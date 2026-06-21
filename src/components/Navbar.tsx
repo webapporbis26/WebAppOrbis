@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useRouterState } from "@tanstack/react-router";
-import { Menu, X, ArrowUpRight, Instagram, Twitter, Linkedin, Github, Mail } from "lucide-react";
+import { Menu, X, ArrowUpRight, Instagram, Twitter, Linkedin, Github, Mail, Phone, Megaphone, Smartphone, Code2 } from "lucide-react";
 
 const logo = { url: "/logo.png" };
 
@@ -77,128 +77,113 @@ export function Navbar() {
         </div>
       </header>
 
-      {/* Full-screen menu */}
+      {/* Full-screen mega menu */}
       <div
-        className={`fixed inset-0 z-[60] ${open ? "pointer-events-auto" : "pointer-events-none"}`}
+        className={`fixed inset-0 z-[60] flex ${open ? "pointer-events-auto" : "pointer-events-none"}`}
       >
+        {/* Backdrop for closing */}
         <div
-          className={`absolute inset-0 bg-background transition-opacity duration-500 ${
+          className={`absolute inset-0 bg-black/40 transition-opacity duration-500 backdrop-blur-sm ${
             open ? "opacity-100" : "opacity-0"
           }`}
           onClick={() => setOpen(false)}
         />
-        {/* animated background */}
-        <div
-          className={`pointer-events-none absolute inset-0 overflow-hidden transition-opacity duration-700 ${
-            open ? "opacity-100" : "opacity-0"
-          }`}
-        >
-          <span
-            className="blob"
-            style={{
-              width: 520,
-              height: 520,
-              background: "var(--grad-blob-1)",
-              top: "-10%",
-              left: "-8%",
-              animation: "blob-float 18s ease-in-out infinite",
-            }}
-          />
-          <span
-            className="blob"
-            style={{
-              width: 600,
-              height: 600,
-              background: "var(--grad-blob-2)",
-              bottom: "-15%",
-              right: "-10%",
-              animation: "blob-float 22s ease-in-out infinite reverse",
-            }}
-          />
-          <div
-            className="absolute inset-0 opacity-[0.06]"
-            style={{
-              backgroundImage:
-                "linear-gradient(var(--foreground) 1px, transparent 1px), linear-gradient(90deg, var(--foreground) 1px, transparent 1px)",
-              backgroundSize: "60px 60px",
-            }}
-          />
-        </div>
 
+        {/* Menu Container */}
         <div
-          className={`relative flex h-full flex-col px-6 py-6 transition-all duration-500 sm:px-10 ${
-            open ? "translate-y-0 opacity-100" : "-translate-y-4 opacity-0"
+          className={`absolute inset-0 w-full flex flex-col md:flex-row transition-transform duration-500 shadow-2xl ${
+            open ? "translate-x-0" : "translate-x-full"
           }`}
         >
-          <div className="flex items-center justify-between">
-            <Link to="/" className="flex items-center gap-2.5" onClick={() => setOpen(false)}>
-              <img src={logo.url} alt="WebApp Orbis" className="h-9 w-9 object-contain" />
-              <span className="text-display text-lg font-semibold tracking-tight">WebApp <span className="text-primary">Orbis</span></span>
+          {/* Left Column - Dark Theme */}
+          <div className="w-full md:w-[32%] bg-[#121212] text-white flex flex-col h-full overflow-y-auto relative z-10 border-r border-white/10 p-8 md:p-12 pb-24 md:pb-12">
+            <Link to="/" className="text-2xl font-bold tracking-[0.2em] mb-12 flex items-center gap-3" onClick={() => setOpen(false)}>
+              <img src={logo.url} alt="Logo" className="h-8 w-8 object-contain" />
+              INTER SMART
             </Link>
-            <button
-              aria-label="Close menu"
-              className="grid h-10 w-10 place-items-center rounded-full glass"
-              onClick={() => setOpen(false)}
-            >
-              <X className="h-5 w-5" />
-            </button>
+
+            <nav className="flex flex-col gap-5 mb-16 mt-4">
+              <Link to="/" className="text-[13px] font-semibold hover:text-primary transition-colors uppercase tracking-[0.1em]" onClick={() => setOpen(false)}>HOME</Link>
+              <Link to="/about" className="text-[13px] font-semibold hover:text-primary transition-colors uppercase tracking-[0.1em]" onClick={() => setOpen(false)}>ABOUT US</Link>
+              <Link to="/services" className="text-[13px] font-semibold hover:text-primary transition-colors uppercase tracking-[0.1em]" onClick={() => setOpen(false)}>SERVICES</Link>
+              <Link to="/portfolio" className="text-[13px] font-semibold hover:text-primary transition-colors uppercase tracking-[0.1em]" onClick={() => setOpen(false)}>PORTFOLIO</Link>
+              <Link to="/contact" className="text-[13px] font-semibold hover:text-primary transition-colors uppercase tracking-[0.1em]" onClick={() => setOpen(false)}>CONTACT</Link>
+            </nav>
+
+            <div className="mt-auto pt-8 border-t border-white/10">
+              <p className="text-[13px] text-gray-400 mb-5">Talk to our expert today</p>
+              <div className="flex flex-col gap-4">
+                <a href="mailto:sales@intersmart.in" className="flex items-center gap-3 text-sm hover:text-primary transition-colors underline underline-offset-4">
+                  <Mail className="w-4 h-4" />
+                  sales@intersmart.in
+                </a>
+                <a href="tel:+919048444322" className="flex items-center gap-3 text-sm hover:text-primary transition-colors underline underline-offset-4">
+                  <Phone className="w-4 h-4" />
+                  +91 90-48-444322
+                </a>
+              </div>
+            </div>
+
+            <div className="mt-12">
+              <p className="text-[13px] text-gray-400 mb-5">Follow us</p>
+              <div className="flex gap-4">
+                {socials.map((s, i) => (
+                  <a key={i} href={s.href} className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center hover:bg-white/10 transition-colors">
+                    <s.icon className="w-4 h-4" />
+                  </a>
+                ))}
+              </div>
+            </div>
           </div>
 
-          <nav className="flex flex-1 flex-col items-center justify-center gap-2 sm:gap-3 md:gap-4">
-            {links.map((l, i) => (
-              <Link
-                key={l.to}
-                to={l.to}
-                className="text-display text-4xl font-semibold tracking-tight transition-colors hover:gradient-text sm:text-5xl md:text-6xl lg:text-7xl"
-                style={{
-                  transitionDelay: `${i * 60}ms`,
-                  opacity: open ? 1 : 0,
-                  transform: open ? "translateY(0)" : "translateY(20px)",
-                  transition: "all 0.6s cubic-bezier(0.65,0,0.35,1)",
-                }}
+          {/* Right Area - Light Theme */}
+          <div className="flex-1 bg-white text-black flex flex-col h-full overflow-y-auto relative p-8 md:p-14 lg:p-20">
+            {/* Close Button */}
+            <div className="absolute top-6 right-6 md:top-10 md:right-10 z-20">
+              <button 
                 onClick={() => setOpen(false)}
+                className="flex items-center gap-3 text-[13px] font-medium tracking-[0.1em] text-gray-500 hover:text-black transition-colors uppercase group"
               >
-                {l.label}
-              </Link>
-            ))}
-          </nav>
-
-          <div className="flex flex-col-reverse items-start justify-between gap-6 border-t border-border/60 pt-6 sm:flex-row sm:items-center">
-            <a
-              href="mailto:hello@weborbis.com"
-              className="inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
-            >
-              <Mail className="h-4 w-4" />
-              hello@weborbis.com
-            </a>
-            <div className="flex items-center gap-3">
-              {socials.map((s, i) => (
-                <a
-                  key={s.label}
-                  href={s.href}
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label={s.label}
-                  className="grid h-10 w-10 place-items-center rounded-full glass transition-all hover:-translate-y-0.5 hover:shadow-elegant"
-                  style={{
-                    transitionDelay: `${i * 80 + 200}ms`,
-                    opacity: open ? 1 : 0,
-                    transform: open ? "translateY(0)" : "translateY(10px)",
-                    transition: "all 0.5s cubic-bezier(0.65,0,0.35,1)",
-                  }}
-                >
-                  <s.icon className="h-4 w-4" />
-                </a>
-              ))}
+                CLOSE MENU
+                <div className="relative w-10 h-10">
+                  <X className="w-10 h-10 absolute inset-0 text-black font-light group-hover:rotate-90 transition-transform duration-300" strokeWidth={1} />
+                </div>
+              </button>
             </div>
-            <Link
-              to="/contact"
-              className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium text-primary-foreground transition-all hover:shadow-elegant"
-              style={{ background: "var(--grad-primary)" }}
-              onClick={() => setOpen(false)}
-            >
-              Start a project <ArrowUpRight className="h-4 w-4" />
-            </Link>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-12 lg:gap-16 mt-20 md:mt-16">
+              {/* Column 1 - Development */}
+              <div className="flex flex-col">
+                <div className="flex flex-col items-start gap-4 mb-6">
+                  <div className="w-12 h-12 bg-[#48D1CC] rounded-md flex items-center justify-center border-2 border-black">
+                    <Code2 className="w-6 h-6 text-black" strokeWidth={2.5} />
+                  </div>
+                  <h3 className="text-xl font-bold tracking-tight text-black mt-2">Development & Software</h3>
+                </div>
+                <div className="w-8 h-[3px] bg-[#48D1CC] mb-8 rounded-full"></div>
+                <div className="flex flex-col gap-5">
+                  <Link to="/services/web-development" className="text-gray-600 hover:text-black transition-colors text-[15px]" onClick={() => setOpen(false)}>Web Development</Link>
+                  <Link to="/services/mobile-development" className="text-gray-600 hover:text-black transition-colors text-[15px]" onClick={() => setOpen(false)}>Mobile App Development</Link>
+                  <Link to="/services/erp-software" className="text-gray-600 hover:text-black transition-colors text-[15px]" onClick={() => setOpen(false)}>ERP Software Solutions</Link>
+                </div>
+              </div>
+
+              {/* Column 2 - Marketing */}
+              <div className="flex flex-col">
+                <div className="flex flex-col items-start gap-4 mb-6">
+                  <div className="w-12 h-12 bg-[#DDA0DD] rounded-md flex items-center justify-center border-2 border-black -rotate-12">
+                     <Megaphone className="w-6 h-6 text-black" strokeWidth={2.5} />
+                  </div>
+                  <h3 className="text-xl font-bold tracking-tight text-black mt-2">Digital Marketing</h3>
+                </div>
+                <div className="w-8 h-[3px] bg-[#9370DB] mb-8 rounded-full"></div>
+                <div className="flex flex-col gap-5">
+                  <Link to="/services/digital-marketing" className="text-gray-600 hover:text-black transition-colors text-[15px]" onClick={() => setOpen(false)}>Digital Marketing Campaigns</Link>
+                  <Link to="/services/seo" className="text-gray-600 hover:text-black transition-colors text-[15px]" onClick={() => setOpen(false)}>Search Engine Optimization (SEO)</Link>
+                </div>
+              </div>
+
+            </div>
           </div>
         </div>
       </div>

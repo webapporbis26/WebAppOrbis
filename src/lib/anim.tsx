@@ -51,7 +51,6 @@ export function useFadeUp(selector: string, scope?: React.RefObject<HTMLElement 
           y: 140,
           opacity: 0,
           scale: 0.92,
-          filter: "blur(12px)",
           duration: 1.4,
           ease: "expo.out",
           scrollTrigger: { trigger: el, start: "top 90%" },
@@ -69,12 +68,11 @@ export function useSerenityText(ref: React.RefObject<HTMLElement | null>, opts: 
     const ctx = gsap.context(() => {
       const targets = el.querySelectorAll<HTMLElement>(".serenity-word");
       if (!targets.length) return;
-      gsap.set(targets, { y: 30, scale: 0.8, opacity: 0, filter: "blur(10px)" });
+      gsap.set(targets, { y: 30, scale: 0.8, opacity: 0 });
       gsap.to(targets, {
         y: 0,
         scale: 1,
         opacity: 1,
-        filter: "blur(0px)",
         duration: 0.8,
         ease: "power2.out",
         stagger: opts.stagger ?? 0.15,

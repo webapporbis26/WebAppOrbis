@@ -6,14 +6,22 @@ export function FloatingBackground() {
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
+    let rafId: number | null = null;
     const onMove = (e: MouseEvent) => {
-      const x = (e.clientX / window.innerWidth - 0.5) * 30;
-      const y = (e.clientY / window.innerHeight - 0.5) * 30;
-      el.style.setProperty("--mx", `${x}px`);
-      el.style.setProperty("--my", `${y}px`);
+      if (rafId) return;
+      rafId = requestAnimationFrame(() => {
+        const x = (e.clientX / window.innerWidth - 0.5) * 30;
+        const y = (e.clientY / window.innerHeight - 0.5) * 30;
+        el.style.setProperty("--mx", `${x}px`);
+        el.style.setProperty("--my", `${y}px`);
+        rafId = null;
+      });
     };
     window.addEventListener("mousemove", onMove);
-    return () => window.removeEventListener("mousemove", onMove);
+    return () => {
+      window.removeEventListener("mousemove", onMove);
+      if (rafId) cancelAnimationFrame(rafId);
+    };
   }, []);
 
   return (
@@ -32,7 +40,6 @@ export function FloatingBackground() {
           width: "55vw",
           height: "55vw",
           transform: "translate(var(--mx), var(--my))",
-          transition: "transform 0.4s ease-out",
           willChange: "transform",
         }}
       >
@@ -56,7 +63,6 @@ export function FloatingBackground() {
           width: "60vw",
           height: "60vw",
           transform: "translate(calc(var(--mx) * -1), calc(var(--my) * -1))",
-          transition: "transform 0.5s ease-out",
           willChange: "transform",
         }}
       >

@@ -24,7 +24,6 @@ function SemiCircleOrbit({ radius, centerX, centerY, items, iconSize }: any) {
           className="
             w-[1000px] h-[1000px] rounded-full 
             bg-[radial-gradient(circle_at_center,rgba(0,0,0,0.05),transparent_70%)]
-            blur-3xl 
             -mt-40 
             pointer-events-none
           "

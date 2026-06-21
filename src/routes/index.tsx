@@ -142,7 +142,7 @@ function ProjectCard({ c }: { c: ProjectItem }) {
             muted
             loop
             playsInline
-            preload="auto"
+            preload="none"
             className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105 z-0"
           />
         )}
@@ -224,15 +224,7 @@ function Home() {
 
         <div data-hero-content className="relative z-20 mx-auto w-full max-w-7xl px-5 sm:px-8 text-white will-change-transform">
           <div className="max-w-3xl mt-20">
-            <h1 className="text-display text-4xl sm:text-5xl md:text-6xl lg:text-[72px] font-bold leading-[1.05] tracking-tight mb-6">
-              Build Smarter Digital Experiences for Modern Businesses
-            </h1>
-            <p className="text-lg sm:text-xl text-white/90 leading-relaxed mb-4">
-              Transform your business with professional website designing and development, mobile app development, and customised ERP solutions tailored to your operational needs. We create modern digital platforms that improve customer engagement, streamline business processes, and support long-term growth.
-            </p>
-            <p className="text-lg sm:text-xl text-white/90 leading-relaxed mb-10">
-              From responsive business websites to advanced enterprise systems, our solutions are designed to deliver performance, functionality, and seamless user experiences across every device.
-            </p>
+
             <div className="flex flex-wrap items-center gap-4">
               <MagneticButton
                 as="a"
@@ -252,6 +244,43 @@ function Home() {
                 <ArrowUpRight className="h-4 w-4" />
               </MagneticButton>
             </div>
+          </div>
+
+          <div className="mt-20 grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl">
+            {[
+              {
+                quote: "They rebuilt our platform in 9 weeks and doubled our checkout conversion. Genuinely the best agency we've worked with.",
+                name: "Amelia Crane",
+                role: "Head of Product, Lumen Goods"
+              },
+              {
+                quote: "An ERP that our team actually enjoys using. The level of craft in the workflows is unreal.",
+                name: "Mateo Rivera",
+                role: "COO, Northwind Logistics"
+              },
+              {
+                quote: "Our App Store rating jumped from 3.4 to 4.8 after the rewrite. Worth every dollar.",
+                name: "Priya Shah",
+                role: "Founder, Quill Health"
+              }
+            ].map((t, i) => (
+              <div key={i} className="bg-white text-left text-black p-6 rounded-2xl shadow-xl flex flex-col justify-between">
+                <div>
+                  <div className="flex gap-1 mb-4 text-[#3b82f6]">
+                     <Star className="w-4 h-4 fill-current" />
+                     <Star className="w-4 h-4 fill-current" />
+                     <Star className="w-4 h-4 fill-current" />
+                     <Star className="w-4 h-4 fill-current" />
+                     <Star className="w-4 h-4 fill-current" />
+                  </div>
+                  <p className="text-gray-800 text-[15px] leading-relaxed mb-6 font-medium">"{t.quote}"</p>
+                </div>
+                <div className="border-t border-gray-100 pt-4 mt-auto">
+                  <p className="font-semibold text-gray-900 text-sm">{t.name}</p>
+                  <p className="text-gray-500 text-xs mt-0.5">{t.role}</p>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-xs uppercase tracking-[0.3em] text-white/70 z-20">
