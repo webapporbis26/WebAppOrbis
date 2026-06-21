@@ -1,11 +1,14 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
-import { Plus, Pencil, Trash2, Search, Download } from "lucide-react";
+import { Plus, Pencil, Trash2, Search, Download, CalendarIcon, Eye, ArrowRightLeft, Sigma, CalendarDays, Filter, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
+import { format } from "date-fns";
+import { Calendar } from "@/components/ui/calendar";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import {
   Dialog,
   DialogContent,
@@ -39,10 +42,11 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useCollection, type WithId } from "@/lib/admin/storage";
+import { useCollection, type WithId, useActivityLogger } from "@/lib/admin/storage";
 import type { EntityConfig } from "@/lib/admin/schemas";
 import { seeds } from "@/lib/admin/schemas";
 import { toast } from "sonner";
+import { dealsApi } from "@/lib/admin/api";
 
 function badgeTone(value: string): string {
   const v = (value || "").toLowerCase();
@@ -82,24 +86,133 @@ export function CrudView({ config }: { config: EntityConfig }) {
   const [query, setQuery] = useState("");
   const [open, setOpen] = useState(false);
   const [editing, setEditing] = useState<WithId<Record<string, any>> | null>(null);
+  const [viewing, setViewing] = useState<WithId<Record<string, any>> | null>(null);
   const [form, setForm] = useState<Record<string, any>>({});
   const [confirmDelete, setConfirmDelete] = useState<string | null>(null);
   const [animationParent] = useAutoAnimate();
+  const [sortConfig, setSortConfig] = useState<{ key: string; direction: "asc" | "desc" } | null>(null);
+  const [activeFilter, setActiveFilter] = useState<string>("all");
+  const logActivity = useActivityLogger();
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
+
+  const filterableField = useMemo(() => config.fields.find(f => f.name.toLowerCase().includes("status") || config.columns.find(c => c.name === f.name)?.badge), [config]);
+  const filterOptions = useMemo(() => {
+    if (!filterableField) return [];
+    const opts = new Set<string>();
+    items.forEach(it => {
+      if (it[filterableField.name]) opts.add(String(it[filterableField.name]));
+    });
+    return Array.from(opts).sort();
+  }, [items, filterableField]);
 
   const filtered = useMemo(() => {
-    if (!query.trim()) return items;
-    const q = query.toLowerCase();
-    return items.filter((it) =>
-      config.searchable.some((k) => {
-        let val = it[k];
-        if (config.fields.find((f) => f.name === k)?.type === "lead_select") {
-          const lead = leads.items.find((l) => l.id === val);
-          val = lead ? `${lead.company} ${lead.contact}` : val;
+    let result = items;
+    if (query.trim()) {
+      const q = query.toLowerCase();
+      result = result.filter((it) =>
+        config.searchable.some((k) => {
+          let val = it[k];
+          if (config.fields.find((f) => f.name === k)?.type === "lead_select") {
+            const lead = leads.items.find((l) => l.id === val);
+            val = lead ? `${lead.company} ${lead.contact}` : val;
+          }
+          return String(val ?? "").toLowerCase().includes(q);
+        })
+      );
+    }
+    
+    if (filterableField && activeFilter !== "all") {
+       result = result.filter(it => String(it[filterableField.name]) === activeFilter);
+    }
+
+    if (sortConfig) {
+      result = [...result].sort((a, b) => {
+        let valA = a[sortConfig.key];
+        let valB = b[sortConfig.key];
+        
+        if (config.fields.find(f => f.name === sortConfig.key)?.type === "lead_select") {
+           valA = leads.items.find(l => l.id === valA)?.company || valA;
+           valB = leads.items.find(l => l.id === valB)?.company || valB;
         }
-        return String(val ?? "").toLowerCase().includes(q);
-      })
-    );
-  }, [items, query, config.searchable, config.fields, leads.items]);
+        
+        if (typeof valA === "string" && typeof valB === "string") {
+          return sortConfig.direction === "asc" ? valA.localeCompare(valB) : valB.localeCompare(valA);
+        }
+        if (valA < valB) return sortConfig.direction === "asc" ? -1 : 1;
+        if (valA > valB) return sortConfig.direction === "asc" ? 1 : -1;
+        return 0;
+      });
+    }
+
+    return result;
+  }, [items, query, config.searchable, config.fields, leads.items, sortConfig, filterableField, activeFilter]);
+
+  useEffect(() => {
+    setPage(1);
+  }, [query, activeFilter, sortConfig]);
+
+  const paginated = useMemo(() => filtered.slice((page - 1) * pageSize, page * pageSize), [filtered, page, pageSize]);
+  const totalPages = Math.ceil(filtered.length / pageSize);
+
+  function toggleSort(key: string) {
+    let direction: "asc" | "desc" = "asc";
+    if (sortConfig && sortConfig.key === key && sortConfig.direction === "asc") {
+      direction = "desc";
+    }
+    setSortConfig({ key, direction });
+  }
+
+  function exportToCSV() {
+    if (filtered.length === 0) return toast.error("No records to export");
+    const headers = config.columns.map((c) => c.label).join(",");
+    const rows = filtered.map((row) => {
+      return config.columns
+        .map((c) => {
+          let val = row[c.name];
+          if (config.fields.find((f) => f.name === c.name)?.type === "lead_select") {
+            const lead = leads.items.find((l) => l.id === val);
+            val = lead ? `${lead.company} - ${lead.contact}` : val;
+          }
+          return `"${String(val ?? "").replace(/"/g, '""')}"`;
+        })
+        .join(",");
+    });
+    const csv = [headers, ...rows].join("\n");
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.setAttribute("download", `${config.key}_export_${new Date().toISOString().slice(0, 10)}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    toast.success("Export successful");
+  }
+
+  async function convertToDeal(row: any) {
+    if (!window.confirm(`Convert lead ${row.company} to a new Deal?`)) return;
+    try {
+      const dealPayload = {
+         id: 0,
+         client: row.company,
+         project: `${row.company} Project`,
+         total: row.budget || 0,
+         advance: 0,
+         type: row.service || 'Static Website',
+         stage: 'New Deal',
+         status: 'In Progress',
+         due: '',
+         remarks: row.notes || ''
+      };
+      await dealsApi.addOrUpdate(dealPayload);
+      update(row.id, { ...row, status: "Converted" });
+      logActivity("Converted", `Lead ${row.company} converted to Deal`);
+      toast.success("Lead converted to Deal!");
+    } catch(err) {
+      toast.error("Failed to convert lead");
+    }
+  }
 
   function openCreate() {
     const init: Record<string, any> = {};
@@ -122,8 +235,13 @@ export function CrudView({ config }: { config: EntityConfig }) {
         const v = form[f.name];
         payload[f.name] = f.type === "number" && v !== "" && v != null ? Number(v) : v ?? "";
       }
-      if (editing) update(editing.id, payload);
-      else create(payload);
+      if (editing) {
+        update(editing.id, payload);
+        logActivity("Updated", `${config.title} Record: ${payload[config.columns[0].name] || 'Unknown'}`);
+      } else {
+        create(payload);
+        logActivity("Created", `${config.title} Record: ${payload[config.columns[0].name] || 'Unknown'}`);
+      }
       setOpen(false);
       toast.success(editing ? `${config.title} updated successfully` : `${config.title} created successfully`);
     } catch (error) {
@@ -140,7 +258,7 @@ export function CrudView({ config }: { config: EntityConfig }) {
           <p className="mt-1 text-sm text-muted-foreground">{config.subtitle}</p>
         </div>
         <div className="flex items-center gap-2">
-          <Button variant="outline" className="rounded-full">
+          <Button variant="outline" className="rounded-full" onClick={exportToCSV}>
             <Download className="mr-2 h-4 w-4" /> Export
           </Button>
           <Button
@@ -155,28 +273,44 @@ export function CrudView({ config }: { config: EntityConfig }) {
 
       {/* Stats */}
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-        <StatCard label="Total" value={items.length} />
+        <StatCard label="Total" value={items.length} icon={Sigma} />
         <StatCard
           label="This month"
           value={items.filter((i: any) => String(i.date || i.due || i.updated || i.start || "").slice(0, 7) === new Date().toISOString().slice(0, 7)).length}
+          icon={CalendarDays}
         />
-        <StatCard label="Showing" value={filtered.length} />
-        <StatCard label="Updated" value={new Date().toLocaleDateString()} />
+        <StatCard label="Showing" value={paginated.length} icon={Filter} />
+        <StatCard label="Updated" value={new Date().toLocaleDateString()} icon={Clock} />
       </div>
 
       {/* Table */}
       <div className="overflow-hidden rounded-2xl border border-border/60 bg-white shadow-soft">
         <div className="flex items-center justify-between border-b border-border/60 px-4 py-3">
-          <div className="relative w-full max-w-xs">
-            <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-            <Input
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              placeholder="Search..."
-              className="h-9 rounded-full pl-9"
-            />
+          <div className="flex items-center gap-3">
+            <div className="relative w-full max-w-xs">
+              <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+              <Input
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                placeholder="Search..."
+                className="h-9 w-[200px] rounded-full pl-9 sm:w-[250px]"
+              />
+            </div>
+            {filterableField && filterOptions.length > 0 && (
+              <Select value={activeFilter} onValueChange={setActiveFilter}>
+                <SelectTrigger className="h-9 w-[140px] rounded-full bg-muted/30">
+                  <SelectValue placeholder="Filter..." />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All Status</SelectItem>
+                  {filterOptions.map(opt => (
+                    <SelectItem key={opt} value={opt}>{opt}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            )}
           </div>
-          <div className="text-xs text-muted-foreground">{filtered.length} records</div>
+          <div className="hidden text-xs text-muted-foreground sm:block">{filtered.length} records</div>
         </div>
 
         <div className="overflow-x-auto">
@@ -184,8 +318,17 @@ export function CrudView({ config }: { config: EntityConfig }) {
             <TableHeader>
               <TableRow className="bg-muted/40">
                 {config.columns.map((c) => (
-                  <TableHead key={c.name} className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
-                    {c.label}
+                  <TableHead 
+                    key={c.name} 
+                    className="cursor-pointer text-xs font-medium uppercase tracking-wider text-muted-foreground transition-colors hover:text-foreground"
+                    onClick={() => toggleSort(c.name)}
+                  >
+                    <div className="flex items-center gap-1.5">
+                      {c.label}
+                      {sortConfig?.key === c.name && (
+                        <span className="text-[10px] text-primary">{sortConfig.direction === "asc" ? "▲" : "▼"}</span>
+                      )}
+                    </div>
                   </TableHead>
                 ))}
                 <TableHead className="w-24 text-right text-xs font-medium uppercase tracking-wider text-muted-foreground">
@@ -194,14 +337,14 @@ export function CrudView({ config }: { config: EntityConfig }) {
               </TableRow>
             </TableHeader>
             <TableBody ref={animationParent as any}>
-              {filtered.length === 0 && (
+              {paginated.length === 0 && (
                 <TableRow>
                   <TableCell colSpan={config.columns.length + 1} className="py-12 text-center text-sm text-muted-foreground">
                     No records yet. Click "Add new" to create one.
                   </TableCell>
                 </TableRow>
               )}
-              {filtered.map((row) => (
+              {paginated.map((row) => (
                 <TableRow key={row.id} className="hover:bg-muted/30">
                   {config.columns.map((c) => {
                     const fieldDef = config.fields.find((f) => f.name === c.name);
@@ -224,6 +367,14 @@ export function CrudView({ config }: { config: EntityConfig }) {
                   })}
                   <TableCell className="text-right">
                     <div className="flex justify-end gap-1">
+                      {config.key === "leads" && row.status !== "Converted" && (
+                         <Button size="icon" variant="ghost" title="Convert to Deal" className="h-8 w-8 rounded-full text-emerald-600 hover:bg-emerald-50 hover:text-emerald-700" onClick={() => convertToDeal(row)}>
+                           <ArrowRightLeft className="h-3.5 w-3.5" />
+                         </Button>
+                      )}
+                      <Button size="icon" variant="ghost" className="h-8 w-8 rounded-full text-muted-foreground hover:text-foreground" onClick={() => setViewing(row)}>
+                        <Eye className="h-3.5 w-3.5" />
+                      </Button>
                       <Button size="icon" variant="ghost" className="h-8 w-8 rounded-full" onClick={() => openEdit(row)}>
                         <Pencil className="h-3.5 w-3.5" />
                       </Button>
@@ -241,6 +392,22 @@ export function CrudView({ config }: { config: EntityConfig }) {
               ))}
             </TableBody>
           </Table>
+        </div>
+        
+        <div className="flex flex-col gap-4 border-t border-border/60 px-4 py-3 sm:flex-row sm:items-center sm:justify-end">
+          <div className="flex items-center gap-4">
+            <div className="text-sm text-muted-foreground">
+              Page {page} of {totalPages || 1}
+            </div>
+            <div className="flex gap-1.5">
+              <Button variant="outline" size="sm" className="h-8 px-3 rounded-md" onClick={() => setPage(p => Math.max(1, p - 1))} disabled={page === 1}>
+                Prev
+              </Button>
+              <Button variant="outline" size="sm" className="h-8 px-3 rounded-md" onClick={() => setPage(p => Math.min(totalPages, p + 1))} disabled={page >= totalPages || totalPages === 0}>
+                Next
+              </Button>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -308,10 +475,39 @@ export function CrudView({ config }: { config: EntityConfig }) {
                       ))}
                     </SelectContent>
                   </Select>
+                ) : f.type === "date" ? (
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <Button
+                        variant={"outline"}
+                        className={`w-full justify-start text-left font-normal ${!form[f.name] && "text-muted-foreground"}`}
+                      >
+                        <CalendarIcon className="mr-2 h-4 w-4" />
+                        {form[f.name] ? format(new Date(form[f.name]), "PPP") : <span>Pick a date</span>}
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0" align="start">
+                      <Calendar
+                        mode="single"
+                        selected={form[f.name] ? new Date(form[f.name]) : undefined}
+                        onSelect={(date) => {
+                          if (date) {
+                            const yyyy = date.getFullYear();
+                            const mm = String(date.getMonth() + 1).padStart(2, '0');
+                            const dd = String(date.getDate()).padStart(2, '0');
+                            setForm((p) => ({ ...p, [f.name]: `${yyyy}-${mm}-${dd}` }));
+                          } else {
+                            setForm((p) => ({ ...p, [f.name]: "" }));
+                          }
+                        }}
+                        initialFocus
+                      />
+                    </PopoverContent>
+                  </Popover>
                 ) : (
                   <Input
                     id={f.name}
-                    type={f.type === "number" ? "number" : f.type === "date" ? "date" : f.type === "email" ? "email" : "text"}
+                    type={f.type === "number" ? "number" : f.type === "email" ? "email" : "text"}
                     value={form[f.name] ?? ""}
                     onChange={(e) => setForm((p) => ({ ...p, [f.name]: e.target.value }))}
                     placeholder={f.placeholder}
@@ -333,6 +529,63 @@ export function CrudView({ config }: { config: EntityConfig }) {
         </DialogContent>
       </Dialog>
 
+      {/* View Dialog */}
+      <Dialog open={!!viewing} onOpenChange={(open) => !open && setViewing(null)}>
+        <DialogContent className="max-w-4xl p-0 sm:rounded-[2rem]">
+          {/* Header section with gradient */}
+          <div className="relative overflow-hidden bg-gradient-to-br from-primary/10 via-primary/5 to-transparent px-8 pb-6 pt-10">
+            <div className="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-primary/10 blur-3xl"></div>
+            <div className="absolute -bottom-10 -left-10 h-32 w-32 rounded-full bg-primary/10 blur-2xl"></div>
+            <DialogHeader>
+              <DialogTitle className="text-display text-3xl">
+                {viewing?.[config.columns[0].name] || `View ${config.title.replace(/s$/, "")}`}
+              </DialogTitle>
+              <DialogDescription className="mt-1.5 text-base">
+                {config.title.replace(/s$/, "")} Details
+              </DialogDescription>
+            </DialogHeader>
+          </div>
+
+          <div className="px-6 pb-6 pt-2">
+            <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3">
+              {config.fields.map((f) => {
+                let displayValue = viewing?.[f.name];
+                if (displayValue && f.type === "date") {
+                  displayValue = format(new Date(displayValue), "PPP");
+                } else if (f.type === "lead_select") {
+                  const lead = leads.items.find((l) => l.id === displayValue);
+                  if (lead) displayValue = `${lead.company} - ${lead.contact}`;
+                }
+                
+                const isBadge = config.columns.find((c) => c.name === f.name)?.badge;
+
+                return (
+                  <div key={f.name} className={`group flex flex-col justify-center rounded-2xl border border-border/40 bg-slate-50/50 px-4 py-2.5 transition-colors hover:bg-slate-50 ${f.full ? "sm:col-span-2" : ""}`}>
+                    <Label className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground/70">
+                      {f.label}
+                    </Label>
+                    <div className="mt-1.5 text-sm font-medium text-foreground">
+                      {isBadge && displayValue ? (
+                        <Badge variant="outline" className={`rounded-full border px-2.5 py-0.5 font-medium ${badgeTone(String(displayValue))}`}>
+                          {formatCell(f.name, displayValue)}
+                        </Badge>
+                      ) : (
+                        displayValue || "—"
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+            <div className="mt-8 flex justify-end">
+              <Button type="button" variant="outline" className="rounded-full px-8" onClick={() => setViewing(null)}>
+                Close
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+
       <AlertDialog open={!!confirmDelete} onOpenChange={(v) => !v && setConfirmDelete(null)}>
         <AlertDialogContent>
           <AlertDialogHeader>
@@ -347,7 +600,10 @@ export function CrudView({ config }: { config: EntityConfig }) {
               className="bg-rose-600 hover:bg-rose-700"
               onClick={() => {
                 try {
-                  if (confirmDelete) remove(confirmDelete);
+                  if (confirmDelete) {
+                    remove(confirmDelete);
+                    logActivity("Deleted", `${config.title} Record`);
+                  }
                   setConfirmDelete(null);
                   toast.success(`${config.title} deleted successfully`);
                 } catch (error) {
@@ -364,11 +620,15 @@ export function CrudView({ config }: { config: EntityConfig }) {
   );
 }
 
-function StatCard({ label, value }: { label: string; value: string | number }) {
+function StatCard({ label, value, icon: Icon }: { label: string; value: string | number; icon?: any }) {
   return (
-    <div className="rounded-2xl border border-border/60 bg-white p-4 shadow-soft">
-      <div className="text-xs uppercase tracking-wider text-muted-foreground">{label}</div>
-      <div className="mt-1 text-display text-2xl font-semibold">{value}</div>
+    <div className="group relative overflow-hidden rounded-2xl border border-border/60 bg-white p-4 shadow-soft transition-all hover:-translate-y-0.5 hover:shadow-elegant dark:bg-card">
+      {Icon && <Icon className="absolute -right-3 -top-3 h-16 w-16 text-primary/5 transition-transform group-hover:scale-110" />}
+      <div className="relative flex items-center gap-1.5">
+        {Icon && <Icon className="h-3.5 w-3.5 text-primary" />}
+        <div className="text-xs uppercase tracking-wider text-muted-foreground">{label}</div>
+      </div>
+      <div className="relative mt-2 text-display text-2xl font-semibold text-foreground">{value}</div>
     </div>
   );
 }

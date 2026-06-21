@@ -197,14 +197,17 @@ export const employeesConfig: EntityConfig = {
   storageKey: "wo_admin_employees",
   fields: [
     { name: "name", label: "Employee Name", type: "text", required: true },
+    { name: "gender", label: "Gender", type: "select", options: ["Male", "Female", "Other"], required: true },
+    { name: "dob", label: "Date of Birth", type: "date", required: true },
+    { name: "mobile", label: "Mobile Number", type: "text", required: true },
     { name: "email", label: "Email", type: "email", required: true },
-    { name: "role", label: "Role", type: "text" },
-    {
-      name: "department",
-      label: "Department",
-      type: "select",
-      options: ["Design", "Engineering", "Management", "Marketing"],
-    },
+    { name: "address", label: "Address", type: "textarea", full: true },
+    { name: "department", label: "Department", type: "text", required: true },
+    { name: "designation", label: "Designation", type: "text", required: true },
+    { name: "skills", label: "Skillset", type: "text" },
+    { name: "experience", label: "Experience (Years)", type: "number" },
+    { name: "qualification", label: "Qualification", type: "text" },
+    { name: "doj", label: "Date of Joining", type: "date", required: true },
     {
       name: "status",
       label: "Status",
@@ -214,12 +217,12 @@ export const employeesConfig: EntityConfig = {
   ],
   columns: [
     { name: "name", label: "Name" },
-    { name: "email", label: "Email" },
-    { name: "role", label: "Role" },
+    { name: "designation", label: "Designation" },
     { name: "department", label: "Department" },
+    { name: "mobile", label: "Mobile" },
     { name: "status", label: "Status", badge: true },
   ],
-  searchable: ["name", "email", "role"],
+  searchable: ["name", "email", "designation", "department", "mobile"],
 };
 
 export const contentConfig: EntityConfig = {

@@ -1,5 +1,6 @@
+import { useState, useEffect } from "react";
 import { Link, useRouterState } from "@tanstack/react-router";
-import { LayoutDashboard, Users, Briefcase, RefreshCw, UserCog, FileText, ArrowLeft, Search, Bell, LogOut } from "lucide-react";
+import { LayoutDashboard, Users, Briefcase, RefreshCw, UserCog, FileText, ArrowLeft, Search, Bell, LogOut, Sun, Moon } from "lucide-react";
 import type { ReactNode } from "react";
 const logo = { url: "/logo.png" };
 import { adminLogout } from "@/lib/admin/auth";
@@ -15,12 +16,35 @@ const nav = [
 
 export function AdminShell({ children }: { children: ReactNode }) {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const [theme, setTheme] = useState<"light" | "dark">("light");
+
+  useEffect(() => {
+    if (localStorage.getItem("theme") === "dark" || (!("theme" in localStorage) && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
+      document.documentElement.classList.add("dark");
+      setTheme("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+      setTheme("light");
+    }
+  }, []);
+
+  const toggleTheme = () => {
+    if (theme === "light") {
+      document.documentElement.classList.add("dark");
+      localStorage.setItem("theme", "dark");
+      setTheme("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+      localStorage.setItem("theme", "light");
+      setTheme("light");
+    }
+  };
 
   return (
-    <div className="min-h-screen bg-[oklch(0.985_0.005_250)]">
+    <div className="min-h-screen bg-background">
       <div className="flex min-h-screen">
         {/* Sidebar */}
-        <aside className="sticky top-0 hidden h-screen w-64 shrink-0 flex-col border-r border-border/60 bg-white/70 backdrop-blur-xl lg:flex">
+        <aside className="sticky top-0 hidden h-screen w-64 shrink-0 flex-col border-r border-border/60 bg-card/70 backdrop-blur-xl lg:flex">
           <div className="flex items-center gap-2.5 px-6 py-5">
             <img src={logo.url} alt="WebApp Orbis" className="h-8 w-8 object-contain" />
             <div className="leading-tight">
@@ -53,19 +77,20 @@ export function AdminShell({ children }: { children: ReactNode }) {
 
         {/* Main */}
         <div className="flex min-w-0 flex-1 flex-col">
-          <header className="sticky top-0 z-30 flex items-center justify-between gap-4 border-b border-border/60 bg-white/70 px-5 py-3.5 backdrop-blur-xl sm:px-8">
+          <header className="sticky top-0 z-30 flex items-center justify-between gap-4 border-b border-border/60 bg-card/70 px-5 py-3.5 backdrop-blur-xl sm:px-8">
             <div className="relative w-full max-w-sm">
               <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
               <input
                 placeholder="Search anything..."
-                className="h-10 w-full rounded-full border border-border bg-white/80 pl-9 pr-4 text-sm outline-none transition-shadow focus:ring-2 focus:ring-ring/40"
+                className="h-10 w-full rounded-full border border-border bg-card/80 pl-9 pr-4 text-sm outline-none transition-shadow focus:ring-2 focus:ring-ring/40"
               />
             </div>
             <div className="flex items-center gap-3">
-              <button className="grid h-10 w-10 place-items-center rounded-full border border-border bg-white/80 text-foreground/70 transition hover:text-foreground">
+
+              <button className="grid h-10 w-10 place-items-center rounded-full border border-border bg-card/80 text-foreground/70 transition hover:text-foreground">
                 <Bell className="h-4 w-4" />
               </button>
-              <div className="flex items-center gap-2.5 rounded-full border border-border bg-white/80 px-2 py-1.5">
+              <div className="flex items-center gap-2.5 rounded-full border border-border bg-card/80 px-2 py-1.5">
                 <div
                   className="grid h-7 w-7 place-items-center rounded-full text-[11px] font-semibold text-primary-foreground"
                   style={{ background: "var(--grad-primary)" }}
@@ -80,7 +105,7 @@ export function AdminShell({ children }: { children: ReactNode }) {
               <button
                 onClick={adminLogout}
                 title="Sign out"
-                className="grid h-10 w-10 place-items-center rounded-full border border-border bg-white/80 text-foreground/70 transition hover:bg-destructive/10 hover:text-destructive"
+                className="grid h-10 w-10 place-items-center rounded-full border border-border bg-card/80 text-foreground/70 transition hover:bg-destructive/10 hover:text-destructive"
               >
                 <LogOut className="h-4 w-4" />
               </button>
@@ -88,7 +113,7 @@ export function AdminShell({ children }: { children: ReactNode }) {
           </header>
 
           {/* Mobile nav */}
-          <div className="flex gap-1 overflow-x-auto border-b border-border/60 bg-white/70 px-4 py-2 lg:hidden">
+          <div className="flex gap-1 overflow-x-auto border-b border-border/60 bg-card/70 px-4 py-2 lg:hidden">
             {nav.map((n) => {
               const active = n.exact ? pathname === n.to : pathname.startsWith(n.to);
               return (

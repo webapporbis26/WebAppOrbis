@@ -82,6 +82,29 @@
   --shadow-soft: 0 10px 40px -12px oklch(0.2 0.02 250 / 0.12);
 }
 
+.dark {
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --ink: oklch(0.985 0 0);
+  --surface: oklch(0.18 0.005 250);
+  --card: oklch(0.18 0.005 250);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.18 0.005 250);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.55 0.22 264);
+  --primary-foreground: oklch(0.99 0 0);
+  --secondary: oklch(0.25 0.005 250);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.25 0.005 250);
+  --muted-foreground: oklch(0.7 0.02 250);
+  --accent: oklch(0.72 0.16 230);
+  --accent-foreground: oklch(0.985 0 0);
+  --border: oklch(0.25 0.008 250);
+  --input: oklch(0.25 0.008 250);
+  --shadow-elegant: 0 30px 80px -30px oklch(0 0 0 / 0.8);
+  --shadow-soft: 0 10px 40px -12px oklch(0 0 0 / 0.5);
+}
+
 html, body, #root {
   overflow-x: hidden;
 }

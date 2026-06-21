@@ -319,3 +319,71 @@ export const contentApi = {
     return res.text();
   }
 };
+
+export const employeesApi = {
+  getAll: async () => {
+    const res = await fetchWithAuth(`/User/GetAllEmployees`);
+    if (!res.ok) return [];
+    
+    const data = await res.json();
+    return data
+      .filter((item: any) => item.isActive !== false)
+      .map((item: any) => ({
+        id: item.id.toString(),
+        name: item.employeeName || '',
+        gender: item.gender || '',
+        dob: item.dateOfBirth ? item.dateOfBirth.split('T')[0] : '',
+        address: item.address || '',
+        mobile: item.mobileNumber || '',
+        email: item.emailID || '',
+        department: item.department || '',
+        designation: item.designation || '',
+        skills: item.skillset || '',
+        experience: item.experience || '',
+        qualification: item.qualification || '',
+        doj: item.dateOfJoining ? item.dateOfJoining.split('T')[0] : '',
+        status: item.status || 'Active'
+      }));
+  },
+  
+  addOrUpdate: async (employee: any) => {
+    const formData = new FormData();
+    if (employee.id && !employee.id.toString().startsWith('e')) {
+      formData.append('ID', employee.id.toString());
+    } else {
+      formData.append('ID', '0');
+    }
+    
+    formData.append('EmployeeName', employee.name || '');
+    formData.append('Gender', employee.gender || '');
+    formData.append('DateOfBirth', employee.dob || '');
+    formData.append('Address', employee.address || '');
+    formData.append('MobileNumber', employee.mobile || '');
+    formData.append('EmailID', employee.email || '');
+    formData.append('Department', employee.department || '');
+    formData.append('Designation', employee.designation || '');
+    formData.append('Skillset', employee.skills || '');
+    formData.append('Experience', (employee.experience || '').toString());
+    formData.append('Qualification', employee.qualification || '');
+    formData.append('DateOfJoining', employee.doj || '');
+    formData.append('Status', employee.status || 'Active');
+    formData.append('CreatedOn', new Date().toISOString());
+    formData.append('ModifiedOn', '');
+    formData.append('DeletedOn', '');
+    formData.append('IsActive', 'true');
+
+    const res = await fetchWithAuth(`/User/AddOrUpdateEmployees`, {
+      method: 'POST',
+      body: formData,
+    });
+    return res.text();
+  },
+  
+  delete: async (id: string | number) => {
+    const res = await fetchWithAuth(`/User/DeleteEmployees?ID=${id}`, {
+      method: 'POST',
+    });
+    return res.text();
+  }
+};
+
