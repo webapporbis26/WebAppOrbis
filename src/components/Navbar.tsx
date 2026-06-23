@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useRouterState } from "@tanstack/react-router";
-import { Menu, X, ArrowUpRight, Instagram, Twitter, Linkedin, Github, Mail, Phone, Megaphone, Smartphone, Code2 } from "lucide-react";
+import { Menu, X, ArrowUpRight, Instagram, Twitter, Linkedin, Github, Mail, Phone, ArrowRight } from "lucide-react";
+import Particles from "./Particles";
 
 const logo = { url: "/logo.png" };
 
@@ -34,6 +35,16 @@ export function Navbar() {
   useEffect(() => {
     setOpen(false);
   }, [pathname]);
+
+  // Lock body scroll when menu is open
+  useEffect(() => {
+    if (open) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => { document.body.style.overflow = ""; };
+  }, [open]);
 
   return (
     <>
@@ -81,7 +92,7 @@ export function Navbar() {
       <div
         className={`fixed inset-0 z-[60] flex ${open ? "pointer-events-auto" : "pointer-events-none"}`}
       >
-        {/* Backdrop for closing */}
+        {/* Backdrop */}
         <div
           className={`absolute inset-0 bg-black/40 transition-opacity duration-500 backdrop-blur-sm ${
             open ? "opacity-100" : "opacity-0"
@@ -91,98 +102,94 @@ export function Navbar() {
 
         {/* Menu Container */}
         <div
-          className={`absolute inset-0 w-full flex flex-col md:flex-row transition-transform duration-500 shadow-2xl ${
-            open ? "translate-x-0" : "translate-x-full"
+          className={`absolute inset-0 w-full bg-white flex flex-col lg:flex-row transition-transform duration-500 shadow-2xl overflow-hidden ${
+            open ? "translate-y-0" : "-translate-y-full"
           }`}
         >
-          {/* Left Column - Dark Theme */}
-          <div className="w-full md:w-[32%] bg-[#121212] text-white flex flex-col h-full overflow-y-auto relative z-10 border-r border-white/10 p-8 md:p-12 pb-24 md:pb-12">
-            <Link to="/" className="text-2xl font-bold tracking-[0.2em] mb-12 flex items-center gap-3" onClick={() => setOpen(false)}>
-              <img src={logo.url} alt="Logo" className="h-8 w-8 object-contain" />
-              INTER SMART
-            </Link>
+          <Particles />
 
-            <nav className="flex flex-col gap-5 mb-16 mt-4">
-              <Link to="/" className="text-[13px] font-semibold hover:text-primary transition-colors uppercase tracking-[0.1em]" onClick={() => setOpen(false)}>HOME</Link>
-              <Link to="/about" className="text-[13px] font-semibold hover:text-primary transition-colors uppercase tracking-[0.1em]" onClick={() => setOpen(false)}>ABOUT US</Link>
-              <Link to="/services" className="text-[13px] font-semibold hover:text-primary transition-colors uppercase tracking-[0.1em]" onClick={() => setOpen(false)}>SERVICES</Link>
-              <Link to="/portfolio" className="text-[13px] font-semibold hover:text-primary transition-colors uppercase tracking-[0.1em]" onClick={() => setOpen(false)}>PORTFOLIO</Link>
-              <Link to="/contact" className="text-[13px] font-semibold hover:text-primary transition-colors uppercase tracking-[0.1em]" onClick={() => setOpen(false)}>CONTACT</Link>
-            </nav>
+          {/* Close Button */}
+          <div className="absolute top-5 right-5 sm:top-8 sm:right-8 z-50">
+            <button
+              onClick={() => setOpen(false)}
+              className="flex items-center gap-2 text-[12px] font-semibold tracking-[0.1em] text-gray-500 hover:text-black transition-colors uppercase group bg-white/90 backdrop-blur-md px-4 py-2 rounded-full border border-gray-200 shadow-sm hover:shadow-md"
+            >
+              CLOSE MENU
+              <X className="w-4 h-4 text-black group-hover:rotate-90 transition-transform duration-300" strokeWidth={2} />
+            </button>
+          </div>
 
-            <div className="mt-auto pt-8 border-t border-white/10">
-              <p className="text-[13px] text-gray-400 mb-5">Talk to our expert today</p>
-              <div className="flex flex-col gap-4">
-                <a href="mailto:sales@intersmart.in" className="flex items-center gap-3 text-sm hover:text-primary transition-colors underline underline-offset-4">
-                  <Mail className="w-4 h-4" />
-                  sales@intersmart.in
-                </a>
-                <a href="tel:+919048444322" className="flex items-center gap-3 text-sm hover:text-primary transition-colors underline underline-offset-4">
-                  <Phone className="w-4 h-4" />
-                  +91 90-48-444322
-                </a>
-              </div>
+          {/* Left Column — Navigation Links */}
+          <div className="w-full lg:w-[50%] xl:w-[45%] flex flex-col h-full relative z-10 px-10 sm:px-16 lg:px-20 xl:px-24 lg:border-r border-gray-100 pt-20 pb-8">
+            {/* Spacer top */}
+            <div className="flex-1 flex flex-col justify-center">
+              <nav className="flex flex-col">
+                {[
+                  { to: "/", label: "Home" },
+                  { to: "/about", label: "About Us" },
+                  { to: "/services", label: "Services" },
+                  { to: "/portfolio", label: "Portfolio" },
+                  { to: "/contact", label: "Contact Us" },
+                ].map((link, i) => (
+                  <Link
+                    key={link.to}
+                    to={link.to}
+                    className="text-[clamp(1.75rem,3.5vw,3rem)] font-light text-gray-400 hover:text-black transition-colors duration-200 group border-b border-gray-100 last:border-0 py-3 sm:py-4 flex items-center gap-3"
+                    onClick={() => setOpen(false)}
+                  >
+                    <span className="text-xs font-mono text-gray-300 group-hover:text-[#2DD4BF] transition-colors w-5 shrink-0">0{i + 1}</span>
+                    {link.label}
+                  </Link>
+                ))}
+              </nav>
             </div>
 
-            <div className="mt-12">
-              <p className="text-[13px] text-gray-400 mb-5">Follow us</p>
-              <div className="flex gap-4">
-                {socials.map((s, i) => (
-                  <a key={i} href={s.href} className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center hover:bg-white/10 transition-colors">
-                    <s.icon className="w-4 h-4" />
-                  </a>
-                ))}
-              </div>
+            {/* Socials pinned to bottom */}
+            <div className="flex flex-wrap gap-5 items-center pt-4 border-t border-gray-100">
+              <a href="https://www.instagram.com/enem.pvt.ltd?igsh=aGZ2NGc1ODM3aWZ4" target="_blank" rel="noopener noreferrer" className="text-xs font-medium text-gray-400 hover:text-black transition-colors flex items-center gap-1 group uppercase tracking-widest">
+                Instagram <ArrowUpRight className="w-3 h-3 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              </a>
+              <a href="https://www.facebook.com/profile.php?id=61577380003721" target="_blank" rel="noopener noreferrer" className="text-xs font-medium text-gray-400 hover:text-black transition-colors flex items-center gap-1 group uppercase tracking-widest">
+                Facebook <ArrowUpRight className="w-3 h-3 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              </a>
+              <a href="https://www.youtube.com/@e_n_e_m?si=qJcn3W7-psF0OWvR" target="_blank" rel="noopener noreferrer" className="text-xs font-medium text-gray-400 hover:text-black transition-colors flex items-center gap-1 group uppercase tracking-widest">
+                YouTube <ArrowUpRight className="w-3 h-3 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              </a>
             </div>
           </div>
 
-          {/* Right Area - Light Theme */}
-          <div className="flex-1 bg-white text-black flex flex-col h-full overflow-y-auto relative p-8 md:p-14 lg:p-20">
-            {/* Close Button */}
-            <div className="absolute top-6 right-6 md:top-10 md:right-10 z-20">
-              <button 
+          {/* Right Column — About & Stats (large screens only) */}
+          <div className="hidden lg:flex flex-1 text-black flex-col justify-center h-full relative z-10 px-16 xl:px-24">
+            <div className="max-w-xl">
+              <h2 className="text-5xl xl:text-6xl font-light mb-6">About Us</h2>
+              <p className="text-gray-500 text-base xl:text-lg leading-relaxed mb-10">
+                We are a professional digital solutions company specialising in website designing and development, mobile app development, and customised ERP software solutions. With a focus on innovation and performance, we help businesses establish a strong digital presence.
+              </p>
+
+              <div className="grid grid-cols-2 gap-y-8 gap-x-8 mb-10">
+                {[
+                  { n: "50+", l: "Happy clients" },
+                  { n: "100+", l: "Projects shipped" },
+                  { n: "5+", l: "Years of experience" },
+                  { n: "98%", l: "Client retention" },
+                ].map((s) => (
+                  <div key={s.l}>
+                    <div className="text-4xl xl:text-5xl font-light mb-1 text-[#2DD4BF]">{s.n}</div>
+                    <p className="text-gray-900 font-medium text-sm xl:text-base">{s.l}</p>
+                  </div>
+                ))}
+              </div>
+
+              <Link
+                to="/about"
                 onClick={() => setOpen(false)}
-                className="flex items-center gap-3 text-[13px] font-medium tracking-[0.1em] text-gray-500 hover:text-black transition-colors uppercase group"
+                className="inline-flex items-center gap-3 bg-[#2DD4BF] hover:bg-[#26b8a5] text-white px-6 py-3 rounded-full font-medium transition-colors group shadow-lg shadow-[#2DD4BF]/20"
               >
-                CLOSE MENU
-                <div className="relative w-10 h-10">
-                  <X className="w-10 h-10 absolute inset-0 text-black font-light group-hover:rotate-90 transition-transform duration-300" strokeWidth={1} />
-                </div>
-              </button>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-12 lg:gap-16 mt-20 md:mt-16">
-              {/* Column 1 - Development */}
-              <div className="flex flex-col">
-                <div className="flex flex-col items-start gap-4 mb-6">
-                  <div className="w-12 h-12 bg-[#48D1CC] rounded-md flex items-center justify-center border-2 border-black">
-                    <Code2 className="w-6 h-6 text-black" strokeWidth={2.5} />
-                  </div>
-                  <h3 className="text-xl font-bold tracking-tight text-black mt-2">Development & Software</h3>
-                </div>
-                <div className="w-8 h-[3px] bg-[#48D1CC] mb-8 rounded-full"></div>
-                <div className="flex flex-col gap-5">
-                  <Link to="/services/web-development" className="text-gray-600 hover:text-black transition-colors text-[15px]" onClick={() => setOpen(false)}>Web Development</Link>
-                  <Link to="/services/mobile-development" className="text-gray-600 hover:text-black transition-colors text-[15px]" onClick={() => setOpen(false)}>Mobile App Development</Link>
-                  <Link to="/services/erp-software" className="text-gray-600 hover:text-black transition-colors text-[15px]" onClick={() => setOpen(false)}>ERP Software Solutions</Link>
-                </div>
-              </div>
-
-              {/* Column 2 - Marketing */}
-              <div className="flex flex-col">
-                <div className="flex flex-col items-start gap-4 mb-6">
-                  <div className="w-12 h-12 bg-[#DDA0DD] rounded-md flex items-center justify-center border-2 border-black -rotate-12">
-                     <Megaphone className="w-6 h-6 text-black" strokeWidth={2.5} />
-                  </div>
-                  <h3 className="text-xl font-bold tracking-tight text-black mt-2">Digital Marketing</h3>
-                </div>
-                <div className="w-8 h-[3px] bg-[#9370DB] mb-8 rounded-full"></div>
-                <div className="flex flex-col gap-5">
-                  <Link to="/services/digital-marketing" className="text-gray-600 hover:text-black transition-colors text-[15px]" onClick={() => setOpen(false)}>Digital Marketing Campaigns</Link>
-                  <Link to="/services/seo" className="text-gray-600 hover:text-black transition-colors text-[15px]" onClick={() => setOpen(false)}>Search Engine Optimization (SEO)</Link>
-                </div>
-              </div>
-
+                More about Us
+                <span className="bg-white rounded-full p-1 group-hover:translate-x-1 transition-transform">
+                  <ArrowRight className="w-4 h-4 text-[#2DD4BF]" />
+                </span>
+              </Link>
             </div>
           </div>
         </div>

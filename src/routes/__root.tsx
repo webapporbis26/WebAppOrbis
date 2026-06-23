@@ -87,7 +87,7 @@ function RootComponent() {
         <Outlet />
       </main>
       {!isAdmin && <Footer />}
-      <Toaster position="top-right" />
+      <Toaster position="top-right" closeButton />
     </>
   );
 }

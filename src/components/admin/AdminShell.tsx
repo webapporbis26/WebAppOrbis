@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { Link, useRouterState } from "@tanstack/react-router";
-import { LayoutDashboard, Users, Briefcase, RefreshCw, UserCog, FileText, ArrowLeft, Search, Bell, LogOut, Sun, Moon } from "lucide-react";
+import { LayoutDashboard, Users, Briefcase, RefreshCw, UserCog, FileText, Search, Bell, LogOut, Settings2 } from "lucide-react";
 import type { ReactNode } from "react";
 const logo = { url: "/logo.png" };
 import { adminLogout } from "@/lib/admin/auth";
@@ -12,39 +12,21 @@ const nav = [
   { to: "/admin/renewals", label: "Renewals", icon: RefreshCw },
   { to: "/admin/employees", label: "Employees", icon: UserCog },
   { to: "/admin/content", label: "Content", icon: FileText },
+  { to: "/admin/settings", label: "Settings", icon: Settings2 },
 ];
 
 export function AdminShell({ children }: { children: ReactNode }) {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
-  const [theme, setTheme] = useState<"light" | "dark">("light");
-
+  // Force light mode always in admin
   useEffect(() => {
-    if (localStorage.getItem("theme") === "dark" || (!("theme" in localStorage) && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
-      document.documentElement.classList.add("dark");
-      setTheme("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-      setTheme("light");
-    }
+    document.documentElement.classList.remove("dark");
   }, []);
 
-  const toggleTheme = () => {
-    if (theme === "light") {
-      document.documentElement.classList.add("dark");
-      localStorage.setItem("theme", "dark");
-      setTheme("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-      localStorage.setItem("theme", "light");
-      setTheme("light");
-    }
-  };
-
   return (
-    <div className="min-h-screen bg-background">
-      <div className="flex min-h-screen">
-        {/* Sidebar */}
-        <aside className="sticky top-0 hidden h-screen w-64 shrink-0 flex-col border-r border-border/60 bg-card/70 backdrop-blur-xl lg:flex">
+    <div className="h-screen overflow-hidden bg-background">
+      <div className="flex h-full">
+        {/* Sidebar — sticky, stays in view while page scrolls */}
+        <aside className="hidden h-full w-64 shrink-0 flex-col border-r border-border/60 bg-card/70 backdrop-blur-xl lg:flex">
           <div className="flex items-center gap-2.5 px-6 py-5">
             <img src={logo.url} alt="WebApp Orbis" className="h-8 w-8 object-contain" />
             <div className="leading-tight">
@@ -75,8 +57,8 @@ export function AdminShell({ children }: { children: ReactNode }) {
           </nav>
         </aside>
 
-        {/* Main */}
-        <div className="flex min-w-0 flex-1 flex-col">
+        {/* Main — grows with content, browser scroll handles it */}
+        <div className="flex min-w-0 flex-1 flex-col h-full overflow-hidden">
           <header className="sticky top-0 z-30 flex items-center justify-between gap-4 border-b border-border/60 bg-card/70 px-5 py-3.5 backdrop-blur-xl sm:px-8">
             <div className="relative w-full max-w-sm">
               <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
@@ -131,7 +113,7 @@ export function AdminShell({ children }: { children: ReactNode }) {
             })}
           </div>
 
-          <main className="flex-1 px-5 py-6 sm:px-8 sm:py-8">{children}</main>
+          <main className="flex-1 overflow-y-auto px-5 py-6 sm:px-8 sm:py-8">{children}</main>
         </div>
       </div>
     </div>

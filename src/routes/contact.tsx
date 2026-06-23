@@ -1,8 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useRef, useState } from "react";
-import { Mail, Phone, MapPin, ArrowUpRight, ChevronDown } from "lucide-react";
-import { RevealLine, useTextReveal, useFadeUp } from "@/lib/anim";
+import { Mail, Phone, MapPin, ArrowUpRight, Loader2, Headset, MessageSquare, Smartphone } from "lucide-react";
+import { useTextReveal, useFadeUp } from "@/lib/anim";
 import SplitText from "@/components/ui/SplitText";
+import { leadsApi } from "@/lib/admin/api";
+import coffeeCup from "@/assets/coffee-cup.png";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
@@ -16,150 +18,524 @@ export const Route = createFileRoute("/contact")({
   component: Contact,
 });
 
-function Field({ label, type = "text", as = "input", required, name, options }: { label: string; type?: string; as?: "input" | "textarea" | "select"; required?: boolean; name: string; options?: string[] }) {
-  const [focused, setFocused] = useState(false);
-  const [value, setValue] = useState("");
-  const active = focused || value.length > 0;
-  const Tag = as as any;
-  
-  return (
-    <div className="relative border-b border-border focus-within:border-foreground transition-colors pt-7">
-      <label
-        className={`pointer-events-none absolute left-0 transition-all duration-300 ${
-          active ? "top-0 text-xs text-muted-foreground" : "top-7 text-base text-muted-foreground"
-        }`}
-      >
-        {label}{required && " *"}
-      </label>
-      {as === "select" ? (
-        <>
-          <select
-            name={name}
-            required={required}
-            onFocus={() => setFocused(true)}
-            onBlur={() => setFocused(false)}
-            value={value}
-            onChange={(e: any) => setValue(e.target.value)}
-            className="w-full bg-transparent pb-3 text-base outline-none appearance-none cursor-pointer relative z-10"
-          >
-            <option value="" disabled hidden></option>
-            {options?.map((opt) => (
-              <option key={opt} value={opt} className="bg-background text-foreground">
-                {opt}
-              </option>
-            ))}
-          </select>
-          <ChevronDown className="absolute right-0 bottom-3 h-5 w-5 text-muted-foreground pointer-events-none z-0" />
-        </>
-      ) : (
-        <Tag
-          type={type}
-          name={name}
-          required={required}
-          rows={as === "textarea" ? 3 : undefined}
-          onFocus={() => setFocused(true)}
-          onBlur={() => setFocused(false)}
-          value={value}
-          onChange={(e: any) => setValue(e.target.value)}
-          className="w-full resize-none bg-transparent pb-3 text-base outline-none"
-        />
-      )}
-    </div>
-  );
-}
-
 function Contact() {
   const heroRef = useRef<HTMLDivElement>(null);
   useTextReveal(heroRef, { delay: 0.2 });
   useFadeUp("[data-fade]");
   const [sent, setSent] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [showWidget, setShowWidget] = useState(true);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setSubmitting(true);
+    
+    try {
+      const formData = new FormData(e.currentTarget);
+      const leadData = {
+        company: formData.get("company")?.toString() || "",
+        contact: formData.get("name")?.toString() || "",
+        email: formData.get("email")?.toString() || "",
+        phone: formData.get("phone")?.toString() || "",
+        service: formData.get("service")?.toString() || "Website Inquiry",
+        source: formData.get("source")?.toString() || "Website",
+        budget: formData.get("budget")?.toString() || "",
+        notes: formData.get("message")?.toString() || "",
+        status: "New"
+      };
+
+      await leadsApi.addOrUpdate(leadData);
+      setSent(true);
+    } catch (error) {
+      console.error("Failed to submit lead", error);
+      alert("Something went wrong. Please try again later.");
+    } finally {
+      setSubmitting(false);
+    }
+  };
 
   return (
     <>
-      <section ref={heroRef} className="pt-40 pb-16">
-        <div className="mx-auto max-w-7xl px-5 sm:px-8">
-          <p className="mb-6 text-xs uppercase tracking-[0.3em] text-muted-foreground">Contact</p>
-          <SplitText tag="h1" className="text-hero">
-            Let's make<br/>
-            something <span className="gradient-text">good.</span>
-          </SplitText>
+      {/* ============== HERO SECTION (MOCKUP 3) ============== */}
+      <section ref={heroRef} className="pt-36 pb-20 sm:pt-44 sm:pb-32 relative overflow-hidden bg-slate-50/10">
+        <div className="absolute inset-0 z-0">
+          <div className="absolute top-0 right-0 w-[45vw] h-[45vw] rounded-full bg-primary/5 blur-[120px] -mr-20 -mt-20 pointer-events-none" />
+          <div className="absolute bottom-0 left-0 w-[40vw] h-[40vw] rounded-full bg-accent/5 blur-[100px] -ml-20 -mb-20 pointer-events-none" />
+        </div>
+
+        <div className="mx-auto max-w-7xl px-5 sm:px-8 relative z-10 grid lg:grid-cols-[1.1fr_1fr] items-center gap-12 lg:gap-16">
+          <div className="text-left space-y-8">
+            <h1 className="text-5xl sm:text-7xl lg:text-[85px] leading-tight tracking-tight text-foreground flex flex-col items-start gap-4">
+              <span className="bg-[#FDE047] px-6 py-2.5 font-light leading-none inline-block text-[#1A1A1A] reveal-block-1">
+                Get in
+              </span>
+              <span className="bg-[#FDE047] px-8 py-3.5 font-black leading-none inline-block text-[65px] sm:text-[85px] lg:text-[105px] text-[#1A1A1A] reveal-block-2">
+                Touch
+              </span>
+            </h1>
+            <div className="pt-2 leading-[2.2]">
+              <span className="bg-[#FDE047] px-3.5 py-2 text-xs sm:text-sm font-extrabold tracking-[0.12em] uppercase text-[#1A1A1A] box-decoration-clone reveal-block-3">
+                Contact Inter Smart for the best Web designing & Digital Marketing services
+              </span>
+            </div>
+          </div>
+
+          <div className="relative flex justify-center items-center h-[480px] sm:h-[550px] lg:h-[600px] w-full" data-fade>
+            {/* Background Blobs with organic slow drifting */}
+            <div className="absolute top-[10%] right-[30%] w-[250px] h-[250px] rounded-full bg-[#E0F2FE] mix-blend-multiply filter blur-[80px] opacity-60 pointer-events-none animate-drift-slow" />
+            <div className="absolute top-[20%] right-[5%] w-[300px] h-[300px] rounded-full bg-[#F3E8FF] mix-blend-multiply filter blur-[90px] opacity-70 pointer-events-none animate-drift-slower" />
+            <div className="absolute bottom-0 right-[15%] w-[200px] h-[200px] rounded-full bg-[#FEF9C3] mix-blend-multiply filter blur-[70px] opacity-50 pointer-events-none animate-drift-slow" />
+
+            {/* Floating Card 1 - Meet us over email (Top Right) */}
+            <div className="absolute top-[5%] right-[5%] sm:right-[10%] animate-float-1">
+              <div className="bg-white rounded-[24px] p-7 shadow-[0_20px_50px_rgba(0,0,0,0.06)] border border-gray-50 flex flex-col items-start gap-4 hover:-translate-y-2 hover:scale-[1.03] transition-all duration-300 w-44 hover:shadow-[0_20px_50px_rgba(0,0,0,0.12)] cursor-pointer group">
+                <div className="w-12 h-12 flex items-center justify-center">
+                  <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ transformBox: "fill-box" }}>
+                    <rect x="8" y="14" width="32" height="22" rx="4" stroke="#1A1A1A" strokeWidth="2.5" fill="white"/>
+                    <path d="M8 16L24 27L40 16" stroke="#1A1A1A" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+                    <circle cx="11" cy="31" r="4.5" fill="#8B5CF6" stroke="white" strokeWidth="1.5" className="mail-dot origin-center transition-all" />
+                  </svg>
+                </div>
+                <div className="text-left font-bold text-[#1A1A1A] leading-tight text-sm tracking-tight">
+                  <span className="block text-gray-900">Meet us over</span>
+                  <span className="block text-gray-500">email</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Floating Card 2 - 24/7 support (Left Middle) */}
+            <div className="absolute top-[28%] left-[5%] sm:left-[10%] animate-float-2">
+              <div className="bg-white rounded-[24px] p-7 shadow-[0_20px_50px_rgba(0,0,0,0.06)] border border-gray-50 flex flex-col items-start gap-4 hover:-translate-y-2 hover:scale-[1.03] transition-all duration-300 w-44 hover:shadow-[0_20px_50px_rgba(0,0,0,0.12)] cursor-pointer group">
+                <div className="w-12 h-12 flex items-center justify-center">
+                  <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ transformBox: "fill-box" }}>
+                    <path d="M10 28C10 20.268 16.268 14 24 14C31.732 14 38 20.268 38 28" stroke="#1A1A1A" strokeWidth="2.5" strokeLinecap="round"/>
+                    <rect x="6" y="24" width="6" height="10" rx="3" fill="#EC4899" stroke="#1A1A1A" strokeWidth="2.5" className="headset-earcup origin-center transition-all"/>
+                    <rect x="36" y="24" width="6" height="10" rx="3" fill="#EC4899" stroke="#1A1A1A" strokeWidth="2.5" className="headset-earcup origin-center transition-all"/>
+                    <path d="M36 31C36 35 32 37 28 37" stroke="#1A1A1A" strokeWidth="2.5" strokeLinecap="round"/>
+                    <circle cx="28" cy="37" r="2" fill="#EC4899" />
+                  </svg>
+                </div>
+                <div className="text-left font-bold text-[#1A1A1A] leading-tight text-sm tracking-tight">
+                  <span className="block text-gray-900">24/7</span>
+                  <span className="block text-gray-500">support</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Floating Card 3 - Online chat support (Bottom Center/Right) */}
+            <div className="absolute bottom-[8%] right-[12%] sm:right-[18%] animate-float-3">
+              <div className="bg-white rounded-[24px] p-7 shadow-[0_20px_50px_rgba(0,0,0,0.06)] border border-gray-50 flex flex-col items-start gap-4 hover:-translate-y-2 hover:scale-[1.03] transition-all duration-300 w-44 hover:shadow-[0_20px_50px_rgba(0,0,0,0.12)] cursor-pointer group">
+                <div className="w-12 h-12 flex items-center justify-center">
+                  <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ transformBox: "fill-box" }}>
+                    <path d="M22 34H28L34 39V34H36C39.3137 34 42 31.3137 42 28C42 24.6863 39.3137 22 36 22" stroke="#1A1A1A" strokeWidth="2.5" strokeLinecap="round"/>
+                    <rect x="8" y="12" width="26" height="20" rx="6" fill="white" stroke="#1A1A1A" strokeWidth="2.5"/>
+                    <path d="M14 32V37L20 32H22" stroke="#1A1A1A" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+                    <line x1="14" y1="19" x2="24" y2="19" stroke="#F59E0B" strokeWidth="2.5" strokeLinecap="round" className="chat-line-1 transition-all" />
+                    <line x1="14" y1="25" x2="28" y2="25" stroke="#F59E0B" strokeWidth="2.5" strokeLinecap="round" className="chat-line-2 transition-all" />
+                  </svg>
+                </div>
+                <div className="text-left font-bold text-[#1A1A1A] leading-tight text-sm tracking-tight">
+                  <span className="block text-gray-900">Online chat</span>
+                  <span className="block text-gray-500">support</span>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
-      <section className="pb-32">
-        <div className="mx-auto grid max-w-7xl gap-20 px-5 sm:px-8 lg:grid-cols-[1.3fr_1fr]">
-          <form
-            data-fade
-            onSubmit={(e) => { e.preventDefault(); setSent(true); }}
-            className="space-y-2"
-          >
-            <Field label="Your name" name="name" required />
-            <Field label="Email address" name="email" type="email" required />
-            <Field label="Company" name="company" />
-            <Field 
-              label="Source" 
-              name="source" 
-              as="select" 
-              options={[
-                "Direct Referral",
-                "Google Search",
-                "Google Maps",
-                "Facebook",
-                "Instagram",
-                "WhatsApp Business",
-                "LinkedIn",
-                "Website",
-                "Email",
-                "Advertisement",
-                "Existing Customer",
-                "Other"
-              ]} 
-            />
-            <Field label="Budget" name="budget" />
-            <Field label="Tell us about your project" name="message" as="textarea" required />
-            <div className="pt-8">
-              <button
-                type="submit"
-                disabled={sent}
-                className="group inline-flex items-center gap-3 rounded-full px-7 py-4 text-base font-medium text-primary-foreground transition-all hover:shadow-elegant disabled:opacity-70"
-                style={{ background: "var(--grad-primary)" }}
-              >
-                {sent ? "Thanks — we'll reply within 24h" : "Send message"}
-                <ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-              </button>
-            </div>
-          </form>
+      {/* ============== START OF SOMETHING BEAUTIFUL (MOCKUP 1) ============== */}
+      <section className="py-24 bg-white border-b border-border/50" data-fade>
+        <div className="mx-auto max-w-7xl px-5 sm:px-8 grid grid-cols-1 lg:grid-cols-[1fr_1.4fr] gap-12 lg:gap-20 items-center">
+          {/* Left Column: Heading */}
+          <div className="text-left">
+            <h3 className="text-display text-4xl sm:text-5xl font-light text-foreground/80 tracking-tight leading-none">
+              This Could Be
+            </h3>
+            <h3 className="text-display text-4xl sm:text-5xl font-light text-foreground/80 tracking-tight leading-none mt-2">
+              The Start Of
+            </h3>
+            <h2 className="text-display text-5xl sm:text-6xl font-bold text-foreground tracking-tight leading-none mt-4">
+              Something Beautiful
+            </h2>
+          </div>
 
-          <aside data-fade className="space-y-10">
+          {/* Right Column: Contact Blocks */}
+          <div className="space-y-12 text-left">
+            {/* Sales Team */}
+            <div className="border-b border-border/80 pb-8">
+              <p className="text-[13px] font-bold tracking-[0.2em] text-[#EC4899] uppercase mb-4">
+                Talk to our sales team today
+              </p>
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 text-lg sm:text-xl font-medium text-foreground tracking-tight">
+                <a href="mailto:info@enempvtltd.com" className="hover:text-primary transition-colors">
+                  info@enempvtltd.com
+                </a>
+                <a href="tel:+918714163018" className="hover:text-primary transition-colors">
+                  +91 87141 63018
+                </a>
+              </div>
+            </div>
+
+            {/* HR Team */}
             <div>
-              <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground">Studio</p>
-              <p className="mt-4 text-2xl text-display">
-                548 Market Street<br />
-                San Francisco, CA 94104
+              <p className="text-[13px] font-bold tracking-[0.2em] text-[#F59E0B] uppercase mb-4">
+                Talk to our hr team today
               </p>
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 text-lg sm:text-xl font-medium text-foreground tracking-tight">
+                <a href="mailto:hr@enempvtltd.com" className="hover:text-primary transition-colors">
+                  hr@enempvtltd.com
+                </a>
+                <a href="tel:+917736003018" className="hover:text-primary transition-colors">
+                  +91 77360 03018
+                </a>
+              </div>
             </div>
-            <div className="space-y-4 text-base">
-              <a href="mailto:hello@lumen.studio" className="flex items-center gap-3 link-underline">
-                <Mail className="h-4 w-4 text-primary" /> hello@lumen.studio
-              </a>
-              <a href="tel:+14155550119" className="flex items-center gap-3 link-underline">
-                <Phone className="h-4 w-4 text-primary" /> +1 (415) 555 0119
-              </a>
-              <p className="flex items-center gap-3 text-muted-foreground">
-                <MapPin className="h-4 w-4 text-primary" /> Mon — Fri · 9am to 6pm PT
-              </p>
-            </div>
-            <div className="overflow-hidden rounded-3xl border border-border aspect-[4/3]">
-              <iframe
-                title="Studio location"
-                src="https://www.openstreetmap.org/export/embed.html?bbox=-122.408%2C37.789%2C-122.396%2C37.795&layer=mapnik"
-                className="h-full w-full"
-                loading="lazy"
-              />
-            </div>
-          </aside>
+          </div>
         </div>
       </section>
+
+      {/* ============== DIGITAL INNOVATIONS SECTION ============== */}
+      <section className="py-24 bg-white border-b border-border/30 overflow-hidden" data-fade>
+        <div className="mx-auto max-w-7xl px-5 sm:px-8 grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-20 items-center">
+          
+          {/* Left Column: Abstract shapes and team count */}
+          <div className="relative py-12 flex flex-col items-center justify-center text-center max-w-sm mx-auto w-full">
+            {/* Yellow semi-circle flat on left, rounded on right */}
+            <div className="absolute left-6 top-[28%] w-8 h-16 rounded-r-full bg-[#FFD600] opacity-90 shadow-sm" />
+            
+            {/* Purple downward-pointing triangle on top right */}
+            <div className="absolute right-12 top-[12%]">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 20L2 4H22L12 20Z" fill="#8B5CF6" />
+              </svg>
+            </div>
+            
+            {/* Cyan vertical half-circle flat on right, rounded on left */}
+            <div className="absolute bottom-4 left-[35%] w-8 h-16 rounded-l-full bg-[#00E5FF] opacity-90 shadow-sm" />
+            
+            {/* 100+ Text */}
+            <span className="text-[100px] sm:text-[120px] font-light leading-none text-[#8B5CF6] tracking-tight relative pr-4 select-none">
+              100+
+            </span>
+            
+            {/* Subtext */}
+            <p className="text-3xl sm:text-4xl font-light text-[#1A1A1A] tracking-tight leading-tight mt-6 max-w-[260px]">
+              Vibrant Team Members
+            </p>
+          </div>
+
+          {/* Right Column: Step Into The World Title and description */}
+          <div className="text-left space-y-8 pt-4 lg:pt-0">
+            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-light text-foreground leading-[1.1] tracking-tight">
+              Step Into The World <br />
+              <span className="font-extrabold text-[#1A1A1A]">Of Digital Innovations</span>
+            </h2>
+            <p className="text-base text-gray-500 font-light leading-relaxed max-w-xl">
+              At Inter Smart, we recognize and value the unique talents of our employees and work as a family to get things done. We are always in search of team players who possess a positive mindset and passion for work. Check out the current openings with us and apply them to fuel your passion for work.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* ============== FORM SECTION - YELLOW CARD (MOCKUP 4) ============== */}
+      <section id="contact-form" className="py-24 bg-[#FBBF24] text-black relative overflow-hidden" data-fade>
+        {/* Coffee Cup Image placed in bottom-left and cropped/clipped */}
+        <div className="absolute -bottom-16 -left-16 w-56 h-56 select-none pointer-events-none z-0">
+          <img 
+            src={coffeeCup} 
+            alt="Coffee" 
+            className="w-full h-full object-contain" 
+          />
+        </div>
+
+        <div className="mx-auto max-w-7xl px-5 sm:px-8 grid grid-cols-1 md:grid-cols-[1fr_1.1fr] lg:grid-cols-[1fr_1.3fr] gap-12 lg:gap-20 items-stretch relative z-10">
+          {/* Left Side: Cursive Typography & Brand Text */}
+          <div className="space-y-10 text-left pt-4 flex flex-col justify-between relative z-10">
+            <div className="space-y-8">
+              {/* Styled Box Logo: DESIGN DEVELOP DELIVER SMART */}
+              <div className="flex items-center gap-3 select-none">
+                <div className="flex items-center border-[2.5px] border-black rounded-lg px-2.5 py-1.5 relative">
+                  <span className="text-4xl font-extrabold tracking-tighter leading-none">D</span>
+                  <div className="flex flex-col text-[8.5px] font-black leading-tight tracking-[0.18em] pl-1.5 border-l border-black/30">
+                    <span>ESIGN</span>
+                    <span>EVELOP</span>
+                    <span>ELIVER</span>
+                  </div>
+                </div>
+                <span className="text-4xl font-black tracking-tight text-white drop-shadow-sm">SMART</span>
+              </div>
+
+              <div className="space-y-4 pt-4">
+                <a href="mailto:sales@intersmart.in" className="flex items-center gap-3.5 font-bold text-lg hover:text-white transition-colors">
+                  <Mail className="h-5.5 w-5.5 shrink-0 stroke-[2.5]" /> sales@intersmart.in
+                </a>
+                <a href="tel:+919645944322" className="flex items-center gap-3.5 font-bold text-lg hover:text-white transition-colors">
+                  <Smartphone className="h-5.5 w-5.5 shrink-0 stroke-[2.5]" /> +91 9645 944 322
+                </a>
+              </div>
+            </div>
+          </div>
+
+          {/* Right Side: Form Block (no background card, inputs directly on yellow, custom blue submit button) */}
+          <div className="text-left relative z-10 flex flex-col justify-center">
+            <h3 className="text-2xl sm:text-3xl font-black uppercase tracking-wider mb-10 text-white drop-shadow-sm">
+              Let's Get Started Now!
+            </h3>
+            <form onSubmit={handleSubmit} className="space-y-8">
+              {/* Name & Phone side-by-side */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                {/* Name Input */}
+                <div className="relative border-b-2 border-black focus-within:border-white py-1 transition-colors">
+                  <label className="block text-[10px] font-black uppercase tracking-widest text-black/60 mb-1">NAME*</label>
+                  <input
+                    type="text"
+                    name="name"
+                    required
+                    className="w-full bg-transparent border-0 outline-none text-black font-bold uppercase tracking-wider text-sm"
+                  />
+                </div>
+                
+                {/* Phone Input with Mock Indian Flag */}
+                <div className="relative border-b-2 border-black focus-within:border-white py-1 transition-colors">
+                  <label className="block text-[10px] font-black uppercase tracking-widest text-black/60 mb-1">PHONE*</label>
+                  <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-1 text-xs font-bold text-black bg-transparent select-none cursor-pointer">
+                      <span>🇮🇳</span>
+                      <span className="text-[9px]">▼</span>
+                    </div>
+                    <input
+                      type="text"
+                      name="phone"
+                      required
+                      className="w-full bg-transparent border-0 outline-none text-black font-bold uppercase tracking-wider text-sm"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Email Input */}
+              <div className="relative border-b-2 border-black focus-within:border-white py-1 transition-colors">
+                <label className="block text-[10px] font-black uppercase tracking-widest text-black/60 mb-1">EMAIL*</label>
+                <input
+                  type="email"
+                  name="email"
+                  required
+                  className="w-full bg-transparent border-0 outline-none text-black font-bold uppercase tracking-wider text-sm"
+                />
+              </div>
+
+              {/* Help Textarea */}
+              <div className="relative border-b-2 border-black focus-within:border-white py-1 transition-colors">
+                <label className="block text-[10px] font-black uppercase tracking-widest text-black/60 mb-1">HOW CAN WE HELP YOU?</label>
+                <textarea
+                  name="message"
+                  required
+                  rows={2}
+                  className="w-full bg-transparent border-0 resize-none outline-none text-black font-bold uppercase tracking-wider text-sm"
+                />
+              </div>
+
+              {/* Custom Solid Rectangular Blue Submit Button */}
+              <div className="pt-4 flex">
+                <button
+                  type="submit"
+                  disabled={sent || submitting}
+                  className="bg-[#0066b2] hover:bg-[#005594] text-white font-black tracking-widest text-xs px-10 py-3.5 transition-colors uppercase cursor-pointer flex items-center justify-center gap-2 select-none"
+                >
+                  {sent ? "Message Sent!" : submitting ? "Sending..." : "SUBMIT"}
+                  {submitting && <Loader2 className="h-3 w-3 animate-spin" />}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      {/* ============== MAP SECTION ============== */}
+      <section className="pb-32" data-fade>
+        <div className="mx-auto max-w-7xl px-5 sm:px-8">
+          <div className="relative rounded-[2rem] border border-border bg-card overflow-hidden shadow-elegant group h-[450px]">
+            {/* Map Iframe with modern grayscale & dark mode logic */}
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3933.204368940869!2d76.52167467579717!3d9.646416078772097!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b07d5f34dbe4edf%3A0x9bcee04788f0616e!2sENEM!5e0!3m2!1sen!2sin!4v1719000000000!5m2!1sen!2sin"
+              width="100%"
+              height="100%"
+              style={{ border: 0 }}
+              allowFullScreen={true}
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              className="absolute inset-0 w-full h-full grayscale opacity-75 dark:opacity-60 dark:invert-[0.9] dark:hue-rotate-180 group-hover:grayscale-0 group-hover:opacity-100 dark:group-hover:opacity-90 dark:group-hover:invert-0 dark:group-hover:hue-rotate-0 transition-all duration-700 ease-in-out"
+            />
+            
+            {/* Floating Location Card */}
+            <div className="absolute top-6 left-6 md:top-10 md:left-10 glass-strong p-6 sm:p-8 rounded-[1.5rem] max-w-sm border border-white/60 shadow-[0_20px_50px_rgba(0,0,0,0.15)] transition-all duration-500 group-hover:-translate-y-1">
+              <div className="flex items-start gap-4">
+                <div className="p-3 bg-primary/10 text-primary rounded-xl shrink-0 mt-0.5">
+                  <MapPin className="h-6 w-6" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold text-foreground mb-2">ENEM Private Limited</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed mb-4">
+                    Athirampuzha Panchayath, Mannanam, Kottayam, Kerala 686561
+                  </p>
+                  <a
+                    href="https://maps.app.goo.gl/qmxmMZuaoGfePiiAA"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 text-sm font-semibold text-primary hover:text-primary/80 transition-colors group/link"
+                  >
+                    Open in Google Maps
+                    <ArrowUpRight className="h-4 w-4 transition-transform group-hover/link:-translate-y-0.5 group-hover/link:translate-x-0.5" />
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ============== FLOATING CHAT WIDGET ============== */}
+      {showWidget && (
+        <div className="fixed bottom-6 right-6 z-50 flex items-center gap-4 group select-none">
+          {/* Speech Bubble Card */}
+          <div className="bg-white border border-gray-100 shadow-xl rounded-2xl p-4 max-w-[260px] sm:max-w-xs text-left text-xs font-bold text-[#1A1A1A] relative animate-fade-in md:block hidden">
+            <span>HI <span className="animate-wiggle inline-block">👋</span> Welcome to Inter Smart! How can we help you today?</span>
+            {/* Close Button inside card */}
+            <button 
+              onClick={() => setShowWidget(false)}
+              className="absolute -top-1.5 -right-1.5 h-4 w-4 bg-white border border-gray-200 shadow-sm rounded-full flex items-center justify-center text-gray-500 hover:text-gray-800 transition-colors text-[8px]"
+              aria-label="Dismiss welcome message"
+            >
+              ✕
+            </button>
+          </div>
+
+          {/* Yellow Circle Chat Button */}
+          <div className="relative flex flex-col items-center">
+            <a
+              href="#contact-form"
+              className="h-16 w-16 bg-[#FBBF24] rounded-full flex items-center justify-center shadow-lg hover:scale-105 hover:bg-yellow-400 transition-all duration-300 relative border-2 border-white animate-bounce-subtle"
+            >
+              {/* Chat Bubble Icon */}
+              <svg className="w-7 h-7 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+              </svg>
+              
+              {/* Notification Badge */}
+              <span className="absolute top-1 right-1 h-5 w-5 bg-red-600 rounded-full text-white text-[10px] font-bold flex items-center justify-center border-2 border-white">
+                1
+              </span>
+            </a>
+          </div>
+        </div>
+      )}
+
+      <style>{`
+        @keyframes bounceSubtle {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-8px); }
+        }
+        @keyframes wiggle {
+          0%, 100% { transform: rotate(0deg); }
+          25% { transform: rotate(-8deg); }
+          75% { transform: rotate(8deg); }
+        }
+        .animate-bounce-subtle {
+          animation: bounceSubtle 4s ease-in-out infinite;
+        }
+        .animate-wiggle {
+          animation: wiggle 0.5s ease-in-out infinite alternate;
+        }
+
+        /* Speech bubble welcome card slide-in fade animation */
+        @keyframes fadeIn {
+          from { opacity: 0; transform: translateX(12px); }
+          to { opacity: 1; transform: translateX(0); }
+        }
+        .animate-fade-in {
+          animation: fadeIn 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        /* Hero Text Reveal curtain animations */
+        @keyframes revealYellowBlock {
+          0% {
+            clip-path: inset(0 100% 0 0);
+          }
+          100% {
+            clip-path: inset(0 0 0 0);
+          }
+        }
+        .reveal-block-1 {
+          animation: revealYellowBlock 0.8s cubic-bezier(0.76, 0, 0.24, 1) forwards;
+        }
+        .reveal-block-2 {
+          animation: revealYellowBlock 0.8s cubic-bezier(0.76, 0, 0.24, 1) 0.15s forwards;
+        }
+        .reveal-block-3 {
+          animation: revealYellowBlock 0.8s cubic-bezier(0.76, 0, 0.24, 1) 0.3s forwards;
+        }
+
+        /* Gentle Floating Info Card animations */
+        @keyframes floatCard1 {
+          0%, 100% { transform: translateY(0) rotate(0deg); }
+          50% { transform: translateY(-12px) rotate(0.8deg); }
+        }
+        @keyframes floatCard2 {
+          0%, 100% { transform: translateY(0) rotate(0deg); }
+          50% { transform: translateY(-18px) rotate(-1.2deg); }
+        }
+        @keyframes floatCard3 {
+          0%, 100% { transform: translateY(0) rotate(0deg); }
+          50% { transform: translateY(-15px) rotate(0.6deg); }
+        }
+        .animate-float-1 {
+          animation: floatCard1 6s ease-in-out infinite;
+        }
+        .animate-float-2 {
+          animation: floatCard2 7s ease-in-out infinite;
+        }
+        .animate-float-3 {
+          animation: floatCard3 8s ease-in-out infinite;
+        }
+
+        /* SVG Micro-animations */
+        @keyframes pulseDot {
+          0% { transform: scale(1); opacity: 1; }
+          100% { transform: scale(1.4); opacity: 0.8; }
+        }
+        .group:hover .mail-dot {
+          animation: pulseDot 0.8s ease-in-out infinite alternate;
+        }
+
+        @keyframes bounceEarcup {
+          0% { transform: scale(1); }
+          100% { transform: scale(1.15); }
+        }
+        .group:hover .headset-earcup {
+          animation: bounceEarcup 0.5s ease-in-out infinite alternate;
+        }
+
+        .group:hover .chat-line-1 {
+          transform: translateX(3px);
+        }
+        .group:hover .chat-line-2 {
+          transform: translateX(5px);
+        }
+
+        /* Organic Background Blobs movement */
+        @keyframes drift {
+          0%, 100% { transform: translate(0, 0) scale(1); }
+          33% { transform: translate(20px, -20px) scale(1.08); }
+          66% { transform: translate(-15px, 15px) scale(0.95); }
+        }
+        .animate-drift-slow {
+          animation: drift 16s ease-in-out infinite;
+        }
+        .animate-drift-slower {
+          animation: drift 22s ease-in-out infinite alternate;
+        }
+      `}</style>
     </>
   );
 }

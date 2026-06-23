@@ -88,10 +88,10 @@ const services = [
 ];
 
 const stats = [
-  { value: "120+", label: "Products shipped" },
-  { value: "38", label: "Active clients" },
-  { value: "14", label: "Countries served" },
-  { value: "9 yrs", label: "Building software" },
+  { value: "100+", label: "Projects shipped" },
+  { value: "50+", label: "Happy clients" },
+  { value: "5+", label: "Years experience" },
+  { value: "98%", label: "Client retention" },
 ];
 
 const process = [

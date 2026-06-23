@@ -23,6 +23,7 @@ import { Route as ServicesMobileDevelopmentRouteImport } from './routes/services
 import { Route as ServicesErpSoftwareRouteImport } from './routes/services.erp-software'
 import { Route as ServicesDigitalMarketingRouteImport } from './routes/services.digital-marketing'
 import { Route as PortfolioSlugRouteImport } from './routes/portfolio.$slug'
+import { Route as AdminSettingsRouteImport } from './routes/admin.settings'
 import { Route as AdminRenewalsRouteImport } from './routes/admin.renewals'
 import { Route as AdminLeadsRouteImport } from './routes/admin.leads'
 import { Route as AdminEmployeesRouteImport } from './routes/admin.employees'
@@ -101,6 +102,11 @@ const PortfolioSlugRoute = PortfolioSlugRouteImport.update({
   path: '/portfolio/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminSettingsRoute = AdminSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminRenewalsRoute = AdminRenewalsRouteImport.update({
   id: '/renewals',
   path: '/renewals',
@@ -138,6 +144,7 @@ export interface FileRoutesByFullPath {
   '/admin/employees': typeof AdminEmployeesRoute
   '/admin/leads': typeof AdminLeadsRoute
   '/admin/renewals': typeof AdminRenewalsRoute
+  '/admin/settings': typeof AdminSettingsRoute
   '/portfolio/$slug': typeof PortfolioSlugRoute
   '/services/digital-marketing': typeof ServicesDigitalMarketingRoute
   '/services/erp-software': typeof ServicesErpSoftwareRoute
@@ -157,6 +164,7 @@ export interface FileRoutesByTo {
   '/admin/employees': typeof AdminEmployeesRoute
   '/admin/leads': typeof AdminLeadsRoute
   '/admin/renewals': typeof AdminRenewalsRoute
+  '/admin/settings': typeof AdminSettingsRoute
   '/portfolio/$slug': typeof PortfolioSlugRoute
   '/services/digital-marketing': typeof ServicesDigitalMarketingRoute
   '/services/erp-software': typeof ServicesErpSoftwareRoute
@@ -179,6 +187,7 @@ export interface FileRoutesById {
   '/admin/employees': typeof AdminEmployeesRoute
   '/admin/leads': typeof AdminLeadsRoute
   '/admin/renewals': typeof AdminRenewalsRoute
+  '/admin/settings': typeof AdminSettingsRoute
   '/portfolio/$slug': typeof PortfolioSlugRoute
   '/services/digital-marketing': typeof ServicesDigitalMarketingRoute
   '/services/erp-software': typeof ServicesErpSoftwareRoute
@@ -202,6 +211,7 @@ export interface FileRouteTypes {
     | '/admin/employees'
     | '/admin/leads'
     | '/admin/renewals'
+    | '/admin/settings'
     | '/portfolio/$slug'
     | '/services/digital-marketing'
     | '/services/erp-software'
@@ -221,6 +231,7 @@ export interface FileRouteTypes {
     | '/admin/employees'
     | '/admin/leads'
     | '/admin/renewals'
+    | '/admin/settings'
     | '/portfolio/$slug'
     | '/services/digital-marketing'
     | '/services/erp-software'
@@ -242,6 +253,7 @@ export interface FileRouteTypes {
     | '/admin/employees'
     | '/admin/leads'
     | '/admin/renewals'
+    | '/admin/settings'
     | '/portfolio/$slug'
     | '/services/digital-marketing'
     | '/services/erp-software'
@@ -363,6 +375,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PortfolioSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/settings': {
+      id: '/admin/settings'
+      path: '/settings'
+      fullPath: '/admin/settings'
+      preLoaderRoute: typeof AdminSettingsRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/renewals': {
       id: '/admin/renewals'
       path: '/renewals'
@@ -407,6 +426,7 @@ interface AdminRouteChildren {
   AdminEmployeesRoute: typeof AdminEmployeesRoute
   AdminLeadsRoute: typeof AdminLeadsRoute
   AdminRenewalsRoute: typeof AdminRenewalsRoute
+  AdminSettingsRoute: typeof AdminSettingsRoute
   AdminIndexRoute: typeof AdminIndexRoute
 }
 
@@ -416,6 +436,7 @@ const AdminRouteChildren: AdminRouteChildren = {
   AdminEmployeesRoute: AdminEmployeesRoute,
   AdminLeadsRoute: AdminLeadsRoute,
   AdminRenewalsRoute: AdminRenewalsRoute,
+  AdminSettingsRoute: AdminSettingsRoute,
   AdminIndexRoute: AdminIndexRoute,
 }
 

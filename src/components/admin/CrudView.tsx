@@ -1,13 +1,15 @@
 import { useMemo, useState, useEffect } from "react";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
-import { Plus, Pencil, Trash2, Search, Download, CalendarIcon, Eye, ArrowRightLeft, Sigma, CalendarDays, Filter, Clock } from "lucide-react";
+import { Plus, Pencil, Trash2, Search, Download, CalendarIcon, Eye, ArrowRightLeft, Sigma, CalendarDays, Filter, Clock, ChevronDown, AlertCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
+import { Checkbox } from "@/components/ui/checkbox";
 import { format } from "date-fns";
 import { Calendar } from "@/components/ui/calendar";
+import { AdminDatePicker } from "@/components/admin/AdminDatePicker";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import {
   Dialog,
@@ -88,7 +90,9 @@ export function CrudView({ config }: { config: EntityConfig }) {
   const [editing, setEditing] = useState<WithId<Record<string, any>> | null>(null);
   const [viewing, setViewing] = useState<WithId<Record<string, any>> | null>(null);
   const [form, setForm] = useState<Record<string, any>>({});
+  const [errors, setErrors] = useState<Record<string, string>>({});
   const [confirmDelete, setConfirmDelete] = useState<string | null>(null);
+  const [confirmConvert, setConfirmConvert] = useState<any | null>(null);
   const [animationParent] = useAutoAnimate();
   const [sortConfig, setSortConfig] = useState<{ key: string; direction: "asc" | "desc" } | null>(null);
   const [activeFilter, setActiveFilter] = useState<string>("all");
@@ -190,8 +194,13 @@ export function CrudView({ config }: { config: EntityConfig }) {
     toast.success("Export successful");
   }
 
-  async function convertToDeal(row: any) {
-    if (!window.confirm(`Convert lead ${row.company} to a new Deal?`)) return;
+  function convertToDeal(row: any) {
+    setConfirmConvert(row);
+  }
+
+  async function handleConvertConfirm() {
+    if (!confirmConvert) return;
+    const row = confirmConvert;
     try {
       const dealPayload = {
          id: 0,
@@ -211,6 +220,8 @@ export function CrudView({ config }: { config: EntityConfig }) {
       toast.success("Lead converted to Deal!");
     } catch(err) {
       toast.error("Failed to convert lead");
+    } finally {
+      setConfirmConvert(null);
     }
   }
 
@@ -218,12 +229,14 @@ export function CrudView({ config }: { config: EntityConfig }) {
     const init: Record<string, any> = {};
     for (const f of config.fields) init[f.name] = f.type === "number" ? "" : "";
     setForm(init);
+    setErrors({});
     setEditing(null);
     setOpen(true);
   }
 
   function openEdit(row: WithId<Record<string, any>>) {
     setForm({ ...row });
+    setErrors({});
     setEditing(row);
     setOpen(true);
   }
@@ -231,10 +244,32 @@ export function CrudView({ config }: { config: EntityConfig }) {
   function submit() {
     try {
       const payload: Record<string, any> = {};
+      const newErrors: Record<string, string> = {};
+      
       for (const f of config.fields) {
         const v = form[f.name];
+        
+        // Custom Validation
+        if (f.required && (v === undefined || v === "" || v === null)) {
+          newErrors[f.name] = `${f.label} is required`;
+        } else if (v && f.type === "email" && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(v))) {
+          newErrors[f.name] = `Invalid email format`;
+        } else if (v && f.name.toLowerCase().includes("phone") && !/^\+?\d{7,15}$/.test(String(v))) {
+          newErrors[f.name] = `Invalid phone number format`;
+        } else if (f.type === "number" && v !== "" && v != null && isNaN(Number(v))) {
+          newErrors[f.name] = `Must be a valid number`;
+        }
+
         payload[f.name] = f.type === "number" && v !== "" && v != null ? Number(v) : v ?? "";
       }
+      
+      if (Object.keys(newErrors).length > 0) {
+        setErrors(newErrors);
+        toast.error("Please fix the errors in the form.");
+        return;
+      }
+      
+      setErrors({});
       if (editing) {
         update(editing.id, payload);
         logActivity("Updated", `${config.title} Record: ${payload[config.columns[0].name] || 'Unknown'}`);
@@ -413,7 +448,7 @@ export function CrudView({ config }: { config: EntityConfig }) {
 
       {/* Form Dialog */}
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent className="max-h-[90vh] max-w-2xl overflow-y-auto">
+        <DialogContent className="max-h-[90vh] max-w-2xl overflow-y-auto" onInteractOutside={(e) => e.preventDefault()}>
           <DialogHeader>
             <DialogTitle className="text-display text-2xl">
               {editing ? "Edit" : "Add"} {config.title.replace(/s$/, "")}
@@ -432,23 +467,30 @@ export function CrudView({ config }: { config: EntityConfig }) {
           >
             {config.fields.map((f) => (
               <div key={f.name} className={`space-y-1.5 ${f.full ? "sm:col-span-2" : ""}`}>
-                <Label htmlFor={f.name} className="text-xs font-medium">
+                <Label htmlFor={f.name} className={`text-xs font-medium ${errors[f.name] ? "text-rose-500" : ""}`}>
                   {f.label} {f.required && <span className="text-rose-500">*</span>}
                 </Label>
                 {f.type === "textarea" ? (
                   <Textarea
                     id={f.name}
                     value={form[f.name] ?? ""}
-                    onChange={(e) => setForm((p) => ({ ...p, [f.name]: e.target.value }))}
+                    onChange={(e) => {
+                      setForm((p) => ({ ...p, [f.name]: e.target.value }));
+                      if (errors[f.name]) setErrors(p => ({ ...p, [f.name]: "" }));
+                    }}
                     placeholder={f.placeholder}
                     rows={3}
+                    className={errors[f.name] ? "border-rose-500 focus-visible:ring-rose-500" : ""}
                   />
                 ) : f.type === "select" ? (
                   <Select
                     value={form[f.name] ?? ""}
-                    onValueChange={(v) => setForm((p) => ({ ...p, [f.name]: v }))}
+                    onValueChange={(v) => {
+                      setForm((p) => ({ ...p, [f.name]: v }));
+                      if (errors[f.name]) setErrors(p => ({ ...p, [f.name]: "" }));
+                    }}
                   >
-                    <SelectTrigger id={f.name}>
+                    <SelectTrigger id={f.name} className={errors[f.name] ? "border-rose-500 focus:ring-rose-500" : ""}>
                       <SelectValue placeholder={`Select ${f.label.toLowerCase()}`} />
                     </SelectTrigger>
                     <SelectContent>
@@ -459,12 +501,62 @@ export function CrudView({ config }: { config: EntityConfig }) {
                       ))}
                     </SelectContent>
                   </Select>
+                ) : f.type === "multiselect" ? (
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <Button
+                        id={f.name}
+                        variant="outline"
+                        className={`w-full justify-between text-left font-normal hover:bg-background ${errors[f.name] ? "border-rose-500 focus-visible:ring-rose-500" : ""}`}
+                      >
+                        <span className="truncate">
+                          {form[f.name] && String(form[f.name]).trim() !== ""
+                            ? String(form[f.name])
+                            : `Select ${f.label.toLowerCase()}`}
+                        </span>
+                        <ChevronDown className="h-4 w-4 shrink-0 opacity-55" />
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-[300px] p-3" align="start">
+                      <div className="space-y-2">
+                        {f.options?.map((opt) => {
+                          const currentValues = form[f.name]
+                            ? String(form[f.name]).split(",").map((s: string) => s.trim()).filter(Boolean)
+                            : [];
+                          const checked = currentValues.includes(opt);
+                          return (
+                            <label
+                              key={opt}
+                              className="flex items-center gap-2.5 rounded-lg px-2 py-1.5 hover:bg-slate-50 dark:hover:bg-muted/50 cursor-pointer text-sm font-medium"
+                            >
+                              <Checkbox
+                                checked={checked}
+                                onCheckedChange={(val) => {
+                                  let newValues;
+                                  if (val) {
+                                    newValues = [...currentValues, opt];
+                                  } else {
+                                    newValues = currentValues.filter((v: string) => v !== opt);
+                                  }
+                                  setForm((p) => ({ ...p, [f.name]: newValues.join(", ") }));
+                                }}
+                              />
+                              <span>{opt}</span>
+                            </label>
+                          );
+                        })}
+                      </div>
+                    </PopoverContent>
+                  </Popover>
                 ) : f.type === "lead_select" ? (
                   <Select
                     value={form[f.name] ?? ""}
-                    onValueChange={(v) => setForm((p) => ({ ...p, [f.name]: v }))}
+                    onValueChange={(v) => {
+                      setForm((p) => ({ ...p, [f.name]: v }));
+                      if (errors[f.name]) setErrors(p => ({ ...p, [f.name]: "" }));
+                    }}
                   >
-                    <SelectTrigger id={f.name}>
+                    <SelectTrigger id={f.name} className={errors[f.name] ? "border-rose-500 focus:ring-rose-500" : ""}>
                       <SelectValue placeholder={`Select ${f.label.toLowerCase()}`} />
                     </SelectTrigger>
                     <SelectContent>
@@ -476,43 +568,33 @@ export function CrudView({ config }: { config: EntityConfig }) {
                     </SelectContent>
                   </Select>
                 ) : f.type === "date" ? (
-                  <Popover>
-                    <PopoverTrigger asChild>
-                      <Button
-                        variant={"outline"}
-                        className={`w-full justify-start text-left font-normal ${!form[f.name] && "text-muted-foreground"}`}
-                      >
-                        <CalendarIcon className="mr-2 h-4 w-4" />
-                        {form[f.name] ? format(new Date(form[f.name]), "PPP") : <span>Pick a date</span>}
-                      </Button>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-auto p-0" align="start">
-                      <Calendar
-                        mode="single"
-                        selected={form[f.name] ? new Date(form[f.name]) : undefined}
-                        onSelect={(date) => {
-                          if (date) {
-                            const yyyy = date.getFullYear();
-                            const mm = String(date.getMonth() + 1).padStart(2, '0');
-                            const dd = String(date.getDate()).padStart(2, '0');
-                            setForm((p) => ({ ...p, [f.name]: `${yyyy}-${mm}-${dd}` }));
-                          } else {
-                            setForm((p) => ({ ...p, [f.name]: "" }));
-                          }
-                        }}
-                        initialFocus
-                      />
-                    </PopoverContent>
-                  </Popover>
+                  <AdminDatePicker
+                    id={f.name}
+                    value={form[f.name] ?? ""}
+                    onChange={(val) => {
+                      setForm((p) => ({ ...p, [f.name]: val }));
+                      if (errors[f.name]) setErrors(p => ({ ...p, [f.name]: "" }));
+                    }}
+                  />
                 ) : (
                   <Input
                     id={f.name}
                     type={f.type === "number" ? "number" : f.type === "email" ? "email" : "text"}
                     value={form[f.name] ?? ""}
-                    onChange={(e) => setForm((p) => ({ ...p, [f.name]: e.target.value }))}
+                    onChange={(e) => {
+                      setForm((p) => ({ ...p, [f.name]: e.target.value }));
+                      if (errors[f.name]) setErrors(p => ({ ...p, [f.name]: "" }));
+                    }}
                     placeholder={f.placeholder}
-                    required={f.required}
+                    className={errors[f.name] ? "border-rose-500 focus-visible:ring-rose-500" : ""}
                   />
+                )}
+                
+                {errors[f.name] && (
+                  <p className="text-xs font-medium text-rose-500 mt-1 flex items-center gap-1.5">
+                    <AlertCircle className="h-3.5 w-3.5 shrink-0" />
+                    {errors[f.name]}
+                  </p>
                 )}
               </div>
             ))}
@@ -530,8 +612,8 @@ export function CrudView({ config }: { config: EntityConfig }) {
       </Dialog>
 
       {/* View Dialog */}
-      <Dialog open={!!viewing} onOpenChange={(open) => !open && setViewing(null)}>
-        <DialogContent className="max-w-4xl p-0 sm:rounded-[2rem]">
+      <Dialog open={!!viewing} onOpenChange={(v) => !v && setViewing(null)}>
+        <DialogContent className="max-w-4xl p-0 sm:rounded-[2rem]" onInteractOutside={(e) => e.preventDefault()}>
           {/* Header section with gradient */}
           <div className="relative overflow-hidden bg-gradient-to-br from-primary/10 via-primary/5 to-transparent px-8 pb-6 pt-10">
             <div className="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-primary/10 blur-3xl"></div>
@@ -612,6 +694,26 @@ export function CrudView({ config }: { config: EntityConfig }) {
               }}
             >
               Delete
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
+      <AlertDialog open={!!confirmConvert} onOpenChange={(v) => !v && setConfirmConvert(null)}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Convert to Deal?</AlertDialogTitle>
+            <AlertDialogDescription>
+              Are you sure you want to convert the lead <strong>{confirmConvert?.company}</strong> to a new Deal? This will create a new record in the Deals section.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction
+              className="bg-primary hover:bg-primary/90 text-primary-foreground"
+              onClick={handleConvertConfirm}
+            >
+              Convert
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

@@ -1,4 +1,4 @@
-export type FieldType = "text" | "email" | "number" | "date" | "select" | "textarea" | "lead_select";
+export type FieldType = "text" | "email" | "number" | "date" | "select" | "textarea" | "lead_select" | "multiselect";
 
 export type FieldDef = {
   name: string;
@@ -149,8 +149,8 @@ export const renewalsConfig: EntityConfig = {
     {
       name: "service",
       label: "Service Type",
-      type: "select",
-      options: ["Domain", "Server", "SSL", "Domain & Server", "Maintenance", "Others"],
+      type: "multiselect",
+      options: ["Domain", "Server", "SSL", "Maintenance", "Others"],
     },
     { name: "domainProvider", label: "Domain Provider", type: "text" },
     { name: "serverProvider", label: "Server Provider", type: "text" },
@@ -251,27 +251,11 @@ export const contentConfig: EntityConfig = {
 };
 
 export const seeds: Record<string, any[]> = {
-  wo_admin_leads: [
-    { id: "l1", company: "Northwind Co.", contact: "Amelia Park", email: "amelia@northwind.co", phone: "+1 415 555 0199", service: "E-Commerce Website", status: "Quotation Sent", date: "2026-06-02" },
-    { id: "l2", company: "Helios Studio", contact: "Marcus Lee", email: "marcus@helios.io", phone: "+44 20 7946 0123", service: "Dynamic Website Development", status: "Contacted", date: "2026-06-08" },
-    { id: "l3", company: "Verdant Foods", contact: "Priya Shah", email: "priya@verdant.com", phone: "+91 98765 43210", service: "ERP/CRM Development", status: "New", date: "2026-06-12" },
-  ],
-  wo_admin_deals: [
-    { id: "d1", project: "Northwind Storefront", leadId: "l1", total: 18500, advance: 6000, type: "E-Commerce", status: "In Progress", stage: "Client Review", due: "2026-08-15", remarks: "Phase 2 starts after design sign-off." },
-    { id: "d2", project: "Helios Marketing Site", leadId: "l2", total: 7200, advance: 2400, type: "Dynamic Website", status: "In Progress", stage: "In Progress", due: "2026-07-22", remarks: "" },
-  ],
-  wo_admin_renewals: [
-    { id: "r1", company: "Northwind Co.", client: "Amelia Park", domain: "northwind.co", service: "Domain & Server", domainProvider: "Namecheap", serverProvider: "Hetzner", plan: "Pro Cloud", billing: "Yearly", amount: 240, start: "2025-07-01", expiry: "2026-07-01", reminder: "Expiring Soon", payment: "Pending", notes: "Auto-renew disabled." },
-    { id: "r2", company: "Helios Studio", client: "Marcus Lee", domain: "helios.io", service: "SSL", domainProvider: "Cloudflare", serverProvider: "—", plan: "Advanced SSL", billing: "Yearly", amount: 89, start: "2025-09-10", expiry: "2026-09-10", reminder: "Active", payment: "Paid", notes: "" },
-  ],
-  wo_admin_employees: [
-    { id: "e1", name: "Sara Ahmed", email: "sara@weborbis.com", role: "Lead Designer", department: "Design", status: "Active" },
-    { id: "e2", name: "Daniel Cruz", email: "daniel@weborbis.com", role: "Senior Engineer", department: "Engineering", status: "Active" },
-    { id: "e3", name: "Maya Patel", email: "maya@weborbis.com", role: "Project Manager", department: "Management", status: "On Leave" },
-  ],
-  wo_admin_content: [
-    { id: "c1", module: "Homepage Hero", description: "Main hero headline, CTA and background.", status: "Published", updated: "2026-06-10" },
-    { id: "c2", module: "Testimonials", description: "Client testimonial carousel.", status: "Published", updated: "2026-06-05" },
-    { id: "c3", module: "Portfolio", description: "Recent works grid.", status: "Draft", updated: "2026-06-12" },
-  ],
+  wo_admin_leads: [],
+  wo_admin_deals: [],
+  wo_admin_renewals: [],
+  wo_admin_employees: [],
+  wo_admin_content: [],
+  wo_admin_logs: [],
 };
+

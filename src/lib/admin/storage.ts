@@ -1,17 +1,53 @@
 import { useCallback, useEffect, useState } from "react";
+import { toast } from "sonner";
 import { dealsApi, leadsApi, renewalsApi, contentApi, employeesApi } from "./api";
 
 export type WithId<T> = T & { id: string };
 
-function read<T>(key: string, seed: WithId<T>[]): WithId<T>[] {
+const CACHE_TTL_MS = 5 * 60 * 1000; // 5 minutes
+
+interface CacheEntry<T> {
+  data: WithId<T>[];
+  ts: number;
+}
+
+function readCache<T>(key: string): WithId<T>[] | null {
+  if (typeof window === "undefined") return null;
+  try {
+    const raw = window.localStorage.getItem(key);
+    if (!raw) return null;
+    const entry: CacheEntry<T> = JSON.parse(raw);
+    // Check TTL — if stale, return null so fresh fetch is triggered
+    if (Date.now() - entry.ts > CACHE_TTL_MS) return null;
+    return entry.data;
+  } catch {
+    return null;
+  }
+}
+
+function writeCache<T>(key: string, data: WithId<T>[]) {
+  if (typeof window === "undefined") return;
+  try {
+    const entry: CacheEntry<T> = { data, ts: Date.now() };
+    window.localStorage.setItem(key, JSON.stringify(entry));
+  } catch {
+    /* ignore */
+  }
+}
+
+function readFallback<T>(key: string, seed: WithId<T>[]): WithId<T>[] {
+  // Try new TTL format first
+  const cached = readCache<T>(key);
+  if (cached) return cached;
+  // Try legacy format (plain array)
   if (typeof window === "undefined") return seed;
   try {
     const raw = window.localStorage.getItem(key);
-    if (!raw) {
-      window.localStorage.setItem(key, JSON.stringify(seed));
-      return seed;
-    }
-    return JSON.parse(raw) as WithId<T>[];
+    if (!raw) return seed;
+    const parsed = JSON.parse(raw);
+    // If it's an array it's the old format — still use it but don't cache-check TTL
+    if (Array.isArray(parsed)) return parsed as WithId<T>[];
+    return seed;
   } catch {
     return seed;
   }
@@ -21,7 +57,7 @@ export function useCollection<T extends Record<string, any>>(
   key: string,
   seed: WithId<T>[] = []
 ) {
-  const [items, setItems] = useState<WithId<T>[]>(() => read<T>(key, seed));
+  const [items, setItems] = useState<WithId<T>[]>(() => readFallback<T>(key, seed));
   const [loading, setLoading] = useState(false);
 
   const getApi = () => {
@@ -33,30 +69,29 @@ export function useCollection<T extends Record<string, any>>(
     return null;
   };
 
-
-
   useEffect(() => {
     const api = getApi();
     if (api) {
       const fetchApi = async () => {
-        if (items.length === 0) setLoading(true);
+        // Only show spinner if cache is empty
+        const cached = readCache<T>(key);
+        if (!cached) setLoading(true);
         try {
           const data = await api.getAll();
           setItems(data as any);
-          if (typeof window !== "undefined") {
-            window.localStorage.setItem(key, JSON.stringify(data));
-          }
+          writeCache(key, data as any);
         } catch (error) {
           console.error(`Failed to fetch ${key} from API`, error);
+          toast.error(`Failed to load data. Showing cached version.`);
         } finally {
           setLoading(false);
         }
       };
       fetchApi();
     } else if (typeof window !== "undefined") {
-      window.localStorage.setItem(key, JSON.stringify(items));
+      writeCache(key, items as any);
     }
-  }, [key, items.length === 0 ? 0 : 1]); // Avoid infinite loop by not depending strictly on items ref
+  }, [key]);
 
   const create = useCallback(async (data: T) => {
     const api = getApi();
@@ -65,11 +100,15 @@ export function useCollection<T extends Record<string, any>>(
         await api.addOrUpdate(data);
         const newData = await api.getAll();
         setItems(newData as any);
-      } catch (err) {
+        writeCache(key, newData as any);
+        toast.success("Record created successfully!");
+      } catch (err: any) {
         console.error("API create failed", err);
+        toast.error(`Failed to create record: ${err?.message ?? "Unknown error"}`);
       }
     } else {
       setItems((prev) => [{ ...(data as any), id: crypto.randomUUID() }, ...prev]);
+      toast.success("Record created!");
     }
   }, [key]);
 
@@ -80,11 +119,15 @@ export function useCollection<T extends Record<string, any>>(
         await api.addOrUpdate({ ...data, id });
         const newData = await api.getAll();
         setItems(newData as any);
-      } catch (err) {
+        writeCache(key, newData as any);
+        toast.success("Record updated successfully!");
+      } catch (err: any) {
         console.error("API update failed", err);
+        toast.error(`Failed to update record: ${err?.message ?? "Unknown error"}`);
       }
     } else {
       setItems((prev) => prev.map((it) => (it.id === id ? { ...(data as any), id } : it)));
+      toast.success("Record updated!");
     }
   }, [key]);
 
@@ -95,11 +138,15 @@ export function useCollection<T extends Record<string, any>>(
         await api.delete(id);
         const newData = await api.getAll();
         setItems(newData as any);
-      } catch (err) {
+        writeCache(key, newData as any);
+        toast.success("Record deleted successfully!");
+      } catch (err: any) {
         console.error("API remove failed", err);
+        toast.error(`Failed to delete record: ${err?.message ?? "Unknown error"}`);
       }
     } else {
       setItems((prev) => prev.filter((it) => it.id !== id));
+      toast.success("Record deleted!");
     }
   }, [key]);
 

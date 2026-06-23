@@ -246,42 +246,8 @@ function Home() {
             </div>
           </div>
 
-          <div className="mt-20 grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl">
-            {[
-              {
-                quote: "They rebuilt our platform in 9 weeks and doubled our checkout conversion. Genuinely the best agency we've worked with.",
-                name: "Amelia Crane",
-                role: "Head of Product, Lumen Goods"
-              },
-              {
-                quote: "An ERP that our team actually enjoys using. The level of craft in the workflows is unreal.",
-                name: "Mateo Rivera",
-                role: "COO, Northwind Logistics"
-              },
-              {
-                quote: "Our App Store rating jumped from 3.4 to 4.8 after the rewrite. Worth every dollar.",
-                name: "Priya Shah",
-                role: "Founder, Quill Health"
-              }
-            ].map((t, i) => (
-              <div key={i} className="bg-white text-left text-black p-6 rounded-2xl shadow-xl flex flex-col justify-between">
-                <div>
-                  <div className="flex gap-1 mb-4 text-[#3b82f6]">
-                     <Star className="w-4 h-4 fill-current" />
-                     <Star className="w-4 h-4 fill-current" />
-                     <Star className="w-4 h-4 fill-current" />
-                     <Star className="w-4 h-4 fill-current" />
-                     <Star className="w-4 h-4 fill-current" />
-                  </div>
-                  <p className="text-gray-800 text-[15px] leading-relaxed mb-6 font-medium">"{t.quote}"</p>
-                </div>
-                <div className="border-t border-gray-100 pt-4 mt-auto">
-                  <p className="font-semibold text-gray-900 text-sm">{t.name}</p>
-                  <p className="text-gray-500 text-xs mt-0.5">{t.role}</p>
-                </div>
-              </div>
-            ))}
-          </div>
+
+
         </div>
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-xs uppercase tracking-[0.3em] text-white/70 z-20">
           <span>Scroll</span>
@@ -347,70 +313,31 @@ function Home() {
         </div>
       </section>
 
-      {/* ============== WHY CHOOSE US ============== */}
-      <section className="relative py-24 sm:py-32 bg-background border-b border-border/40 overflow-hidden">
-        <div className="mx-auto max-w-7xl px-5 sm:px-8">
-          <div className="grid lg:grid-cols-2 gap-16 lg:gap-24">
-            {/* Left side: Bullets */}
-            <div className="space-y-8" data-fade>
-              <h2 className="text-3xl sm:text-4xl font-medium tracking-tight">Why Choose Us</h2>
-              <ul className="space-y-5">
-                {[
-                  "Professional and responsive designs",
-                  "SEO-friendly development approach",
-                  "User-focused interface and experience",
-                  "Scalable and secure solutions",
-                  "Fast-loading and mobile-optimised platforms",
-                  "Dedicated technical support and maintenance",
-                  "Customised solutions for every business requirement"
-                ].map((item, i) => (
-                  <li key={i} className="flex items-start gap-4 text-lg text-foreground/80">
-                    <CheckCircle2 className="h-6 w-6 text-primary shrink-0 mt-0.5" />
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            
-            {/* Right side: Grow Your Business Digitally */}
-            <div className="space-y-6" data-fade>
-              <h3 className="text-3xl sm:text-4xl font-medium tracking-tight mb-8">Grow Your Business Digitally</h3>
-              <p className="text-lg text-foreground/75 leading-relaxed">
-                We combine creativity, technology, and strategy to deliver digital solutions that help businesses strengthen their online presence and improve operational performance.
-              </p>
-              <p className="text-lg text-foreground/75 leading-relaxed">
-                Whether you need a professional website, a powerful mobile application, or a complete ERP system, we deliver solutions that support your business growth efficiently.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-
-
       {/* ============== COMPREHENSIVE ABOUT US ============== */}
-      <section className="relative py-32 sm:py-40 bg-muted/30">
+      <section className="relative py-16 sm:py-24 bg-muted/30">
         <div className="mx-auto max-w-7xl px-5 sm:px-8">
-          <div className="mb-16 text-center max-w-3xl mx-auto">
-            <p data-fade className="mb-4 text-xs uppercase tracking-[0.3em] text-muted-foreground">About · 02</p>
+          <div className="mb-8 text-center max-w-3xl mx-auto">
             <SplitText tag="h2" className="text-display text-4xl sm:text-5xl lg:text-6xl font-normal leading-[1.1]">
               A studio built around <span className="gradient-text">craft, clarity and care.</span>
             </SplitText>
           </div>
 
           <Tabs defaultValue="story" className="w-full">
-            <TabsList className="grid w-full grid-cols-1 md:grid-cols-3 max-w-3xl mx-auto mb-16 h-auto rounded-full bg-background border border-border/50 p-1">
+            <TabsList className="grid w-full grid-cols-1 md:grid-cols-3 max-w-3xl mx-auto mb-10 h-auto rounded-full bg-background border border-border/50 p-1">
               <TabsTrigger value="story" className="rounded-full py-3 text-base font-medium">Our Story</TabsTrigger>
               <TabsTrigger value="services" className="rounded-full py-3 text-base font-medium">What We Do</TabsTrigger>
               <TabsTrigger value="approach" className="rounded-full py-3 text-base font-medium">Our Approach</TabsTrigger>
             </TabsList>
 
             <TabsContent value="story" className="mt-0 focus-visible:outline-none focus-visible:ring-0">
-              <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-                <div className="space-y-10" data-fade>
+              <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-start">
+                <div className="space-y-8" data-fade>
                   <div>
-                    <h3 className="text-3xl font-semibold mb-6 text-foreground">About Us</h3>
-                    <div className="space-y-4 text-lg text-foreground/75 leading-relaxed">
+                    <h3 className="text-3xl font-semibold mb-6 text-foreground flex items-center gap-4">
+                      <span className="relative flex h-8 w-1.5 overflow-hidden rounded-full bg-primary/20"><span className="absolute inset-x-0 bottom-0 top-1/2 bg-primary"></span></span>
+                      About Us
+                    </h3>
+                    <div className="space-y-4 text-[17px] text-foreground/75 leading-relaxed">
                       <p>
                         We are a professional digital solutions company specialising in website designing and development, mobile app development, and customised ERP software solutions. Our focus is on helping businesses establish a strong digital presence while improving operational efficiency through innovative technology solutions.
                       </p>
@@ -419,22 +346,28 @@ function Home() {
                       </p>
                     </div>
                   </div>
-                  <div className="grid sm:grid-cols-2 gap-6">
-                    <div className="glass p-6 rounded-2xl border border-border/30">
-                      <h4 className="text-xl font-semibold mb-3 text-primary">Our Vision</h4>
+                  <div className="grid sm:grid-cols-2 gap-6 pt-2">
+                    <div className="relative overflow-hidden bg-white/60 backdrop-blur-xl p-7 rounded-[1.5rem] border border-white shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:-translate-y-1 transition-transform duration-300">
+                      <div className="absolute top-0 right-0 w-24 h-24 bg-primary/5 rounded-full blur-2xl -mr-10 -mt-10 pointer-events-none" />
+                      <h4 className="text-[19px] font-semibold mb-3 text-foreground flex items-center gap-2">
+                        <Compass className="w-5 h-5 text-primary" /> Our Vision
+                      </h4>
                       <p className="text-foreground/70 text-sm leading-relaxed">To empower businesses with reliable digital technologies that improve customer engagement, simplify operations, and support long-term business growth.</p>
                     </div>
-                    <div className="glass p-6 rounded-2xl border border-border/30">
-                      <h4 className="text-xl font-semibold mb-3 text-primary">Our Mission</h4>
+                    <div className="relative overflow-hidden bg-white/60 backdrop-blur-xl p-7 rounded-[1.5rem] border border-white shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:-translate-y-1 transition-transform duration-300">
+                      <div className="absolute top-0 right-0 w-24 h-24 bg-primary/5 rounded-full blur-2xl -mr-10 -mt-10 pointer-events-none" />
+                      <h4 className="text-[19px] font-semibold mb-3 text-foreground flex items-center gap-2">
+                        <Rocket className="w-5 h-5 text-primary" /> Our Mission
+                      </h4>
                       <p className="text-foreground/70 text-sm leading-relaxed">To provide high-quality digital solutions through innovative design, advanced development practices, and customer-focused strategies.</p>
                     </div>
                   </div>
                 </div>
                 <div className="grid grid-cols-2 gap-6" data-fade>
                   {[
-                    { n: 120, s: "+", l: "Projects shipped" },
-                    { n: 38, s: "", l: "Countries reached" },
-                    { n: 14, s: "", l: "Industry awards" },
+                    { n: 100, s: "+", l: "Projects shipped" },
+                    { n: 50, s: "+", l: "Happy clients" },
+                    { n: 5, s: "+", l: "Years of experience" },
                     { n: 98, s: "%", l: "Client retention" },
                   ].map((c, i) => (
                     <CounterCard key={i} n={c.n} s={c.s} l={c.l} />
@@ -445,30 +378,33 @@ function Home() {
 
             <TabsContent value="services" className="mt-0 focus-visible:outline-none focus-visible:ring-0">
               <div className="grid md:grid-cols-3 gap-8" data-fade>
-                <div className="glass p-8 rounded-[2rem] border border-border/30 transition-transform hover:-translate-y-2">
-                  <div className="h-16 w-16 bg-primary/10 text-primary rounded-2xl flex items-center justify-center mb-8">
-                    <Globe className="h-8 w-8" />
+                <div className="group relative overflow-hidden bg-gradient-to-b from-white to-white/40 backdrop-blur-2xl p-10 rounded-[2.5rem] border border-white shadow-[0_8px_30px_rgb(0,0,0,0.06)] hover:shadow-[0_20px_40px_rgb(0,0,0,0.12)] hover:border-primary/30 hover:-translate-y-2 transition-all duration-500">
+                  <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full blur-3xl -mr-10 -mt-10 pointer-events-none group-hover:bg-primary/20 transition-colors duration-500" />
+                  <div className="h-16 w-16 bg-gradient-to-br from-primary/10 to-primary/5 rounded-2xl flex items-center justify-center mb-8 border border-primary/10 group-hover:scale-110 group-hover:-rotate-3 transition-transform duration-500">
+                    <Globe className="h-7 w-7 text-primary" />
                   </div>
-                  <h3 className="text-2xl font-semibold mb-4 text-foreground">Website Designing & Development</h3>
-                  <p className="text-foreground/75 leading-relaxed text-base">
+                  <h3 className="text-2xl font-bold mb-5 text-foreground leading-tight">Website Designing &<br/>Development</h3>
+                  <p className="text-foreground/70 text-[16px] leading-[1.8] relative z-10">
                     We create responsive and professionally designed websites that enhance brand visibility and improve user experience. Our websites are developed with modern technologies to ensure speed, security, and seamless functionality across all devices.
                   </p>
                 </div>
-                <div className="glass p-8 rounded-[2rem] border border-border/30 transition-transform hover:-translate-y-2">
-                  <div className="h-16 w-16 bg-primary/10 text-primary rounded-2xl flex items-center justify-center mb-8">
-                    <Smartphone className="h-8 w-8" />
+                <div className="group relative overflow-hidden bg-gradient-to-b from-white to-white/40 backdrop-blur-2xl p-10 rounded-[2.5rem] border border-white shadow-[0_8px_30px_rgb(0,0,0,0.06)] hover:shadow-[0_20px_40px_rgb(0,0,0,0.12)] hover:border-primary/30 hover:-translate-y-2 transition-all duration-500">
+                  <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full blur-3xl -mr-10 -mt-10 pointer-events-none group-hover:bg-primary/20 transition-colors duration-500" />
+                  <div className="h-16 w-16 bg-gradient-to-br from-primary/10 to-primary/5 rounded-2xl flex items-center justify-center mb-8 border border-primary/10 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500">
+                    <Smartphone className="h-7 w-7 text-primary" />
                   </div>
-                  <h3 className="text-2xl font-semibold mb-4 text-foreground">Mobile App Development</h3>
-                  <p className="text-foreground/75 leading-relaxed text-base">
+                  <h3 className="text-2xl font-bold mb-5 text-foreground leading-tight">Mobile App<br/>Development</h3>
+                  <p className="text-foreground/70 text-[16px] leading-[1.8] relative z-10">
                     Our mobile app development services help businesses connect with customers through intuitive and feature-rich applications. We develop customised Android and iOS applications focused on usability, performance, and long-term scalability.
                   </p>
                 </div>
-                <div className="glass p-8 rounded-[2rem] border border-border/30 transition-transform hover:-translate-y-2">
-                  <div className="h-16 w-16 bg-primary/10 text-primary rounded-2xl flex items-center justify-center mb-8">
-                    <Database className="h-8 w-8" />
+                <div className="group relative overflow-hidden bg-gradient-to-b from-white to-white/40 backdrop-blur-2xl p-10 rounded-[2.5rem] border border-white shadow-[0_8px_30px_rgb(0,0,0,0.06)] hover:shadow-[0_20px_40px_rgb(0,0,0,0.12)] hover:border-primary/30 hover:-translate-y-2 transition-all duration-500">
+                  <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full blur-3xl -mr-10 -mt-10 pointer-events-none group-hover:bg-primary/20 transition-colors duration-500" />
+                  <div className="h-16 w-16 bg-gradient-to-br from-primary/10 to-primary/5 rounded-2xl flex items-center justify-center mb-8 border border-primary/10 group-hover:scale-110 group-hover:-rotate-3 transition-transform duration-500">
+                    <Database className="h-7 w-7 text-primary" />
                   </div>
-                  <h3 className="text-2xl font-semibold mb-4 text-foreground">ERP Software Solutions</h3>
-                  <p className="text-foreground/75 leading-relaxed text-base">
+                  <h3 className="text-2xl font-bold mb-5 text-foreground leading-tight">ERP Software<br/>Solutions</h3>
+                  <p className="text-foreground/70 text-[16px] leading-[1.8] relative z-10">
                     We develop customised ERP systems that streamline daily business operations and improve workflow management. Our ERP solutions help organisations manage multiple departments efficiently through integrated and automated systems.
                   </p>
                 </div>
@@ -476,28 +412,38 @@ function Home() {
             </TabsContent>
 
             <TabsContent value="approach" className="mt-0 focus-visible:outline-none focus-visible:ring-0">
-              <div className="grid lg:grid-cols-2 gap-16 items-center" data-fade>
-                <div className="order-2 lg:order-1 glass p-10 sm:p-12 rounded-[2.5rem] border border-border/30">
-                  <h3 className="text-3xl font-semibold mb-8 text-foreground">Why Businesses Trust Us</h3>
-                  <ul className="space-y-6">
-                    {[
-                      "Experienced development and design team",
-                      "Customised business-focused solutions",
-                      "Modern and scalable technologies",
-                      "SEO-friendly and responsive development",
-                      "Reliable technical support and maintenance",
-                      "Focus on quality, performance, and security"
-                    ].map((item, idx) => (
-                      <li key={idx} className="flex items-start gap-4 text-lg text-foreground/80">
-                        <CheckCircle2 className="h-6 w-6 text-primary shrink-0 mt-0.5" />
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
+              <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center" data-fade>
+                <div className="order-2 lg:order-1 relative group">
+                  <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-primary/0 rounded-[3rem] blur-2xl transition-all duration-500 group-hover:blur-3xl group-hover:opacity-70 opacity-50" />
+                  <div className="relative bg-white/90 backdrop-blur-3xl p-10 sm:p-14 rounded-[3rem] border border-white shadow-[0_8px_40px_rgb(0,0,0,0.08)] overflow-hidden">
+                    <div className="absolute top-0 right-0 w-40 h-40 bg-primary/5 rounded-full blur-3xl -mr-16 -mt-16 pointer-events-none" />
+                    <h3 className="text-[28px] sm:text-[32px] font-bold mb-10 text-foreground tracking-tight">Why Businesses Trust Us</h3>
+                    <ul className="space-y-6">
+                      {[
+                        "Experienced development and design team",
+                        "Customised business-focused solutions",
+                        "Modern and scalable technologies",
+                        "SEO-friendly and responsive development",
+                        "Reliable technical support and maintenance",
+                        "Focus on quality, performance, and security"
+                      ].map((item, idx) => (
+                        <li key={idx} className="flex items-start gap-5 text-[16px] sm:text-[17px] text-foreground/80 group/item hover:translate-x-2 transition-transform duration-300">
+                          <div className="relative flex items-center justify-center shrink-0 mt-0.5">
+                            <div className="absolute inset-0 bg-primary/20 rounded-full blur-md opacity-0 group-hover/item:opacity-100 transition-opacity duration-300" />
+                            <CheckCircle2 className="h-6 w-6 text-primary relative z-10" />
+                          </div>
+                          <span className="font-medium group-hover/item:text-foreground transition-colors duration-300">{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 </div>
-                <div className="order-1 lg:order-2 space-y-8">
-                  <h3 className="text-4xl font-semibold text-foreground">Our Approach</h3>
-                  <div className="space-y-6 text-lg text-foreground/75 leading-relaxed">
+                <div className="order-1 lg:order-2 space-y-8 lg:pl-4">
+                  <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-bold uppercase tracking-widest">
+                    <Sparkles className="w-4 h-4" /> The Process
+                  </div>
+                  <h3 className="text-4xl sm:text-5xl font-bold text-foreground leading-[1.1] tracking-tight">Our Approach</h3>
+                  <div className="space-y-6 text-[17px] sm:text-[18px] text-foreground/75 leading-relaxed">
                     <p>
                       We believe every business requires unique digital solutions. Our team works closely with clients to understand their goals, industry requirements, and operational challenges before creating customised strategies and technology platforms.
                     </p>
@@ -559,33 +505,16 @@ function Home() {
       </section>
 
       {/* ============== CLIENTS / BRANDS ============== */}
-      <section className="relative py-20 bg-background">
-        <div className="mx-auto max-w-[1200px] px-5 sm:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-[1.2fr_2fr] gap-10 lg:gap-20 items-start mb-16" data-fade>
-            <div>
-              <h2 className="text-display text-4xl sm:text-5xl lg:text-6xl font-normal leading-[1.1] text-foreground tracking-tight">
-                Top-notch<br />
-                <span className="text-[#F59E0B] lowercase">clients</span>
-              </h2>
-            </div>
-            <div className="space-y-6 pt-1 lg:pt-3">
-              <p className="text-lg sm:text-xl text-foreground/75 leading-relaxed max-w-xl font-light">
-                We partner with brands who share our values, and who want to shake things up for the greater good.
-              </p>
-              <div>
-                <a 
-                  href="/about" 
-                  className="inline-flex items-center gap-2 text-sm font-bold text-foreground hover:text-foreground/70 transition-colors group"
-                >
-                  <span className="border-b border-foreground/30 group-hover:border-foreground transition-colors pb-0.5">about</span>
-                  <span className="transition-transform group-hover:translate-x-1">→</span>
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <LogoCloud />
+      <section className="relative py-24 bg-muted/10 border-t border-b border-border/50">
+        <LogoCloud
+          title={
+            <>
+              Brands That Trust <span className="font-bold text-primary">WebApp Orbis</span>
+            </>
+          }
+          subtitle="Trusted by 50+ businesses worldwide to deliver digital solutions that perform."
+          limit={15}
+        />
       </section>
 
       {/* ============== TECHNOLOGIES WE USED ============== */}
@@ -599,23 +528,24 @@ function Home() {
             <SplitText tag="h2" className="text-4xl sm:text-5xl font-light text-foreground tracking-wide">Let's Talk</SplitText>
             <SplitText tag="h1" className="text-6xl sm:text-7xl lg:text-8xl font-black text-foreground uppercase mt-2 tracking-tight">IDEAS</SplitText>
             <p className="text-[11px] sm:text-xs font-semibold tracking-[0.2em] sm:tracking-[0.25em] uppercase mt-8 text-foreground/70 leading-relaxed max-w-[280px]">
-              Kerala's Leading Web Design Agency For Business Growth
+              Inter Smart Your Perfect Partner For Complete E-Solutions
             </p>
           </div>
           
           <div data-fade className="flex flex-col justify-center pt-2 sm:pt-4">
             <SplitText tag="h2" className="text-3xl sm:text-4xl lg:text-[42px] font-light text-foreground mb-8 sm:mb-10 leading-[1.2]">
-              Complete Web Solutions That<br className="hidden sm:block" /> Drive Results
+              Step Into The World Of{" "}
+              <span className="font-bold">Digital Innovations</span>
             </SplitText>
             <div className="space-y-6 text-[15px] sm:text-base text-foreground/70 leading-[1.8]">
               <p>
-                Your website is your strongest business asset, serving as your online presence, which is essential for success in today's digital market. Inter Smart builds high-performance websites through its design and development process, creating websites that attract visitors and keep them engaged until they convert. As a trusted website design & development company in Kochi, Kerala, we focus on building websites that support real business growth.
+                Inter Smart is a complete web solution provider established in the commercial city of Kerala — Cochin. We have experts in each and every department of Web development to offer you solutions that can produce results from the very first day. Web design company Kerala includes experts who are specialized in a variety of areas. We have web designers with exceptional talent to build the layout of your website, developers to implement the most reliable yet cost-effective and robust technologies, online marketing gurus to spread the reputation of your website from our labs to the entire world and much more to offer.
               </p>
               <p>
-                We build search engine-friendly websites tailored to your business needs through our web design services, which combine strategic planning with UI/UX design and modern web development techniques.
+                Inter Smart is also renowned for providing high-quality Digital Marketing services in Kerala. Equipped with professionals who have decades of experience under their belt, we have succeeded in improving the online visibility of a large number of enterprises in the domain of the World Wide Web. Intersmart Solution is committed to helping your enterprise realize its true brand value and marketing potential.
               </p>
               <p>
-                Beyond design and development, our web solutions deliver results through two main functions: generating high-quality leads, enhancing customer engagement, and supporting businesses during their online growth process. Our team develops websites that will scale with your company.
+                We make sure that your online presence is felt by the world by implementing tested and proven marketing strategies. Our group of experts is passionate about their profession. We stay a step ahead with the latest technologies and keep sharpening our designing skills to further improve our outcomes. The expertise and promptness of our professional employees have earned us a large satisfied clientele in India and abroad. Our Web Designing Company in Cochin is committed to serving the varying interests of all esteemed customers around the world.
               </p>
             </div>
           </div>
@@ -676,11 +606,11 @@ function CounterCard({ n, s, l }: { n: number; s: string; l: string }) {
   const ref = useRef<HTMLSpanElement>(null);
   useCounter(ref, n, s);
   return (
-    <div data-fade className="rounded-3xl border border-border bg-card p-8">
-      <p className="text-display text-5xl gradient-text">
+    <div data-fade className="rounded-[2rem] border border-white bg-white/70 backdrop-blur-xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] p-8 sm:p-10 transition-transform duration-300 hover:-translate-y-1">
+      <p className="text-display text-5xl sm:text-6xl text-[#0066FF] tracking-tight font-medium">
         <span ref={ref}>0{s}</span>
       </p>
-      <p className="mt-3 text-sm text-muted-foreground">{l}</p>
+      <p className="mt-4 text-[15px] font-medium text-foreground/60 tracking-wide">{l}</p>
     </div>
   );
 }

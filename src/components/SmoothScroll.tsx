@@ -13,6 +13,9 @@ export function SmoothScroll() {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
 
   useEffect(() => {
+    // Don't use Lenis on admin pages — let admin panel manage its own scroll
+    if (pathname.startsWith("/admin")) return;
+
     // Initialize Lenis with a responsive lerp for a snappier feel
     const lenis = new Lenis({
       lerp: 0.1,
@@ -37,7 +40,7 @@ export function SmoothScroll() {
       lenis.destroy();
       lenisRef.current = null;
     };
-  }, []);
+  }, [pathname]);
 
   // When pathname changes, update Lenis layout and refresh ScrollTrigger
   useEffect(() => {

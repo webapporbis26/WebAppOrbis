@@ -1,32 +1,25 @@
 const BASE_URL = 'https://api.webapporbis.com';
 
-const CREDENTIALS = {
-  email: 'admin@webapporbis',
-  password: '123'
-};
-
 let cachedToken: string | null = null;
 
 export const authApi = {
-  getToken: async () => {
-    if (cachedToken) return cachedToken;
-    
-    if (typeof window !== 'undefined') {
-      const stored = localStorage.getItem('wo_admin_token');
-      if (stored) {
-        cachedToken = stored;
-        return stored;
-      }
+  login: async (email: string, password: string) => {
+    let mappedEmail = email.trim();
+    // The backend stringently requires 'admin@webapporbis' without the .com
+    // We map common UI inputs back to this backend username.
+    const normalized = mappedEmail.toLowerCase();
+    if (normalized === 'admin@weborbis.com' || normalized === 'admin@webapporbis.com' || normalized === 'admin@weborbis') {
+      mappedEmail = 'admin@webapporbis';
     }
-
+    
     const res = await fetch(`${BASE_URL}/User/GenerateToken`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        Email: CREDENTIALS.email,
-        Password: CREDENTIALS.password
+        Email: mappedEmail,
+        Password: password
       }),
     });
     
@@ -41,6 +34,18 @@ export const authApi = {
     }
     return token;
   },
+  getToken: async () => {
+    if (cachedToken) return cachedToken;
+    
+    if (typeof window !== 'undefined') {
+      const stored = localStorage.getItem('wo_admin_token');
+      if (stored) {
+        cachedToken = stored;
+        return stored;
+      }
+    }
+    throw new Error('No authentication token found. Please log in.');
+  },
   clearToken: () => {
     cachedToken = null;
     if (typeof window !== 'undefined') {
@@ -50,28 +55,39 @@ export const authApi = {
 };
 
 const fetchWithAuth = async (endpoint: string, options: RequestInit = {}) => {
-  let token = await authApi.getToken();
+  const token = await authApi.getToken();
   
-  const makeRequest = async (t: string) => {
-    const headers: any = {
-      Authorization: `Bearer ${t}`,
-      ...options.headers,
-    };
-    if (!(options.body instanceof FormData) && !headers['Content-Type']) {
-      headers['Content-Type'] = 'application/json';
-    }
-    return fetch(`${BASE_URL}${endpoint}`, { ...options, headers });
+  const headers: any = {
+    Authorization: `Bearer ${token}`,
+    ...options.headers,
   };
-
-  let res = await makeRequest(token);
-  
-  // Retry once if token expired
-  if (res.status === 401) {
-    authApi.clearToken();
-    token = await authApi.getToken();
-    res = await makeRequest(token);
+  if (!(options.body instanceof FormData) && !headers['Content-Type']) {
+    headers['Content-Type'] = 'application/json';
   }
   
+  const res = await fetch(`${BASE_URL}${endpoint}`, { ...options, headers });
+  
+  if (res.status === 401) {
+    authApi.clearToken();
+    // Setting this key to empty string to trigger logout in auth.ts listener
+    if (typeof window !== 'undefined') localStorage.removeItem('weborbis_admin_auth');
+    throw new Error('Session expired');
+  }
+  
+  if (!res.ok) {
+    throw new Error(`API error: ${res.status}`);
+  }
+  return res;
+};
+
+const fetchWithoutAuth = async (endpoint: string, options: RequestInit = {}) => {
+  const headers: any = {
+    ...options.headers,
+  };
+  if (!(options.body instanceof FormData) && !headers['Content-Type']) {
+    headers['Content-Type'] = 'application/json';
+  }
+  const res = await fetch(`${BASE_URL}${endpoint}`, { ...options, headers });
   if (!res.ok) {
     throw new Error(`API error: ${res.status}`);
   }
@@ -114,17 +130,18 @@ export const dealsApi = {
   
   addOrUpdate: async (deal: any) => {
     const formData = new FormData();
-    if (deal.id && !deal.id.toString().startsWith('d')) {
-      formData.append('ID', deal.id.toString());
-    }
+    const isNew = !deal.id || deal.id.toString().startsWith('d');
+    formData.append('ID', isNew ? '0' : deal.id.toString());
     
+    const toISO = (d: string) => d ? new Date(d).toISOString() : '';
+
     // Package extra UI fields into remarks
     const extraData = {
       project: deal.project,
       client: deal.client,
       total: deal.total,
       advance: deal.advance,
-      due: deal.due,
+      due: toISO(deal.due),
       actualRemarks: deal.remarks
     };
     
@@ -135,6 +152,7 @@ export const dealsApi = {
     formData.append('Stage', deal.stage || '');
     formData.append('Status', deal.status || '');
     formData.append('Value', (deal.total || 0).toString());
+    formData.append('CreatedOn', new Date().toISOString());
     formData.append('IsActive', 'true');
 
     const res = await fetchWithAuth(`/User/AddOrUpdateDeals`, {
@@ -177,9 +195,8 @@ export const leadsApi = {
   
   addOrUpdate: async (lead: any) => {
     const formData = new FormData();
-    if (lead.id && !lead.id.toString().startsWith('l')) {
-      formData.append('ID', lead.id.toString());
-    }
+    const isNew = !lead.id || lead.id.toString().startsWith('l');
+    formData.append('ID', isNew ? '0' : lead.id.toString());
     
     formData.append('ClientName', lead.company || '');
     formData.append('Company', lead.company || '');
@@ -190,9 +207,10 @@ export const leadsApi = {
     formData.append('ServiceRequested', lead.service || '');
     formData.append('Requirement', lead.service || '');
     formData.append('Source', lead.source || '');
-    formData.append('Budget', (lead.budget || '').toString());
-    formData.append('Status', lead.status || '');
+    formData.append('Budget', (lead.budget || 0).toString());
+    formData.append('Status', lead.status || 'New');
     formData.append('Notes', lead.notes || '');
+    formData.append('CreatedOn', new Date().toISOString());
     formData.append('IsActive', 'true');
 
     const res = await fetchWithAuth(`/User/AddOrUpdateLeads`, {
@@ -238,9 +256,10 @@ export const renewalsApi = {
   
   addOrUpdate: async (renewal: any) => {
     const formData = new FormData();
-    if (renewal.id && !renewal.id.toString().startsWith('r')) {
-      formData.append('ID', renewal.id.toString());
-    }
+    const isNew = !renewal.id || renewal.id.toString().startsWith('r');
+    formData.append('ID', isNew ? '0' : renewal.id.toString());
+
+    const toISO = (d: string) => d ? new Date(d).toISOString() : '';
     
     formData.append('CompanyName', renewal.company || '');
     formData.append('ClientName', renewal.client || '');
@@ -250,8 +269,8 @@ export const renewalsApi = {
     formData.append('ServerProvider', renewal.serverProvider || '');
     formData.append('PlanName', renewal.plan || '');
     formData.append('BillingCycle', renewal.billing || '');
-    formData.append('StartDate', renewal.start || '');
-    formData.append('ExpiryDate', renewal.expiry || '');
+    formData.append('StartDate', toISO(renewal.start));
+    formData.append('ExpiryDate', toISO(renewal.expiry));
     formData.append('Amount', (renewal.amount || 0).toString());
     formData.append('ReminderStage', renewal.reminder || '');
     formData.append('PaymentStatus', renewal.payment || '');
@@ -268,7 +287,7 @@ export const renewalsApi = {
   },
   
   delete: async (id: string | number) => {
-    const res = await fetchWithAuth(`/User/User/DeleteRenewals?ID=${id}`, {
+    const res = await fetchWithAuth(`/User/DeleteRenewals?ID=${id}`, {
       method: 'POST',
     });
     return res.text();
@@ -348,28 +367,28 @@ export const employeesApi = {
   
   addOrUpdate: async (employee: any) => {
     const formData = new FormData();
-    if (employee.id && !employee.id.toString().startsWith('e')) {
-      formData.append('ID', employee.id.toString());
-    } else {
-      formData.append('ID', '0');
-    }
-    
+
+    // ID: 0 for new, numeric ID for existing
+    const isNew = !employee.id || employee.id.toString().startsWith('e');
+    formData.append('ID', isNew ? '0' : employee.id.toString());
+
+    // Helper: convert YYYY-MM-DD to ISO datetime string
+    const toISO = (d: string) => d ? new Date(d).toISOString() : '';
+
     formData.append('EmployeeName', employee.name || '');
     formData.append('Gender', employee.gender || '');
-    formData.append('DateOfBirth', employee.dob || '');
+    formData.append('DateOfBirth', toISO(employee.dob));
     formData.append('Address', employee.address || '');
     formData.append('MobileNumber', employee.mobile || '');
     formData.append('EmailID', employee.email || '');
     formData.append('Department', employee.department || '');
     formData.append('Designation', employee.designation || '');
     formData.append('Skillset', employee.skills || '');
-    formData.append('Experience', (employee.experience || '').toString());
+    formData.append('Experience', (employee.experience || 0).toString());
     formData.append('Qualification', employee.qualification || '');
-    formData.append('DateOfJoining', employee.doj || '');
+    formData.append('DateOfJoining', toISO(employee.doj));
     formData.append('Status', employee.status || 'Active');
     formData.append('CreatedOn', new Date().toISOString());
-    formData.append('ModifiedOn', '');
-    formData.append('DeletedOn', '');
     formData.append('IsActive', 'true');
 
     const res = await fetchWithAuth(`/User/AddOrUpdateEmployees`, {

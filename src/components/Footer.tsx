@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Facebook, Twitter, Instagram, Linkedin, MessageCircle, Shield } from "lucide-react";
+import { Facebook, Twitter, Instagram, Linkedin, MessageCircle, Shield, Youtube } from "lucide-react";
 
 export function Footer() {
   return (
@@ -44,10 +44,9 @@ export function Footer() {
               Join Us
             </h3>
             <ul className="flex flex-col gap-5 text-sm font-light text-gray-300">
-              <li><a href="#" className="flex items-center gap-4 hover:text-white transition-colors"><Facebook className="w-5 h-5 text-white" /> Facebook</a></li>
-              <li><a href="#" className="flex items-center gap-4 hover:text-white transition-colors"><Twitter className="w-5 h-5 text-white" /> Twitter</a></li>
-              <li><a href="#" className="flex items-center gap-4 hover:text-white transition-colors"><Instagram className="w-5 h-5 text-white" /> Instagram</a></li>
-              <li><a href="#" className="flex items-center gap-4 hover:text-white transition-colors"><Linkedin className="w-5 h-5 text-white" /> Linkedin</a></li>
+              <li><a href="https://www.facebook.com/profile.php?id=61577380003721" target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 hover:text-white transition-colors"><Facebook className="w-5 h-5 text-white" /> Facebook</a></li>
+              <li><a href="https://www.instagram.com/enem.pvt.ltd?igsh=aGZ2NGc1ODM3aWZ4" target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 hover:text-white transition-colors"><Instagram className="w-5 h-5 text-white" /> Instagram</a></li>
+              <li><a href="https://www.youtube.com/@e_n_e_m?si=qJcn3W7-psF0OWvR" target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 hover:text-white transition-colors"><Youtube className="w-5 h-5 text-white" /> YouTube</a></li>
             </ul>
           </div>
 
@@ -55,7 +54,7 @@ export function Footer() {
 
         {/* Bottom Bar */}
         <div className="mt-20 pt-6 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4 text-xs font-light text-gray-400">
-          <p>Copyright © 2026. Inter Smart Technologies PVT LTD. All Rights Reserved</p>
+          <p>Copyright © 2026. Enem PVT LTD. All Rights Reserved</p>
           <div className="flex items-center gap-2">
             <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
             <span>/</span>

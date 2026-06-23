@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 
+import { authApi } from "./api";
+
 const KEY = "weborbis_admin_auth";
-const EMAIL = "admin@weborbis.com";
-const PASSWORD = "admin123";
 
 type Listener = () => void;
 const listeners = new Set<Listener>();
@@ -20,20 +20,23 @@ export function isAdminAuthed(): boolean {
   }
 }
 
-export function adminLogin(email: string, password: string): boolean {
-  if (email.trim().toLowerCase() !== EMAIL || password !== PASSWORD) return false;
+export async function adminLogin(email: string, password: string): Promise<boolean> {
   try {
+    await authApi.login(email, password);
     window.localStorage.setItem(KEY, "1");
-  } catch {
-    /* ignore */
+    notify();
+    return true;
+  } catch (err) {
+    console.error("Login failed:", err);
+    return false;
   }
-  notify();
-  return true;
 }
 
 export function adminLogout() {
   try {
+    authApi.clearToken();
     window.localStorage.removeItem(KEY);
+    window.location.href = "/admin";
   } catch {
     /* ignore */
   }

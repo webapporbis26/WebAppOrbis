@@ -9,15 +9,18 @@ export function AdminLogin() {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
-  const onSubmit = (e: FormEvent) => {
+  const onSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setError(null);
     setLoading(true);
-    setTimeout(() => {
-      const ok = adminLogin(email, password);
+    try {
+      const ok = await adminLogin(email, password);
       if (!ok) setError("Invalid credentials. Please try again.");
+    } catch (err) {
+      setError("An unexpected error occurred.");
+    } finally {
       setLoading(false);
-    }, 250);
+    }
   };
 
   return (
@@ -54,14 +57,14 @@ export function AdminLogin() {
 
           <form onSubmit={onSubmit} className="mt-6 space-y-4">
             <div>
-              <label className="mb-1.5 block text-xs font-medium text-foreground/70">Email</label>
+              <label className="mb-1.5 block text-xs font-medium text-foreground/70">Username or Email</label>
               <div className="relative">
                 <Mail className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                 <input
-                  type="email"
+                  type="text"
                   required
                   autoFocus
-                  autoComplete="email"
+                  autoComplete="username"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="admin@weborbis.com"
