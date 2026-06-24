@@ -17,9 +17,9 @@ import { gsap, useTextReveal, useFadeUp } from "@/lib/anim";
 import { LogoCloud } from "@/components/ui/logo-cloud-3";
 import { Marquee } from "@/components/ui/marquee";
 
-import case1 from "@/assets/portfolio-1.jpg";
-import case2 from "@/assets/portfolio-2.jpg";
-import case3 from "@/assets/portfolio-3.jpg";
+import malluImg from "@/assets/project/mallu.jpeg";
+import dhanaImg from "@/assets/project/dhana.jpeg";
+import bestImg from "@/assets/project/best.png";
 
 export const Route = createFileRoute("/services/seo")({
   head: () => ({
@@ -69,19 +69,19 @@ const services = [
 
 const portfolioItems = [
   {
-    title: "DR JASNAS CLINIC",
+    title: "Mallusmart",
+    subtitle: "E-COMMERCE",
+    img: malluImg,
+  },
+  {
+    title: "Denahalaya Punnapra",
     subtitle: "HEALTHCARE",
-    img: case1,
+    img: dhanaImg,
   },
   {
-    title: "FUSION FLOORS",
-    subtitle: "UAE",
-    img: case2,
-  },
-  {
-    title: "SCHOOL OF AYURVEDHA",
-    subtitle: "EDUCATION",
-    img: case3,
+    title: "Best Choice Qatar",
+    subtitle: "CORPORATE",
+    img: bestImg,
   },
 ];
 
@@ -125,10 +125,10 @@ function SEOPage() {
   }, []);
 
   return (
-    <div className="bg-[#FAFAFA] min-h-screen pt-32 pb-20">
+    <div className="bg-[#FAFAFA] min-h-screen pt-28 pb-20">
       {/* HERO SECTION */}
-      <section ref={heroRef} className="mx-auto max-w-[1400px] px-5 sm:px-8 mb-24">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+      <section ref={heroRef} className="mx-auto max-w-[1400px] px-5 sm:px-8 mb-12">
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-12 items-center">
           <div>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-light text-[#1a1a1a] leading-tight mb-6">
               SEO Company –<br/>
@@ -157,7 +157,7 @@ function SEOPage() {
               <p className="text-[#1a1a1a] font-medium text-sm">Years of Experience</p>
             </div>
             <div className="bg-[#8c8c8c] p-8 flex flex-col justify-center transition-transform hover:-translate-y-1">
-              <h3 className="text-4xl md:text-5xl font-black text-white mb-2">1500<span className="text-2xl">+</span></h3>
+              <h3 className="text-4xl md:text-5xl font-black text-white mb-2">50<span className="text-2xl">+</span></h3>
               <p className="text-white font-medium text-sm">Trusted Clients Worldwide</p>
             </div>
             <div className="bg-[#8c8c8c] p-8 flex flex-col justify-center transition-transform hover:-translate-y-1">
@@ -165,7 +165,7 @@ function SEOPage() {
               <p className="text-white font-medium text-sm">SEO Experts</p>
             </div>
             <div className="bg-[#FFC107] p-8 flex flex-col justify-center transition-transform hover:-translate-y-1">
-              <h3 className="text-4xl md:text-5xl font-black text-[#1a1a1a] mb-2">150<span className="text-2xl">+</span></h3>
+              <h3 className="text-4xl md:text-5xl font-black text-[#1a1a1a] mb-2">100<span className="text-2xl">+</span></h3>
               <p className="text-[#1a1a1a] font-medium text-sm">Successful SEO Projects</p>
             </div>
           </div>
@@ -173,19 +173,19 @@ function SEOPage() {
       </section>
 
       {/* TOOLS / PARTNERS LOGOS */}
-      <section className="bg-white py-12 border-y border-gray-100 mb-24">
+      <section className="bg-white py-12 border-y border-gray-100 mb-12">
         <div className="mx-auto max-w-[1400px] px-5 sm:px-8">
           <LogoCloud />
         </div>
       </section>
 
       {/* ABOUT SEO SECTION */}
-      <section className="mx-auto max-w-[1400px] px-5 sm:px-8 mb-32">
-        <h2 className="text-3xl md:text-4xl font-light text-[#1a1a1a] text-center mb-16" data-fade>
+      <section className="mx-auto max-w-[1400px] px-5 sm:px-8 mb-12">
+        <h2 className="text-3xl md:text-4xl font-light text-[#1a1a1a] text-center mb-12" data-fade>
           WebApp Orbis - <span className="font-medium">SEO Company</span>
         </h2>
         
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
+        <div className="grid lg:grid-cols-2 gap-12 items-center">
           <div data-fade className="space-y-6 text-gray-600 leading-relaxed text-[15px]">
             <p>
               Our SEO (Search Engine Optimization) services: It's pretty obvious that very few people enter your website address manually on their browser and specifically go online to visit your site – unless your website is so popular like Facebook, Google or Twitter. Internet users punch in a keyword, a clue of what they are searching on search engines and explore websites that get listed out on the search result pages.
@@ -222,9 +222,9 @@ function SEOPage() {
       <Marquee text="✦ RANK HIGHER ✦ DRIVE TRAFFIC ✦ MAXIMIZE ROI ✦ CONVERT LEADS " speed={25} />
 
       {/* TECH STACK BENTO GRID */}
-      <section className="bg-white py-32 border-b border-gray-100">
+      <section className="bg-white py-28 border-b border-gray-100">
         <div className="mx-auto max-w-[1400px] px-5 sm:px-8">
-          <div className="text-center mb-16" data-fade>
+          <div className="text-center mb-12" data-fade>
             <h2 className="text-4xl md:text-5xl font-light text-[#1a1a1a] mb-6">
               Our SEO <span className="font-bold">Tech Stack</span>
             </h2>
@@ -303,7 +303,7 @@ function SEOPage() {
       </section>
 
       {/* SERVICES GRID */}
-      <section className="mx-auto max-w-[1400px] px-5 sm:px-8 mb-32 pt-20">
+      <section className="mx-auto max-w-[1400px] px-5 sm:px-8 mb-12 pt-20">
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {services.map((service, i) => {
             const Icon = service.icon;
@@ -329,13 +329,13 @@ function SEOPage() {
       </section>
 
       {/* WHY ARE WE THE BEST */}
-      <section className="bg-white py-24 border-t border-gray-100 mb-20">
+      <section className="bg-white py-24 border-t border-gray-100 mb-12">
         <div className="mx-auto max-w-[1400px] px-5 sm:px-8">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-light text-[#1a1a1a] text-center mb-16" data-fade>
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-light text-[#1a1a1a] text-center mb-12" data-fade>
             Why Are We the <span className="font-medium">Best SEO Company?</span>
           </h2>
           
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div data-fade className="relative aspect-[4/3] rounded-xl overflow-hidden bg-gray-100">
               {/* Placeholder for the laptop working image */}
               <div className="absolute inset-0 bg-gradient-to-br from-blue-100 to-purple-100 flex items-center justify-center p-8">
@@ -370,9 +370,9 @@ function SEOPage() {
               </div>
               
               <div>
-                <h3 className="text-2xl font-bold text-[#1a1a1a] mb-3">A Legacy of 1500+ Trusted Clients</h3>
+                <h3 className="text-2xl font-bold text-[#1a1a1a] mb-3">A Legacy of 50+ Trusted Clients</h3>
                 <p className="text-gray-600 leading-relaxed text-sm">
-                  We collaborated with local businesses and companies from various industries worldwide. Our 1500+ clients show we can adapt and help grow your business with customized SEO solutions, no matter your industry.
+                  We collaborated with local businesses and companies from various industries worldwide. Our 50+ clients show we can adapt and help grow your business with customized SEO solutions, no matter your industry.
                 </p>
               </div>
 
@@ -389,7 +389,7 @@ function SEOPage() {
 
       {/* PORTFOLIO */}
       <section className="mx-auto max-w-[1400px] px-5 sm:px-8 mb-10">
-        <div className="text-center mb-16" data-fade>
+        <div className="text-center mb-12" data-fade>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-light text-[#1a1a1a] mb-4">
             Our Works Define Our <span className="font-bold">Success Look Through Some</span>
           </h2>

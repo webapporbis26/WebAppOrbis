@@ -26,12 +26,7 @@ import bestImg from "@/assets/project/best.png";
 import candleImg from "@/assets/project/candle.png";
 import eventImg from "@/assets/project/event.png";
 
-import p1 from "@/assets/portfolio-1.jpg";
-import p2 from "@/assets/portfolio-2.jpg";
-import p3 from "@/assets/portfolio-3.jpg";
-import p4 from "@/assets/portfolio-4.jpg";
-import p5 from "@/assets/portfolio-5.jpg";
-import p6 from "@/assets/portfolio-6.jpg";
+
 
 
 const deskHeroItems = [
@@ -217,14 +212,14 @@ function Home() {
       {/* ============== HERO ============== */}
       <section
         ref={heroRef}
-        className="relative flex min-h-[100dvh] items-center pt-40 pb-20 lg:pt-32 overflow-hidden"
+        className="relative flex min-h-[100dvh] items-center pt-28 pb-20 lg:pt-28 overflow-hidden"
       >
         <div className="absolute inset-0 z-0">
           <HeroMedia />
         </div>
 
         <div data-hero-content className="relative z-20 mx-auto w-full max-w-7xl px-5 sm:px-8 text-white will-change-transform">
-          <div className="max-w-3xl mt-20">
+          <div className="max-w-3xl mt-12">
 
             <div className="flex flex-wrap items-center gap-4">
               <MagneticButton
@@ -257,7 +252,7 @@ function Home() {
       </section>
 
       {/* ============== FEATURES STRIP ============== */}
-      <section className="relative z-30 mt-20 sm:mt-28 mx-auto max-w-[90rem] px-5 sm:px-8">
+      <section className="relative z-30 mt-12 sm:mt-12 mx-auto max-w-[90rem] px-5 sm:px-8">
         <div className="mb-8 text-center" data-fade>
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-foreground">
             Love Our Design? Let's Create Your <span style={{ color: "var(--color-primary, #e11d48)" }}>Dream Website</span>.
@@ -289,7 +284,7 @@ function Home() {
       {/* ============== DIGITAL SOLUTIONS ============== */}
       <section className="relative py-20 sm:py-28 bg-[#f5f7fa]">
         <div className="mx-auto max-w-7xl px-5 sm:px-8">
-          <div className="text-center mb-16 sm:mb-20" data-fade>
+          <div className="text-center mb-12 sm:mb-12" data-fade>
             <h2 className="text-display text-3xl sm:text-4xl lg:text-[2.75rem] text-foreground leading-[1.2] tracking-tight">
               <span className="font-light">Digital Solutions for your</span> <span className="font-bold">Business Growth</span>
             </h2>
@@ -365,7 +360,7 @@ function Home() {
             </TabsList>
 
             <TabsContent value="story" className="mt-0 focus-visible:outline-none focus-visible:ring-0">
-              <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-start">
+              <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start">
                 <div className="space-y-8" data-fade>
                   <div>
                     <h3 className="text-3xl font-semibold mb-6 text-foreground flex items-center gap-4">
@@ -447,11 +442,11 @@ function Home() {
             </TabsContent>
 
             <TabsContent value="approach" className="mt-0 focus-visible:outline-none focus-visible:ring-0">
-              <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center" data-fade>
+              <div className="grid lg:grid-cols-2 gap-12 lg:gap-12 items-center" data-fade>
                 <div className="order-2 lg:order-1 relative group">
                   <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-primary/0 rounded-[3rem] blur-2xl transition-all duration-500 group-hover:blur-3xl group-hover:opacity-70 opacity-50" />
                   <div className="relative bg-white/90 backdrop-blur-3xl p-10 sm:p-14 rounded-[3rem] border border-white shadow-[0_8px_40px_rgb(0,0,0,0.08)] overflow-hidden">
-                    <div className="absolute top-0 right-0 w-40 h-40 bg-primary/5 rounded-full blur-3xl -mr-16 -mt-16 pointer-events-none" />
+                    <div className="absolute top-0 right-0 w-40 h-40 bg-primary/5 rounded-full blur-3xl -mr-12 -mt-12 pointer-events-none" />
                     <h3 className="text-[28px] sm:text-[32px] font-bold mb-10 text-foreground tracking-tight">Why Businesses Trust Us</h3>
                     <ul className="space-y-6">
                       {[
@@ -496,7 +491,7 @@ function Home() {
       {/* ============== OUR WORKS ============== */}
       <section ref={serenityRef} className="relative py-20 sm:py-28 bg-background">
         <div className="mx-auto max-w-[1400px] px-5 sm:px-8">
-          <div className="text-center max-w-4xl mx-auto mb-14">
+          <div className="text-center max-w-4xl mx-auto mb-12">
             <h3 className="text-[28px] sm:text-[34px] font-light text-foreground mb-2 flex justify-center flex-wrap gap-x-2">
               {["Our", "Works", "Define", "Our", "Success"].map((w, i) => (
                 <span key={i} className="serenity-word inline-block">{w}</span>
@@ -525,7 +520,7 @@ function Home() {
             ))}
           </div>
 
-          <div className="mt-16 flex justify-center" data-fade>
+          <div className="mt-12 flex justify-center" data-fade>
             <MagneticButton
               as="a"
               href="/portfolio"
@@ -557,9 +552,9 @@ function Home() {
 
       {/* ============== LET'S TALK IDEAS ============== */}
       <section className="relative py-20 sm:py-28 bg-white">
-        <div className="mx-auto max-w-[1200px] px-5 sm:px-8 grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-12 lg:gap-24 items-start">
+        <div className="mx-auto max-w-[1200px] px-5 sm:px-8 grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-12 lg:gap-12 items-start">
           <div data-fade className="flex flex-col h-full">
-            <div className="w-16 h-[200px] sm:h-[300px] bg-[#FFC107] mb-12 sm:mb-16" />
+            <div className="w-16 h-[200px] sm:h-[300px] bg-[#FFC107] mb-12 sm:mb-12" />
             <div className="sticky top-32">
               <SplitText tag="h2" className="text-5xl sm:text-6xl font-light text-foreground tracking-wide">Let's Talk</SplitText>
               <SplitText tag="h1" className="text-7xl sm:text-[100px] font-black text-foreground uppercase mt-2 tracking-tighter leading-none">IDEAS</SplitText>
@@ -570,7 +565,7 @@ function Home() {
           </div>
           
           <div data-fade className="flex flex-col justify-center pt-8 sm:pt-16">
-            <SplitText tag="h2" className="text-3xl sm:text-4xl lg:text-[46px] font-light text-foreground mb-10 sm:mb-14 leading-[1.25]">
+            <SplitText tag="h2" className="text-3xl sm:text-4xl lg:text-[46px] font-light text-foreground mb-10 sm:mb-12 leading-[1.25]">
               Complete Web Solutions That <br className="hidden lg:block" /> Drive Results
             </SplitText>
             <div className="space-y-8 text-[14px] sm:text-[15px] text-foreground/70 leading-[1.8] text-justify md:text-left">
@@ -590,7 +585,7 @@ function Home() {
       {/* ============== OUR WEBSITE DESIGN PROCESS ============== */}
       <section className="relative py-20 sm:py-28 bg-white">
         <div className="mx-auto max-w-[90rem] px-5 sm:px-8">
-          <div className="text-center mb-16 sm:mb-24" data-fade>
+          <div className="text-center mb-12 sm:mb-12" data-fade>
             <h2 className="text-3xl sm:text-4xl lg:text-[2.75rem] font-light text-foreground mb-6 leading-tight">
               Our <span className="text-[#DC2626] font-medium">Website Design Process</span>
             </h2>

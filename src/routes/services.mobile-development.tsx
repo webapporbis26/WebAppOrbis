@@ -98,10 +98,10 @@ function MobileDevelopment() {
   }, []);
 
   return (
-    <div className="bg-[#FAFAFA] min-h-screen pt-32 pb-20">
+    <div className="bg-[#FAFAFA] min-h-screen pt-28 pb-20">
       {/* HERO SECTION */}
-      <section ref={heroRef} className="mx-auto max-w-[1400px] px-5 sm:px-8 mb-24">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+      <section ref={heroRef} className="mx-auto max-w-[1400px] px-5 sm:px-8 mb-12">
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-12 items-center">
           <div>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-light text-[#1a1a1a] leading-tight mb-6">
               Mobile App Development<br/>
@@ -130,7 +130,7 @@ function MobileDevelopment() {
               <p className="text-[#1a1a1a] font-medium text-sm">Years of Experience</p>
             </div>
             <div className="bg-[#8c8c8c] p-8 flex flex-col justify-center transition-transform hover:-translate-y-1">
-              <h3 className="text-4xl md:text-5xl font-black text-white mb-2">1500<span className="text-2xl">+</span></h3>
+              <h3 className="text-4xl md:text-5xl font-black text-white mb-2">50<span className="text-2xl">+</span></h3>
               <p className="text-white font-medium text-sm">Trusted Clients Worldwide</p>
             </div>
             <div className="bg-[#8c8c8c] p-8 flex flex-col justify-center transition-transform hover:-translate-y-1">
@@ -146,7 +146,7 @@ function MobileDevelopment() {
       </section>
 
       {/* PARTNERS / LOGOS */}
-      <section className="bg-white py-12 border-y border-gray-100 mb-24">
+      <section className="bg-white py-12 border-y border-gray-100 mb-12">
         <div className="mx-auto max-w-[1400px] px-5 sm:px-8">
           <LogoCloud />
         </div>
@@ -156,9 +156,9 @@ function MobileDevelopment() {
       <Marquee text="✦ NATIVE ✦ CROSS-PLATFORM ✦ SCALABLE ✦ SECURE ✦ HIGH-PERFORMANCE " speed={25} />
 
       {/* TECH STACK BENTO GRID */}
-      <section className="bg-white py-32 border-b border-gray-100">
+      <section className="bg-white py-28 border-b border-gray-100">
         <div className="mx-auto max-w-[1400px] px-5 sm:px-8">
-          <div className="text-center mb-16" data-fade>
+          <div className="text-center mb-12" data-fade>
             <h2 className="text-4xl md:text-5xl font-light text-[#1a1a1a] mb-6">
               Our Mobile <span className="font-bold">Tech Stack</span>
             </h2>
@@ -237,7 +237,7 @@ function MobileDevelopment() {
       </section>
 
       {/* SERVICES GRID */}
-      <section className="mx-auto max-w-[1400px] px-5 sm:px-8 mb-32 pt-20">
+      <section className="mx-auto max-w-[1400px] px-5 sm:px-8 mb-12 pt-20">
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {services.map((service, i) => {
             const Icon = service.icon;
@@ -265,11 +265,11 @@ function MobileDevelopment() {
       {/* ABOUT SECTION */}
       <section className="bg-white py-24 border-t border-gray-100">
         <div className="mx-auto max-w-[1400px] px-5 sm:px-8">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-light text-[#1a1a1a] text-center uppercase tracking-wide mb-20" data-fade>
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-light text-[#1a1a1a] text-center uppercase tracking-wide mb-12" data-fade>
             MOBILE APP DEVELOPMENT COMPANY FOR ALL STARTUP TO BIG SCALE BUSINESS
           </h2>
           
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div data-fade className="relative bg-[#f4f7ff] rounded-2xl p-8 aspect-square md:aspect-[4/3] lg:aspect-square flex items-center justify-center overflow-hidden">
               {/* Abstract App Illustration representation */}
               <div className="relative w-full max-w-md h-[400px]">

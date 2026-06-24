@@ -53,7 +53,7 @@ export function Footer() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="mt-20 pt-6 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4 text-xs font-light text-gray-400">
+        <div className="mt-12 pt-6 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4 text-xs font-light text-gray-400">
           <p>Copyright © 2026. Enem PVT LTD. All Rights Reserved</p>
           <div className="flex items-center gap-2">
             <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
@@ -62,11 +62,6 @@ export function Footer() {
           </div>
         </div>
       </div>
-
-      {/* Floating Chat Button */}
-      <button className="fixed bottom-6 right-6 w-14 h-14 bg-yellow-500 rounded-full flex items-center justify-center text-black shadow-lg hover:scale-105 transition-transform z-50">
-        <MessageCircle className="w-7 h-7 fill-black" />
-      </button>
     </footer>
   );
 }

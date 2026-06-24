@@ -97,10 +97,10 @@ function ERPDevelopment() {
   }, []);
 
   return (
-    <div className="bg-[#f5f7fa] min-h-screen pt-32 pb-20">
+    <div className="bg-[#f5f7fa] min-h-screen pt-28 pb-20">
       {/* HERO SECTION */}
-      <section ref={heroRef} className="mx-auto max-w-[1400px] px-5 sm:px-8 mb-24">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+      <section ref={heroRef} className="mx-auto max-w-[1400px] px-5 sm:px-8 mb-12">
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-12 items-center">
           <div>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-[#1a1a1a] leading-tight mb-6">
               ERP Software <span className="text-[#FBBF24]">Development</span>
@@ -150,9 +150,9 @@ function ERPDevelopment() {
       <Marquee text="✦ INVENTORY ✦ HR MANAGEMENT ✦ ACCOUNTING ✦ CRM ✦ ANALYTICS ✦ AUTOMATION " speed={25} />
 
       {/* SERVICES GRID */}
-      <section className="bg-white py-32 border-b border-gray-100">
+      <section className="bg-white py-28 border-b border-gray-100">
         <div className="mx-auto max-w-[1400px] px-5 sm:px-8">
-          <div className="text-center mb-16" data-fade>
+          <div className="text-center mb-12" data-fade>
             <h2 className="text-4xl md:text-5xl font-light text-[#1a1a1a] mb-6">
               Our ERP Services <span className="font-bold">Include</span>
             </h2>
@@ -185,7 +185,7 @@ function ERPDevelopment() {
       {/* BOTTOM CONTENT / CLOSING */}
       <section className="py-24 bg-[#1a1a1a]">
         <div className="mx-auto max-w-4xl px-5 sm:px-8 text-center text-white">
-          <div data-fade className="mb-16">
+          <div data-fade className="mb-12">
             <h2 className="text-3xl font-bold mb-6 text-[#FBBF24]">Custom Digital Solutions</h2>
             <p className="text-lg text-white/80 leading-relaxed">
               In addition to our core services, we provide customised digital solutions tailored to unique business requirements. We work closely with businesses to develop scalable platforms that support operational growth and digital transformation.

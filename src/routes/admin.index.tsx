@@ -168,7 +168,7 @@ function AdminDashboard() {
                   <div className="text-xs text-muted-foreground">{r.domain} • {r.service}</div>
                 </div>
                 <div className="text-right">
-                  <div className="text-xs font-medium">${Number(r.amount || 0).toLocaleString()}</div>
+                  <div className="text-xs font-medium">₹{Number(r.amount || 0).toLocaleString()}</div>
                   <div className="text-[11px] text-muted-foreground">exp {r.expiry}</div>
                 </div>
               </li>

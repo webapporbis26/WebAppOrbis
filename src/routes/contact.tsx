@@ -57,13 +57,13 @@ function Contact() {
   return (
     <>
       {/* ============== HERO SECTION (MOCKUP 3) ============== */}
-      <section ref={heroRef} className="pt-36 pb-20 sm:pt-44 sm:pb-32 relative overflow-hidden bg-slate-50/10">
+      <section ref={heroRef} className="pt-28 pb-20 sm:pt-28 sm:pb-28 relative overflow-hidden bg-slate-50/10">
         <div className="absolute inset-0 z-0">
-          <div className="absolute top-0 right-0 w-[45vw] h-[45vw] rounded-full bg-primary/5 blur-[120px] -mr-20 -mt-20 pointer-events-none" />
-          <div className="absolute bottom-0 left-0 w-[40vw] h-[40vw] rounded-full bg-accent/5 blur-[100px] -ml-20 -mb-20 pointer-events-none" />
+          <div className="absolute top-0 right-0 w-[45vw] h-[45vw] rounded-full bg-primary/5 blur-[120px] -mr-12 -mt-12 pointer-events-none" />
+          <div className="absolute bottom-0 left-0 w-[40vw] h-[40vw] rounded-full bg-accent/5 blur-[100px] -ml-12 -mb-12 pointer-events-none" />
         </div>
 
-        <div className="mx-auto max-w-7xl px-5 sm:px-8 relative z-10 grid lg:grid-cols-[1.1fr_1fr] items-center gap-12 lg:gap-16">
+        <div className="mx-auto max-w-7xl px-5 sm:px-8 relative z-10 grid lg:grid-cols-[1.1fr_1fr] items-center gap-12 lg:gap-12">
           <div className="text-left space-y-8">
             <h1 className="text-5xl sm:text-7xl lg:text-[85px] leading-tight tracking-tight text-foreground flex flex-col items-start gap-4">
               <span className="bg-[#FDE047] px-6 py-2.5 font-light leading-none inline-block text-[#1A1A1A] reveal-block-1">
@@ -146,7 +146,7 @@ function Contact() {
 
       {/* ============== START OF SOMETHING BEAUTIFUL (MOCKUP 1) ============== */}
       <section className="py-24 bg-white border-b border-border/50" data-fade>
-        <div className="mx-auto max-w-7xl px-5 sm:px-8 grid grid-cols-1 lg:grid-cols-[1fr_1.4fr] gap-12 lg:gap-20 items-center">
+        <div className="mx-auto max-w-7xl px-5 sm:px-8 grid grid-cols-1 lg:grid-cols-[1fr_1.4fr] gap-12 lg:gap-12 items-center">
           {/* Left Column: Heading */}
           <div className="text-left">
             <h3 className="text-display text-4xl sm:text-5xl font-light text-foreground/80 tracking-tight leading-none">
@@ -197,7 +197,7 @@ function Contact() {
 
       {/* ============== DIGITAL INNOVATIONS SECTION ============== */}
       <section className="py-24 bg-white border-b border-border/30 overflow-hidden" data-fade>
-        <div className="mx-auto max-w-7xl px-5 sm:px-8 grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-20 items-center">
+        <div className="mx-auto max-w-7xl px-5 sm:px-8 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-12 items-center">
           
           {/* Left Column: Abstract shapes and team count */}
           <div className="relative py-12 flex flex-col items-center justify-center text-center max-w-sm mx-auto w-full">
@@ -241,11 +241,11 @@ function Contact() {
       {/* ============== LET'S GET STARTED NOW ============== */}
       <section id="contact-form" className="relative py-20 sm:py-28 bg-[#f0f7ff] overflow-hidden">
         <div className="mx-auto max-w-[1200px] px-5 sm:px-8 relative z-10">
-          <div className="grid grid-cols-1 md:grid-cols-[1fr_1.2fr] gap-16 lg:gap-24 items-start">
+          <div className="grid grid-cols-1 md:grid-cols-[1fr_1.2fr] gap-12 lg:gap-12 items-start">
             
             {/* Left Column */}
             <div className="flex flex-col text-left pt-2">
-              <div className="flex items-center mb-16">
+              <div className="flex items-center mb-12">
                 <div className="flex items-center">
                   <span className="text-[55px] leading-none font-light text-[#222] mr-1 border border-[#222] px-2 rounded-sm shadow-sm bg-transparent">D</span>
                   <div className="flex flex-col text-[10px] leading-none font-extrabold text-[#222] mr-3 mt-1 space-y-[2px]">
@@ -266,7 +266,7 @@ function Contact() {
                 </a>
               </div>
 
-              <div className="mt-16 animate-float drop-shadow-xl hidden sm:block w-full max-w-[320px]">
+              <div className="mt-12 animate-float drop-shadow-xl hidden sm:block w-full max-w-[320px]">
                 <img src={contactIllustration} alt="Contact Illustration" className="w-full h-auto object-contain rounded-3xl mix-blend-multiply opacity-90" />
               </div>
             </div>
@@ -305,7 +305,7 @@ function Contact() {
       </section>
 
       {/* ============== MAP SECTION ============== */}
-      <section className="pb-32" data-fade>
+      <section className="pb-28" data-fade>
         <div className="mx-auto max-w-7xl px-5 sm:px-8">
           <div className="relative rounded-[2rem] border border-border bg-card overflow-hidden shadow-elegant group h-[450px]">
             {/* Map Iframe with modern grayscale & dark mode logic */}

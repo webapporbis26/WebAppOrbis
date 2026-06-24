@@ -27,7 +27,7 @@ export function LogoCloud({ className, title, subtitle, limit = 12, ...props }: 
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
         {/* Header Section (Only if title is provided) */}
         {title && (
-          <div className="text-center mb-12 sm:mb-16">
+          <div className="text-center mb-12 sm:mb-12">
             <h2 className="text-display text-3xl sm:text-4xl lg:text-[2.5rem] font-light text-foreground mb-3 leading-tight tracking-tight">
               {title}
             </h2>

@@ -105,7 +105,7 @@ function ProjectDetail() {
   return (
     <>
       {/* HERO */}
-      <section ref={heroRef} className="relative pt-32 pb-12">
+      <section ref={heroRef} className="relative pt-28 pb-12">
         <div className="mx-auto max-w-7xl px-5 sm:px-8">
           <Link
             to="/portfolio"
@@ -170,7 +170,7 @@ function ProjectDetail() {
 
       {/* STORY */}
       <section className="pb-24">
-        <div className="mx-auto grid max-w-7xl gap-16 px-5 sm:px-8 md:grid-cols-12">
+        <div className="mx-auto grid max-w-7xl gap-12 px-5 sm:px-8 md:grid-cols-12">
           <div className="md:col-span-4">
             <p className="sticky top-28 text-xs uppercase tracking-[0.3em] text-muted-foreground">The work</p>
           </div>
@@ -206,7 +206,7 @@ function ProjectDetail() {
       </section>
 
       {/* GALLERY */}
-      <section ref={galleryRef} className="pb-32">
+      <section ref={galleryRef} className="pb-28">
         <div className="mx-auto max-w-7xl px-5 sm:px-8">
           <div className="grid gap-6 md:grid-cols-6">
             <div className="md:col-span-4 overflow-hidden rounded-3xl bg-muted">

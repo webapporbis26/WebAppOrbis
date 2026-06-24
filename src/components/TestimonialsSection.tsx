@@ -64,7 +64,7 @@ const thirdColumn = testimonials.slice(6, 9);
 
 export const TestimonialsSection = () => {
   return (
-    <section className="bg-background pt-12 pb-20 sm:pt-16 sm:pb-32 relative border-t border-border overflow-hidden">
+    <section className="bg-background pt-12 pb-20 sm:pt-16 sm:pb-28 relative border-t border-border overflow-hidden">
       <div className="container z-10 mx-auto px-5 sm:px-8 max-w-7xl">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -82,7 +82,7 @@ export const TestimonialsSection = () => {
           </p>
         </motion.div>
 
-        <div className="flex justify-center gap-6 mt-16 [mask-image:linear-gradient(to_bottom,transparent,black_10%,black_90%,transparent)] max-h-[600px] sm:max-h-[740px] overflow-hidden">
+        <div className="flex justify-center gap-6 mt-12 [mask-image:linear-gradient(to_bottom,transparent,black_10%,black_90%,transparent)] max-h-[600px] sm:max-h-[740px] overflow-hidden">
           <TestimonialsColumn testimonials={firstColumn} duration={15} />
           <TestimonialsColumn testimonials={secondColumn} className="hidden md:block" duration={19} />
           <TestimonialsColumn testimonials={thirdColumn} className="hidden lg:block" duration={17} />

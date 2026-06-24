@@ -26,10 +26,10 @@ function Portfolio() {
   }, [activeFilter]);
 
   return (
-    <div className="bg-white min-h-screen pt-40 pb-32 font-sans">
+    <div className="bg-white min-h-screen pt-28 pb-28 font-sans">
       
       {/* HERO SECTION */}
-      <section className="mx-auto max-w-[1400px] px-5 sm:px-8 mb-24">
+      <section className="mx-auto max-w-[1400px] px-5 sm:px-8 mb-12">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           
           {/* Left Text */}
@@ -97,7 +97,7 @@ function Portfolio() {
       </section>
 
       {/* FILTER BAR */}
-      <section className="mx-auto max-w-[1400px] px-5 sm:px-8 mb-16">
+      <section className="mx-auto max-w-[1400px] px-5 sm:px-8 mb-12">
         <div className="flex flex-wrap items-center justify-start gap-4" data-fade>
           {CATEGORIES.map(cat => (
             <button
@@ -117,7 +117,7 @@ function Portfolio() {
 
       {/* GRID */}
       <section className="mx-auto max-w-[1400px] px-5 sm:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 gap-y-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 gap-y-12">
           {filteredProjects.map((p) => (
             <ProjectCard key={p.title} p={p} />
           ))}

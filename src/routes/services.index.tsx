@@ -40,7 +40,7 @@ const services = [
     desc: "From marketing sites that convert to web apps that scale — designed in-house and engineered to last.",
     image: serviceWeb,
     tag: "Web Platforms",
-    price: "From $4,800",
+    price: "From ₹4,800",
     timeline: "3–8 weeks",
     items: [
       "Brand & marketing sites",
@@ -57,7 +57,7 @@ const services = [
     desc: "Native and cross-platform apps for iOS and Android, with the polish and performance the stores reward.",
     image: serviceMobile,
     tag: "iOS · Android",
-    price: "From $12,000",
+    price: "From ₹12,000",
     timeline: "6–14 weeks",
     items: [
       "iOS & Android native",
@@ -74,7 +74,7 @@ const services = [
     desc: "Custom ERP systems that mirror how your team actually works — fully integrated and infinitely flexible.",
     image: serviceErp,
     tag: "Enterprise",
-    price: "From $24,000",
+    price: "From ₹24,000",
     timeline: "8–20 weeks",
     items: [
       "Inventory & operations",
@@ -167,7 +167,7 @@ function Services() {
   return (
     <>
       {/* Hero */}
-      <section ref={heroRef} className="pt-40 pb-20 relative overflow-hidden">
+      <section ref={heroRef} className="pt-28 pb-20 relative overflow-hidden">
         <div
           aria-hidden
           className="absolute -top-32 -right-32 h-[480px] w-[480px] rounded-full blur-3xl opacity-40"
@@ -187,7 +187,7 @@ function Services() {
           </p>
 
           {/* Stats */}
-          <div data-fade className="mt-16 grid grid-cols-2 gap-6 border-t border-border pt-10 sm:grid-cols-4">
+          <div data-fade className="mt-12 grid grid-cols-2 gap-6 border-t border-border pt-10 sm:grid-cols-4">
             {stats.map((s) => (
               <div key={s.label}>
                 <div className="text-display text-3xl sm:text-4xl">{s.value}</div>
@@ -285,7 +285,7 @@ function Services() {
             </div>
           </div>
 
-          <div className="mt-16 grid gap-6 md:grid-cols-3 lg:grid-cols-5">
+          <div className="mt-12 grid gap-6 md:grid-cols-3 lg:grid-cols-5">
             {process.map((p, i) => (
               <div
                 key={p.title}
@@ -314,7 +314,7 @@ function Services() {
             Words from teams we've shipped with.
           </SplitText>
 
-          <div className="mt-14 grid gap-6 md:grid-cols-3">
+          <div className="mt-12 grid gap-6 md:grid-cols-3">
             {testimonials.map((t) => (
               <figure
                 key={t.name}
@@ -359,7 +359,7 @@ function Services() {
       </section>
 
       {/* CTA */}
-      <section className="py-32">
+      <section className="py-28">
         <div className="mx-auto max-w-7xl px-5 sm:px-8">
           <div
             className="rounded-3xl p-12 sm:p-20 text-primary-foreground relative overflow-hidden"

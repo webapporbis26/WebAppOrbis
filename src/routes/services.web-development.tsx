@@ -59,7 +59,7 @@ export const Route = createFileRoute("/services/web-development")({
 
 const heroStats = [
   { n: 15, s: "+", label: "Years of Experience" },
-  { n: 1500, s: "+", label: "Trusted Clients Worldwide" },
+  { n: 50, s: "+", label: "Trusted Clients Worldwide" },
   { n: 35, s: "+", label: "Experienced Designers & Developers" },
   { n: 30, s: "+", label: "Days Average Project Duration" },
 ];
@@ -313,7 +313,7 @@ function WebDevelopment() {
   return (
     <>
       {/* ============== HERO ============== */}
-      <section ref={heroRef} className="relative pt-36 sm:pt-44 pb-20 overflow-hidden">
+      <section ref={heroRef} className="relative pt-28 sm:pt-28 pb-20 overflow-hidden">
         {/* Background decorative elements */}
         <div
           aria-hidden
@@ -334,7 +334,7 @@ function WebDevelopment() {
             <ArrowLeft className="h-4 w-4" /> All Services
           </Link>
 
-          <div className="grid lg:grid-cols-[1.2fr_1fr] gap-12 lg:gap-16 items-start">
+          <div className="grid lg:grid-cols-[1.2fr_1fr] gap-12 lg:gap-12 items-start">
             {/* Left: Title */}
             <div>
               <p className="mb-4 text-xs uppercase tracking-[0.3em] text-muted-foreground inline-flex items-center gap-2">
@@ -382,9 +382,9 @@ function WebDevelopment() {
       </section>
 
       {/* ============== DELIVERED CLASS - SERVICES GRID ============== */}
-      <section className="relative py-24 sm:py-32 bg-[#f5f7fa]">
+      <section className="relative py-24 sm:py-28 bg-[#f5f7fa]">
         <div className="mx-auto max-w-7xl px-5 sm:px-8">
-          <div className="text-center mb-16 sm:mb-20">
+          <div className="text-center mb-12 sm:mb-12">
             <p data-fade className="mb-4 text-xs uppercase tracking-[0.3em] text-muted-foreground">
               What We Deliver
             </p>
@@ -449,9 +449,9 @@ function WebDevelopment() {
       </section>
 
       {/* ============== WHY CHOOSE US FEATURES ============== */}
-      <section className="relative py-24 sm:py-32 bg-background">
+      <section className="relative py-24 sm:py-28 bg-background">
         <div className="mx-auto max-w-7xl px-5 sm:px-8">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div data-fade>
               <p className="mb-4 text-xs uppercase tracking-[0.3em] text-muted-foreground">
                 Why Choose Us
@@ -505,9 +505,9 @@ function WebDevelopment() {
       </section>
 
       {/* ============== INDUSTRIES WE SERVE ============== */}
-      <section className="relative py-24 sm:py-32 bg-muted/30">
+      <section className="relative py-24 sm:py-28 bg-muted/30">
         <div className="mx-auto max-w-7xl px-5 sm:px-8">
-          <div className="text-center mb-16 sm:mb-20">
+          <div className="text-center mb-12 sm:mb-12">
             <p data-fade className="mb-4 text-xs uppercase tracking-[0.3em] text-muted-foreground">
               Industries We Serve
             </p>
@@ -602,9 +602,9 @@ function WebDevelopment() {
       <Marquee text="✦ INNOVATE ✦ DESIGN ✦ ARCHITECT ✦ DEPLOY ✦ SCALE " speed={25} />
 
       {/* TECH STACK BENTO GRID */}
-      <section className="bg-white py-32 border-b border-gray-100">
+      <section className="bg-white py-28 border-b border-gray-100">
         <div className="mx-auto max-w-[1400px] px-5 sm:px-8">
-          <div className="text-center mb-16" data-fade>
+          <div className="text-center mb-12" data-fade>
             <h2 className="text-4xl md:text-5xl font-light text-[#1a1a1a] mb-6">
               Our Modern <span className="font-bold">Tech Stack</span>
             </h2>
@@ -683,9 +683,9 @@ function WebDevelopment() {
       </section>
 
       {/* ============== PORTFOLIO ============== */}
-      <section className="mx-auto max-w-[1400px] px-5 sm:px-8 mb-32 pt-20">
+      <section className="mx-auto max-w-[1400px] px-5 sm:px-8 mb-12 pt-20">
         <div className="mx-auto max-w-[1400px] px-5 sm:px-8">
-          <div className="text-center max-w-3xl mx-auto mb-14">
+          <div className="text-center max-w-3xl mx-auto mb-12">
             <p data-fade className="mb-4 text-xs uppercase tracking-[0.3em] text-muted-foreground">
               Our Work
             </p>
@@ -704,7 +704,7 @@ function WebDevelopment() {
             ))}
           </div>
 
-          <div className="mt-16 flex justify-center" data-fade>
+          <div className="mt-12 flex justify-center" data-fade>
             <MagneticButton
               as="a"
               href="/portfolio"
@@ -721,7 +721,7 @@ function WebDevelopment() {
       {/* ============== TECH STACK ============== */}
       <section className="relative py-20 sm:py-24 bg-background border-t border-border/40">
         <div className="mx-auto max-w-7xl px-5 sm:px-8">
-          <div className="text-center mb-14" data-fade>
+          <div className="text-center mb-12" data-fade>
             <h2 className="text-display text-3xl sm:text-4xl font-normal">
               Technologies We <span className="gradient-text">Use</span>
             </h2>
@@ -777,7 +777,7 @@ function WebDevelopment() {
       </section>
 
       {/* ============== CTA ============== */}
-      <section className="py-32">
+      <section className="py-28">
         <div className="mx-auto max-w-7xl px-5 sm:px-8">
           <div
             className="rounded-3xl p-12 sm:p-20 text-primary-foreground relative overflow-hidden"

@@ -152,7 +152,7 @@ function About() {
 
   return (
     <>
-      <section ref={heroRef} className="pt-32 pb-20 sm:pt-40 sm:pb-32 relative overflow-hidden" style={{ background: "#f0f2f5" }}>
+      <section ref={heroRef} className="pt-28 pb-20 sm:pt-28 sm:pb-28 relative overflow-hidden" style={{ background: "#f0f2f5" }}>
         <div className="mx-auto max-w-7xl px-5 sm:px-8 relative z-10 grid lg:grid-cols-2 items-center gap-12 lg:gap-8 min-h-[400px]">
           {/* LEFT — text */}
           <div className="text-left" data-fade>
@@ -235,9 +235,9 @@ function About() {
 
       {/* ============== OUR PHILOSOPHY ============== */}
       <section className="relative py-20 sm:py-28 bg-white">
-        <div className="mx-auto max-w-[1200px] px-5 sm:px-8 grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-12 lg:gap-24 items-start">
+        <div className="mx-auto max-w-[1200px] px-5 sm:px-8 grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-12 lg:gap-12 items-start">
           <div data-fade className="flex flex-col h-full">
-            <div className="w-16 h-[200px] sm:h-[300px] bg-[#FFC107] mb-12 sm:mb-16" />
+            <div className="w-16 h-[200px] sm:h-[300px] bg-[#FFC107] mb-12 sm:mb-12" />
             <div className="sticky top-32">
               <SplitText tag="h2" className="text-5xl sm:text-6xl font-light text-foreground tracking-wide">Our Vision &</SplitText>
               <SplitText tag="h1" className="text-7xl sm:text-[90px] font-black text-foreground uppercase mt-2 tracking-tighter leading-none">PHILOSOPHY</SplitText>
@@ -248,7 +248,7 @@ function About() {
           </div>
           
           <div data-fade className="flex flex-col justify-center pt-24 sm:pt-[200px]">
-            <SplitText tag="h2" className="text-3xl sm:text-4xl lg:text-[46px] font-light text-foreground mb-10 sm:mb-14 leading-[1.25]">
+            <SplitText tag="h2" className="text-3xl sm:text-4xl lg:text-[46px] font-light text-foreground mb-10 sm:mb-12 leading-[1.25]">
               Transforming Ideas Into <br className="hidden lg:block" /> Digital Realities
             </SplitText>
             <div className="space-y-8 text-[14px] sm:text-[15px] text-foreground/70 leading-[1.8] text-justify md:text-left">
@@ -322,7 +322,7 @@ function About() {
 
       {/* ============== MISSION & VISION ============== */}
       <section className="py-20 sm:py-28 bg-[#f4f6f8]">
-        <div className="mx-auto max-w-[1200px] px-5 sm:px-8 text-center mb-16 sm:mb-20">
+        <div className="mx-auto max-w-[1200px] px-5 sm:px-8 text-center mb-12 sm:mb-12">
           <SplitText tag="h2" className="text-3xl sm:text-5xl font-light text-[#222] mb-2 tracking-wide">Our Works Define Our</SplitText>
           <SplitText tag="h2" className="text-4xl sm:text-6xl font-bold text-[#111] tracking-tight mb-6">Success Look Through Some</SplitText>
           <p className="text-[#555] text-[15px] sm:text-[17px]">Excellent customer service is our foundation</p>
@@ -360,7 +360,7 @@ function About() {
       </section>
 
       <section className="py-20 sm:py-28 bg-[#fafafa]">
-        <div className="mx-auto grid max-w-7xl gap-20 px-5 sm:px-8 lg:grid-cols-[1fr_1.2fr] items-start">
+        <div className="mx-auto grid max-w-7xl gap-12 px-5 sm:px-8 lg:grid-cols-[1fr_1.2fr] items-start">
           <div className="relative overflow-hidden rounded-2xl aspect-[4/5] shadow-2xl">
             <img
               ref={imgRef}
@@ -396,7 +396,7 @@ function About() {
 
       <section className="py-20 sm:py-28 bg-white">
         <div className="mx-auto max-w-7xl px-5 sm:px-8">
-          <div className="mb-20 text-left">
+          <div className="mb-12 text-left">
             <p data-fade className="mb-6 text-sm uppercase tracking-[0.3em] text-gray-400 font-medium">What We Do</p>
             <h2 className="text-5xl sm:text-6xl md:text-7xl font-light tracking-tight text-[#1a1a1a]">
               Our Core <span className="font-bold">Services.</span>
@@ -457,7 +457,7 @@ function About() {
 
       <section className="py-20 sm:py-28 bg-[#fafafa]">
         <div className="mx-auto max-w-7xl px-5 sm:px-8">
-          <div className="grid lg:grid-cols-2 gap-20 lg:gap-32">
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-12">
             <div className="space-y-10 text-left">
               <p data-fade className="text-sm uppercase tracking-[0.3em] text-gray-400 font-medium">Our Approach</p>
               <h2 className="text-4xl sm:text-5xl font-light tracking-tight text-[#1a1a1a] leading-tight">Tailored strategies for <br/><span className="font-bold">unique goals.</span></h2>
@@ -500,11 +500,11 @@ function About() {
       {/* ============== LET'S GET STARTED NOW ============== */}
       <section className="relative py-20 sm:py-28 bg-[#f0f7ff] overflow-hidden">
         <div className="mx-auto max-w-[1200px] px-5 sm:px-8 relative z-10">
-          <div className="grid grid-cols-1 md:grid-cols-[1fr_1.2fr] gap-16 lg:gap-24 items-start">
+          <div className="grid grid-cols-1 md:grid-cols-[1fr_1.2fr] gap-12 lg:gap-12 items-start">
             
             {/* Left Column */}
             <div className="flex flex-col text-left pt-2">
-              <div className="flex items-center mb-16">
+              <div className="flex items-center mb-12">
                 <div className="flex items-center">
                   <span className="text-[55px] leading-none font-light text-[#222] mr-1 border border-[#222] px-2 rounded-sm shadow-sm bg-transparent">D</span>
                   <div className="flex flex-col text-[10px] leading-none font-extrabold text-[#222] mr-3 mt-1 space-y-[2px]">
@@ -525,7 +525,7 @@ function About() {
                 </a>
               </div>
 
-              <div className="mt-16 animate-float drop-shadow-xl hidden sm:block w-full max-w-[320px]">
+              <div className="mt-12 animate-float drop-shadow-xl hidden sm:block w-full max-w-[320px]">
                 <img src={contactIllustration} alt="Contact Illustration" className="w-full h-auto object-contain rounded-3xl mix-blend-multiply opacity-90" />
               </div>
             </div>

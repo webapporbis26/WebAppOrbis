@@ -26,7 +26,7 @@ import { LogoCloud } from "@/components/ui/logo-cloud-3";
 import { Marquee } from "@/components/ui/marquee";
 import { MagneticButton } from "@/components/MagneticButton";
 
-import caseStudyImg from "@/assets/portfolio-4.jpg";
+import caseStudyImg from "@/assets/project/event.png";
 
 export const Route = createFileRoute("/services/digital-marketing")({
   head: () => ({
@@ -159,9 +159,9 @@ function DigitalMarketing() {
   }, []);
 
   return (
-    <div className="bg-[#FAFAFA] min-h-screen pt-32 pb-20">
+    <div className="bg-[#FAFAFA] min-h-screen pt-28 pb-20">
       {/* HEADER BANNER */}
-      <section ref={heroRef} className="mx-auto max-w-[1400px] px-5 sm:px-8 mb-24">
+      <section ref={heroRef} className="mx-auto max-w-[1400px] px-5 sm:px-8 mb-12">
         <div className="bg-[#FFC107] py-20 px-8 rounded-lg text-center flex flex-col items-center justify-center min-h-[350px]">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-[#1a1a1a] max-w-4xl leading-tight tracking-tight mb-10">
             Get a Custom Digital Marketing Strategy for Your Business
@@ -176,8 +176,8 @@ function DigitalMarketing() {
       </section>
 
       {/* WHY CHOOSE US */}
-      <section className="mx-auto max-w-6xl px-5 sm:px-8 mb-32">
-        <div className="text-center mb-16">
+      <section className="mx-auto max-w-6xl px-5 sm:px-8 mb-12">
+        <div className="text-center mb-12">
           <p className="text-3xl md:text-4xl font-light text-[#1a1a1a] mb-2">
             Why Choose WebApp Orbis for
           </p>
@@ -189,7 +189,7 @@ function DigitalMarketing() {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-12 lg:gap-20 mt-20" data-fade>
+        <div className="grid md:grid-cols-2 gap-12 lg:gap-12 mt-12" data-fade>
           <div className="flex gap-6 items-start">
             <div className="shrink-0 mt-1">
               <Megaphone className="w-12 h-12 text-[#1a1a1a]" strokeWidth={1.5} />
@@ -197,7 +197,7 @@ function DigitalMarketing() {
             <div>
               <h3 className="text-2xl font-bold text-[#1a1a1a] mb-4">Strong Brand Building</h3>
               <p className="text-gray-600 leading-relaxed text-sm">
-                Served 500+ brands across B2B, B2C, education, and e-commerce in 15+ years. From logo to LinkedIn, we build brands that your audience recognises and trusts across every channel.
+                Served 50+ brands across B2B, B2C, education, and e-commerce in 15+ years. From logo to LinkedIn, we build brands that your audience recognises and trusts across every channel.
               </p>
             </div>
           </div>
@@ -219,9 +219,9 @@ function DigitalMarketing() {
       <Marquee text="✦ STRATEGIZE ✦ OPTIMIZE ✦ ENGAGE ✦ CONVERT ✦ SCALE " speed={25} />
 
       {/* TECH STACK BENTO GRID */}
-      <section className="bg-white py-32 border-y border-gray-100 mb-20">
+      <section className="bg-white py-28 border-y border-gray-100 mb-12">
         <div className="mx-auto max-w-[1400px] px-5 sm:px-8">
-          <div className="text-center mb-16" data-fade>
+          <div className="text-center mb-12" data-fade>
             <h2 className="text-4xl md:text-5xl font-light text-[#1a1a1a] mb-6">
               Our Marketing <span className="font-bold">Tech Stack</span>
             </h2>
@@ -300,7 +300,7 @@ function DigitalMarketing() {
       </section>
 
       {/* LOGO CLOUD */}
-      <section className="bg-white py-20 border-y border-gray-100 mb-20">
+      <section className="bg-white py-20 border-y border-gray-100 mb-12">
         <div className="mx-auto max-w-7xl px-5 sm:px-8">
           <div className="flex flex-col md:flex-row items-center justify-between gap-8 mb-12">
             <h3 className="text-2xl md:text-3xl font-light text-gray-800">
@@ -316,7 +316,7 @@ function DigitalMarketing() {
       </section>
 
       {/* SERVICES GRID */}
-      <section className="mx-auto max-w-[1400px] px-5 sm:px-8 mb-32">
+      <section className="mx-auto max-w-[1400px] px-5 sm:px-8 mb-12">
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {services.map((service, i) => {
             const Icon = service.icon;
@@ -342,7 +342,7 @@ function DigitalMarketing() {
       </section>
 
       {/* INDUSTRIES GRID */}
-      <section className="mx-auto max-w-[1400px] px-5 sm:px-8 mb-32">
+      <section className="mx-auto max-w-[1400px] px-5 sm:px-8 mb-12">
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {industries.map((ind, i) => {
             const Icon = ind.icon;
@@ -367,9 +367,9 @@ function DigitalMarketing() {
       </section>
 
       {/* PROVEN RESULTS */}
-      <section className="bg-white py-32 border-t border-gray-100">
+      <section className="bg-white py-28 border-t border-gray-100">
         <div className="mx-auto max-w-7xl px-5 sm:px-8">
-          <div className="grid lg:grid-cols-2 gap-16 items-start">
+          <div className="grid lg:grid-cols-2 gap-12 items-start">
             <div data-fade>
               <h2 className="text-4xl md:text-5xl lg:text-6xl font-light text-[#1a1a1a] leading-tight mb-8">
                 Proven Results That<br/>

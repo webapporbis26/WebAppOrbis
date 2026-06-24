@@ -24,7 +24,7 @@ function SemiCircleOrbit({ radius, centerX, centerY, items, iconSize }: any) {
           className="
             w-[1000px] h-[1000px] rounded-full 
             bg-[radial-gradient(circle_at_center,rgba(0,0,0,0.05),transparent_70%)]
-            -mt-40 
+            -mt-12 
             pointer-events-none
           "
           style={{ zIndex: 0 }}
@@ -117,7 +117,7 @@ export default function MultiOrbitSemiCircle() {
         }
       `}</style>
       <div className="relative flex flex-col items-center text-center z-10">
-        <h2 data-fade className="text-[32px] sm:text-[40px] text-foreground font-light mb-16 tracking-tight">
+        <h2 data-fade className="text-[32px] sm:text-[40px] text-foreground font-light mb-12 tracking-tight">
           Technologies <span className="font-bold">We Used</span>
         </h2>
 
