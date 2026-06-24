@@ -64,7 +64,7 @@ const thirdColumn = testimonials.slice(6, 9);
 
 export const TestimonialsSection = () => {
   return (
-    <section className="bg-background py-20 sm:py-32 relative border-t border-border overflow-hidden">
+    <section className="bg-background pt-12 pb-20 sm:pt-16 sm:pb-32 relative border-t border-border overflow-hidden">
       <div className="container z-10 mx-auto px-5 sm:px-8 max-w-7xl">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -73,11 +73,6 @@ export const TestimonialsSection = () => {
           viewport={{ once: true }}
           className="flex flex-col items-center justify-center max-w-[540px] mx-auto text-center"
         >
-          <div className="flex justify-center mb-6">
-            <div className="border border-border py-1 px-4 rounded-full text-xs uppercase tracking-[0.3em] text-muted-foreground bg-muted/50">
-              Testimonials
-            </div>
-          </div>
 
           <h2 className="text-4xl sm:text-5xl font-light tracking-wide text-foreground leading-[1.1]">
             What our <span className="font-bold">users say</span>

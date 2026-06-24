@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
-import { ArrowDown, ArrowUpRight, Globe, Smartphone, Database, Sparkles, Zap, Shield, Users, Star, Search, Compass, Rocket, MonitorSmartphone, SearchCheck, CodeXml, Headset, Share2, MessageCircle } from "lucide-react";
+import { ArrowDown, ArrowUpRight, Globe, Smartphone, Database, Sparkles, Zap, Shield, Users, Star, Search, Compass, Rocket, MonitorSmartphone, SearchCheck, CodeXml, Headset, Share2, MessageCircle, PhoneCall, LayoutTemplate, Wrench } from "lucide-react";
 import { gsap, ScrollTrigger, RevealLine, useTextReveal, useFadeUp, useCounter, useSerenityText } from "@/lib/anim";
 import SplitText from "@/components/ui/SplitText";
 import { MagneticButton } from "@/components/MagneticButton";
@@ -50,12 +50,12 @@ const faqs = [
 ];
 
 const featuresList = [
-  { icon: MonitorSmartphone, title: "Mobile Friendly Web Designs" },
-  { icon: SearchCheck, title: "SEO-Optimized Websites" },
-  { icon: CodeXml, title: "Lightweight and Fast Loading HTML Pages" },
-  { icon: Headset, title: "Unconditional Free Lifetime Support" },
-  { icon: Share2, title: "Social Media Page Creation and Integration" },
-  { icon: MessageCircle, title: "Direct Enquiry to Your WhatsApp" },
+  { icon: MonitorSmartphone, title: "Mobile Friendly Web Designs", desc: "Flawless experience across all devices and screen sizes." },
+  { icon: SearchCheck, title: "SEO-Optimized Websites", desc: "Built with best practices to rank higher on search engines." },
+  { icon: CodeXml, title: "Lightweight and Fast Loading HTML Pages", desc: "Optimized code for blazing fast performance." },
+  { icon: Headset, title: "Unconditional Free Lifetime Support", desc: "We're here to help you, anytime you need us." },
+  { icon: Share2, title: "Social Media Page Creation and Integration", desc: "Seamlessly connect your website with social channels." },
+  { icon: MessageCircle, title: "Direct Enquiry to Your WhatsApp", desc: "Get leads instantly delivered to your WhatsApp." },
 ];
 
 export const Route = createFileRoute("/")({
@@ -72,11 +72,12 @@ export const Route = createFileRoute("/")({
 
 
 
-const features = [
-  { icon: Sparkles, title: "Crafted with intent", desc: "Every pixel, transition and interaction has a reason." },
-  { icon: Zap, title: "Performance first", desc: "Sub-second loads. 100/100 Lighthouse is the baseline." },
-  { icon: Shield, title: "Built to scale", desc: "Architecture that holds up at 10x your current traffic." },
-  { icon: Users, title: "Partners, not vendors", desc: "We embed with your team and ship like one of you." },
+const processSteps = [
+  { icon: PhoneCall, title: "Project will be evaluated in detail" },
+  { icon: LayoutTemplate, title: "Web Design preview & suggestions" },
+  { icon: MonitorSmartphone, title: "Designing of web pages & html conversion" },
+  { icon: Rocket, title: "Launch the website & final payment" },
+  { icon: Wrench, title: "You will get a after service" },
 ];
 
 const testimonials = [
@@ -255,19 +256,46 @@ function Home() {
         </div>
       </section>
 
+      {/* ============== FEATURES STRIP ============== */}
+      <section className="relative z-30 mt-16 sm:mt-24 mx-auto max-w-[90rem] px-5 sm:px-8">
+        <div className="mb-8 text-center" data-fade>
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-foreground">
+            Love Our Design? Let's Create Your <span style={{ color: "var(--color-primary, #e11d48)" }}>Dream Website</span>.
+          </h2>
+          <p className="mt-2 text-[#2DD4BF] font-semibold text-lg sm:text-xl">
+            Talk to Web Design Experts today.
+          </p>
+        </div>
+        <div className="py-4 px-2 sm:px-4 flex flex-wrap justify-between items-start gap-y-10 gap-x-4" data-fade>
+          {featuresList.map((f, i) => (
+            <div key={i} className="relative flex flex-col items-center text-center w-1/2 sm:w-1/3 lg:flex-1 px-2 group cursor-default">
+              <div className="h-14 w-14 sm:h-16 sm:w-16 rounded-full flex items-center justify-center text-[#2DD4BF] group-hover:scale-110 transition-transform duration-300 mb-4 bg-[#2DD4BF]/10">
+                <f.icon className="h-7 w-7 sm:h-8 sm:w-8 stroke-[1.5]" />
+              </div>
+              <h4 className="text-[11px] sm:text-[13px] font-medium text-foreground/70 leading-snug max-w-[140px] transition-all duration-300 group-hover:-translate-y-1">
+                {f.title}
+              </h4>
+              
+              {/* Animated Tooltip */}
+              <div className="absolute top-[100%] left-1/2 -translate-x-1/2 mt-2 w-[160px] sm:w-[200px] bg-foreground text-background text-[11px] sm:text-xs p-3 rounded-xl shadow-xl opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 pointer-events-none z-50">
+                <div className="absolute -top-1.5 left-1/2 -translate-x-1/2 border-4 border-transparent border-b-foreground" />
+                {f.desc}
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
       {/* ============== DIGITAL SOLUTIONS ============== */}
-      <section className="relative py-24 sm:py-32 bg-[#f5f7fa]">
+      <section className="relative pt-12 pb-12 sm:pt-16 sm:pb-16 bg-[#f5f7fa]">
         <div className="mx-auto max-w-7xl px-5 sm:px-8">
           <div className="text-center mb-16 sm:mb-20" data-fade>
-            <h2 className="text-display text-3xl sm:text-4xl lg:text-[2.75rem] font-light text-foreground leading-[1.2] tracking-tight">
-              Digital Solutions for your
+            <h2 className="text-display text-3xl sm:text-4xl lg:text-[2.75rem] text-foreground leading-[1.2] tracking-tight">
+              <span className="font-light">Digital Solutions for your</span> <span className="font-bold">Business Growth</span>
             </h2>
-            <h3 className="text-display text-3xl sm:text-4xl lg:text-[2.75rem] font-bold text-foreground leading-[1.2] tracking-tight">
-              Business Growth
-            </h3>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 lg:gap-12">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-10">
             {[
               {
                 emoji: "💻",
@@ -284,11 +312,18 @@ function Home() {
                 link: "/services/mobile-development",
               },
               {
-                emoji: "⚙️",
+                emoji: "📈",
+                color: "#818CF8",
+                title: "Digital Marketing",
+                desc: "Boost your online presence and reach your target audience with data-driven marketing campaigns. We leverage social media, content marketing, and paid advertising to drive measurable growth and conversions.",
+                link: "/services/digital-marketing",
+              },
+              {
+                emoji: "🎯",
                 color: "#FBBF24",
-                title: "ERP Solutions",
-                desc: "We develop customised ERP systems that streamline daily business operations and improve workflow management. Our ERP solutions help organisations manage multiple departments efficiently through integrated and automated systems.",
-                link: "/services/erp-software",
+                title: "SEO Optimization",
+                desc: "Improve your search engine rankings and drive organic traffic to your website. We implement advanced on-page and off-page SEO strategies to ensure your business stands out in search results.",
+                link: "/services/seo",
               },
             ].map((card, i) => (
               <div key={i} data-fade className="flex flex-col items-start group">
@@ -297,7 +332,7 @@ function Home() {
                   {card.title}
                 </h4>
                 <div className="w-8 h-1 rounded-full mb-6" style={{ backgroundColor: card.color }} />
-                <p className="text-[15px] text-foreground/70 leading-relaxed mb-8 flex-1">
+                <p className="text-[15px] text-foreground/70 leading-relaxed mb-5 flex-1">
                   {card.desc}
                 </p>
                 <Link
@@ -314,16 +349,16 @@ function Home() {
       </section>
 
       {/* ============== COMPREHENSIVE ABOUT US ============== */}
-      <section className="relative py-16 sm:py-24 bg-muted/30">
+      <section className="relative pt-8 pb-16 sm:pt-12 sm:pb-24 bg-muted/30">
         <div className="mx-auto max-w-7xl px-5 sm:px-8">
-          <div className="mb-8 text-center max-w-3xl mx-auto">
+          <div className="mb-4 text-center max-w-3xl mx-auto">
             <SplitText tag="h2" className="text-display text-4xl sm:text-5xl lg:text-6xl font-normal leading-[1.1]">
               A studio built around <span className="gradient-text">craft, clarity and care.</span>
             </SplitText>
           </div>
 
           <Tabs defaultValue="story" className="w-full">
-            <TabsList className="grid w-full grid-cols-1 md:grid-cols-3 max-w-3xl mx-auto mb-10 h-auto rounded-full bg-background border border-border/50 p-1">
+            <TabsList className="grid w-full grid-cols-1 md:grid-cols-3 max-w-3xl mx-auto mb-6 h-auto rounded-full bg-background border border-border/50 p-1">
               <TabsTrigger value="story" className="rounded-full py-3 text-base font-medium">Our Story</TabsTrigger>
               <TabsTrigger value="services" className="rounded-full py-3 text-base font-medium">What We Do</TabsTrigger>
               <TabsTrigger value="approach" className="rounded-full py-3 text-base font-medium">Our Approach</TabsTrigger>
@@ -521,55 +556,58 @@ function Home() {
       <MultiOrbitSemiCircle />
 
       {/* ============== LET'S TALK IDEAS ============== */}
-      <section className="relative py-24 sm:py-32 bg-white">
-        <div className="mx-auto max-w-[1200px] px-5 sm:px-8 grid grid-cols-1 md:grid-cols-[1fr_1.5fr] gap-16 lg:gap-24 items-start">
-          <div data-fade className="flex flex-col">
-            <div className="w-12 h-40 bg-[#FFC107] mb-8" />
-            <SplitText tag="h2" className="text-4xl sm:text-5xl font-light text-foreground tracking-wide">Let's Talk</SplitText>
-            <SplitText tag="h1" className="text-6xl sm:text-7xl lg:text-8xl font-black text-foreground uppercase mt-2 tracking-tight">IDEAS</SplitText>
-            <p className="text-[11px] sm:text-xs font-semibold tracking-[0.2em] sm:tracking-[0.25em] uppercase mt-8 text-foreground/70 leading-relaxed max-w-[280px]">
-              Inter Smart Your Perfect Partner For Complete E-Solutions
-            </p>
+      <section className="relative pt-0 pb-16 sm:pb-24 bg-white">
+        <div className="mx-auto max-w-[1200px] px-5 sm:px-8 grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-12 lg:gap-24 items-start">
+          <div data-fade className="flex flex-col h-full">
+            <div className="w-16 h-[200px] sm:h-[300px] bg-[#FFC107] mb-12 sm:mb-16" />
+            <div className="sticky top-32">
+              <SplitText tag="h2" className="text-5xl sm:text-6xl font-light text-foreground tracking-wide">Let's Talk</SplitText>
+              <SplitText tag="h1" className="text-7xl sm:text-[100px] font-black text-foreground uppercase mt-2 tracking-tighter leading-none">IDEAS</SplitText>
+              <p className="text-[11px] sm:text-xs font-semibold tracking-[0.2em] sm:tracking-[0.25em] uppercase mt-10 text-foreground/70 leading-relaxed max-w-[280px]">
+                KERALA'S LEADING WEB DESIGN AGENCY FOR BUSINESS GROWTH
+              </p>
+            </div>
           </div>
           
-          <div data-fade className="flex flex-col justify-center pt-2 sm:pt-4">
-            <SplitText tag="h2" className="text-3xl sm:text-4xl lg:text-[42px] font-light text-foreground mb-8 sm:mb-10 leading-[1.2]">
-              Step Into The World Of{" "}
-              <span className="font-bold">Digital Innovations</span>
+          <div data-fade className="flex flex-col justify-center pt-8 sm:pt-16">
+            <SplitText tag="h2" className="text-3xl sm:text-4xl lg:text-[46px] font-light text-foreground mb-10 sm:mb-14 leading-[1.25]">
+              Complete Web Solutions That <br className="hidden lg:block" /> Drive Results
             </SplitText>
-            <div className="space-y-6 text-[15px] sm:text-base text-foreground/70 leading-[1.8]">
+            <div className="space-y-8 text-[14px] sm:text-[15px] text-foreground/70 leading-[1.8] text-justify md:text-left">
               <p>
-                Inter Smart is a complete web solution provider established in the commercial city of Kerala — Cochin. We have experts in each and every department of Web development to offer you solutions that can produce results from the very first day. Web design company Kerala includes experts who are specialized in a variety of areas. We have web designers with exceptional talent to build the layout of your website, developers to implement the most reliable yet cost-effective and robust technologies, online marketing gurus to spread the reputation of your website from our labs to the entire world and much more to offer.
+                Your website is your strongest business asset, serving as your online presence, which is essential for success in today's digital market. Inter Smart builds high-performance websites through its design and development process, creating websites that attract visitors and keep them engaged until they convert. As a trusted website design & development company in Kochi, Kerala, we focus on building websites that support real business growth.
               </p>
               <p>
-                Inter Smart is also renowned for providing high-quality Digital Marketing services in Kerala. Equipped with professionals who have decades of experience under their belt, we have succeeded in improving the online visibility of a large number of enterprises in the domain of the World Wide Web. Intersmart Solution is committed to helping your enterprise realize its true brand value and marketing potential.
+                We build search engine-friendly websites tailored to your business needs through our web design services, which combine strategic planning with UI/UX design and modern web development techniques.
               </p>
               <p>
-                We make sure that your online presence is felt by the world by implementing tested and proven marketing strategies. Our group of experts is passionate about their profession. We stay a step ahead with the latest technologies and keep sharpening our designing skills to further improve our outcomes. The expertise and promptness of our professional employees have earned us a large satisfied clientele in India and abroad. Our Web Designing Company in Cochin is committed to serving the varying interests of all esteemed customers around the world.
+                Beyond design and development, our web solutions deliver results through two main functions: generating high-quality leads, enhancing customer engagement, and supporting businesses during their online growth process. Our team develops websites that will scale with your company.
               </p>
             </div>
           </div>
         </div>
       </section>
-      {/* ============== WHY CHOOSE US ============== */}
-      <section className="relative py-32 sm:py-40">
-        <div className="mx-auto max-w-7xl px-5 sm:px-8">
-          <div className="mb-16">
-            <p data-fade className="mb-4 text-xs uppercase tracking-[0.3em] text-muted-foreground">Why us · 04</p>
-            <SplitText tag="h2" className="text-section max-w-3xl">
-              The difference is in <span className="gradient-text">the details.</span>
-            </SplitText>
+      {/* ============== OUR WEBSITE DESIGN PROCESS ============== */}
+      <section className="relative pt-8 pb-12 sm:pt-12 sm:pb-16 bg-white">
+        <div className="mx-auto max-w-[90rem] px-5 sm:px-8">
+          <div className="text-center mb-16 sm:mb-24" data-fade>
+            <h2 className="text-3xl sm:text-4xl lg:text-[2.75rem] font-light text-foreground mb-6 leading-tight">
+              Our <span className="text-[#DC2626] font-medium">Website Design Process</span>
+            </h2>
+            <p className="text-foreground/70 text-[15px] sm:text-lg max-w-3xl mx-auto">
+              We offer free consultations to understand your business goals and create a tailored website design strategy.
+            </p>
           </div>
-          <div className="grid gap-px overflow-hidden rounded-3xl border border-border bg-border md:grid-cols-2 lg:grid-cols-4">
-            {features.map((f) => (
-              <div
-                key={f.title}
-                data-fade
-                className="group relative bg-card p-8 transition-colors hover:bg-muted"
-              >
-                <f.icon className="h-7 w-7 text-primary transition-transform duration-500 group-hover:scale-110 group-hover:rotate-6" />
-                <h3 className="text-display mt-8 text-xl">{f.title}</h3>
-                <p className="mt-3 text-sm text-muted-foreground">{f.desc}</p>
+
+          <div className="flex flex-wrap justify-center items-start gap-y-12 gap-x-6 sm:gap-x-4 md:flex-nowrap">
+            {processSteps.map((step, i) => (
+              <div key={i} data-fade className="w-1/2 sm:w-1/3 md:w-1/5 flex flex-col items-center text-center group cursor-default">
+                <div className="h-20 w-20 sm:h-28 sm:w-28 rounded-full flex items-center justify-center mb-6 sm:mb-8 transition-transform duration-500 group-hover:-translate-y-2">
+                  <step.icon className="h-10 w-10 sm:h-14 sm:w-14 text-[#2DD4BF] transition-transform duration-500 group-hover:scale-110" strokeWidth={1.5} />
+                </div>
+                <h4 className="text-[14px] sm:text-[16px] text-foreground/80 font-medium leading-snug px-2 max-w-[200px]">
+                  {step.title}
+                </h4>
               </div>
             ))}
           </div>
@@ -579,13 +617,13 @@ function Home() {
       {/* ============== TESTIMONIALS ============== */}
       <TestimonialsSection />
       {/* ============== FAQ ============== */}
-      <section className="py-28 border-t border-border bg-background">
-        <div className="mx-auto max-w-7xl px-5 sm:px-8 grid gap-12 md:grid-cols-[1fr_1.5fr]">
-          <div>
+      <section className="pt-12 pb-24 border-t border-border bg-background">
+        <div className="mx-auto max-w-4xl px-5 sm:px-8 flex flex-col items-center">
+          <div className="text-center w-full mb-12">
             <p data-fade className="mb-4 text-xs uppercase tracking-[0.3em] text-muted-foreground">
               FAQ
             </p>
-            <SplitText tag="h2" className="text-display text-4xl sm:text-5xl leading-[1.05]">
+            <SplitText tag="h2" className="text-display text-3xl sm:text-4xl leading-[1.1]">
               The usual questions, answered.
             </SplitText>
           </div>

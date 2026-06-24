@@ -1,4 +1,4 @@
-import { createFileRoute, Outlet } from "@tanstack/react-router";
+import { createFileRoute, Outlet, Navigate } from "@tanstack/react-router";
 import { AdminShell } from "@/components/admin/AdminShell";
 import { AdminLogin } from "@/components/admin/AdminLogin";
 import { useAdminAuth } from "@/lib/admin/auth";
@@ -26,4 +26,5 @@ export const Route = createFileRoute("/admin")({
     ],
   }),
   component: AdminGate,
+  notFoundComponent: () => <Navigate to="/admin" replace />,
 });
