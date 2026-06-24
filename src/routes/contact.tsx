@@ -4,7 +4,7 @@ import { Mail, Phone, MapPin, ArrowUpRight, Loader2, Headset, MessageSquare, Sma
 import { useTextReveal, useFadeUp } from "@/lib/anim";
 import SplitText from "@/components/ui/SplitText";
 import { leadsApi } from "@/lib/admin/api";
-import coffeeCup from "@/assets/coffee-cup.png";
+import contactIllustration from "@/assets/contact-illustration.png";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
@@ -238,116 +238,68 @@ function Contact() {
         </div>
       </section>
 
-      {/* ============== FORM SECTION - YELLOW CARD (MOCKUP 4) ============== */}
-      <section id="contact-form" className="py-24 bg-[#FBBF24] text-black relative overflow-hidden" data-fade>
-        {/* Coffee Cup Image placed in bottom-left and cropped/clipped */}
-        <div className="absolute -bottom-16 -left-16 w-56 h-56 select-none pointer-events-none z-0">
-          <img 
-            src={coffeeCup} 
-            alt="Coffee" 
-            className="w-full h-full object-contain" 
-          />
-        </div>
-
-        <div className="mx-auto max-w-7xl px-5 sm:px-8 grid grid-cols-1 md:grid-cols-[1fr_1.1fr] lg:grid-cols-[1fr_1.3fr] gap-12 lg:gap-20 items-stretch relative z-10">
-          {/* Left Side: Cursive Typography & Brand Text */}
-          <div className="space-y-10 text-left pt-4 flex flex-col justify-between relative z-10">
-            <div className="space-y-8">
-              {/* Styled Box Logo: DESIGN DEVELOP DELIVER SMART */}
-              <div className="flex items-center gap-3 select-none">
-                <div className="flex items-center border-[2.5px] border-black rounded-lg px-2.5 py-1.5 relative">
-                  <span className="text-4xl font-extrabold tracking-tighter leading-none">D</span>
-                  <div className="flex flex-col text-[8.5px] font-black leading-tight tracking-[0.18em] pl-1.5 border-l border-black/30">
+      {/* ============== LET'S GET STARTED NOW ============== */}
+      <section id="contact-form" className="relative py-20 sm:py-28 bg-[#f0f7ff] overflow-hidden">
+        <div className="mx-auto max-w-[1200px] px-5 sm:px-8 relative z-10">
+          <div className="grid grid-cols-1 md:grid-cols-[1fr_1.2fr] gap-16 lg:gap-24 items-start">
+            
+            {/* Left Column */}
+            <div className="flex flex-col text-left pt-2">
+              <div className="flex items-center mb-16">
+                <div className="flex items-center">
+                  <span className="text-[55px] leading-none font-light text-[#222] mr-1 border border-[#222] px-2 rounded-sm shadow-sm bg-transparent">D</span>
+                  <div className="flex flex-col text-[10px] leading-none font-extrabold text-[#222] mr-3 mt-1 space-y-[2px]">
                     <span>ESIGN</span>
                     <span>EVELOP</span>
                     <span>ELIVER</span>
                   </div>
                 </div>
-                <span className="text-4xl font-black tracking-tight text-white drop-shadow-sm">SMART</span>
+                <span className="text-[55px] leading-none font-bold text-primary mt-1 tracking-wide drop-shadow-sm">SMART</span>
+              </div>
+              
+              <div className="space-y-4 pt-4">
+                <a href="mailto:sales@intersmart.in" className="flex items-center gap-3.5 font-bold text-lg text-[#222] hover:text-primary transition-colors">
+                  <Mail className="h-6 w-6 shrink-0 stroke-[2.5]" /> sales@intersmart.in
+                </a>
+                <a href="tel:+919645944322" className="flex items-center gap-3.5 font-bold text-lg text-[#222] hover:text-primary transition-colors">
+                  <Smartphone className="h-6 w-6 shrink-0 stroke-[2.5]" /> +91 9645 944 322
+                </a>
               </div>
 
-              <div className="space-y-4 pt-4">
-                <a href="mailto:sales@intersmart.in" className="flex items-center gap-3.5 font-bold text-lg hover:text-white transition-colors">
-                  <Mail className="h-5.5 w-5.5 shrink-0 stroke-[2.5]" /> sales@intersmart.in
-                </a>
-                <a href="tel:+919645944322" className="flex items-center gap-3.5 font-bold text-lg hover:text-white transition-colors">
-                  <Smartphone className="h-5.5 w-5.5 shrink-0 stroke-[2.5]" /> +91 9645 944 322
-                </a>
+              <div className="mt-16 animate-float drop-shadow-xl hidden sm:block w-full max-w-[320px]">
+                <img src={contactIllustration} alt="Contact Illustration" className="w-full h-auto object-contain rounded-3xl mix-blend-multiply opacity-90" />
               </div>
             </div>
-          </div>
 
-          {/* Right Side: Form Block (no background card, inputs directly on yellow, custom blue submit button) */}
-          <div className="text-left relative z-10 flex flex-col justify-center">
-            <h3 className="text-2xl sm:text-3xl font-black uppercase tracking-wider mb-10 text-white drop-shadow-sm">
-              Let's Get Started Now!
-            </h3>
-            <form onSubmit={handleSubmit} className="space-y-8">
-              {/* Name & Phone side-by-side */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                {/* Name Input */}
-                <div className="relative border-b-2 border-black focus-within:border-white py-1 transition-colors">
-                  <label className="block text-[10px] font-black uppercase tracking-widest text-black/60 mb-1">NAME*</label>
-                  <input
-                    type="text"
-                    name="name"
-                    required
-                    className="w-full bg-transparent border-0 outline-none text-black font-bold uppercase tracking-wider text-sm"
-                  />
-                </div>
-                
-                {/* Phone Input with Mock Indian Flag */}
-                <div className="relative border-b-2 border-black focus-within:border-white py-1 transition-colors">
-                  <label className="block text-[10px] font-black uppercase tracking-widest text-black/60 mb-1">PHONE*</label>
-                  <div className="flex items-center gap-2">
-                    <div className="flex items-center gap-1 text-xs font-bold text-black bg-transparent select-none cursor-pointer">
-                      <span>🇮🇳</span>
-                      <span className="text-[9px]">▼</span>
-                    </div>
-                    <input
-                      type="text"
-                      name="phone"
-                      required
-                      className="w-full bg-transparent border-0 outline-none text-black font-bold uppercase tracking-wider text-sm"
-                    />
+            {/* Right Column */}
+            <div className="text-left relative z-10 flex flex-col justify-center">
+              <h2 className="text-3xl sm:text-[40px] font-bold text-primary mb-10 tracking-tight drop-shadow-sm">LET'S GET STARTED NOW!</h2>
+              
+              <form onSubmit={handleSubmit} className="space-y-12">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-10">
+                  <div className="relative">
+                    <input type="text" name="name" required placeholder="NAME*" className="w-full bg-transparent border-b border-[#222]/50 text-[#222] placeholder:text-[#222]/80 text-[12px] font-medium tracking-wide py-2 focus:outline-none transition-colors focus:border-primary" />
+                  </div>
+                  <div className="relative flex items-center border-b border-[#222]/50 focus-within:border-primary transition-colors">
+                    <span className="text-[14px] mr-2 text-[#222] select-none cursor-pointer">🇮🇳 ⌄</span>
+                    <input type="tel" name="phone" required placeholder="PHONE*" className="w-full bg-transparent text-[#222] placeholder:text-[#222]/80 text-[12px] font-medium tracking-wide py-2 focus:outline-none" />
                   </div>
                 </div>
-              </div>
 
-              {/* Email Input */}
-              <div className="relative border-b-2 border-black focus-within:border-white py-1 transition-colors">
-                <label className="block text-[10px] font-black uppercase tracking-widest text-black/60 mb-1">EMAIL*</label>
-                <input
-                  type="email"
-                  name="email"
-                  required
-                  className="w-full bg-transparent border-0 outline-none text-black font-bold uppercase tracking-wider text-sm"
-                />
-              </div>
+                <div className="relative">
+                  <input type="email" name="email" required placeholder="EMAIL*" className="w-full bg-transparent border-b border-[#222]/50 text-[#222] placeholder:text-[#222]/80 text-[12px] font-medium tracking-wide py-2 focus:outline-none transition-colors focus:border-primary" />
+                </div>
 
-              {/* Help Textarea */}
-              <div className="relative border-b-2 border-black focus-within:border-white py-1 transition-colors">
-                <label className="block text-[10px] font-black uppercase tracking-widest text-black/60 mb-1">HOW CAN WE HELP YOU?</label>
-                <textarea
-                  name="message"
-                  required
-                  rows={2}
-                  className="w-full bg-transparent border-0 resize-none outline-none text-black font-bold uppercase tracking-wider text-sm"
-                />
-              </div>
+                <div className="relative">
+                  <input type="text" name="message" required placeholder="HOW CAN WE HELP YOU?" className="w-full bg-transparent border-b border-[#222]/50 text-[#222] placeholder:text-[#222]/80 text-[12px] font-medium tracking-wide py-2 focus:outline-none transition-colors focus:border-primary" />
+                </div>
 
-              {/* Custom Solid Rectangular Blue Submit Button */}
-              <div className="pt-4 flex">
-                <button
-                  type="submit"
-                  disabled={sent || submitting}
-                  className="bg-[#0066b2] hover:bg-[#005594] text-white font-black tracking-widest text-xs px-10 py-3.5 transition-colors uppercase cursor-pointer flex items-center justify-center gap-2 select-none"
-                >
+                <button type="submit" disabled={sent || submitting} className="bg-primary text-white text-[13px] font-bold px-10 py-3.5 hover:bg-primary/90 transition-colors mt-6 shadow-sm flex items-center justify-center gap-2 select-none uppercase tracking-widest">
                   {sent ? "Message Sent!" : submitting ? "Sending..." : "SUBMIT"}
                   {submitting && <Loader2 className="h-3 w-3 animate-spin" />}
                 </button>
-              </div>
-            </form>
+              </form>
+            </div>
           </div>
         </div>
       </section>

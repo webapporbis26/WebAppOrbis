@@ -3,8 +3,11 @@ import { useEffect, useRef, useState } from "react";
 import { RevealLine, useTextReveal, useFadeUp, gsap, ScrollTrigger } from "@/lib/anim";
 import SplitText from "@/components/ui/SplitText";
 import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext, type CarouselApi } from "@/components/ui/carousel";
-import { Users, Target, Rocket, Lightbulb, MonitorSmartphone, CodeXml } from "lucide-react";
+import { Users, Target, Rocket, Lightbulb, MonitorSmartphone, CodeXml, Mail, Smartphone, Loader2 } from "lucide-react";
 import about from "@/assets/about-team.jpg";
+import coffeeCup from "@/assets/coffee-cup.png";
+import contactIllustration from "@/assets/contact-illustration.png";
+import { leadsApi } from "@/lib/admin/api";
 
 const DeploymentIcon = (props: any) => (
   <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
@@ -83,6 +86,37 @@ function About() {
   const imgRef = useRef<HTMLImageElement>(null);
   const [api, setApi] = useState<CarouselApi>();
   const [selectedIndex, setSelectedIndex] = useState(0);
+  
+  const [sent, setSent] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setSubmitting(true);
+    
+    try {
+      const formData = new FormData(e.currentTarget);
+      const leadData = {
+        company: formData.get("company")?.toString() || "",
+        contact: formData.get("name")?.toString() || "",
+        email: formData.get("email")?.toString() || "",
+        phone: formData.get("phone")?.toString() || "",
+        service: formData.get("service")?.toString() || "Website Inquiry",
+        source: formData.get("source")?.toString() || "Website",
+        budget: formData.get("budget")?.toString() || "",
+        notes: formData.get("message")?.toString() || "",
+        status: "New"
+      };
+
+      await leadsApi.addOrUpdate(leadData);
+      setSent(true);
+    } catch (error) {
+      console.error("Failed to submit lead", error);
+      alert("Something went wrong. Please try again later.");
+    } finally {
+      setSubmitting(false);
+    }
+  };
 
   useTextReveal(heroRef, { delay: 0.2 });
   useFadeUp("[data-fade]");
@@ -145,7 +179,7 @@ function About() {
               boxShadow:"0 12px 40px rgba(0,0,0,0.10)",
             }}>
               <p style={{ fontSize:40, fontWeight:800, color:"#2dd4bf", lineHeight:1, fontFamily:"Space Grotesk,sans-serif" }}>
-                1.5<span style={{ fontSize:28 }}>k+</span>
+                50<span style={{ fontSize:28 }}>+</span>
               </p>
               <p style={{ fontSize:11, fontWeight:700, letterSpacing:"0.15em", color:"#888", marginTop:6, textTransform:"uppercase" }}>Happy Clients</p>
             </div>
@@ -182,7 +216,7 @@ function About() {
               zIndex:9,
             }}>
               <p style={{ fontSize:38, fontWeight:800, color:"#7c5cbf", lineHeight:1, fontFamily:"Space Grotesk,sans-serif" }}>
-                2.1<span style={{ fontSize:26 }}>k+</span>
+                100<span style={{ fontSize:26 }}>+</span>
               </p>
               <p style={{ fontSize:11, fontWeight:700, letterSpacing:"0.15em", color:"#888", marginTop:6, textTransform:"uppercase" }}>Successful<br/>Projects</p>
             </div>
@@ -200,7 +234,7 @@ function About() {
       </section>
 
       {/* ============== OUR PHILOSOPHY ============== */}
-      <section className="relative pt-0 pb-16 sm:pb-24 bg-white">
+      <section className="relative py-20 sm:py-28 bg-white">
         <div className="mx-auto max-w-[1200px] px-5 sm:px-8 grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-12 lg:gap-24 items-start">
           <div data-fade className="flex flex-col h-full">
             <div className="w-16 h-[200px] sm:h-[300px] bg-[#FFC107] mb-12 sm:mb-16" />
@@ -233,7 +267,7 @@ function About() {
       </section>
 
       {/* ============== CUSTOMER SERVICE CAROUSEL ============== */}
-      <section className="pt-8 pb-20 sm:pt-12 sm:pb-32 bg-[#f4f6f8]">
+      <section className="py-20 sm:py-28 bg-[#f4f6f8]">
         <div className="mx-auto max-w-[1200px] px-5 sm:px-8 text-center mb-8 sm:mb-12">
           <SplitText tag="h2" className="text-3xl sm:text-5xl font-light text-[#222] mb-2 tracking-wide">Excellent Customer</SplitText>
           <SplitText tag="h2" className="text-4xl sm:text-6xl font-bold text-[#111] tracking-tight">Service Is Our Foundation</SplitText>
@@ -287,7 +321,7 @@ function About() {
       </section>
 
       {/* ============== MISSION & VISION ============== */}
-      <section className="pt-16 pb-24 sm:pt-20 sm:pb-32 bg-[#f4f6f8]">
+      <section className="py-20 sm:py-28 bg-[#f4f6f8]">
         <div className="mx-auto max-w-[1200px] px-5 sm:px-8 text-center mb-16 sm:mb-20">
           <SplitText tag="h2" className="text-3xl sm:text-5xl font-light text-[#222] mb-2 tracking-wide">Our Works Define Our</SplitText>
           <SplitText tag="h2" className="text-4xl sm:text-6xl font-bold text-[#111] tracking-tight mb-6">Success Look Through Some</SplitText>
@@ -325,7 +359,7 @@ function About() {
         </div>
       </section>
 
-      <section className="py-24 sm:py-32 bg-[#fafafa]">
+      <section className="py-20 sm:py-28 bg-[#fafafa]">
         <div className="mx-auto grid max-w-7xl gap-20 px-5 sm:px-8 lg:grid-cols-[1fr_1.2fr] items-start">
           <div className="relative overflow-hidden rounded-2xl aspect-[4/5] shadow-2xl">
             <img
@@ -360,7 +394,7 @@ function About() {
 
 
 
-      <section className="py-32 sm:py-40 bg-white">
+      <section className="py-20 sm:py-28 bg-white">
         <div className="mx-auto max-w-7xl px-5 sm:px-8">
           <div className="mb-20 text-left">
             <p data-fade className="mb-6 text-sm uppercase tracking-[0.3em] text-gray-400 font-medium">What We Do</p>
@@ -421,7 +455,7 @@ function About() {
         </div>
       </section>
 
-      <section className="py-32 sm:py-40 bg-[#fafafa]">
+      <section className="py-20 sm:py-28 bg-[#fafafa]">
         <div className="mx-auto max-w-7xl px-5 sm:px-8">
           <div className="grid lg:grid-cols-2 gap-20 lg:gap-32">
             <div className="space-y-10 text-left">
@@ -464,7 +498,7 @@ function About() {
       </section>
 
       {/* ============== LET'S GET STARTED NOW ============== */}
-      <section className="relative py-24 sm:py-32 bg-[#FFC107] overflow-hidden">
+      <section className="relative py-20 sm:py-28 bg-[#f0f7ff] overflow-hidden">
         <div className="mx-auto max-w-[1200px] px-5 sm:px-8 relative z-10">
           <div className="grid grid-cols-1 md:grid-cols-[1fr_1.2fr] gap-16 lg:gap-24 items-start">
             
@@ -479,51 +513,49 @@ function About() {
                     <span>ELIVER</span>
                   </div>
                 </div>
-                <span className="text-[55px] leading-none font-bold text-white mt-1 tracking-wide drop-shadow-sm">SMART</span>
+                <span className="text-[55px] leading-none font-bold text-primary mt-1 tracking-wide drop-shadow-sm">SMART</span>
               </div>
               
-              <div className="flex items-center gap-4 mb-6">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#222" strokeWidth="1.5">
-                  <path d="M4 7.00005L10.2 11.65C11.2667 12.45 12.7333 12.45 13.8 11.65L20 7" strokeLinecap="round" strokeLinejoin="round"/>
-                  <rect x="3" y="5" width="18" height="14" rx="2" strokeLinecap="round"/>
-                </svg>
-                <span className="text-[17px] font-medium text-[#222]">sales@intersmart.ae</span>
+              <div className="space-y-4 pt-4">
+                <a href="mailto:sales@intersmart.in" className="flex items-center gap-3.5 font-bold text-lg text-[#222] hover:text-primary transition-colors">
+                  <Mail className="h-6 w-6 shrink-0 stroke-[2.5]" /> sales@intersmart.in
+                </a>
+                <a href="tel:+919645944322" className="flex items-center gap-3.5 font-bold text-lg text-[#222] hover:text-primary transition-colors">
+                  <Smartphone className="h-6 w-6 shrink-0 stroke-[2.5]" /> +91 9645 944 322
+                </a>
               </div>
-              
-              <div className="flex items-center gap-4">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#222" strokeWidth="1.5">
-                  <rect x="6" y="2" width="12" height="20" rx="2" strokeLinecap="round" strokeLinejoin="round"/>
-                  <path d="M12 18H12.01" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"/>
-                </svg>
-                <span className="text-[17px] font-medium text-[#222]">971509939863</span>
+
+              <div className="mt-16 animate-float drop-shadow-xl hidden sm:block w-full max-w-[320px]">
+                <img src={contactIllustration} alt="Contact Illustration" className="w-full h-auto object-contain rounded-3xl mix-blend-multiply opacity-90" />
               </div>
             </div>
 
             {/* Right Column */}
-            <div className="text-left">
-              <h2 className="text-3xl sm:text-[40px] font-bold text-white mb-10 tracking-tight drop-shadow-sm">LET'S GET STARTED NOW!</h2>
+            <div className="text-left relative z-10 flex flex-col justify-center">
+              <h2 className="text-3xl sm:text-[40px] font-bold text-primary mb-10 tracking-tight drop-shadow-sm">LET'S GET STARTED NOW!</h2>
               
-              <form className="space-y-12">
+              <form onSubmit={handleSubmit} className="space-y-12">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-10">
                   <div className="relative">
-                    <input type="text" placeholder="NAME*" className="w-full bg-transparent border-b border-[#222] text-[#222] placeholder:text-[#222]/80 text-[12px] font-medium tracking-wide py-2 focus:outline-none transition-colors" />
+                    <input type="text" name="name" required placeholder="NAME*" className="w-full bg-transparent border-b border-[#222]/50 text-[#222] placeholder:text-[#222]/80 text-[12px] font-medium tracking-wide py-2 focus:outline-none transition-colors focus:border-primary" />
                   </div>
-                  <div className="relative flex items-center border-b border-[#222]">
-                    <span className="text-[14px] mr-2">🇮🇳 ⌄</span>
-                    <input type="tel" placeholder="PHONE*" className="w-full bg-transparent text-[#222] placeholder:text-[#222]/80 text-[12px] font-medium tracking-wide py-2 focus:outline-none transition-colors" />
+                  <div className="relative flex items-center border-b border-[#222]/50 focus-within:border-primary transition-colors">
+                    <span className="text-[14px] mr-2 text-[#222] select-none cursor-pointer">🇮🇳 ⌄</span>
+                    <input type="tel" name="phone" required placeholder="PHONE*" className="w-full bg-transparent text-[#222] placeholder:text-[#222]/80 text-[12px] font-medium tracking-wide py-2 focus:outline-none" />
                   </div>
                 </div>
 
                 <div className="relative">
-                  <input type="email" placeholder="EMAIL*" className="w-full bg-transparent border-b border-[#222] text-[#222] placeholder:text-[#222]/80 text-[12px] font-medium tracking-wide py-2 focus:outline-none transition-colors" />
+                  <input type="email" name="email" required placeholder="EMAIL*" className="w-full bg-transparent border-b border-[#222]/50 text-[#222] placeholder:text-[#222]/80 text-[12px] font-medium tracking-wide py-2 focus:outline-none transition-colors focus:border-primary" />
                 </div>
 
                 <div className="relative">
-                  <input type="text" placeholder="HOW CAN WE HELP YOU?" className="w-full bg-transparent border-b border-[#222] text-[#222] placeholder:text-[#222]/80 text-[12px] font-medium tracking-wide py-2 focus:outline-none transition-colors" />
+                  <input type="text" name="message" required placeholder="HOW CAN WE HELP YOU?" className="w-full bg-transparent border-b border-[#222]/50 text-[#222] placeholder:text-[#222]/80 text-[12px] font-medium tracking-wide py-2 focus:outline-none transition-colors focus:border-primary" />
                 </div>
 
-                <button type="button" className="bg-[#0275d8] text-white text-[13px] font-medium px-10 py-3 hover:bg-[#025aa5] transition-colors mt-6 shadow-sm">
-                  SUBMIT
+                <button type="submit" disabled={sent || submitting} className="bg-primary text-white text-[13px] font-bold px-10 py-3.5 hover:bg-primary/90 transition-colors mt-6 shadow-sm flex items-center justify-center gap-2 select-none uppercase tracking-widest">
+                  {sent ? "Message Sent!" : submitting ? "Sending..." : "SUBMIT"}
+                  {submitting && <Loader2 className="h-3 w-3 animate-spin" />}
                 </button>
               </form>
             </div>

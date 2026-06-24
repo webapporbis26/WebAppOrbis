@@ -257,7 +257,7 @@ function Home() {
       </section>
 
       {/* ============== FEATURES STRIP ============== */}
-      <section className="relative z-30 mt-16 sm:mt-24 mx-auto max-w-[90rem] px-5 sm:px-8">
+      <section className="relative z-30 mt-20 sm:mt-28 mx-auto max-w-[90rem] px-5 sm:px-8">
         <div className="mb-8 text-center" data-fade>
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-foreground">
             Love Our Design? Let's Create Your <span style={{ color: "var(--color-primary, #e11d48)" }}>Dream Website</span>.
@@ -287,7 +287,7 @@ function Home() {
       </section>
 
       {/* ============== DIGITAL SOLUTIONS ============== */}
-      <section className="relative pt-12 pb-12 sm:pt-16 sm:pb-16 bg-[#f5f7fa]">
+      <section className="relative py-20 sm:py-28 bg-[#f5f7fa]">
         <div className="mx-auto max-w-7xl px-5 sm:px-8">
           <div className="text-center mb-16 sm:mb-20" data-fade>
             <h2 className="text-display text-3xl sm:text-4xl lg:text-[2.75rem] text-foreground leading-[1.2] tracking-tight">
@@ -349,7 +349,7 @@ function Home() {
       </section>
 
       {/* ============== COMPREHENSIVE ABOUT US ============== */}
-      <section className="relative pt-8 pb-16 sm:pt-12 sm:pb-24 bg-muted/30">
+      <section className="relative py-20 sm:py-28 bg-muted/30">
         <div className="mx-auto max-w-7xl px-5 sm:px-8">
           <div className="mb-4 text-center max-w-3xl mx-auto">
             <SplitText tag="h2" className="text-display text-4xl sm:text-5xl lg:text-6xl font-normal leading-[1.1]">
@@ -540,7 +540,7 @@ function Home() {
       </section>
 
       {/* ============== CLIENTS / BRANDS ============== */}
-      <section className="relative py-24 bg-muted/10 border-t border-b border-border/50">
+      <section className="relative py-20 sm:py-28 bg-muted/10 border-t border-b border-border/50">
         <LogoCloud
           title={
             <>
@@ -556,7 +556,7 @@ function Home() {
       <MultiOrbitSemiCircle />
 
       {/* ============== LET'S TALK IDEAS ============== */}
-      <section className="relative pt-0 pb-16 sm:pb-24 bg-white">
+      <section className="relative py-20 sm:py-28 bg-white">
         <div className="mx-auto max-w-[1200px] px-5 sm:px-8 grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-12 lg:gap-24 items-start">
           <div data-fade className="flex flex-col h-full">
             <div className="w-16 h-[200px] sm:h-[300px] bg-[#FFC107] mb-12 sm:mb-16" />
@@ -588,7 +588,7 @@ function Home() {
         </div>
       </section>
       {/* ============== OUR WEBSITE DESIGN PROCESS ============== */}
-      <section className="relative pt-8 pb-12 sm:pt-12 sm:pb-16 bg-white">
+      <section className="relative py-20 sm:py-28 bg-white">
         <div className="mx-auto max-w-[90rem] px-5 sm:px-8">
           <div className="text-center mb-16 sm:mb-24" data-fade>
             <h2 className="text-3xl sm:text-4xl lg:text-[2.75rem] font-light text-foreground mb-6 leading-tight">
@@ -617,7 +617,7 @@ function Home() {
       {/* ============== TESTIMONIALS ============== */}
       <TestimonialsSection />
       {/* ============== FAQ ============== */}
-      <section className="pt-12 pb-24 border-t border-border bg-background">
+      <section className="py-20 sm:py-28 border-t border-border bg-background">
         <div className="mx-auto max-w-4xl px-5 sm:px-8 flex flex-col items-center">
           <div className="text-center w-full mb-12">
             <p data-fade className="mb-4 text-xs uppercase tracking-[0.3em] text-muted-foreground">
