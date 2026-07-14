@@ -72,6 +72,8 @@ export const leadsConfig: EntityConfig = {
       options: ["New", "Contacted", "Quotation Sent", "Confirmed", "Closed"],
     },
     { name: "date", label: "Date", type: "date" },
+    { name: "address", label: "Address", type: "textarea", full: true },
+    { name: "quotationDocumentUrl", label: "Quotation Document URL", type: "text", full: true },
     { name: "notes", label: "Notes", type: "textarea", full: true },
   ],
   columns: [
@@ -123,6 +125,8 @@ export const dealsConfig: EntityConfig = {
       ],
     },
     { name: "due", label: "Due Date", type: "date" },
+    { name: "address", label: "Address", type: "textarea", full: true },
+    { name: "quotationDocumentUrl", label: "Quotation Document URL", type: "text", full: true },
     { name: "remarks", label: "Remarks", type: "textarea", full: true },
   ],
   columns: [

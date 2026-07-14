@@ -1,6 +1,6 @@
 import { useMemo, useState, useEffect } from "react";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
-import { Plus, Pencil, Trash2, Search, Download, CalendarIcon, Eye, ArrowRightLeft, Sigma, CalendarDays, Filter, Clock, ChevronDown, AlertCircle } from "lucide-react";
+import { Plus, Pencil, Trash2, Search, Download, CalendarIcon, Eye, ArrowRightLeft, Sigma, CalendarDays, Filter, Clock, ChevronDown, AlertCircle, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -204,7 +204,7 @@ export function CrudView({ config }: { config: EntityConfig }) {
     try {
       const dealPayload = {
          id: 0,
-         client: row.company,
+         leadId: row.id,
          project: `${row.company} Project`,
          total: row.budget || 0,
          advance: 0,
@@ -577,17 +577,30 @@ export function CrudView({ config }: { config: EntityConfig }) {
                     }}
                   />
                 ) : (
-                  <Input
-                    id={f.name}
-                    type={f.type === "number" ? "number" : f.type === "email" ? "email" : "text"}
-                    value={form[f.name] ?? ""}
-                    onChange={(e) => {
-                      setForm((p) => ({ ...p, [f.name]: e.target.value }));
-                      if (errors[f.name]) setErrors(p => ({ ...p, [f.name]: "" }));
-                    }}
-                    placeholder={f.placeholder}
-                    className={errors[f.name] ? "border-rose-500 focus-visible:ring-rose-500" : ""}
-                  />
+                  <div className="flex gap-2">
+                    <Input
+                      id={f.name}
+                      type={f.type === "number" ? "number" : f.type === "email" ? "email" : "text"}
+                      value={form[f.name] ?? ""}
+                      onChange={(e) => {
+                        setForm((p) => ({ ...p, [f.name]: e.target.value }));
+                        if (errors[f.name]) setErrors(p => ({ ...p, [f.name]: "" }));
+                      }}
+                      placeholder={f.placeholder}
+                      className={errors[f.name] ? "border-rose-500 focus-visible:ring-rose-500" : ""}
+                    />
+                    {f.name === "quotationDocumentUrl" && form[f.name] && (
+                      <a
+                        href={form[f.name].startsWith('http') ? form[f.name] : `https://${form[f.name]}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 w-10 shrink-0"
+                        title="Open Link"
+                      >
+                        <ExternalLink className="h-4 w-4" />
+                      </a>
+                    )}
+                  </div>
                 )}
                 
                 {errors[f.name] && (

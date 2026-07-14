@@ -27,7 +27,8 @@ export const authApi = {
       throw new Error(`Login failed: ${res.statusText}`);
     }
     
-    const token = await res.text();
+    const rawToken = await res.text();
+    const token = rawToken.replace(/^"|"$/g, '').trim();
     cachedToken = token;
     if (typeof window !== 'undefined') {
       localStorage.setItem('wo_admin_token', token);
@@ -35,16 +36,27 @@ export const authApi = {
     return token;
   },
   getToken: async () => {
-    if (cachedToken) return cachedToken;
+    if (cachedToken) return cachedToken.replace(/^"|"$/g, '');
     
     if (typeof window !== 'undefined') {
       const stored = localStorage.getItem('wo_admin_token');
       if (stored) {
-        cachedToken = stored;
-        return stored;
+        const cleanToken = stored.replace(/^"|"$/g, '').trim();
+        cachedToken = cleanToken;
+        return cleanToken;
       }
     }
     throw new Error('No authentication token found. Please log in.');
+  },
+  getTokenOptional: () => {
+    if (cachedToken) return cachedToken.replace(/^"|"$/g, '');
+    if (typeof window !== 'undefined') {
+      const stored = localStorage.getItem('wo_admin_token');
+      if (stored) {
+        return stored.replace(/^"|"$/g, '').trim();
+      }
+    }
+    return null;
   },
   clearToken: () => {
     cachedToken = null;
@@ -70,6 +82,33 @@ const fetchWithAuth = async (endpoint: string, options: RequestInit = {}) => {
   if (res.status === 401) {
     authApi.clearToken();
     // Setting this key to empty string to trigger logout in auth.ts listener
+    if (typeof window !== 'undefined') localStorage.removeItem('weborbis_admin_auth');
+    throw new Error('Session expired');
+  }
+  
+  if (!res.ok) {
+    throw new Error(`API error: ${res.status}`);
+  }
+  return res;
+};
+
+const fetchOptionalAuth = async (endpoint: string, options: RequestInit = {}) => {
+  const token = authApi.getTokenOptional();
+  
+  const headers: any = {
+    ...options.headers,
+  };
+  if (token) {
+    headers.Authorization = `Bearer ${token}`;
+  }
+  if (!(options.body instanceof FormData) && !headers['Content-Type']) {
+    headers['Content-Type'] = 'application/json';
+  }
+  
+  const res = await fetch(`${BASE_URL}${endpoint}`, { ...options, headers });
+  
+  if (res.status === 401 && token) {
+    authApi.clearToken();
     if (typeof window !== 'undefined') localStorage.removeItem('weborbis_admin_auth');
     throw new Error('Session expired');
   }
@@ -123,6 +162,8 @@ export const dealsApi = {
           stage: item.stage || 'New Deal',
           status: item.status || 'In Progress',
           due: extraData.due || '',
+          address: item.address || '',
+          quotationDocumentUrl: item.quotationDocumentURL || item.QuotationDocumentURL || '',
           remarks: extraData.actualRemarks || ''
         };
       });
@@ -152,6 +193,8 @@ export const dealsApi = {
     formData.append('Stage', deal.stage || '');
     formData.append('Status', deal.status || '');
     formData.append('Value', (deal.total || 0).toString());
+    formData.append('Address', deal.address || '');
+    formData.append('QuotationDocumentURL', deal.quotationDocumentUrl || '');
     formData.append('CreatedOn', new Date().toISOString());
     formData.append('IsActive', 'true');
 
@@ -188,6 +231,8 @@ export const leadsApi = {
         source: item.source || '',
         budget: item.budget || '',
         status: item.status || 'New',
+        address: item.address || '',
+        quotationDocumentUrl: item.quotationDocumentURL || item.QuotationDocumentURL || '',
         notes: item.notes || '',
         date: item.createdOn ? item.createdOn.split('T')[0] : '',
       }));
@@ -209,11 +254,13 @@ export const leadsApi = {
     formData.append('Source', lead.source || '');
     formData.append('Budget', (lead.budget || 0).toString());
     formData.append('Status', lead.status || 'New');
+    formData.append('Address', lead.address || '');
+    formData.append('QuotationDocumentURL', lead.quotationDocumentUrl || '');
     formData.append('Notes', lead.notes || '');
     formData.append('CreatedOn', new Date().toISOString());
     formData.append('IsActive', 'true');
 
-    const res = await fetchWithAuth(`/User/AddOrUpdateLeads`, {
+    const res = await fetchOptionalAuth(`/User/AddOrUpdateLeads`, {
       method: 'POST',
       body: formData,
     });
