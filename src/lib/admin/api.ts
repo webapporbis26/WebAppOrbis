@@ -152,7 +152,7 @@ export const dealsApi = {
 
         return {
           id: item.id.toString(),
-          leadID: item.leadID || 0,
+          leadId: (item.leadID && item.leadID.toString() !== '0') ? item.leadID.toString() : (extraData.leadId || ''),
           gst: item.gst || '',
           project: extraData.project || 'Unknown Project',
           client: extraData.client || 'Unknown Client',
@@ -176,10 +176,10 @@ export const dealsApi = {
     
     const toISO = (d: string) => d ? new Date(d).toISOString() : '';
 
-    // Package extra UI fields into remarks
     const extraData = {
       project: deal.project,
       client: deal.client,
+      leadId: deal.leadId,
       total: deal.total,
       advance: deal.advance,
       due: toISO(deal.due),
@@ -187,7 +187,7 @@ export const dealsApi = {
     };
     
     formData.append('Remarks', JSON.stringify(extraData));
-    formData.append('LeadID', (deal.leadID || 0).toString());
+    formData.append('LeadID', (deal.leadId || deal.leadID || 0).toString());
     formData.append('GST', deal.gst || '');
     formData.append('ProjectType', deal.type || '');
     formData.append('Stage', deal.stage || '');

@@ -176,7 +176,7 @@ export function CrudView({ config }: { config: EntityConfig }) {
           let val = row[c.name];
           if (config.fields.find((f) => f.name === c.name)?.type === "lead_select") {
             const lead = leads.items.find((l) => l.id === val);
-            val = lead ? `${lead.company} - ${lead.contact}` : val;
+            val = lead ? `${lead.company} - ${lead.contact}` : (val === "0" || val === 0 ? "" : val);
           }
           return `"${String(val ?? "").replace(/"/g, '""')}"`;
         })
@@ -352,6 +352,9 @@ export function CrudView({ config }: { config: EntityConfig }) {
           <Table>
             <TableHeader>
               <TableRow className="bg-muted/40">
+                <TableHead className="w-12 text-xs font-medium uppercase tracking-wider text-muted-foreground">
+                  S.No
+                </TableHead>
                 {config.columns.map((c) => (
                   <TableHead 
                     key={c.name} 
@@ -374,19 +377,22 @@ export function CrudView({ config }: { config: EntityConfig }) {
             <TableBody ref={animationParent as any}>
               {paginated.length === 0 && (
                 <TableRow>
-                  <TableCell colSpan={config.columns.length + 1} className="py-12 text-center text-sm text-muted-foreground">
+                  <TableCell colSpan={config.columns.length + 2} className="py-12 text-center text-sm text-muted-foreground">
                     No records yet. Click "Add new" to create one.
                   </TableCell>
                 </TableRow>
               )}
-              {paginated.map((row) => (
+              {paginated.map((row, index) => (
                 <TableRow key={row.id} className="hover:bg-muted/30">
+                  <TableCell className="text-sm font-medium text-muted-foreground">
+                    {(page - 1) * pageSize + index + 1}
+                  </TableCell>
                   {config.columns.map((c) => {
                     const fieldDef = config.fields.find((f) => f.name === c.name);
                     let displayValue = row[c.name];
                     if (fieldDef?.type === "lead_select") {
                       const lead = leads.items.find((l) => l.id === displayValue);
-                      displayValue = lead ? lead.company : displayValue;
+                      displayValue = lead ? lead.company : (displayValue === "0" || displayValue === 0 ? "" : displayValue);
                     }
                     return (
                       <TableCell key={c.name} className="text-sm">
@@ -550,7 +556,7 @@ export function CrudView({ config }: { config: EntityConfig }) {
                   </Popover>
                 ) : f.type === "lead_select" ? (
                   <Select
-                    value={form[f.name] ?? ""}
+                    value={form[f.name] ? String(form[f.name]) : ""}
                     onValueChange={(v) => {
                       setForm((p) => ({ ...p, [f.name]: v }));
                       if (errors[f.name]) setErrors(p => ({ ...p, [f.name]: "" }));
