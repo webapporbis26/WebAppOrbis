@@ -109,7 +109,7 @@ export default function MultiOrbitSemiCircle() {
   const outerOrbitItems = TECHNOLOGIES.slice(4, 10);
 
   return (
-    <section className="py-24 relative w-full overflow-hidden bg-slate-50/50">
+    <section className="py-10 sm:py-14 relative w-full overflow-hidden bg-slate-50/50">
       <style>{`
         @keyframes orbit-float {
           0%, 100% { transform: translateY(0); }
@@ -117,12 +117,12 @@ export default function MultiOrbitSemiCircle() {
         }
       `}</style>
       <div className="relative flex flex-col items-center text-center z-10">
-        <h2 data-fade className="text-[32px] sm:text-[40px] text-foreground font-light mb-12 tracking-tight">
+        <h2 data-fade className="text-[32px] sm:text-[40px] text-foreground font-light mb-4 tracking-tight">
           Technologies <span className="font-bold">We Used</span>
         </h2>
 
         <div
-          className="relative mt-8"
+          className="relative mt-2"
           style={{ width: baseWidth, height: baseWidth * 0.5 }}
         >
           {/* Base decorative circle lines */}

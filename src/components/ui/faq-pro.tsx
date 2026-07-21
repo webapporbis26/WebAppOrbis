@@ -106,22 +106,22 @@ function FaqProRow({
   triggerId,
 }: FaqProRowProps) {
   return (
-    <div className="overflow-hidden rounded-2xl bg-muted/70 dark:bg-muted/50">
+    <div className="overflow-hidden rounded-[16px] border border-border/40 bg-white hover:border-primary/20 hover:shadow-[0_4px_20px_rgba(0,0,0,0.01)] transition-all duration-300">
       <button
         aria-controls={panelId}
         aria-expanded={isOpen}
-        className="flex w-full items-start justify-between gap-4 px-5 py-4 text-left outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-inset"
+        className="flex w-full items-start justify-between gap-4 px-6 py-5 text-left outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-inset"
         id={triggerId}
         onClick={onToggle}
         type="button"
       >
-        <span className="font-medium text-[15px] text-foreground leading-6 tracking-[-0.02em]">
+        <span className="font-bold text-[16px] text-foreground leading-6 tracking-tight">
           {highlightText(item.question, query)}
         </span>
         <ChevronDown
           aria-hidden
           className={cn(
-            "mt-0.5 size-4 shrink-0 text-muted-foreground transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]",
+            "mt-1 size-4 shrink-0 text-muted-foreground transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]",
             isOpen && "rotate-180"
           )}
         />
@@ -144,7 +144,7 @@ function FaqProRow({
             y: isOpen ? 0 : -6,
           }}
           aria-hidden={!isOpen}
-          className="px-5 pb-5 text-[14px] text-muted-foreground leading-6"
+          className="px-6 pb-6 text-[15px] text-muted-foreground/90 font-medium leading-relaxed"
           inert={isOpen ? undefined : true}
           initial={false}
           transition={{

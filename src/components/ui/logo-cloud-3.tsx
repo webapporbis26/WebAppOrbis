@@ -19,7 +19,7 @@ export function LogoCloud({ className, title, subtitle, limit = 12, ...props }: 
     <div
       className={cn(
         "w-full",
-        title ? "py-12 bg-muted/20 dark:bg-muted/5" : "py-4",
+        title ? "py-8 bg-muted/20 dark:bg-muted/5" : "py-4",
         className
       )}
       {...props}
@@ -27,7 +27,7 @@ export function LogoCloud({ className, title, subtitle, limit = 12, ...props }: 
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
         {/* Header Section (Only if title is provided) */}
         {title && (
-          <div className="text-center mb-12 sm:mb-12">
+          <div className="text-center mb-8 sm:mb-8">
             <h2 className="text-display text-3xl sm:text-4xl lg:text-[2.5rem] font-light text-foreground mb-3 leading-tight tracking-tight">
               {title}
             </h2>
@@ -57,7 +57,7 @@ export function LogoCloud({ className, title, subtitle, limit = 12, ...props }: 
 
         {/* Expand/Collapse Button */}
         {LOGOS.length > limit && (
-          <div className="mt-12 flex justify-center">
+          <div className="mt-8 flex justify-center">
             <button
               onClick={() => setExpanded(!expanded)}
               className="inline-flex items-center justify-center bg-white dark:bg-card hover:bg-slate-50 dark:hover:bg-muted border border-border px-8 py-3 rounded-full text-xs font-bold tracking-wider text-foreground hover:text-primary transition-all duration-300 shadow-sm hover:shadow-md uppercase cursor-pointer"

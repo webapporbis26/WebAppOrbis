@@ -11,8 +11,6 @@ import { LogoCloud } from "@/components/ui/logo-cloud-3";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { CheckCircle2 } from "lucide-react";
 
-import heroVideo from "@/assets/ido-video.mp4";
-
 import eventVideo from "@/assets/project/event.mp4";
 import candleVideo from "@/assets/project/candle.mp4";
 import resortVideo from "@/assets/project/resort.mp4";
@@ -30,11 +28,21 @@ import eventImg from "@/assets/project/event.png";
 
 
 const deskHeroItems = [
-  { type: "video", src: heroVideo },
+  { type: "image", src: bestImg },
+  { type: "image", src: candleImg },
+  { type: "image", src: dhanaImg },
+  { type: "image", src: eventImg },
+  { type: "image", src: malluImg },
+  { type: "image", src: resortImg },
 ];
 
 const mobileHeroItems = [
-  { type: "video", src: heroVideo },
+  { type: "image", src: bestImg },
+  { type: "image", src: candleImg },
+  { type: "image", src: dhanaImg },
+  { type: "image", src: eventImg },
+  { type: "image", src: malluImg },
+  { type: "image", src: resortImg },
 ];
 
 const faqs = [
@@ -212,20 +220,20 @@ function Home() {
       {/* ============== HERO ============== */}
       <section
         ref={heroRef}
-        className="relative flex min-h-[100dvh] items-center pt-28 pb-20 lg:pt-28 overflow-hidden"
+        className="relative flex min-h-[100dvh] items-end pb-12 sm:pb-16 overflow-hidden"
       >
         <div className="absolute inset-0 z-0">
           <HeroMedia />
         </div>
 
         <div data-hero-content className="relative z-20 mx-auto w-full max-w-7xl px-5 sm:px-8 text-white will-change-transform">
-          <div className="max-w-3xl mt-12">
+          <div className="max-w-3xl">
 
-            <div className="flex flex-wrap items-center gap-4">
+            <div className="flex flex-wrap items-center gap-2">
               <MagneticButton
                 as="a"
                 href="/contact"
-                className="group gap-2 rounded-full px-7 py-4 text-base font-medium text-white shadow-elegant"
+                className="group gap-2 rounded-[14px] px-7 py-4 text-base font-medium text-white shadow-md hover:shadow-lg transition-all duration-300 hover:scale-[1.03] active:scale-95"
                 {...({ style: { background: "var(--grad-primary)" } } as any)}
               >
                 Start a project
@@ -234,7 +242,7 @@ function Home() {
               <MagneticButton
                 as="a"
                 href="/portfolio"
-                className="group gap-2 rounded-full border border-white/30 px-7 py-4 text-base font-medium text-white hover:bg-white hover:text-black transition-colors"
+                className="group gap-2 rounded-[14px] border border-white/30 px-7 py-4 text-base font-medium text-white hover:bg-white hover:text-black transition-all duration-300 hover:scale-[1.03] active:scale-95"
               >
                 See our work
                 <ArrowUpRight className="h-4 w-4" />
@@ -252,22 +260,22 @@ function Home() {
       </section>
 
       {/* ============== FEATURES STRIP ============== */}
-      <section className="relative z-30 mt-12 sm:mt-12 mx-auto max-w-[90rem] px-5 sm:px-8">
-        <div className="mb-8 text-center" data-fade>
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-foreground">
+      <section className="relative z-30 mt-6 sm:mt-8 mx-auto max-w-7xl px-5 sm:px-8">
+        <div className="mb-6 text-center" data-fade>
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight text-foreground leading-tight">
             Love Our Design? Let's Create Your <span style={{ color: "var(--color-primary, #e11d48)" }}>Dream Website</span>.
           </h2>
-          <p className="mt-2 text-[#2DD4BF] font-semibold text-lg sm:text-xl">
+          <p className="mt-2 text-[#2DD4BF] font-semibold text-base sm:text-lg">
             Talk to Web Design Experts today.
           </p>
         </div>
-        <div className="py-4 px-2 sm:px-4 flex flex-wrap justify-between items-start gap-y-10 gap-x-4" data-fade>
+        <div className="py-4 px-4 sm:px-8 flex flex-wrap justify-between items-start gap-y-6 gap-x-6 bg-white/50 backdrop-blur-md rounded-2xl border border-border/30 shadow-sm" data-fade>
           {featuresList.map((f, i) => (
             <div key={i} className="relative flex flex-col items-center text-center w-1/2 sm:w-1/3 lg:flex-1 px-2 group cursor-default">
               <div className="h-14 w-14 sm:h-16 sm:w-16 rounded-full flex items-center justify-center text-[#2DD4BF] group-hover:scale-110 transition-transform duration-300 mb-4 bg-[#2DD4BF]/10">
                 <f.icon className="h-7 w-7 sm:h-8 sm:w-8 stroke-[1.5]" />
               </div>
-              <h4 className="text-[11px] sm:text-[13px] font-medium text-foreground/70 leading-snug max-w-[140px] transition-all duration-300 group-hover:-translate-y-1">
+              <h4 className="text-xs sm:text-sm font-semibold text-foreground/80 leading-snug max-w-[140px] transition-all duration-300 group-hover:-translate-y-1">
                 {f.title}
               </h4>
               
@@ -282,15 +290,15 @@ function Home() {
       </section>
 
       {/* ============== DIGITAL SOLUTIONS ============== */}
-      <section className="relative py-20 sm:py-28 bg-[#f5f7fa]">
+      <section className="relative py-10 sm:py-14 bg-[#f5f7fa]">
         <div className="mx-auto max-w-7xl px-5 sm:px-8">
-          <div className="text-center mb-12 sm:mb-12" data-fade>
-            <h2 className="text-display text-3xl sm:text-4xl lg:text-[2.75rem] text-foreground leading-[1.2] tracking-tight">
+          <div className="text-center mb-8 sm:mb-10" data-fade>
+            <h2 className="text-display text-3xl sm:text-4xl lg:text-5xl font-extrabold text-foreground leading-tight tracking-tight">
               <span className="font-light">Digital Solutions for your</span> <span className="font-bold">Business Growth</span>
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-10">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-5">
             {[
               {
                 emoji: "💻",
@@ -321,18 +329,18 @@ function Home() {
                 link: "/services/seo",
               },
             ].map((card, i) => (
-              <div key={i} data-fade className="flex flex-col items-start group">
-                <div className="text-5xl mb-8">{card.emoji}</div>
-                <h4 className="text-display text-xl sm:text-2xl font-bold text-foreground leading-tight mb-3">
+              <div key={i} data-fade className="flex flex-col items-start bg-white p-5 sm:p-6 rounded-[14px] border border-border/40 shadow-[0_4px_20px_rgb(0,0,0,0.02)] hover:shadow-[0_12px_30px_rgb(0,0,0,0.05)] hover:border-primary/20 hover:-translate-y-1 transition-all duration-300 group">
+                <div className="text-2xl sm:text-3xl mb-3">{card.emoji}</div>
+                <h4 className="text-base sm:text-lg font-bold text-foreground leading-snug mb-2">
                   {card.title}
                 </h4>
-                <div className="w-8 h-1 rounded-full mb-6" style={{ backgroundColor: card.color }} />
-                <p className="text-[15px] text-foreground/70 leading-relaxed mb-5 flex-1">
+                <div className="w-6 h-0.5 rounded-full mb-3" style={{ backgroundColor: card.color }} />
+                <p className="text-xs sm:text-sm text-foreground/75 leading-relaxed mb-4 flex-1">
                   {card.desc}
                 </p>
                 <Link
                   to={card.link}
-                  className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-[0.15em] text-foreground/60 hover:text-foreground transition-colors group/link"
+                  className="inline-flex items-center gap-1 text-xs font-bold uppercase tracking-[0.12em] text-foreground/60 hover:text-foreground transition-all duration-300 group/link hover:translate-x-0.5"
                 >
                   View more
                   <span className="text-sm transition-transform group-hover/link:translate-x-0.5">+</span>
@@ -344,7 +352,7 @@ function Home() {
       </section>
 
       {/* ============== COMPREHENSIVE ABOUT US ============== */}
-      <section className="relative py-20 sm:py-28 bg-muted/30">
+      <section className="relative py-10 sm:py-14 bg-muted/30">
         <div className="mx-auto max-w-7xl px-5 sm:px-8">
           <div className="mb-4 text-center max-w-3xl mx-auto">
             <SplitText tag="h2" className="text-display text-4xl sm:text-5xl lg:text-6xl font-normal leading-[1.1]">
@@ -489,7 +497,7 @@ function Home() {
       </section>
 
       {/* ============== OUR WORKS ============== */}
-      <section ref={serenityRef} className="relative py-20 sm:py-28 bg-background">
+      <section ref={serenityRef} className="relative py-10 sm:py-14 bg-background">
         <div className="mx-auto max-w-[1400px] px-5 sm:px-8">
           <div className="text-center max-w-4xl mx-auto mb-12">
             <h3 className="text-[28px] sm:text-[34px] font-light text-foreground mb-2 flex justify-center flex-wrap gap-x-2">
@@ -535,7 +543,7 @@ function Home() {
       </section>
 
       {/* ============== CLIENTS / BRANDS ============== */}
-      <section className="relative py-20 sm:py-28 bg-muted/10 border-t border-b border-border/50">
+      <section className="relative py-10 sm:py-14 bg-muted/10 border-t border-b border-border/50">
         <LogoCloud
           title={
             <>
@@ -551,7 +559,7 @@ function Home() {
       <MultiOrbitSemiCircle />
 
       {/* ============== LET'S TALK IDEAS ============== */}
-      <section className="relative py-20 sm:py-28 bg-white">
+      <section className="relative py-10 sm:py-14 bg-white">
         <div className="mx-auto max-w-[1200px] px-5 sm:px-8 grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-12 lg:gap-12 items-start">
           <div data-fade className="flex flex-col h-full">
             <div className="w-16 h-[200px] sm:h-[300px] bg-[#FFC107] mb-12 sm:mb-12" />
@@ -583,7 +591,7 @@ function Home() {
         </div>
       </section>
       {/* ============== OUR WEBSITE DESIGN PROCESS ============== */}
-      <section className="relative py-20 sm:py-28 bg-white">
+      <section className="relative py-10 sm:py-14 bg-white">
         <div className="mx-auto max-w-[90rem] px-5 sm:px-8">
           <div className="text-center mb-12 sm:mb-12" data-fade>
             <h2 className="text-3xl sm:text-4xl lg:text-[2.75rem] font-light text-foreground mb-6 leading-tight">
@@ -611,26 +619,7 @@ function Home() {
 
       {/* ============== TESTIMONIALS ============== */}
       <TestimonialsSection />
-      {/* ============== FAQ ============== */}
-      <section className="py-20 sm:py-28 border-t border-border bg-background">
-        <div className="mx-auto max-w-4xl px-5 sm:px-8 flex flex-col items-center">
-          <div className="text-center w-full mb-12">
-            <p data-fade className="mb-4 text-xs uppercase tracking-[0.3em] text-muted-foreground">
-              FAQ
-            </p>
-            <SplitText tag="h2" className="text-display text-3xl sm:text-4xl leading-[1.1]">
-              The usual questions, answered.
-            </SplitText>
-          </div>
-          <div data-fade className="w-full">
-            <FaqPro 
-              items={faqs.map((f, i) => ({ id: String(i), question: f.q, answer: f.a }))} 
-              defaultOpenFirst 
-              searchPlaceholder="Search questions..." 
-            />
-          </div>
-        </div>
-      </section>
+
     </>
   );
 }
