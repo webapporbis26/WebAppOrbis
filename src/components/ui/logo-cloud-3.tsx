@@ -11,15 +11,11 @@ type LogoCloudProps = React.ComponentProps<"div"> & {
 };
 
 export function LogoCloud({ className, title, subtitle, limit = 12, ...props }: LogoCloudProps) {
-  const [expanded, setExpanded] = useState(false);
-
-  const displayLogos = expanded ? LOGOS : LOGOS.slice(0, limit);
-
   return (
     <div
       className={cn(
         "w-full",
-        title ? "py-8 bg-muted/20 dark:bg-muted/5" : "py-4",
+        title ? "py-1 bg-muted/20 dark:bg-muted/5" : "py-1",
         className
       )}
       {...props}
@@ -27,45 +23,43 @@ export function LogoCloud({ className, title, subtitle, limit = 12, ...props }: 
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
         {/* Header Section (Only if title is provided) */}
         {title && (
-          <div className="text-center mb-8 sm:mb-8">
-            <h2 className="text-display text-3xl sm:text-4xl lg:text-[2.5rem] font-light text-foreground mb-3 leading-tight tracking-tight">
+          <div className="text-center mb-4 sm:mb-4">
+            <h2 className="text-display text-2xl sm:text-3xl lg:text-[2.25rem] font-light text-foreground mb-2 leading-tight tracking-tight">
               {title}
             </h2>
             {subtitle && (
-              <p className="text-muted-foreground text-sm sm:text-base max-w-2xl mx-auto font-medium">
+              <p className="text-muted-foreground text-xs sm:text-sm max-w-2xl mx-auto font-medium">
                 {subtitle}
               </p>
             )}
           </div>
         )}
 
-        {/* Grid Section */}
-        <div className="relative rounded-[2rem] border border-border/80 bg-border/40 dark:bg-border/20 gap-[1px] grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 overflow-hidden transition-all duration-500 shadow-soft">
-          {displayLogos.map((logoUrl, i) => (
-            <div
-              key={i}
-              className="group flex items-center justify-center bg-white dark:bg-card px-4 py-8 h-28 hover:bg-slate-50 dark:hover:bg-muted/40 transition-colors duration-300"
-            >
-              <img
-                src={logoUrl}
-                alt={`Client logo ${i + 1}`}
-                className="max-h-16 max-w-[75%] object-contain transition-all duration-300 transform group-hover:scale-105"
-              />
+        {/* Infinite Auto-Scrolling Logo Marquee */}
+        <div className="relative w-full overflow-hidden py-2">
+          <div className="group flex overflow-hidden p-2 [--gap:1.5rem] [gap:var(--gap)] flex-row [--duration:80s]">
+            <div className="flex shrink-0 justify-around [gap:var(--gap)] animate-marquee flex-row group-hover:[animation-play-state:paused]">
+              {[...Array(4)].map((_, setIdx) => (
+                LOGOS.map((logoUrl, i) => (
+                  <div 
+                    key={`${setIdx}-${i}`} 
+                    className="flex items-center justify-center bg-white dark:bg-card rounded-2xl border border-border/40 shadow-[0_4px_20px_rgb(0,0,0,0.02)] p-4 w-36 h-20 shrink-0 hover:bg-slate-50 transition-colors"
+                  >
+                    <img
+                      src={logoUrl}
+                      alt={`Client logo ${i + 1}`}
+                      className="max-h-12 max-w-[85%] object-contain"
+                    />
+                  </div>
+                ))
+              ))}
             </div>
-          ))}
-        </div>
-
-        {/* Expand/Collapse Button */}
-        {LOGOS.length > limit && (
-          <div className="mt-8 flex justify-center">
-            <button
-              onClick={() => setExpanded(!expanded)}
-              className="inline-flex items-center justify-center bg-white dark:bg-card hover:bg-slate-50 dark:hover:bg-muted border border-border px-8 py-3 rounded-full text-xs font-bold tracking-wider text-foreground hover:text-primary transition-all duration-300 shadow-sm hover:shadow-md uppercase cursor-pointer"
-            >
-              {expanded ? "Show Less" : "See All Clients"}
-            </button>
           </div>
-        )}
+
+          {/* Gradients on the side for professional edge fade */}
+          <div className="pointer-events-none absolute inset-y-0 left-0 hidden w-1/6 bg-gradient-to-r from-background sm:block" />
+          <div className="pointer-events-none absolute inset-y-0 right-0 hidden w-1/6 bg-gradient-to-l from-background sm:block" />
+        </div>
       </div>
     </div>
   );

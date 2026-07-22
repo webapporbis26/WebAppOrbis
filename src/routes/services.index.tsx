@@ -13,6 +13,8 @@ import {
   Rocket,
   LifeBuoy,
   Star,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react";
 import { RevealLine, useTextReveal, useFadeUp, gsap, ScrollTrigger } from "@/lib/anim";
 import SplitText from "@/components/ui/SplitText";
@@ -130,6 +132,18 @@ const faqs = [
 function Services() {
   const heroRef = useRef<HTMLDivElement>(null);
   const cardsRef = useRef<HTMLDivElement>(null);
+  const processRef = useRef<HTMLDivElement>(null);
+
+  const scrollContainer = (ref: React.RefObject<HTMLDivElement | null>, direction: "left" | "right") => {
+    if (ref.current) {
+      const scrollAmount = ref.current.clientWidth * 0.75;
+      ref.current.scrollBy({
+        left: direction === "left" ? -scrollAmount : scrollAmount,
+        behavior: "smooth",
+      });
+    }
+  };
+
   useTextReveal(heroRef, { delay: 0.2 });
   useFadeUp("[data-fade]");
 
@@ -285,54 +299,41 @@ function Services() {
             </div>
           </div>
 
-          <div className="mt-12 grid gap-6 md:grid-cols-3 lg:grid-cols-5">
-            {process.map((p, i) => (
-              <div
-                key={p.title}
-                data-fade
-                className="rounded-2xl border border-border bg-card p-6 transition-all hover:-translate-y-1 hover:shadow-elegant"
-              >
-                <div className="text-xs text-muted-foreground">0{i + 1}</div>
-                <div className="mt-4 grid h-11 w-11 place-items-center rounded-xl bg-primary/10 text-primary">
-                  <p.icon className="h-5 w-5" />
-                </div>
-                <h3 className="text-display mt-5 text-xl">{p.title}</h3>
-                <p className="mt-2 text-sm text-muted-foreground">{p.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+          <div className="relative group/process">
+            {/* Left Scroll Button */}
+            <button 
+              onClick={() => scrollContainer(processRef, 'left')}
+              className="absolute -left-3 top-1/2 -translate-y-1/2 z-40 bg-white/95 dark:bg-card/95 hover:bg-white dark:hover:bg-card border border-border/80 shadow-md rounded-full p-2 text-foreground transition-all duration-300 lg:hidden flex items-center justify-center cursor-pointer"
+              aria-label="Scroll process left"
+            >
+              <ChevronLeft className="h-4 w-4" />
+            </button>
 
-      {/* Testimonials */}
-      <section className="py-28 border-t border-border">
-        <div className="mx-auto max-w-7xl px-5 sm:px-8">
-          <p data-fade className="mb-4 text-xs uppercase tracking-[0.3em] text-muted-foreground">
-            What clients say
-          </p>
-          <SplitText tag="h2" className="text-display text-4xl sm:text-5xl max-w-2xl leading-[1.05]">
-            Words from teams we've shipped with.
-          </SplitText>
+            {/* Right Scroll Button */}
+            <button 
+              onClick={() => scrollContainer(processRef, 'right')}
+              className="absolute -right-3 top-1/2 -translate-y-1/2 z-40 bg-white/95 dark:bg-card/95 hover:bg-white dark:hover:bg-card border border-border/80 shadow-md rounded-full p-2 text-foreground transition-all duration-300 lg:hidden flex items-center justify-center cursor-pointer"
+              aria-label="Scroll process right"
+            >
+              <ChevronRight className="h-4 w-4" />
+            </button>
 
-          <div className="mt-12 grid gap-6 md:grid-cols-3">
-            {testimonials.map((t) => (
-              <figure
-                key={t.name}
-                data-fade
-                className="flex h-full flex-col justify-between rounded-3xl border border-border bg-card p-8"
-              >
-                <div className="flex gap-1 text-primary">
-                  {Array.from({ length: 5 }).map((_, i) => (
-                    <Star key={i} className="h-4 w-4 fill-current" />
-                  ))}
+            <div ref={processRef} className="mt-12 flex lg:grid gap-6 lg:grid-cols-5 overflow-x-auto lg:overflow-x-visible snap-x snap-mandatory scrollbar-none pb-4 lg:pb-0 -mx-5 px-5 lg:mx-0 lg:px-0">
+              {process.map((p, i) => (
+                <div
+                  key={p.title}
+                  data-fade
+                  className="flex-none w-[75%] sm:w-[45%] lg:w-auto snap-center rounded-2xl border border-border bg-card p-6 transition-all hover:-translate-y-1 hover:shadow-elegant"
+                >
+                  <div className="text-xs text-muted-foreground">0{i + 1}</div>
+                  <div className="mt-4 grid h-11 w-11 place-items-center rounded-xl bg-primary/10 text-primary">
+                    <p.icon className="h-5 w-5" />
+                  </div>
+                  <h3 className="text-display mt-5 text-xl">{p.title}</h3>
+                  <p className="mt-2 text-sm text-muted-foreground">{p.desc}</p>
                 </div>
-                <blockquote className="mt-6 text-lg leading-snug">“{t.quote}”</blockquote>
-                <figcaption className="mt-8 border-t border-border pt-5">
-                  <div className="font-medium">{t.name}</div>
-                  <div className="text-sm text-muted-foreground">{t.role}</div>
-                </figcaption>
-              </figure>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       </section>

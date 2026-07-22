@@ -5,7 +5,7 @@ export function Footer() {
   return (
     <footer className="relative bg-[#050505] text-white pt-24 pb-12 px-5 sm:px-8 border-t border-white/10 font-sans">
       <div className="mx-auto max-w-7xl">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 lg:gap-16">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-y-12 gap-x-6 md:gap-16">
           {/* Column 1: Company */}
           <div className="flex flex-col gap-4">
             <h3 className="text-sm font-bold text-blue-500 uppercase tracking-widest inline-block border-b-2 border-blue-500 pb-2 w-max mb-2">
@@ -39,7 +39,7 @@ export function Footer() {
           </div>
 
           {/* Column 3: Join Us */}
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-4 col-span-2 md:col-span-1">
             <h3 className="text-sm font-bold text-yellow-500 uppercase tracking-widest inline-block border-b-2 border-yellow-500 pb-2 w-max mb-2">
               Join Us
             </h3>

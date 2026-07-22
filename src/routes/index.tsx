@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
-import { ArrowDown, ArrowUpRight, Globe, Smartphone, Database, Sparkles, Zap, Shield, Users, Star, Search, Compass, Rocket, MonitorSmartphone, SearchCheck, CodeXml, Headset, Share2, MessageCircle, PhoneCall, LayoutTemplate, Wrench } from "lucide-react";
+import { ArrowDown, ArrowUpRight, Globe, Smartphone, Database, Sparkles, Zap, Shield, Users, Star, Search, Compass, Rocket, MonitorSmartphone, SearchCheck, CodeXml, Headset, Share2, MessageCircle, PhoneCall, LayoutTemplate, Wrench, ChevronLeft, ChevronRight } from "lucide-react";
 import { gsap, ScrollTrigger, RevealLine, useTextReveal, useFadeUp, useCounter, useSerenityText } from "@/lib/anim";
 import SplitText from "@/components/ui/SplitText";
 import { MagneticButton } from "@/components/MagneticButton";
@@ -128,7 +128,7 @@ function ProjectCard({ c }: { c: ProjectItem }) {
       target="_blank" 
       rel="noopener noreferrer" 
       data-fade 
-      className="group block"
+      className="group block flex-none w-[85%] md:w-auto snap-center"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
@@ -169,6 +169,21 @@ function Home() {
   useTextReveal(heroRef, { stagger: 0.14, delay: 0.4 });
   useSerenityText(serenityRef);
   useFadeUp("[data-fade]");
+  const [showMoreIdeas, setShowMoreIdeas] = useState(false);
+
+  const featuresRef = useRef<HTMLDivElement>(null);
+  const worksRef = useRef<HTMLDivElement>(null);
+  const processRef = useRef<HTMLDivElement>(null);
+
+  const scrollContainer = (ref: React.RefObject<HTMLDivElement | null>, direction: "left" | "right") => {
+    if (ref.current) {
+      const scrollAmount = ref.current.clientWidth * 0.75;
+      ref.current.scrollBy({
+        left: direction === "left" ? -scrollAmount : scrollAmount,
+        behavior: "smooth",
+      });
+    }
+  };
 
   // Hero content pin + zoom-out as we leave
   useEffect(() => {
@@ -269,23 +284,43 @@ function Home() {
             Talk to Web Design Experts today.
           </p>
         </div>
-        <div className="py-4 px-4 sm:px-8 flex flex-wrap justify-between items-start gap-y-6 gap-x-6 bg-white/50 backdrop-blur-md rounded-2xl border border-border/30 shadow-sm" data-fade>
-          {featuresList.map((f, i) => (
-            <div key={i} className="relative flex flex-col items-center text-center w-1/2 sm:w-1/3 lg:flex-1 px-2 group cursor-default">
-              <div className="h-14 w-14 sm:h-16 sm:w-16 rounded-full flex items-center justify-center text-[#2DD4BF] group-hover:scale-110 transition-transform duration-300 mb-4 bg-[#2DD4BF]/10">
-                <f.icon className="h-7 w-7 sm:h-8 sm:w-8 stroke-[1.5]" />
+        <div className="relative group/features">
+          {/* Left Scroll Button */}
+          <button 
+            onClick={() => scrollContainer(featuresRef, 'left')}
+            className="absolute -left-3 top-1/2 -translate-y-1/2 z-40 bg-white/95 dark:bg-card/95 hover:bg-white dark:hover:bg-card border border-border/80 shadow-md rounded-full p-2 text-foreground transition-all duration-300 sm:hidden flex items-center justify-center cursor-pointer"
+            aria-label="Scroll features left"
+          >
+            <ChevronLeft className="h-4 w-4" />
+          </button>
+
+          {/* Right Scroll Button */}
+          <button 
+            onClick={() => scrollContainer(featuresRef, 'right')}
+            className="absolute -right-3 top-1/2 -translate-y-1/2 z-40 bg-white/95 dark:bg-card/95 hover:bg-white dark:hover:bg-card border border-border/80 shadow-md rounded-full p-2 text-foreground transition-all duration-300 sm:hidden flex items-center justify-center cursor-pointer"
+            aria-label="Scroll features right"
+          >
+            <ChevronRight className="h-4 w-4" />
+          </button>
+
+          <div ref={featuresRef} className="py-4 px-4 sm:px-8 flex -mx-5 px-5 sm:mx-0 sm:px-0 sm:flex-wrap justify-between items-start gap-6 overflow-x-auto sm:overflow-x-visible snap-x snap-mandatory scrollbar-none bg-white/50 backdrop-blur-md rounded-2xl border border-border/30 shadow-sm pb-4 sm:pb-0" data-fade>
+            {featuresList.map((f, i) => (
+              <div key={i} className="relative flex-none w-[50%] sm:w-1/3 lg:flex-1 flex flex-col items-center text-center px-2 group cursor-default snap-center">
+                <div className="h-14 w-14 sm:h-16 sm:w-16 rounded-full flex items-center justify-center text-[#2DD4BF] group-hover:scale-110 transition-transform duration-300 mb-4 bg-[#2DD4BF]/10">
+                  <f.icon className="h-7 w-7 sm:h-8 sm:w-8 stroke-[1.5]" />
+                </div>
+                <h4 className="text-xs sm:text-sm font-semibold text-foreground/80 leading-snug max-w-[140px] transition-all duration-300 group-hover:-translate-y-1">
+                  {f.title}
+                </h4>
+                
+                {/* Animated Tooltip */}
+                <div className="absolute top-[100%] left-1/2 -translate-x-1/2 mt-2 w-[160px] sm:w-[200px] bg-foreground text-background text-[11px] sm:text-xs p-3 rounded-xl shadow-xl opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 pointer-events-none z-50">
+                  <div className="absolute -top-1.5 left-1/2 -translate-x-1/2 border-4 border-transparent border-b-foreground" />
+                  {f.desc}
+                </div>
               </div>
-              <h4 className="text-xs sm:text-sm font-semibold text-foreground/80 leading-snug max-w-[140px] transition-all duration-300 group-hover:-translate-y-1">
-                {f.title}
-              </h4>
-              
-              {/* Animated Tooltip */}
-              <div className="absolute top-[100%] left-1/2 -translate-x-1/2 mt-2 w-[160px] sm:w-[200px] bg-foreground text-background text-[11px] sm:text-xs p-3 rounded-xl shadow-xl opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 pointer-events-none z-50">
-                <div className="absolute -top-1.5 left-1/2 -translate-x-1/2 border-4 border-transparent border-b-foreground" />
-                {f.desc}
-              </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </section>
 
@@ -298,7 +333,7 @@ function Home() {
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-5">
+          <div className="flex -mx-5 px-5 sm:mx-0 sm:px-0 sm:grid sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-5 overflow-x-auto sm:overflow-x-visible snap-x snap-mandatory scrollbar-none pb-4 sm:pb-0">
             {[
               {
                 emoji: "💻",
@@ -329,7 +364,7 @@ function Home() {
                 link: "/services/seo",
               },
             ].map((card, i) => (
-              <div key={i} data-fade className="flex flex-col items-start bg-white p-5 sm:p-6 rounded-[14px] border border-border/40 shadow-[0_4px_20px_rgb(0,0,0,0.02)] hover:shadow-[0_12px_30px_rgb(0,0,0,0.05)] hover:border-primary/20 hover:-translate-y-1 transition-all duration-300 group">
+              <div key={i} data-fade className="flex-none w-[85%] sm:w-auto snap-center flex flex-col items-start bg-white p-5 sm:p-6 rounded-[14px] border border-border/40 shadow-[0_4px_20px_rgb(0,0,0,0.02)] hover:shadow-[0_12px_30px_rgb(0,0,0,0.05)] hover:border-primary/20 hover:-translate-y-1 transition-all duration-300 group">
                 <div className="text-2xl sm:text-3xl mb-3">{card.emoji}</div>
                 <h4 className="text-base sm:text-lg font-bold text-foreground leading-snug mb-2">
                   {card.title}
@@ -352,16 +387,16 @@ function Home() {
       </section>
 
       {/* ============== COMPREHENSIVE ABOUT US ============== */}
-      <section className="relative py-10 sm:py-14 bg-muted/30">
+      <section className="relative py-6 sm:py-8 bg-muted/30">
         <div className="mx-auto max-w-7xl px-5 sm:px-8">
-          <div className="mb-4 text-center max-w-3xl mx-auto">
+          <div className="text-center max-w-3xl mx-auto mb-2">
             <SplitText tag="h2" className="text-display text-4xl sm:text-5xl lg:text-6xl font-normal leading-[1.1]">
               A studio built around <span className="gradient-text">craft, clarity and care.</span>
             </SplitText>
           </div>
 
           <Tabs defaultValue="story" className="w-full">
-            <TabsList className="grid w-full grid-cols-1 md:grid-cols-3 max-w-3xl mx-auto mb-6 h-auto rounded-full bg-background border border-border/50 p-1">
+            <TabsList className="grid w-full grid-cols-1 md:grid-cols-3 max-w-3xl mx-auto -mt-3 mb-4 h-auto rounded-full bg-background border border-border/50 p-1">
               <TabsTrigger value="story" className="rounded-full py-3 text-base font-medium">Our Story</TabsTrigger>
               <TabsTrigger value="services" className="rounded-full py-3 text-base font-medium">What We Do</TabsTrigger>
               <TabsTrigger value="approach" className="rounded-full py-3 text-base font-medium">Our Approach</TabsTrigger>
@@ -415,8 +450,8 @@ function Home() {
             </TabsContent>
 
             <TabsContent value="services" className="mt-0 focus-visible:outline-none focus-visible:ring-0">
-              <div className="grid md:grid-cols-3 gap-8" data-fade>
-                <div className="group relative overflow-hidden bg-gradient-to-b from-white to-white/40 backdrop-blur-2xl p-10 rounded-[2.5rem] border border-white shadow-[0_8px_30px_rgb(0,0,0,0.06)] hover:shadow-[0_20px_40px_rgb(0,0,0,0.12)] hover:border-primary/30 hover:-translate-y-2 transition-all duration-500">
+              <div className="flex -mx-5 px-5 md:mx-0 md:px-0 md:grid md:grid-cols-3 gap-8 overflow-x-auto md:overflow-x-visible snap-x snap-mandatory scrollbar-none pb-4 md:pb-0" data-fade>
+                <div className="flex-none w-[85%] md:w-auto snap-center group relative overflow-hidden bg-gradient-to-b from-white to-white/40 backdrop-blur-2xl p-10 rounded-[2.5rem] border border-white shadow-[0_8px_30px_rgb(0,0,0,0.06)] hover:shadow-[0_20px_40px_rgb(0,0,0,0.12)] hover:border-primary/30 hover:-translate-y-2 transition-all duration-500">
                   <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full blur-3xl -mr-10 -mt-10 pointer-events-none group-hover:bg-primary/20 transition-colors duration-500" />
                   <div className="h-16 w-16 bg-gradient-to-br from-primary/10 to-primary/5 rounded-2xl flex items-center justify-center mb-8 border border-primary/10 group-hover:scale-110 group-hover:-rotate-3 transition-transform duration-500">
                     <Globe className="h-7 w-7 text-primary" />
@@ -426,7 +461,7 @@ function Home() {
                     We create responsive and professionally designed websites that enhance brand visibility and improve user experience. Our websites are developed with modern technologies to ensure speed, security, and seamless functionality across all devices.
                   </p>
                 </div>
-                <div className="group relative overflow-hidden bg-gradient-to-b from-white to-white/40 backdrop-blur-2xl p-10 rounded-[2.5rem] border border-white shadow-[0_8px_30px_rgb(0,0,0,0.06)] hover:shadow-[0_20px_40px_rgb(0,0,0,0.12)] hover:border-primary/30 hover:-translate-y-2 transition-all duration-500">
+                <div className="flex-none w-[85%] md:w-auto snap-center group relative overflow-hidden bg-gradient-to-b from-white to-white/40 backdrop-blur-2xl p-10 rounded-[2.5rem] border border-white shadow-[0_8px_30px_rgb(0,0,0,0.06)] hover:shadow-[0_20px_40px_rgb(0,0,0,0.12)] hover:border-primary/30 hover:-translate-y-2 transition-all duration-500">
                   <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full blur-3xl -mr-10 -mt-10 pointer-events-none group-hover:bg-primary/20 transition-colors duration-500" />
                   <div className="h-16 w-16 bg-gradient-to-br from-primary/10 to-primary/5 rounded-2xl flex items-center justify-center mb-8 border border-primary/10 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500">
                     <Smartphone className="h-7 w-7 text-primary" />
@@ -436,7 +471,7 @@ function Home() {
                     Our mobile app development services help businesses connect with customers through intuitive and feature-rich applications. We develop customised Android and iOS applications focused on usability, performance, and long-term scalability.
                   </p>
                 </div>
-                <div className="group relative overflow-hidden bg-gradient-to-b from-white to-white/40 backdrop-blur-2xl p-10 rounded-[2.5rem] border border-white shadow-[0_8px_30px_rgb(0,0,0,0.06)] hover:shadow-[0_20px_40px_rgb(0,0,0,0.12)] hover:border-primary/30 hover:-translate-y-2 transition-all duration-500">
+                <div className="flex-none w-[85%] md:w-auto snap-center group relative overflow-hidden bg-gradient-to-b from-white to-white/40 backdrop-blur-2xl p-10 rounded-[2.5rem] border border-white shadow-[0_8px_30px_rgb(0,0,0,0.06)] hover:shadow-[0_20px_40px_rgb(0,0,0,0.12)] hover:border-primary/30 hover:-translate-y-2 transition-all duration-500">
                   <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full blur-3xl -mr-10 -mt-10 pointer-events-none group-hover:bg-primary/20 transition-colors duration-500" />
                   <div className="h-16 w-16 bg-gradient-to-br from-primary/10 to-primary/5 rounded-2xl flex items-center justify-center mb-8 border border-primary/10 group-hover:scale-110 group-hover:-rotate-3 transition-transform duration-500">
                     <Database className="h-7 w-7 text-primary" />
@@ -515,17 +550,37 @@ function Home() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 sm:gap-10">
-            {[
-              { type: "video" as const, src: eventVideo, img: eventImg, title: "Dreamweaver Events", link: "https://dreamweaverevents.co.in" },
-              { type: "video" as const, src: candleVideo, img: candleImg, title: "Nazareth Candles", link: "https://nazarethcandles.com" },
-              { type: "video" as const, src: resortVideo, img: resortImg, title: "Chandys Hotels & Resorts", link: "https://chandyshotelsandresorts.com" },
-              { type: "video" as const, src: malluVideo, img: malluImg, title: "Mallusmart", link: "https://mallusmart.com" },
-              { type: "video" as const, src: dhnaVideo, img: dhanaImg, title: "Denahalaya Punnapra", link: "https://denahalayapunnapra.com" },
-              { type: "video" as const, src: bestVideo, img: bestImg, title: "Best Choice Qatar", link: "https://bestchoiceqatar.net" },
-            ].map((c, i) => (
-              <ProjectCard key={i} c={c} />
-            ))}
+          <div className="relative group/works">
+            {/* Left Scroll Button */}
+            <button 
+              onClick={() => scrollContainer(worksRef, 'left')}
+              className="absolute -left-3 top-1/2 -translate-y-1/2 z-40 bg-white/95 dark:bg-card/95 hover:bg-white dark:hover:bg-card border border-border/80 shadow-md rounded-full p-2 text-foreground transition-all duration-300 md:hidden flex items-center justify-center cursor-pointer"
+              aria-label="Scroll works left"
+            >
+              <ChevronLeft className="h-4 w-4" />
+            </button>
+
+            {/* Right Scroll Button */}
+            <button 
+              onClick={() => scrollContainer(worksRef, 'right')}
+              className="absolute -right-3 top-1/2 -translate-y-1/2 z-40 bg-white/95 dark:bg-card/95 hover:bg-white dark:hover:bg-card border border-border/80 shadow-md rounded-full p-2 text-foreground transition-all duration-300 md:hidden flex items-center justify-center cursor-pointer"
+              aria-label="Scroll works right"
+            >
+              <ChevronRight className="h-4 w-4" />
+            </button>
+
+            <div ref={worksRef} className="flex -mx-5 px-5 md:mx-0 md:px-0 md:grid md:grid-cols-3 gap-8 sm:gap-10 overflow-x-auto md:overflow-x-visible snap-x snap-mandatory scrollbar-none pb-4 md:pb-0">
+              {[
+                { type: "video" as const, src: eventVideo, img: eventImg, title: "Dreamweaver Events", link: "https://dreamweaverevents.co.in" },
+                { type: "video" as const, src: candleVideo, img: candleImg, title: "Nazareth Candles", link: "https://nazarethcandles.com" },
+                { type: "video" as const, src: resortVideo, img: resortImg, title: "Chandys Hotels & Resorts", link: "https://chandyshotelsandresorts.com" },
+                { type: "video" as const, src: malluVideo, img: malluImg, title: "Mallusmart", link: "https://mallusmart.com" },
+                { type: "video" as const, src: dhnaVideo, img: dhanaImg, title: "Denahalaya Punnapra", link: "https://denahalayapunnapra.com" },
+                { type: "video" as const, src: bestVideo, img: bestImg, title: "Best Choice Qatar", link: "https://bestchoiceqatar.net" },
+              ].map((c, i) => (
+                <ProjectCard key={i} c={c} />
+              ))}
+            </div>
           </div>
 
           <div className="mt-12 flex justify-center" data-fade>
@@ -562,7 +617,6 @@ function Home() {
       <section className="relative py-10 sm:py-14 bg-white">
         <div className="mx-auto max-w-[1200px] px-5 sm:px-8 grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-12 lg:gap-12 items-start">
           <div data-fade className="flex flex-col h-full">
-            <div className="w-16 h-[200px] sm:h-[300px] bg-[#FFC107] mb-12 sm:mb-12" />
             <div className="sticky top-32">
               <SplitText tag="h2" className="text-5xl sm:text-6xl font-light text-foreground tracking-wide">Let's Talk</SplitText>
               <SplitText tag="h1" className="text-7xl sm:text-[100px] font-black text-foreground uppercase mt-2 tracking-tighter leading-none">IDEAS</SplitText>
@@ -580,12 +634,22 @@ function Home() {
               <p>
                 Your website is your strongest business asset, serving as your online presence, which is essential for success in today's digital market. Inter Smart builds high-performance websites through its design and development process, creating websites that attract visitors and keep them engaged until they convert. As a trusted website design & development company in Kochi, Kerala, we focus on building websites that support real business growth.
               </p>
-              <p>
-                We build search engine-friendly websites tailored to your business needs through our web design services, which combine strategic planning with UI/UX design and modern web development techniques.
-              </p>
-              <p>
-                Beyond design and development, our web solutions deliver results through two main functions: generating high-quality leads, enhancing customer engagement, and supporting businesses during their online growth process. Our team develops websites that will scale with your company.
-              </p>
+              {showMoreIdeas && (
+                <>
+                  <p>
+                    We build search engine-friendly websites tailored to your business needs through our web design services, which combine strategic planning with UI/UX design and modern web development techniques.
+                  </p>
+                  <p>
+                    Beyond design and development, our web solutions deliver results through two main functions: generating high-quality leads, enhancing customer engagement, and supporting businesses during their online growth process. Our team develops websites that will scale with your company.
+                  </p>
+                </>
+              )}
+              <button 
+                onClick={() => setShowMoreIdeas(!showMoreIdeas)} 
+                className="mt-2 text-xs font-bold uppercase tracking-wider text-blue-600 hover:text-blue-700 transition-colors flex items-center gap-1 cursor-pointer select-none"
+              >
+                {showMoreIdeas ? "Read Less ↑" : "Read More ↓"}
+              </button>
             </div>
           </div>
         </div>
@@ -602,17 +666,37 @@ function Home() {
             </p>
           </div>
 
-          <div className="flex flex-wrap justify-center items-start gap-y-12 gap-x-6 sm:gap-x-4 md:flex-nowrap">
-            {processSteps.map((step, i) => (
-              <div key={i} data-fade className="w-1/2 sm:w-1/3 md:w-1/5 flex flex-col items-center text-center group cursor-default">
-                <div className="h-20 w-20 sm:h-28 sm:w-28 rounded-full flex items-center justify-center mb-6 sm:mb-8 transition-transform duration-500 group-hover:-translate-y-2">
-                  <step.icon className="h-10 w-10 sm:h-14 sm:w-14 text-[#2DD4BF] transition-transform duration-500 group-hover:scale-110" strokeWidth={1.5} />
+          <div className="relative group/process">
+            {/* Left Scroll Button */}
+            <button 
+              onClick={() => scrollContainer(processRef, 'left')}
+              className="absolute -left-3 top-1/3 -translate-y-1/2 z-40 bg-white/95 dark:bg-card/95 hover:bg-white dark:hover:bg-card border border-border/80 shadow-md rounded-full p-2 text-foreground transition-all duration-300 md:hidden flex items-center justify-center cursor-pointer"
+              aria-label="Scroll process left"
+            >
+              <ChevronLeft className="h-4 w-4" />
+            </button>
+
+            {/* Right Scroll Button */}
+            <button 
+              onClick={() => scrollContainer(processRef, 'right')}
+              className="absolute -right-3 top-1/3 -translate-y-1/2 z-40 bg-white/95 dark:bg-card/95 hover:bg-white dark:hover:bg-card border border-border/80 shadow-md rounded-full p-2 text-foreground transition-all duration-300 md:hidden flex items-center justify-center cursor-pointer"
+              aria-label="Scroll process right"
+            >
+              <ChevronRight className="h-4 w-4" />
+            </button>
+
+            <div ref={processRef} className="flex overflow-x-auto md:flex-nowrap md:justify-center gap-6 snap-x snap-mandatory scrollbar-none pb-4 -mx-5 px-5 md:mx-0 md:px-0">
+              {processSteps.map((step, i) => (
+                <div key={i} data-fade className="flex-none w-[45%] md:w-1/5 flex flex-col items-center text-center group cursor-default snap-center">
+                  <div className="h-20 w-20 sm:h-28 sm:w-28 rounded-full flex items-center justify-center mb-6 sm:mb-8 transition-transform duration-500 group-hover:-translate-y-2">
+                    <step.icon className="h-10 w-10 sm:h-14 sm:w-14 text-[#2DD4BF] transition-transform duration-500 group-hover:scale-110" strokeWidth={1.5} />
+                  </div>
+                  <h4 className="text-[14px] sm:text-[16px] text-foreground/80 font-medium leading-snug px-2 max-w-[200px]">
+                    {step.title}
+                  </h4>
                 </div>
-                <h4 className="text-[14px] sm:text-[16px] text-foreground/80 font-medium leading-snug px-2 max-w-[200px]">
-                  {step.title}
-                </h4>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -620,6 +704,27 @@ function Home() {
       {/* ============== TESTIMONIALS ============== */}
       <TestimonialsSection />
 
+      {/* ============== CTA BANNER ============== */}
+      <section className="relative py-14 sm:py-20 bg-gradient-to-r from-blue-600 to-indigo-700 text-white overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.12),transparent_50%)] pointer-events-none" />
+        <div className="mx-auto max-w-5xl px-5 sm:px-8 relative z-10 text-center">
+          <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight mb-4 leading-tight">
+            Love Our Design? Let's Create Your Dream Website.
+          </h2>
+          <p className="text-blue-100 text-base sm:text-xl font-medium max-w-2xl mx-auto mb-8">
+            Talk to Web Design Experts today. Let's collaborate to build a digital presence that stands out.
+          </p>
+          <div className="flex justify-center">
+            <Link
+              to="/contact"
+              className="bg-white text-blue-600 hover:bg-blue-50 font-bold px-8 py-4 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-0.5 inline-flex items-center gap-2 text-sm sm:text-base"
+            >
+              Get a Free Quote
+              <span className="text-lg">→</span>
+            </Link>
+          </div>
+        </div>
+      </section>
     </>
   );
 }

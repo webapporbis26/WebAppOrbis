@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { RevealLine, useTextReveal, useFadeUp, gsap, ScrollTrigger } from "@/lib/anim";
 import SplitText from "@/components/ui/SplitText";
 import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext, type CarouselApi } from "@/components/ui/carousel";
-import { Users, Target, Rocket, Lightbulb, MonitorSmartphone, CodeXml, Mail, Smartphone, Loader2 } from "lucide-react";
+import { Users, Target, Rocket, Lightbulb, MonitorSmartphone, CodeXml, Mail, Smartphone, Loader2, ChevronLeft, ChevronRight } from "lucide-react";
 import about from "@/assets/about-team.jpg";
 import coffeeCup from "@/assets/coffee-cup.png";
 import contactIllustration from "@/assets/contact-illustration.png";
@@ -89,6 +89,18 @@ function About() {
   
   const [sent, setSent] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const [showMorePhilosophy, setShowMorePhilosophy] = useState(false);
+  const servicesRef = useRef<HTMLDivElement>(null);
+
+  const scrollContainer = (ref: React.RefObject<HTMLDivElement | null>, direction: "left" | "right") => {
+    if (ref.current) {
+      const scrollAmount = ref.current.clientWidth * 0.75;
+      ref.current.scrollBy({
+        left: direction === "left" ? -scrollAmount : scrollAmount,
+        behavior: "smooth",
+      });
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -237,7 +249,11 @@ function About() {
       <section className="relative py-10 sm:py-14 bg-white">
         <div className="mx-auto max-w-[1200px] px-5 sm:px-8 grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-12 lg:gap-12 items-start">
           <div data-fade className="flex flex-col h-full">
-            <div className="w-16 h-[200px] sm:h-[300px] bg-[#FFC107] mb-12 sm:mb-12" />
+            <img 
+              src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=600&h=450&q=80" 
+              alt="Our Philosophy" 
+              className="w-full rounded-2xl border border-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.03)] object-cover mb-8 aspect-[4/3]"
+            />
             <div className="sticky top-32">
               <SplitText tag="h2" className="text-5xl sm:text-6xl font-light text-foreground tracking-wide">Our Vision &</SplitText>
               <SplitText tag="h1" className="text-7xl sm:text-[90px] font-black text-foreground uppercase mt-2 tracking-tighter leading-none">PHILOSOPHY</SplitText>
@@ -255,12 +271,22 @@ function About() {
               <p>
                 At WebApp Orbis, our philosophy centers on the belief that every digital product we create should be a perfect blend of form and function. We don't just write code; we architect solutions that empower businesses to scale, innovate, and thrive in an increasingly digital world.
               </p>
-              <p>
-                We understand that your technology infrastructure is the backbone of your modern enterprise. That's why our approach is deeply collaborative. We embed ourselves within your teams, ensuring that our strategies align perfectly with your long-term business objectives and operational realities.
-              </p>
-              <p>
-                From intuitive user interfaces to robust backend architectures, our commitment to excellence remains unwavering. We leverage cutting-edge technologies to deliver experiences that not only captivate your audience but also drive measurable results and sustainable growth for your brand.
-              </p>
+              {showMorePhilosophy && (
+                <>
+                  <p>
+                    We understand that your technology infrastructure is the backbone of your modern enterprise. That's why our approach is deeply collaborative. We embed ourselves within your teams, ensuring that our strategies align perfectly with your long-term business objectives and operational realities.
+                  </p>
+                  <p>
+                    From intuitive user interfaces to robust backend architectures, our commitment to excellence remains unwavering. We leverage cutting-edge technologies to deliver experiences that not only captivate your audience but also drive measurable results and sustainable growth for your brand.
+                  </p>
+                </>
+              )}
+              <button 
+                onClick={() => setShowMorePhilosophy(!showMorePhilosophy)} 
+                className="mt-2 text-xs font-bold uppercase tracking-wider text-blue-600 hover:text-blue-700 transition-colors flex items-center gap-1 cursor-pointer select-none"
+              >
+                {showMorePhilosophy ? "Read Less ↑" : "Read More ↓"}
+              </button>
             </div>
           </div>
         </div>
@@ -402,55 +428,75 @@ function About() {
               Our Core <span className="font-bold">Services.</span>
             </h2>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-10 text-left">
-            {[
-              {
-                emoji: "💻",
-                color: "#2DD4BF",
-                title: "Website Designing & Development",
-                desc: "We create responsive and professionally designed websites that enhance brand visibility and improve user experience. Our websites are developed with modern technologies to ensure speed, security, and seamless functionality across all devices.",
-                link: "/services/web-development",
-              },
-              {
-                emoji: "📱",
-                color: "#F472B6",
-                title: "Mobile App Development",
-                desc: "Our mobile app development services help businesses connect with customers through intuitive and feature-rich applications. We develop customised Android and iOS applications focused on usability, performance, and long-term scalability.",
-                link: "/services/mobile-development",
-              },
-              {
-                emoji: "📈",
-                color: "#818CF8",
-                title: "Digital Marketing",
-                desc: "Boost your online presence and reach your target audience with data-driven marketing campaigns. We leverage social media, content marketing, and paid advertising to drive measurable growth and conversions.",
-                link: "/services/digital-marketing",
-              },
-              {
-                emoji: "🎯",
-                color: "#FBBF24",
-                title: "SEO Optimization",
-                desc: "Improve your search engine rankings and drive organic traffic to your website. We implement advanced on-page and off-page SEO strategies to ensure your business stands out in search results.",
-                link: "/services/seo",
-              },
-            ].map((card, i) => (
-              <div key={i} data-fade className="flex flex-col items-start group">
-                <div className="text-5xl mb-8">{card.emoji}</div>
-                <h4 className="text-display text-xl sm:text-2xl font-bold text-[#1a1a1a] leading-tight mb-3">
-                  {card.title}
-                </h4>
-                <div className="w-8 h-1 rounded-full mb-6" style={{ backgroundColor: card.color }} />
-                <p className="text-[15px] text-gray-600 leading-relaxed mb-5 flex-1">
-                  {card.desc}
-                </p>
-                <Link
-                  to={card.link}
-                  className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-[0.15em] text-gray-500 hover:text-[#1a1a1a] transition-colors group/link"
-                >
-                  View more
-                  <span className="text-sm transition-transform group-hover/link:translate-x-0.5">+</span>
-                </Link>
-              </div>
-            ))}
+          <div className="relative group/services">
+            {/* Left Scroll Button */}
+            <button 
+              onClick={() => scrollContainer(servicesRef, 'left')}
+              className="absolute -left-3 top-1/2 -translate-y-1/2 z-40 bg-white/95 dark:bg-card/95 hover:bg-white dark:hover:bg-card border border-border/80 shadow-md rounded-full p-2 text-foreground transition-all duration-300 sm:hidden flex items-center justify-center cursor-pointer"
+              aria-label="Scroll services left"
+            >
+              <ChevronLeft className="h-4 w-4" />
+            </button>
+
+            {/* Right Scroll Button */}
+            <button 
+              onClick={() => scrollContainer(servicesRef, 'right')}
+              className="absolute -right-3 top-1/2 -translate-y-1/2 z-40 bg-white/95 dark:bg-card/95 hover:bg-white dark:hover:bg-card border border-border/80 shadow-md rounded-full p-2 text-foreground transition-all duration-300 sm:hidden flex items-center justify-center cursor-pointer"
+              aria-label="Scroll services right"
+            >
+              <ChevronRight className="h-4 w-4" />
+            </button>
+
+            <div ref={servicesRef} className="flex sm:grid sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-10 text-left overflow-x-auto sm:overflow-x-visible snap-x snap-mandatory scrollbar-none pb-4 sm:pb-0 -mx-5 px-5 sm:mx-0 sm:px-0">
+              {[
+                {
+                  emoji: "💻",
+                  color: "#2DD4BF",
+                  title: "Website Designing & Development",
+                  desc: "We create responsive and professionally designed websites that enhance brand visibility and improve user experience. Our websites are developed with modern technologies to ensure speed, security, and seamless functionality across all devices.",
+                  link: "/services/web-development",
+                },
+                {
+                  emoji: "📱",
+                  color: "#F472B6",
+                  title: "Mobile App Development",
+                  desc: "Our mobile app development services help businesses connect with customers through intuitive and feature-rich applications. We develop customised Android and iOS applications focused on usability, performance, and long-term scalability.",
+                  link: "/services/mobile-development",
+                },
+                {
+                  emoji: "📈",
+                  color: "#818CF8",
+                  title: "Digital Marketing",
+                  desc: "Boost your online presence and reach your target audience with data-driven marketing campaigns. We leverage social media, content marketing, and paid advertising to drive measurable growth and conversions.",
+                  link: "/services/digital-marketing",
+                },
+                {
+                  emoji: "🎯",
+                  color: "#FBBF24",
+                  title: "SEO Optimization",
+                  desc: "Improve your search engine rankings and drive organic traffic to your website. We implement advanced on-page and off-page SEO strategies to ensure your business stands out in search results.",
+                  link: "/services/seo",
+                },
+              ].map((card, i) => (
+                <div key={i} data-fade className="flex-none w-[85%] sm:w-auto snap-center flex flex-col items-start group">
+                  <div className="text-5xl mb-8">{card.emoji}</div>
+                  <h4 className="text-display text-xl sm:text-2xl font-bold text-[#1a1a1a] leading-tight mb-3">
+                    {card.title}
+                  </h4>
+                  <div className="w-8 h-1 rounded-full mb-6" style={{ backgroundColor: card.color }} />
+                  <p className="text-[15px] text-gray-600 leading-relaxed mb-5 flex-1">
+                    {card.desc}
+                  </p>
+                  <Link
+                    to={card.link}
+                    className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-[0.15em] text-gray-500 hover:text-[#1a1a1a] transition-colors group/link"
+                  >
+                    View more
+                    <span className="text-sm transition-transform group-hover/link:translate-x-0.5">+</span>
+                  </Link>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -559,6 +605,28 @@ function About() {
                 </button>
               </form>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ============== CTA BANNER ============== */}
+      <section className="relative py-14 sm:py-20 bg-gradient-to-r from-blue-600 to-indigo-700 text-white overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.12),transparent_50%)] pointer-events-none" />
+        <div className="mx-auto max-w-5xl px-5 sm:px-8 relative z-10 text-center">
+          <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight mb-4 leading-tight">
+            Love Our Design? Let's Create Your Dream Website.
+          </h2>
+          <p className="text-blue-100 text-base sm:text-xl font-medium max-w-2xl mx-auto mb-8">
+            Talk to Web Design Experts today. Let's collaborate to build a digital presence that stands out.
+          </p>
+          <div className="flex justify-center">
+            <Link
+              to="/contact"
+              className="bg-white text-blue-600 hover:bg-blue-50 font-bold px-8 py-4 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-0.5 inline-flex items-center gap-2 text-sm sm:text-base animate-pulse-slow"
+            >
+              Get a Free Quote
+              <span className="text-lg">→</span>
+            </Link>
           </div>
         </div>
       </section>
