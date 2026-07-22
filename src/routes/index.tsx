@@ -794,21 +794,28 @@ function HeroMedia() {
 }
 
 function HeroMediaItem({ item, isActive, onNext }: { item: any, isActive: boolean, onNext: () => void }) {
-  const videoRef = useRef<HTMLVideoElement>(null);
+  const desktopVideoRef = useRef<HTMLVideoElement>(null);
+  const mobileVideoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
-    if (item.type === "video" && videoRef.current) {
-      videoRef.current.muted = true;
-      if (isActive) {
-        const playPromise = videoRef.current.play();
-        if (playPromise !== undefined) {
-          playPromise.catch((err) => {
-            console.warn("Safari/Chrome blocked autoplay:", err);
-          });
+    if (item.type === "video") {
+      const playVideo = (videoEl: HTMLVideoElement | null) => {
+        if (!videoEl) return;
+        videoEl.muted = true;
+        if (isActive) {
+          const playPromise = videoEl.play();
+          if (playPromise !== undefined) {
+            playPromise.catch((err) => {
+              console.warn("Autoplay blocked:", err);
+            });
+          }
+        } else {
+          videoEl.pause();
         }
-      } else {
-        videoRef.current.pause();
-      }
+      };
+
+      playVideo(desktopVideoRef.current);
+      playVideo(mobileVideoRef.current);
     }
   }, [isActive, item.type, item.src]);
 
@@ -816,23 +823,77 @@ function HeroMediaItem({ item, isActive, onNext }: { item: any, isActive: boolea
     <div
       className={`absolute inset-0 transition-opacity duration-1000 ${isActive ? "opacity-100 z-10" : "opacity-0 z-0"}`}
     >
-      {item.type === "video" ? (
-        <video
-          ref={videoRef}
-          src={item.src}
-          muted
-          playsInline
-          autoPlay
-          loop
-          className="h-full w-full object-cover"
-        />
-      ) : (
-        <img
-          src={item.src}
-          alt=""
-          className="h-full w-full object-cover"
-        />
-      )}
+      {/* Desktop Version */}
+      <div className="hidden lg:block w-full h-full">
+        {item.type === "video" ? (
+          <video
+            ref={desktopVideoRef}
+            src={item.src}
+            muted
+            playsInline
+            autoPlay
+            loop
+            className="h-full w-full object-cover"
+          />
+        ) : (
+          <img
+            src={item.src}
+            alt=""
+            className="h-full w-full object-cover"
+          />
+        )}
+      </div>
+
+      {/* Mobile/Tablet Version: Framed inside a Smartphone Mockup */}
+      <div className="lg:hidden w-full h-full flex flex-col items-center justify-center bg-[#0d0f12] px-5 pb-28 pt-10 relative overflow-hidden">
+        {/* Ambient Blur Background */}
+        {item.type === "video" ? (
+          <video
+            ref={mobileVideoRef}
+            src={item.src}
+            muted
+            playsInline
+            autoPlay
+            loop
+            className="absolute inset-0 w-full h-full object-cover blur-3xl opacity-20 scale-110 pointer-events-none"
+          />
+        ) : (
+          <img
+            src={item.src}
+            alt=""
+            className="absolute inset-0 w-full h-full object-cover blur-3xl opacity-25 scale-110 pointer-events-none"
+          />
+        )}
+
+        {/* Smartphone Frame */}
+        <div className="relative w-[280px] h-[520px] sm:w-[320px] sm:h-[600px] rounded-[3rem] border-[8px] border-slate-800 bg-[#0d0f12] shadow-[0_25px_60px_-15px_rgba(0,0,0,0.9)] overflow-hidden flex items-center justify-center z-20">
+          {/* Speaker & Camera Notch */}
+          <div className="absolute top-0 inset-x-0 h-6 bg-slate-900 rounded-b-2xl flex items-center justify-center gap-2 z-30">
+            <div className="w-12 h-1 bg-slate-800 rounded-full" />
+            <div className="w-2.5 h-2.5 bg-slate-950 border border-slate-800 rounded-full" />
+          </div>
+          
+          {/* Content (contained nicely to fit the screen) */}
+          <div className="w-full h-full pt-6">
+            {item.type === "video" ? (
+              <video
+                src={item.src}
+                muted
+                playsInline
+                autoPlay
+                loop
+                className="w-full h-full object-cover"
+              />
+            ) : (
+              <img
+                src={item.src}
+                alt=""
+                className="w-full h-full object-cover object-top"
+              />
+            )}
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
