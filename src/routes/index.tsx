@@ -246,10 +246,6 @@ function Home() {
             <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold tracking-tight mb-6">
               Build Smarter Digital Experiences for Modern Businesses
             </h1>
-            <p className="text-lg sm:text-xl text-white/90 mb-8 leading-relaxed">
-              Transform your business with professional website designing and development, mobile app development, and customised ERP solutions tailored to your operational needs. We create modern digital platforms that improve customer engagement, streamline business processes, and support long-term growth.<br/><br/>
-              From responsive business websites to advanced enterprise systems, our solutions are designed to deliver performance, functionality, and seamless user experiences across every device.
-            </p>
             <div className="flex flex-wrap items-center gap-2">
               <MagneticButton
                 as="a"
