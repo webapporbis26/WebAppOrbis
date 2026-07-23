@@ -81,7 +81,7 @@ export function AdminShell({ children }: { children: ReactNode }) {
                 </div>
                 <div className="pr-2 text-xs leading-tight">
                   <div className="font-medium">Admin</div>
-                  <div className="text-muted-foreground">admin@weborbis.com</div>
+                  <div className="text-muted-foreground">admin@webapporbis.com</div>
                 </div>
               </div>
               <button

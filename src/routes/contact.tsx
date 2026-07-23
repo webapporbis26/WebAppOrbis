@@ -50,7 +50,7 @@ function Contact() {
       const whatsappText = encodeURIComponent(
         `*New Website Lead*\n\n*Name:* ${leadData.contact}\n*Email:* ${leadData.email}\n*Phone:* ${leadData.phone}\n*Subject:* ${leadData.service}\n*Message:* ${leadData.notes}`
       );
-      window.open(`https://wa.me/919645944322?text=${whatsappText}`, "_blank");
+      window.open(`https://wa.me/917736003018?text=${whatsappText}`, "_blank");
     } catch (error) {
       console.error("Failed to submit lead", error);
       alert("Something went wrong. Please try again later.");
@@ -153,8 +153,8 @@ function Contact() {
                   </div>
                   <div>
                     <span className="block text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-0.5">Phone</span>
-                    <a href="tel:+919645944322" className="text-[14px] font-semibold text-slate-700 hover:text-blue-600 transition-colors">
-                      +91 9645 944 322
+                    <a href="tel:+917736003018" className="text-[14px] font-semibold text-slate-700 hover:text-blue-600 transition-colors">
+                      +91 7736 003 018
                     </a>
                   </div>
                 </div>
@@ -166,8 +166,8 @@ function Contact() {
                   </div>
                   <div>
                     <span className="block text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-0.5">Email</span>
-                    <a href="mailto:info@enempvtltd.com" className="text-[14px] font-semibold text-slate-700 hover:text-blue-600 transition-colors">
-                      info@enempvtltd.com
+                    <a href="mailto:info@webapporbis.com" className="text-[14px] font-semibold text-slate-700 hover:text-blue-600 transition-colors">
+                      info@webapporbis.com
                     </a>
                   </div>
                 </div>
@@ -179,8 +179,8 @@ function Contact() {
                   </div>
                   <div>
                     <span className="block text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-0.5">Website</span>
-                    <a href="https://www.enempvtltd.com" target="_blank" rel="noopener noreferrer" className="text-[14px] font-semibold text-slate-700 hover:text-blue-600 transition-colors">
-                      www.enempvtltd.com
+                    <a href="https://www.webapporbis.com" target="_blank" rel="noopener noreferrer" className="text-[14px] font-semibold text-slate-700 hover:text-blue-600 transition-colors">
+                      www.webapporbis.com
                     </a>
                   </div>
                 </div>

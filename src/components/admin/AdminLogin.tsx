@@ -67,7 +67,7 @@ export function AdminLogin() {
                   autoComplete="username"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="admin@weborbis.com"
+                  placeholder="admin@webapporbis.com"
                   className="h-11 w-full rounded-xl border border-border bg-white/80 pl-10 pr-3 text-sm outline-none transition-shadow focus:ring-2 focus:ring-ring/40"
                 />
               </div>

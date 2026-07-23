@@ -558,11 +558,11 @@ function About() {
               </div>
               
               <div className="space-y-4 pt-4">
-                <a href="mailto:sales@weborbis.com" className="flex items-center gap-3.5 font-bold text-lg text-[#222] hover:text-primary transition-colors">
-                  <Mail className="h-6 w-6 shrink-0 stroke-[2.5]" /> sales@weborbis.com
+                <a href="mailto:info@webapporbis.com" className="flex items-center gap-3.5 font-bold text-lg text-[#222] hover:text-primary transition-colors">
+                  <Mail className="h-6 w-6 shrink-0 stroke-[2.5]" /> info@webapporbis.com
                 </a>
-                <a href="tel:+919645944322" className="flex items-center gap-3.5 font-bold text-lg text-[#222] hover:text-primary transition-colors">
-                  <Smartphone className="h-6 w-6 shrink-0 stroke-[2.5]" /> +91 9645 944 322
+                <a href="tel:+917736003018" className="flex items-center gap-3.5 font-bold text-lg text-[#222] hover:text-primary transition-colors">
+                  <Smartphone className="h-6 w-6 shrink-0 stroke-[2.5]" /> +91 7736 003 018
                 </a>
               </div>
 
