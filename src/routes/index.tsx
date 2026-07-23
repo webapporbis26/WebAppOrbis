@@ -636,7 +636,7 @@ function Home() {
         <div className="mx-auto max-w-[90rem] px-5 sm:px-8">
           <div className="text-center mb-12 sm:mb-12" data-fade>
             <h2 className="text-3xl sm:text-4xl lg:text-[2.75rem] font-light text-foreground mb-6 leading-tight">
-              Our <span className="text-[#DC2626] font-medium">Website Design Process</span>
+              Our <span className="text-blue-600 font-medium">Website Design Process</span>
             </h2>
             <p className="text-foreground/70 text-[15px] sm:text-lg max-w-3xl mx-auto">
               We offer free consultations to understand your business goals and create a tailored website design strategy.
@@ -666,7 +666,7 @@ function Home() {
               {processSteps.map((step, i) => (
                 <div key={i} data-fade className="flex-none w-[45%] md:w-1/5 flex flex-col items-center text-center group cursor-default snap-center">
                   <div className="h-20 w-20 sm:h-28 sm:w-28 rounded-full flex items-center justify-center mb-6 sm:mb-8 transition-transform duration-500 group-hover:-translate-y-2">
-                    <step.icon className="h-10 w-10 sm:h-14 sm:w-14 text-[#2DD4BF] transition-transform duration-500 group-hover:scale-110" strokeWidth={1.5} />
+                    <step.icon className="h-10 w-10 sm:h-14 sm:w-14 text-blue-600 transition-transform duration-500 group-hover:scale-110" strokeWidth={1.5} />
                   </div>
                   <h4 className="text-[14px] sm:text-[16px] text-foreground/80 font-medium leading-snug px-2 max-w-[200px]">
                     {step.title}
