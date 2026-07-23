@@ -1,49 +1,47 @@
 import { useEffect, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 export function Loader() {
   const [show, setShow] = useState(true);
-  const [fade, setFade] = useState(false);
 
   useEffect(() => {
-    // Start fading out after 1.8 seconds
-    const fadeTimer = setTimeout(() => {
-      setFade(true);
-    }, 1800);
-
-    // Completely unmount after 2.5 seconds
+    // Start exit animation and unmount after 3.5 seconds
     const removeTimer = setTimeout(() => {
       setShow(false);
-    }, 2500);
+    }, 3500);
 
     return () => {
-      clearTimeout(fadeTimer);
       clearTimeout(removeTimer);
     };
   }, []);
 
-  if (!show) return null;
-
   return (
-    <div
-      className={`fixed inset-0 z-[9999] flex items-center justify-center bg-white transition-opacity duration-700 ease-in-out ${
-        fade ? "opacity-0 pointer-events-none" : "opacity-100"
-      }`}
-    >
-      <div 
-        className={`flex items-center gap-3 select-none scale-125 md:scale-150 transition-all duration-1000 ease-out ${
-          fade ? "scale-150 md:scale-[1.8] blur-sm" : ""
-        }`}
-      >
-        <div className="flex items-center border-[2.5px] border-[#222] rounded-lg px-2.5 py-1.5 relative">
-          <span className="text-4xl font-extrabold tracking-tighter leading-none text-[#222]">D</span>
-          <div className="flex flex-col text-[8.5px] font-black leading-tight tracking-[0.18em] pl-1.5 border-l border-[#222]/30 text-[#222]">
-            <span>ESIGN</span>
-            <span>EVELOP</span>
-            <span>ELIVER</span>
+    <AnimatePresence>
+      {show && (
+        <motion.div
+          initial={{ opacity: 1 }}
+          exit={{ y: "-100%", opacity: 0 }}
+          transition={{ duration: 1.2, ease: [0.76, 0, 0.24, 1] }} // Smooth cinematic easing
+          className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-background/80 backdrop-blur-xl border-b border-white/10 shadow-2xl"
+        >
+          <div className="flex flex-col items-center gap-6 select-none relative">
+            {/* Subtle glow effect behind logo */}
+            <div className="absolute inset-0 bg-primary/20 blur-[60px] rounded-full scale-150 animate-pulse" />
+            
+            <motion.img
+              src="/logo.png"
+              alt="Weborbis Logo"
+              initial={{ opacity: 0, scale: 0.9, y: 15 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              transition={{
+                duration: 1.5,
+                ease: "easeOut",
+              }}
+              className="w-32 h-32 md:w-40 md:h-40 object-contain drop-shadow-2xl relative z-10"
+            />
           </div>
-        </div>
-        <span className="text-4xl font-black tracking-tight text-primary drop-shadow-sm">SMART</span>
-      </div>
-    </div>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 }

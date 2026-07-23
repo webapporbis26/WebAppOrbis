@@ -550,21 +550,16 @@ function About() {
             
             {/* Left Column */}
             <div className="flex flex-col text-left pt-2">
-              <div className="flex items-center mb-12">
-                <div className="flex items-center">
-                  <span className="text-[55px] leading-none font-light text-[#222] mr-1 border border-[#222] px-2 rounded-sm shadow-sm bg-transparent">D</span>
-                  <div className="flex flex-col text-[10px] leading-none font-extrabold text-[#222] mr-3 mt-1 space-y-[2px]">
-                    <span>ESIGN</span>
-                    <span>EVELOP</span>
-                    <span>ELIVER</span>
-                  </div>
-                </div>
-                <span className="text-[55px] leading-none font-bold text-primary mt-1 tracking-wide drop-shadow-sm">SMART</span>
+              <div className="flex items-center gap-4 mb-12">
+                <img src="/logo.png" alt="Weborbis Logo" className="w-16 h-16 object-contain" />
+                <span className="text-4xl md:text-5xl font-black tracking-tighter text-primary drop-shadow-sm">
+                  Weborbis
+                </span>
               </div>
               
               <div className="space-y-4 pt-4">
-                <a href="mailto:sales@intersmart.in" className="flex items-center gap-3.5 font-bold text-lg text-[#222] hover:text-primary transition-colors">
-                  <Mail className="h-6 w-6 shrink-0 stroke-[2.5]" /> sales@intersmart.in
+                <a href="mailto:sales@weborbis.com" className="flex items-center gap-3.5 font-bold text-lg text-[#222] hover:text-primary transition-colors">
+                  <Mail className="h-6 w-6 shrink-0 stroke-[2.5]" /> sales@weborbis.com
                 </a>
                 <a href="tel:+919645944322" className="flex items-center gap-3.5 font-bold text-lg text-[#222] hover:text-primary transition-colors">
                   <Smartphone className="h-6 w-6 shrink-0 stroke-[2.5]" /> +91 9645 944 322
