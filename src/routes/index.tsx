@@ -340,9 +340,7 @@ function Home() {
                     <CounterCard key={i} n={c.n} s={c.s} l={c.l} />
                   ))}
                   </div>
-                </CarouselItem>
-              </CarouselContent>
-            </Carousel>
+                </div>
             </TabsContent>
 
             <TabsContent value="services" className="mt-0 focus-visible:outline-none focus-visible:ring-0">
@@ -429,9 +427,7 @@ function Home() {
                     </p>
                   </div>
                   </div>
-                </CarouselItem>
-              </CarouselContent>
-            </Carousel>
+                </div>
             </TabsContent>
           </Tabs>
         </div>
@@ -466,21 +462,23 @@ function Home() {
             <ChevronRight className="h-4 w-4" />
           </button>
 
-          <div ref={featuresRef} className="py-4 px-4 sm:px-8 flex -mx-5 px-5 sm:mx-0 sm:px-0 sm:flex-wrap justify-between items-start gap-6 overflow-x-auto sm:overflow-x-visible snap-x snap-mandatory scrollbar-none bg-white/50 backdrop-blur-md rounded-2xl border border-border/30 shadow-sm pb-4 sm:pb-0" data-fade>
+          <Carousel opts={{ loop: true, breakpoints: { '(min-width: 640px)': { active: false } } }} className="w-full" data-fade>
+            <CarouselContent className="py-4 px-4 sm:px-8 flex -ml-5 sm:ml-0 sm:flex-wrap justify-between items-start gap-6 bg-white/50 backdrop-blur-md rounded-2xl border border-border/30 shadow-sm pb-4 sm:pb-0" ref={featuresRef}>
             {featuresList.map((f, i) => (
-              <div key={i} className="relative flex-none w-[50%] sm:w-1/3 lg:flex-1 flex flex-col items-center text-center px-2 group cursor-default snap-center">
-                <div className="h-14 w-14 sm:h-16 sm:w-16 rounded-full flex items-center justify-center text-[#2DD4BF] group-hover:scale-110 transition-transform duration-300 mb-4 bg-[#2DD4BF]/10">
-                  <f.icon className="h-7 w-7 sm:h-8 sm:w-8 stroke-[1.5]" />
-                </div>
-                <h4 className="text-xs sm:text-sm font-semibold text-foreground/80 leading-snug max-w-[140px] transition-all duration-300 group-hover:-translate-y-1">
-                  {f.title}
-                </h4>
-                
-                {/* Animated Tooltip */}
-                <div className="absolute top-[100%] left-1/2 -translate-x-1/2 mt-2 w-[160px] sm:w-[200px] bg-foreground text-background text-[11px] sm:text-xs p-3 rounded-xl shadow-xl opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 pointer-events-none z-50">
-                  <div className="absolute -top-1.5 left-1/2 -translate-x-1/2 border-4 border-transparent border-b-foreground" />
-                  {f.desc}
-                </div>
+              <CarouselItem key={i} className="pl-5 sm:pl-0 basis-auto">
+                <div className="relative flex-none w-[50%] sm:w-1/3 lg:flex-1 flex flex-col items-center text-center px-2 group cursor-default snap-center">
+                  <div className="h-14 w-14 sm:h-16 sm:w-16 rounded-full flex items-center justify-center text-[#2DD4BF] group-hover:scale-110 transition-transform duration-300 mb-4 bg-[#2DD4BF]/10">
+                    <f.icon className="h-7 w-7 sm:h-8 sm:w-8 stroke-[1.5]" />
+                  </div>
+                  <h4 className="text-xs sm:text-sm font-semibold text-foreground/80 leading-snug max-w-[140px] transition-all duration-300 group-hover:-translate-y-1">
+                    {f.title}
+                  </h4>
+                  
+                  {/* Animated Tooltip */}
+                  <div className="absolute top-[100%] left-1/2 -translate-x-1/2 mt-2 w-[160px] sm:w-[200px] bg-foreground text-background text-[11px] sm:text-xs p-3 rounded-xl shadow-xl opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 pointer-events-none z-50">
+                    <div className="absolute -top-1.5 left-1/2 -translate-x-1/2 border-4 border-transparent border-b-foreground" />
+                    {f.desc}
+                  </div>
                 </div>
               </CarouselItem>
             ))}
@@ -498,7 +496,8 @@ function Home() {
             </h2>
           </div>
 
-          <div className="flex -mx-5 px-5 sm:mx-0 sm:px-0 sm:grid sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-5 overflow-x-auto sm:overflow-x-visible snap-x snap-mandatory scrollbar-none pb-4 sm:pb-0">
+          <Carousel opts={{ loop: true, breakpoints: { '(min-width: 640px)': { active: false } } }} className="w-full">
+            <CarouselContent className="flex -ml-5 sm:ml-0 sm:grid sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-5 pb-4 sm:pb-0">
             {[
               {
                 emoji: "💻",
@@ -529,22 +528,23 @@ function Home() {
                 link: "/services/seo",
               },
             ].map((card, i) => (
-              <div key={i} data-fade className="flex-none w-[85%] sm:w-auto snap-center flex flex-col items-start bg-white p-5 sm:p-6 rounded-[14px] border border-border/40 shadow-[0_4px_20px_rgb(0,0,0,0.02)] hover:shadow-[0_12px_30px_rgb(0,0,0,0.05)] hover:border-primary/20 hover:-translate-y-1 transition-all duration-300 group">
-                <div className="text-2xl sm:text-3xl mb-3">{card.emoji}</div>
-                <h4 className="text-base sm:text-lg font-bold text-foreground leading-snug mb-2">
-                  {card.title}
-                </h4>
-                <div className="w-6 h-0.5 rounded-full mb-3" style={{ backgroundColor: card.color }} />
-                <p className="text-xs sm:text-sm text-foreground/75 leading-relaxed mb-4 flex-1">
-                  {card.desc}
-                </p>
-                <Link
-                  to={card.link}
-                  className="inline-flex items-center gap-1 text-xs font-bold uppercase tracking-[0.12em] text-foreground/60 hover:text-foreground transition-all duration-300 group/link hover:translate-x-0.5"
-                >
-                  View more
-                  <span className="text-sm transition-transform group-hover/link:translate-x-0.5">+</span>
-                </Link>
+              <CarouselItem key={i} className="pl-5 sm:pl-0 basis-[85%] sm:basis-auto" data-fade>
+                <div className="flex flex-col items-start bg-white p-5 sm:p-6 rounded-[14px] border border-border/40 shadow-[0_4px_20px_rgb(0,0,0,0.02)] hover:shadow-[0_12px_30px_rgb(0,0,0,0.05)] hover:border-primary/20 hover:-translate-y-1 transition-all duration-300 group h-full">
+                  <div className="text-2xl sm:text-3xl mb-3">{card.emoji}</div>
+                  <h4 className="text-base sm:text-lg font-bold text-foreground leading-snug mb-2">
+                    {card.title}
+                  </h4>
+                  <div className="w-6 h-0.5 rounded-full mb-3" style={{ backgroundColor: card.color }} />
+                  <p className="text-xs sm:text-sm text-foreground/75 leading-relaxed mb-4 flex-1">
+                    {card.desc}
+                  </p>
+                  <Link
+                    to={card.link}
+                    className="inline-flex items-center gap-1 text-xs font-bold uppercase tracking-[0.12em] text-foreground/60 hover:text-foreground transition-all duration-300 group/link hover:translate-x-0.5"
+                  >
+                    View more
+                    <span className="text-sm transition-transform group-hover/link:translate-x-0.5">+</span>
+                  </Link>
                 </div>
               </CarouselItem>
             ))}
