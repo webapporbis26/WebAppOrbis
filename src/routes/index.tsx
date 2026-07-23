@@ -243,9 +243,7 @@ function Home() {
 
         <div data-hero-content className="relative z-20 mx-auto w-full max-w-7xl px-5 sm:px-8 text-white will-change-transform">
           <div className="max-w-3xl">
-            <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold tracking-tight mb-6 text-black">
-              Build Smarter Digital Experiences for Modern Businesses
-            </h1>
+
             <div className="flex flex-wrap items-center gap-2">
               <MagneticButton
                 as="a"
