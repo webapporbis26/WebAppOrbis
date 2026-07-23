@@ -435,7 +435,7 @@ function Home() {
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight text-foreground leading-tight">
             Love Our Design? Let's Create Your <span style={{ color: "var(--color-primary, #e11d48)" }}>Dream Website</span>.
           </h2>
-          <p className="mt-2 text-[#2DD4BF] font-semibold text-base sm:text-lg">
+          <p className="mt-2 text-blue-600 font-semibold text-base sm:text-lg">
             Talk to Web Design Experts today.
           </p>
         </div>
@@ -463,7 +463,7 @@ function Home() {
             {featuresList.map((f, i) => (
               <CarouselItem key={i} className="pl-5 sm:pl-0 basis-auto">
                 <div className="relative flex-none w-[50%] sm:w-1/3 lg:flex-1 flex flex-col items-center text-center px-2 group cursor-default snap-center">
-                  <div className="h-14 w-14 sm:h-16 sm:w-16 rounded-full flex items-center justify-center text-[#2DD4BF] group-hover:scale-110 transition-transform duration-300 mb-4 bg-[#2DD4BF]/10">
+                  <div className="h-14 w-14 sm:h-16 sm:w-16 rounded-full flex items-center justify-center text-blue-600 group-hover:scale-110 transition-transform duration-300 mb-4 bg-blue-600/10">
                     <f.icon className="h-7 w-7 sm:h-8 sm:w-8 stroke-[1.5]" />
                   </div>
                   <h4 className="text-xs sm:text-sm font-semibold text-foreground/80 leading-snug max-w-[140px] transition-all duration-300 group-hover:-translate-y-1">
