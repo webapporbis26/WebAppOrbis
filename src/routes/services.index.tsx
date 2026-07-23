@@ -39,55 +39,58 @@ const services = [
   {
     icon: Globe,
     title: "Website Design & Development",
-    desc: "From marketing sites that convert to web apps that scale — designed in-house and engineered to last.",
+    desc: "We create professional websites that combine modern design with advanced functionality. Our websites are developed to deliver fast performance, responsive layouts, and seamless user experiences across desktops, tablets, and mobile devices.",
     image: serviceWeb,
     tag: "Web Platforms",
-    price: "From ₹4,800",
-    timeline: "3–8 weeks",
     items: [
-      "Brand & marketing sites",
-      "Headless commerce",
-      "Custom web applications",
-      "Editorial & content platforms",
-      "Design systems",
+      "Corporate website development",
+      "Business and portfolio websites",
+      "E-commerce website development",
+      "Responsive web design",
+      "Custom web application development",
+      "Website maintenance and support",
+      "UI and UX design solutions",
+      "SEO-friendly website structure",
     ],
     stack: ["Next.js", "TypeScript", "Tailwind", "Sanity", "Vercel"],
   },
   {
     icon: Smartphone,
     title: "Mobile App Development",
-    desc: "Native and cross-platform apps for iOS and Android, with the polish and performance the stores reward.",
+    desc: "We develop customised mobile applications designed to improve customer accessibility and business operations. Our applications are built with modern technologies to ensure smooth performance, security, and scalability.",
     image: serviceMobile,
     tag: "iOS · Android",
-    price: "From ₹12,000",
-    timeline: "6–14 weeks",
     items: [
-      "iOS & Android native",
-      "React Native / Flutter",
-      "Offline-first architecture",
-      "App store optimization",
-      "Long-term maintenance",
+      "Android app development",
+      "iOS app development",
+      "Cross-platform mobile applications",
+      "Business application development",
+      "E-commerce mobile applications",
+      "Custom application interfaces",
+      "App maintenance and updates",
+      "Secure and scalable app architecture",
     ],
     stack: ["Swift", "Kotlin", "React Native", "Expo", "Firebase"],
   },
   {
     icon: Database,
     title: "ERP Software Solutions",
-    desc: "Custom ERP systems that mirror how your team actually works — fully integrated and infinitely flexible.",
+    desc: "Our ERP solutions are designed to simplify and automate business operations through integrated management systems. We develop customised ERP software that improves productivity, workflow efficiency, and data management across departments.",
     image: serviceErp,
     tag: "Enterprise",
-    price: "From ₹24,000",
-    timeline: "8–20 weeks",
     items: [
-      "Inventory & operations",
-      "Finance & accounting",
-      "HR & payroll",
-      "Custom workflows",
-      "Third-party integrations",
+      "Custom ERP software development",
+      "Inventory and stock management systems",
+      "Human resource management systems",
+      "Accounting and finance modules",
+      "CRM and customer management systems",
+      "Reporting and analytics integration",
+      "Workflow automation solutions",
+      "ERP maintenance and support",
     ],
     stack: ["Node.js", "PostgreSQL", "Redis", "Docker", "AWS"],
   },
-];
+]
 
 const stats = [
   { value: "100+", label: "Projects shipped" },
@@ -181,24 +184,29 @@ function Services() {
   return (
     <>
       {/* Hero */}
-      <section ref={heroRef} className="pt-28 pb-20 relative overflow-hidden">
+      <section ref={heroRef} className="pt-40 pb-16 relative overflow-hidden">
         <div
           aria-hidden
           className="absolute -top-32 -right-32 h-[480px] w-[480px] rounded-full blur-3xl opacity-40"
           style={{ background: "var(--grad-primary)" }}
         />
         <div className="mx-auto max-w-7xl px-5 sm:px-8 relative">
-          <p className="mb-6 text-xs uppercase tracking-[0.3em] text-muted-foreground inline-flex items-center gap-2">
-            <Sparkles className="h-3 w-3" /> Services
-          </p>
-          <SplitText tag="h1" className="text-hero">
-            Three things,<br/>
-            done <span className="gradient-text">properly.</span>
-          </SplitText>
-          <p data-fade className="mt-10 max-w-2xl text-lg text-muted-foreground">
-            We focus on the disciplines where craft compounds. Every engagement gets senior
-            attention from people who've shipped at scale.
-          </p>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-8 items-center">
+            <div className="flex flex-col items-start text-left">
+              <h1 className="text-hero text-left" data-fade>
+                Three things,<br/>
+                done <span className="gradient-text">properly.</span>
+              </h1>
+              <p data-fade className="mt-8 max-w-xl text-lg text-muted-foreground">
+                We provide comprehensive digital solutions designed to help businesses strengthen their online presence, improve operational efficiency, and enhance customer engagement. Our services combine modern technology, creative design, and strategic development to deliver reliable business solutions.
+              </p>
+            </div>
+
+            <div data-fade className="w-full rounded-3xl overflow-hidden aspect-square sm:aspect-video lg:aspect-square xl:aspect-[4/3] relative shadow-elegant">
+              <img src={serviceWeb} alt="Services Overview" className="w-full h-full object-cover" />
+              <div className="absolute inset-0 bg-gradient-to-t from-background/20 to-transparent pointer-events-none" />
+            </div>
+          </div>
 
           {/* Stats */}
           <div data-fade className="mt-12 grid grid-cols-2 gap-6 border-t border-border pt-10 sm:grid-cols-4">
@@ -213,7 +221,7 @@ function Services() {
       </section>
 
       {/* Service cards with images */}
-      <section ref={cardsRef} className="py-20">
+      <section ref={cardsRef} className="py-10">
         <div className="mx-auto max-w-7xl px-5 sm:px-8 space-y-10">
           {services.map((s, i) => (
             <div
@@ -249,17 +257,6 @@ function Services() {
                 <SplitText tag="h2" className="text-display mt-6 text-3xl sm:text-4xl leading-tight">{s.title}</SplitText>
                 <p className="mt-4 text-base text-muted-foreground">{s.desc}</p>
 
-                <div className="mt-6 flex flex-wrap gap-6 text-sm">
-                  <div>
-                    <div className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Investment</div>
-                    <div className="mt-1 font-medium">{s.price}</div>
-                  </div>
-                  <div>
-                    <div className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Timeline</div>
-                    <div className="mt-1 font-medium">{s.timeline}</div>
-                  </div>
-                </div>
-
                 <ul className="mt-6 grid gap-3 sm:grid-cols-2">
                   {s.items.map((it) => (
                     <li key={it} className="flex items-start gap-3 text-sm">
@@ -286,7 +283,7 @@ function Services() {
       </section>
 
       {/* Process */}
-      <section className="py-28 border-t border-border">
+      <section className="py-12 border-t border-border">
         <div className="mx-auto max-w-7xl px-5 sm:px-8">
           <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
             <div>
@@ -338,8 +335,30 @@ function Services() {
         </div>
       </section>
 
+      {/* Concluding Statements */}
+      <section className="py-12 border-t border-border bg-muted/20">
+        <div className="mx-auto max-w-7xl px-5 sm:px-8 grid md:grid-cols-2 gap-12">
+          <div data-fade>
+            <SplitText tag="h3" className="text-display text-2xl sm:text-3xl mb-4">
+              Custom Digital Solutions
+            </SplitText>
+            <p className="text-foreground/75 leading-relaxed">
+              In addition to our core services, we provide customised digital solutions tailored to unique business requirements. We work closely with businesses to develop scalable platforms that support operational growth and digital transformation.
+            </p>
+          </div>
+          <div data-fade>
+            <SplitText tag="h3" className="text-display text-2xl sm:text-3xl mb-4">
+              Delivering Reliable Technology Solutions
+            </SplitText>
+            <p className="text-foreground/75 leading-relaxed">
+              We are committed to providing innovative digital services that combine functionality, design quality, and long-term performance. Whether you require a professional website, a mobile application, or a complete ERP system, we deliver solutions designed to support your business success.
+            </p>
+          </div>
+        </div>
+      </section>
+
       {/* FAQ */}
-      <section className="py-28 border-t border-border">
+      <section className="py-12 border-t border-border">
         <div className="mx-auto max-w-7xl px-5 sm:px-8 grid gap-12 md:grid-cols-[1fr_1.5fr]">
           <div>
             <p data-fade className="mb-4 text-xs uppercase tracking-[0.3em] text-muted-foreground">
@@ -360,7 +379,7 @@ function Services() {
       </section>
 
       {/* CTA */}
-      <section className="py-28">
+      <section className="py-12">
         <div className="mx-auto max-w-7xl px-5 sm:px-8">
           <div
             className="rounded-3xl p-12 sm:p-20 text-primary-foreground relative overflow-hidden"

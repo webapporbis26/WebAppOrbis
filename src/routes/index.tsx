@@ -8,6 +8,7 @@ import { FaqPro } from "@/components/ui/faq-pro";
 import { TestimonialsSection } from "@/components/TestimonialsSection";
 import MultiOrbitSemiCircle from "@/components/ui/multi-orbit-semi-circle";
 import { LogoCloud } from "@/components/ui/logo-cloud-3";
+import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { CheckCircle2 } from "lucide-react";
 
@@ -169,7 +170,6 @@ function Home() {
   useTextReveal(heroRef, { stagger: 0.14, delay: 0.4 });
   useSerenityText(serenityRef);
   useFadeUp("[data-fade]");
-  const [showMoreIdeas, setShowMoreIdeas] = useState(false);
 
   const featuresRef = useRef<HTMLDivElement>(null);
   const worksRef = useRef<HTMLDivElement>(null);
@@ -243,7 +243,13 @@ function Home() {
 
         <div data-hero-content className="relative z-20 mx-auto w-full max-w-7xl px-5 sm:px-8 text-white will-change-transform">
           <div className="max-w-3xl">
-
+            <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold tracking-tight mb-6">
+              Build Smarter Digital Experiences for Modern Businesses
+            </h1>
+            <p className="text-lg sm:text-xl text-white/90 mb-8 leading-relaxed">
+              Transform your business with professional website designing and development, mobile app development, and customised ERP solutions tailored to your operational needs. We create modern digital platforms that improve customer engagement, streamline business processes, and support long-term growth.<br/><br/>
+              From responsive business websites to advanced enterprise systems, our solutions are designed to deliver performance, functionality, and seamless user experiences across every device.
+            </p>
             <div className="flex flex-wrap items-center gap-2">
               <MagneticButton
                 as="a"
@@ -271,6 +277,163 @@ function Home() {
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-xs uppercase tracking-[0.3em] text-white/70 z-20">
           <span>Scroll</span>
           <ArrowDown className="h-4 w-4 animate-bounce" />
+        </div>
+      </section>
+
+      {/* ============== COMPREHENSIVE ABOUT US ============== */}
+      <section className="relative py-6 sm:py-8 bg-muted/30">
+        <div className="mx-auto max-w-7xl px-5 sm:px-8">
+          <div className="text-center max-w-3xl mx-auto mb-2">
+            <SplitText tag="h2" className="text-display text-4xl sm:text-5xl lg:text-6xl font-normal leading-[1.1]">
+              A studio built around <span className="gradient-text">craft, clarity and care.</span>
+            </SplitText>
+          </div>
+
+          <Tabs defaultValue="story" className="w-full">
+            <TabsList className="grid w-full grid-cols-1 md:grid-cols-3 max-w-3xl mx-auto -mt-3 mb-4 h-auto rounded-full bg-background border border-border/50 p-1">
+              <TabsTrigger value="story" className="rounded-full py-3 text-base font-medium">Our Story</TabsTrigger>
+              <TabsTrigger value="services" className="rounded-full py-3 text-base font-medium">What We Do</TabsTrigger>
+              <TabsTrigger value="approach" className="rounded-full py-3 text-base font-medium">Our Approach</TabsTrigger>
+            </TabsList>
+
+            <TabsContent value="story" className="mt-0 focus-visible:outline-none focus-visible:ring-0">
+              <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start">
+                <div className="space-y-8" data-fade>
+                  <div>
+                    <h3 className="text-3xl font-semibold mb-6 text-foreground flex items-center gap-4">
+                      <span className="relative flex h-8 w-1.5 overflow-hidden rounded-full bg-primary/20"><span className="absolute inset-x-0 bottom-0 top-1/2 bg-primary"></span></span>
+                      About Us
+                    </h3>
+                    <div className="space-y-4 text-[17px] text-foreground/75 leading-relaxed">
+                      <p>
+                        We are a professional digital solutions company specialising in website designing and development, mobile app development, and customised ERP software solutions. Our focus is on helping businesses establish a strong digital presence while improving operational efficiency through innovative technology solutions.
+                      </p>
+                      <p>
+                        With a dedicated team of designers, developers, and technology experts, we create modern platforms that combine functionality, creativity, and performance. Our approach is centred around understanding business objectives and delivering solutions tailored to specific operational requirements.
+                      </p>
+                    </div>
+                  </div>
+                  <div className="grid sm:grid-cols-2 gap-6 pt-2">
+                    <div className="relative overflow-hidden bg-white/60 backdrop-blur-xl p-7 rounded-[1.5rem] border border-white shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:-translate-y-1 transition-transform duration-300">
+                      <div className="absolute top-0 right-0 w-24 h-24 bg-primary/5 rounded-full blur-2xl -mr-10 -mt-10 pointer-events-none" />
+                      <h4 className="text-[19px] font-semibold mb-3 text-foreground flex items-center gap-2">
+                        <Compass className="w-5 h-5 text-primary" /> Our Vision
+                      </h4>
+                      <p className="text-foreground/70 text-sm leading-relaxed">To empower businesses with reliable digital technologies that improve customer engagement, simplify operations, and support long-term business growth.</p>
+                    </div>
+                    <div className="relative overflow-hidden bg-white/60 backdrop-blur-xl p-7 rounded-[1.5rem] border border-white shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:-translate-y-1 transition-transform duration-300">
+                      <div className="absolute top-0 right-0 w-24 h-24 bg-primary/5 rounded-full blur-2xl -mr-10 -mt-10 pointer-events-none" />
+                      <h4 className="text-[19px] font-semibold mb-3 text-foreground flex items-center gap-2">
+                        <Rocket className="w-5 h-5 text-primary" /> Our Mission
+                      </h4>
+                      <p className="text-foreground/70 text-sm leading-relaxed">To provide high-quality digital solutions through innovative design, advanced development practices, and customer-focused strategies. We aim to help businesses adapt to the evolving digital landscape with scalable and efficient technology services.</p>
+                    </div>
+                  </div>
+                </div>
+                <div className="grid grid-cols-2 gap-6" data-fade>
+                  {[
+                    { n: 100, s: "+", l: "Projects shipped" },
+                    { n: 50, s: "+", l: "Happy clients" },
+                    { n: 5, s: "+", l: "Years of experience" },
+                    { n: 98, s: "%", l: "Client retention" },
+                  ].map((c, i) => (
+                    <CounterCard key={i} n={c.n} s={c.s} l={c.l} />
+                  ))}
+                  </div>
+                </CarouselItem>
+              </CarouselContent>
+            </Carousel>
+            </TabsContent>
+
+            <TabsContent value="services" className="mt-0 focus-visible:outline-none focus-visible:ring-0">
+              <Carousel opts={{ loop: true, breakpoints: { '(min-width: 768px)': { active: false } } }} className="w-full" data-fade>
+              <CarouselContent className="-ml-5 md:ml-0 flex md:grid md:grid-cols-3 gap-8 md:gap-8 mb-4 md:mb-0">
+                <CarouselItem className="pl-5 md:pl-0 basis-[85%] md:basis-auto">
+                  <div className="group relative overflow-hidden bg-gradient-to-b from-white to-white/40 backdrop-blur-2xl p-10 rounded-[2.5rem] border border-white shadow-[0_8px_30px_rgb(0,0,0,0.06)] hover:shadow-[0_20px_40px_rgb(0,0,0,0.12)] hover:border-primary/30 hover:-translate-y-2 transition-all duration-500 h-full">
+                  <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full blur-3xl -mr-10 -mt-10 pointer-events-none group-hover:bg-primary/20 transition-colors duration-500" />
+                  <div className="h-16 w-16 bg-gradient-to-br from-primary/10 to-primary/5 rounded-2xl flex items-center justify-center mb-8 border border-primary/10 group-hover:scale-110 group-hover:-rotate-3 transition-transform duration-500">
+                    <Globe className="h-7 w-7 text-primary" />
+                  </div>
+                  <h3 className="text-2xl font-bold mb-5 text-foreground leading-tight">Website Designing &<br/>Development</h3>
+                  <p className="text-foreground/70 text-[16px] leading-[1.8] relative z-10">
+                    We create responsive and professionally designed websites that enhance brand visibility and improve user experience. Our websites are developed with modern technologies to ensure speed, security, and seamless functionality across all devices.
+                  </p>
+                  </div>
+                </CarouselItem>
+                <CarouselItem className="pl-5 md:pl-0 basis-[85%] md:basis-auto">
+                  <div className="group relative overflow-hidden bg-gradient-to-b from-white to-white/40 backdrop-blur-2xl p-10 rounded-[2.5rem] border border-white shadow-[0_8px_30px_rgb(0,0,0,0.06)] hover:shadow-[0_20px_40px_rgb(0,0,0,0.12)] hover:border-primary/30 hover:-translate-y-2 transition-all duration-500 h-full">
+                  <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full blur-3xl -mr-10 -mt-10 pointer-events-none group-hover:bg-primary/20 transition-colors duration-500" />
+                  <div className="h-16 w-16 bg-gradient-to-br from-primary/10 to-primary/5 rounded-2xl flex items-center justify-center mb-8 border border-primary/10 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500">
+                    <Smartphone className="h-7 w-7 text-primary" />
+                  </div>
+                  <h3 className="text-2xl font-bold mb-5 text-foreground leading-tight">Mobile App<br/>Development</h3>
+                  <p className="text-foreground/70 text-[16px] leading-[1.8] relative z-10">
+                    Our mobile app development services help businesses connect with customers through intuitive and feature-rich applications. We develop customised Android and iOS applications focused on usability, performance, and long-term scalability.
+                  </p>
+                  </div>
+                </CarouselItem>
+                <CarouselItem className="pl-5 md:pl-0 basis-[85%] md:basis-auto">
+                  <div className="group relative overflow-hidden bg-gradient-to-b from-white to-white/40 backdrop-blur-2xl p-10 rounded-[2.5rem] border border-white shadow-[0_8px_30px_rgb(0,0,0,0.06)] hover:shadow-[0_20px_40px_rgb(0,0,0,0.12)] hover:border-primary/30 hover:-translate-y-2 transition-all duration-500 h-full">
+                  <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full blur-3xl -mr-10 -mt-10 pointer-events-none group-hover:bg-primary/20 transition-colors duration-500" />
+                  <div className="h-16 w-16 bg-gradient-to-br from-primary/10 to-primary/5 rounded-2xl flex items-center justify-center mb-8 border border-primary/10 group-hover:scale-110 group-hover:-rotate-3 transition-transform duration-500">
+                    <Database className="h-7 w-7 text-primary" />
+                  </div>
+                  <h3 className="text-2xl font-bold mb-5 text-foreground leading-tight">ERP Software<br/>Solutions</h3>
+                  <p className="text-foreground/70 text-[16px] leading-[1.8] relative z-10">
+                    We develop customised ERP systems that streamline daily business operations and improve workflow management. Our ERP solutions help organisations manage multiple departments efficiently through integrated and automated systems.
+                  </p>
+                  </div>
+                </CarouselItem>
+              </CarouselContent>
+            </Carousel>
+            </TabsContent>
+
+            <TabsContent value="approach" className="mt-0 focus-visible:outline-none focus-visible:ring-0">
+              <div className="grid lg:grid-cols-2 gap-12 lg:gap-12 items-center" data-fade>
+                <div className="order-2 lg:order-1 relative group">
+                  <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-primary/0 rounded-[3rem] blur-2xl transition-all duration-500 group-hover:blur-3xl group-hover:opacity-70 opacity-50" />
+                  <div className="relative bg-white/90 backdrop-blur-3xl p-10 sm:p-14 rounded-[3rem] border border-white shadow-[0_8px_40px_rgb(0,0,0,0.08)] overflow-hidden">
+                    <div className="absolute top-0 right-0 w-40 h-40 bg-primary/5 rounded-full blur-3xl -mr-12 -mt-12 pointer-events-none" />
+                    <h3 className="text-[28px] sm:text-[32px] font-bold mb-10 text-foreground tracking-tight">Why Businesses Trust Us</h3>
+                    <ul className="space-y-6">
+                      {[
+                        "Experienced development and design team",
+                        "Customised business-focused solutions",
+                        "Modern and scalable technologies",
+                        "SEO-friendly and responsive development",
+                        "Reliable technical support and maintenance",
+                        "Focus on quality, performance, and security"
+                      ].map((item, idx) => (
+                        <li key={idx} className="flex items-start gap-5 text-[16px] sm:text-[17px] text-foreground/80 group/item hover:translate-x-2 transition-transform duration-300">
+                          <div className="relative flex items-center justify-center shrink-0 mt-0.5">
+                            <div className="absolute inset-0 bg-primary/20 rounded-full blur-md opacity-0 group-hover/item:opacity-100 transition-opacity duration-300" />
+                            <CheckCircle2 className="h-6 w-6 text-primary relative z-10" />
+                          </div>
+                          <span className="font-medium group-hover/item:text-foreground transition-colors duration-300">{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+                <div className="order-1 lg:order-2 space-y-8 lg:pl-4">
+                  <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-bold uppercase tracking-widest">
+                    <Sparkles className="w-4 h-4" /> The Process
+                  </div>
+                  <h3 className="text-4xl sm:text-5xl font-bold text-foreground leading-[1.1] tracking-tight">Our Approach</h3>
+                  <div className="space-y-6 text-[17px] sm:text-[18px] text-foreground/75 leading-relaxed">
+                    <p>
+                      We believe every business requires unique digital solutions. Our team works closely with clients to understand their goals, industry requirements, and operational challenges before creating customised strategies and technology platforms.
+                    </p>
+                    <p>
+                      From planning and design to development and deployment, we maintain a transparent and collaborative process to ensure high-quality project delivery.
+                    </p>
+                  </div>
+                  </div>
+                </CarouselItem>
+              </CarouselContent>
+            </Carousel>
+            </TabsContent>
+          </Tabs>
         </div>
       </section>
 
@@ -318,9 +481,11 @@ function Home() {
                   <div className="absolute -top-1.5 left-1/2 -translate-x-1/2 border-4 border-transparent border-b-foreground" />
                   {f.desc}
                 </div>
-              </div>
+                </div>
+              </CarouselItem>
             ))}
-          </div>
+            </CarouselContent>
+          </Carousel>
         </div>
       </section>
 
@@ -380,154 +545,11 @@ function Home() {
                   View more
                   <span className="text-sm transition-transform group-hover/link:translate-x-0.5">+</span>
                 </Link>
-              </div>
+                </div>
+              </CarouselItem>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ============== COMPREHENSIVE ABOUT US ============== */}
-      <section className="relative py-6 sm:py-8 bg-muted/30">
-        <div className="mx-auto max-w-7xl px-5 sm:px-8">
-          <div className="text-center max-w-3xl mx-auto mb-2">
-            <SplitText tag="h2" className="text-display text-4xl sm:text-5xl lg:text-6xl font-normal leading-[1.1]">
-              A studio built around <span className="gradient-text">craft, clarity and care.</span>
-            </SplitText>
-          </div>
-
-          <Tabs defaultValue="story" className="w-full">
-            <TabsList className="grid w-full grid-cols-1 md:grid-cols-3 max-w-3xl mx-auto -mt-3 mb-4 h-auto rounded-full bg-background border border-border/50 p-1">
-              <TabsTrigger value="story" className="rounded-full py-3 text-base font-medium">Our Story</TabsTrigger>
-              <TabsTrigger value="services" className="rounded-full py-3 text-base font-medium">What We Do</TabsTrigger>
-              <TabsTrigger value="approach" className="rounded-full py-3 text-base font-medium">Our Approach</TabsTrigger>
-            </TabsList>
-
-            <TabsContent value="story" className="mt-0 focus-visible:outline-none focus-visible:ring-0">
-              <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start">
-                <div className="space-y-8" data-fade>
-                  <div>
-                    <h3 className="text-3xl font-semibold mb-6 text-foreground flex items-center gap-4">
-                      <span className="relative flex h-8 w-1.5 overflow-hidden rounded-full bg-primary/20"><span className="absolute inset-x-0 bottom-0 top-1/2 bg-primary"></span></span>
-                      About Us
-                    </h3>
-                    <div className="space-y-4 text-[17px] text-foreground/75 leading-relaxed">
-                      <p>
-                        We are a professional digital solutions company specialising in website designing and development, mobile app development, and customised ERP software solutions. Our focus is on helping businesses establish a strong digital presence while improving operational efficiency through innovative technology solutions.
-                      </p>
-                      <p>
-                        With a dedicated team of designers, developers, and technology experts, we create modern platforms that combine functionality, creativity, and performance. Our approach is centred around understanding business objectives and delivering solutions tailored to specific operational requirements.
-                      </p>
-                    </div>
-                  </div>
-                  <div className="grid sm:grid-cols-2 gap-6 pt-2">
-                    <div className="relative overflow-hidden bg-white/60 backdrop-blur-xl p-7 rounded-[1.5rem] border border-white shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:-translate-y-1 transition-transform duration-300">
-                      <div className="absolute top-0 right-0 w-24 h-24 bg-primary/5 rounded-full blur-2xl -mr-10 -mt-10 pointer-events-none" />
-                      <h4 className="text-[19px] font-semibold mb-3 text-foreground flex items-center gap-2">
-                        <Compass className="w-5 h-5 text-primary" /> Our Vision
-                      </h4>
-                      <p className="text-foreground/70 text-sm leading-relaxed">To empower businesses with reliable digital technologies that improve customer engagement, simplify operations, and support long-term business growth.</p>
-                    </div>
-                    <div className="relative overflow-hidden bg-white/60 backdrop-blur-xl p-7 rounded-[1.5rem] border border-white shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:-translate-y-1 transition-transform duration-300">
-                      <div className="absolute top-0 right-0 w-24 h-24 bg-primary/5 rounded-full blur-2xl -mr-10 -mt-10 pointer-events-none" />
-                      <h4 className="text-[19px] font-semibold mb-3 text-foreground flex items-center gap-2">
-                        <Rocket className="w-5 h-5 text-primary" /> Our Mission
-                      </h4>
-                      <p className="text-foreground/70 text-sm leading-relaxed">To provide high-quality digital solutions through innovative design, advanced development practices, and customer-focused strategies.</p>
-                    </div>
-                  </div>
-                </div>
-                <div className="grid grid-cols-2 gap-6" data-fade>
-                  {[
-                    { n: 100, s: "+", l: "Projects shipped" },
-                    { n: 50, s: "+", l: "Happy clients" },
-                    { n: 5, s: "+", l: "Years of experience" },
-                    { n: 98, s: "%", l: "Client retention" },
-                  ].map((c, i) => (
-                    <CounterCard key={i} n={c.n} s={c.s} l={c.l} />
-                  ))}
-                </div>
-              </div>
-            </TabsContent>
-
-            <TabsContent value="services" className="mt-0 focus-visible:outline-none focus-visible:ring-0">
-              <div className="flex -mx-5 px-5 md:mx-0 md:px-0 md:grid md:grid-cols-3 gap-8 overflow-x-auto md:overflow-x-visible snap-x snap-mandatory scrollbar-none pb-4 md:pb-0" data-fade>
-                <div className="flex-none w-[85%] md:w-auto snap-center group relative overflow-hidden bg-gradient-to-b from-white to-white/40 backdrop-blur-2xl p-10 rounded-[2.5rem] border border-white shadow-[0_8px_30px_rgb(0,0,0,0.06)] hover:shadow-[0_20px_40px_rgb(0,0,0,0.12)] hover:border-primary/30 hover:-translate-y-2 transition-all duration-500">
-                  <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full blur-3xl -mr-10 -mt-10 pointer-events-none group-hover:bg-primary/20 transition-colors duration-500" />
-                  <div className="h-16 w-16 bg-gradient-to-br from-primary/10 to-primary/5 rounded-2xl flex items-center justify-center mb-8 border border-primary/10 group-hover:scale-110 group-hover:-rotate-3 transition-transform duration-500">
-                    <Globe className="h-7 w-7 text-primary" />
-                  </div>
-                  <h3 className="text-2xl font-bold mb-5 text-foreground leading-tight">Website Designing &<br/>Development</h3>
-                  <p className="text-foreground/70 text-[16px] leading-[1.8] relative z-10">
-                    We create responsive and professionally designed websites that enhance brand visibility and improve user experience. Our websites are developed with modern technologies to ensure speed, security, and seamless functionality across all devices.
-                  </p>
-                </div>
-                <div className="flex-none w-[85%] md:w-auto snap-center group relative overflow-hidden bg-gradient-to-b from-white to-white/40 backdrop-blur-2xl p-10 rounded-[2.5rem] border border-white shadow-[0_8px_30px_rgb(0,0,0,0.06)] hover:shadow-[0_20px_40px_rgb(0,0,0,0.12)] hover:border-primary/30 hover:-translate-y-2 transition-all duration-500">
-                  <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full blur-3xl -mr-10 -mt-10 pointer-events-none group-hover:bg-primary/20 transition-colors duration-500" />
-                  <div className="h-16 w-16 bg-gradient-to-br from-primary/10 to-primary/5 rounded-2xl flex items-center justify-center mb-8 border border-primary/10 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500">
-                    <Smartphone className="h-7 w-7 text-primary" />
-                  </div>
-                  <h3 className="text-2xl font-bold mb-5 text-foreground leading-tight">Mobile App<br/>Development</h3>
-                  <p className="text-foreground/70 text-[16px] leading-[1.8] relative z-10">
-                    Our mobile app development services help businesses connect with customers through intuitive and feature-rich applications. We develop customised Android and iOS applications focused on usability, performance, and long-term scalability.
-                  </p>
-                </div>
-                <div className="flex-none w-[85%] md:w-auto snap-center group relative overflow-hidden bg-gradient-to-b from-white to-white/40 backdrop-blur-2xl p-10 rounded-[2.5rem] border border-white shadow-[0_8px_30px_rgb(0,0,0,0.06)] hover:shadow-[0_20px_40px_rgb(0,0,0,0.12)] hover:border-primary/30 hover:-translate-y-2 transition-all duration-500">
-                  <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full blur-3xl -mr-10 -mt-10 pointer-events-none group-hover:bg-primary/20 transition-colors duration-500" />
-                  <div className="h-16 w-16 bg-gradient-to-br from-primary/10 to-primary/5 rounded-2xl flex items-center justify-center mb-8 border border-primary/10 group-hover:scale-110 group-hover:-rotate-3 transition-transform duration-500">
-                    <Database className="h-7 w-7 text-primary" />
-                  </div>
-                  <h3 className="text-2xl font-bold mb-5 text-foreground leading-tight">ERP Software<br/>Solutions</h3>
-                  <p className="text-foreground/70 text-[16px] leading-[1.8] relative z-10">
-                    We develop customised ERP systems that streamline daily business operations and improve workflow management. Our ERP solutions help organisations manage multiple departments efficiently through integrated and automated systems.
-                  </p>
-                </div>
-              </div>
-            </TabsContent>
-
-            <TabsContent value="approach" className="mt-0 focus-visible:outline-none focus-visible:ring-0">
-              <div className="grid lg:grid-cols-2 gap-12 lg:gap-12 items-center" data-fade>
-                <div className="order-2 lg:order-1 relative group">
-                  <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-primary/0 rounded-[3rem] blur-2xl transition-all duration-500 group-hover:blur-3xl group-hover:opacity-70 opacity-50" />
-                  <div className="relative bg-white/90 backdrop-blur-3xl p-10 sm:p-14 rounded-[3rem] border border-white shadow-[0_8px_40px_rgb(0,0,0,0.08)] overflow-hidden">
-                    <div className="absolute top-0 right-0 w-40 h-40 bg-primary/5 rounded-full blur-3xl -mr-12 -mt-12 pointer-events-none" />
-                    <h3 className="text-[28px] sm:text-[32px] font-bold mb-10 text-foreground tracking-tight">Why Businesses Trust Us</h3>
-                    <ul className="space-y-6">
-                      {[
-                        "Experienced development and design team",
-                        "Customised business-focused solutions",
-                        "Modern and scalable technologies",
-                        "SEO-friendly and responsive development",
-                        "Reliable technical support and maintenance",
-                        "Focus on quality, performance, and security"
-                      ].map((item, idx) => (
-                        <li key={idx} className="flex items-start gap-5 text-[16px] sm:text-[17px] text-foreground/80 group/item hover:translate-x-2 transition-transform duration-300">
-                          <div className="relative flex items-center justify-center shrink-0 mt-0.5">
-                            <div className="absolute inset-0 bg-primary/20 rounded-full blur-md opacity-0 group-hover/item:opacity-100 transition-opacity duration-300" />
-                            <CheckCircle2 className="h-6 w-6 text-primary relative z-10" />
-                          </div>
-                          <span className="font-medium group-hover/item:text-foreground transition-colors duration-300">{item}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-                <div className="order-1 lg:order-2 space-y-8 lg:pl-4">
-                  <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-bold uppercase tracking-widest">
-                    <Sparkles className="w-4 h-4" /> The Process
-                  </div>
-                  <h3 className="text-4xl sm:text-5xl font-bold text-foreground leading-[1.1] tracking-tight">Our Approach</h3>
-                  <div className="space-y-6 text-[17px] sm:text-[18px] text-foreground/75 leading-relaxed">
-                    <p>
-                      We believe every business requires unique digital solutions. Our team works closely with clients to understand their goals, industry requirements, and operational challenges before creating customised strategies and technology platforms.
-                    </p>
-                    <p>
-                      From planning and design to development and deployment, we maintain a transparent and collaborative process to ensure high-quality project delivery.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </TabsContent>
-          </Tabs>
+            </CarouselContent>
+          </Carousel>
         </div>
       </section>
 
@@ -613,47 +635,6 @@ function Home() {
       {/* ============== TECHNOLOGIES WE USED ============== */}
       <MultiOrbitSemiCircle />
 
-      {/* ============== LET'S TALK IDEAS ============== */}
-      <section className="relative py-10 sm:py-14 bg-white">
-        <div className="mx-auto max-w-[1200px] px-5 sm:px-8 grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-12 lg:gap-12 items-start">
-          <div data-fade className="flex flex-col h-full">
-            <div className="sticky top-32">
-              <SplitText tag="h2" className="text-5xl sm:text-6xl font-light text-foreground tracking-wide">Let's Talk</SplitText>
-              <SplitText tag="h1" className="text-7xl sm:text-[100px] font-black text-foreground uppercase mt-2 tracking-tighter leading-none">IDEAS</SplitText>
-              <p className="text-[11px] sm:text-xs font-semibold tracking-[0.2em] sm:tracking-[0.25em] uppercase mt-10 text-foreground/70 leading-relaxed max-w-[280px]">
-                KERALA'S LEADING WEB DESIGN AGENCY FOR BUSINESS GROWTH
-              </p>
-            </div>
-          </div>
-          
-          <div data-fade className="flex flex-col justify-center pt-8 sm:pt-16">
-            <SplitText tag="h2" className="text-3xl sm:text-4xl lg:text-[46px] font-light text-foreground mb-10 sm:mb-12 leading-[1.25]">
-              Complete Web Solutions That <br className="hidden lg:block" /> Drive Results
-            </SplitText>
-            <div className="space-y-8 text-[14px] sm:text-[15px] text-foreground/70 leading-[1.8] text-justify md:text-left">
-              <p>
-                Your website is your strongest business asset, serving as your online presence, which is essential for success in today's digital market. Inter Smart builds high-performance websites through its design and development process, creating websites that attract visitors and keep them engaged until they convert. As a trusted website design & development company in Kochi, Kerala, we focus on building websites that support real business growth.
-              </p>
-              {showMoreIdeas && (
-                <>
-                  <p>
-                    We build search engine-friendly websites tailored to your business needs through our web design services, which combine strategic planning with UI/UX design and modern web development techniques.
-                  </p>
-                  <p>
-                    Beyond design and development, our web solutions deliver results through two main functions: generating high-quality leads, enhancing customer engagement, and supporting businesses during their online growth process. Our team develops websites that will scale with your company.
-                  </p>
-                </>
-              )}
-              <button 
-                onClick={() => setShowMoreIdeas(!showMoreIdeas)} 
-                className="mt-2 text-xs font-bold uppercase tracking-wider text-blue-600 hover:text-blue-700 transition-colors flex items-center gap-1 cursor-pointer select-none"
-              >
-                {showMoreIdeas ? "Read Less ↑" : "Read More ↓"}
-              </button>
-            </div>
-          </div>
-        </div>
-      </section>
       {/* ============== OUR WEBSITE DESIGN PROCESS ============== */}
       <section className="relative py-10 sm:py-14 bg-white">
         <div className="mx-auto max-w-[90rem] px-5 sm:px-8">

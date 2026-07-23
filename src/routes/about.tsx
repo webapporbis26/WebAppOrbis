@@ -196,7 +196,7 @@ function About() {
               <p style={{ fontSize:11, fontWeight:700, letterSpacing:"0.15em", color:"#888", marginTop:6, textTransform:"uppercase" }}>Happy Clients</p>
             </div>
 
-            {/* Card: 14+ Years of Experience — center, purple */}
+            {/* Card: 5+ Years of Experience — center, purple */}
             <div style={{
               position:"absolute", top:"20%", left:"18%",
               background:"#7c5cbf", borderRadius:20,
@@ -204,7 +204,7 @@ function About() {
               boxShadow:"0 12px 40px rgba(124,92,191,0.35)",
               zIndex:10,
             }}>
-              <p style={{ fontSize:64, fontWeight:900, color:"#fff", lineHeight:1, fontFamily:"Space Grotesk,sans-serif" }}>14</p>
+              <p style={{ fontSize:64, fontWeight:900, color:"#fff", lineHeight:1, fontFamily:"Space Grotesk,sans-serif" }}>5+</p>
               <div style={{ width:32, height:3, background:"rgba(255,255,255,0.5)", margin:"8px 0", borderRadius:4 }} />
             </div>
 
