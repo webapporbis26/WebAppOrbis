@@ -21,7 +21,7 @@ import SplitText from "@/components/ui/SplitText";
 import serviceWeb from "@/assets/service-web.jpg";
 import serviceMobile from "@/assets/service-mobile.jpg";
 import serviceErp from "@/assets/service-erp.jpg";
-import { FaqPro } from "@/components/ui/faq-pro";
+
 
 export const Route = createFileRoute("/services/")({
   head: () => ({
@@ -125,12 +125,6 @@ const testimonials = [
   },
 ];
 
-const faqs = [
-  { q: "How do engagements typically start?", a: "A 30-minute discovery call, followed by a fixed-fee discovery sprint to scope the work in detail." },
-  { q: "Do you work with in-house teams?", a: "Yes — we frequently embed with internal product, design or engineering teams." },
-  { q: "What about post-launch?", a: "Every project includes a 30-day warranty. Most clients continue on a monthly retainer." },
-  { q: "Where are you based?", a: "A distributed team across London, Lisbon and Bengaluru — overlapping hours with EU and US clients." },
-];
 
 function Services() {
   const heroRef = useRef<HTMLDivElement>(null);
@@ -357,26 +351,6 @@ function Services() {
         </div>
       </section>
 
-      {/* FAQ */}
-      <section className="py-12 border-t border-border">
-        <div className="mx-auto max-w-7xl px-5 sm:px-8 grid gap-12 md:grid-cols-[1fr_1.5fr]">
-          <div>
-            <p data-fade className="mb-4 text-xs uppercase tracking-[0.3em] text-muted-foreground">
-              FAQ
-            </p>
-            <SplitText tag="h2" className="text-display text-4xl sm:text-5xl leading-[1.05]">
-              The usual questions, answered.
-            </SplitText>
-          </div>
-          <div data-fade className="w-full">
-            <FaqPro 
-              items={faqs.map((f, i) => ({ id: String(i), question: f.q, answer: f.a }))} 
-              defaultOpenFirst 
-              searchPlaceholder="Search questions..." 
-            />
-          </div>
-        </div>
-      </section>
 
       {/* CTA */}
       <section className="py-12">
