@@ -72,6 +72,9 @@ export function Footer() {
               <a href="https://www.youtube.com/@e_n_e_m?si=qJcn3W7-psF0OWvR" target="_blank" rel="noopener noreferrer" aria-label="YouTube" className="hover:-translate-y-1 transition-all duration-300 bg-white/5 hover:bg-[#FF0000] p-3 rounded-full group">
                 <Youtube className="w-5 h-5 text-gray-400 group-hover:text-white transition-colors" />
               </a>
+              <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="hover:-translate-y-1 transition-all duration-300 bg-white/5 hover:bg-[#0A66C2] p-3 rounded-full group">
+                <Linkedin className="w-5 h-5 text-gray-400 group-hover:text-white transition-colors" />
+              </a>
             </div>
           </div>
 

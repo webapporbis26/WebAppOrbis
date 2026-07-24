@@ -2,7 +2,7 @@ import { Phone, Mail, MessageCircle } from "lucide-react";
 
 export function MobileBottomBar() {
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-50 flex h-11 w-full md:hidden shadow-[0_-4px_20px_rgba(0,0,0,0.15)] font-sans">
+    <div className="fixed bottom-0 left-0 right-0 z-50 flex h-[calc(2.75rem+env(safe-area-inset-bottom))] pb-[env(safe-area-inset-bottom)] w-full md:hidden shadow-[0_-4px_20px_rgba(0,0,0,0.15)] font-sans">
       {/* Call Us */}
       <a 
         href="tel:+917736003018" 

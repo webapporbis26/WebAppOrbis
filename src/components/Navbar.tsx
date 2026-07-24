@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useRouterState } from "@tanstack/react-router";
-import { Menu, X, ArrowUpRight, Instagram, Twitter, Linkedin, Github, Mail, Phone, ArrowRight, Facebook, Youtube } from "lucide-react";
+import { Menu, X, ArrowUpRight, Instagram, Twitter, Linkedin, Github, Mail, Phone, ArrowRight, Facebook, Youtube, MessageCircle } from "lucide-react";
 import Particles from "./Particles";
 
 const logo = { url: "/logo.png" };
@@ -120,7 +120,7 @@ export function Navbar() {
           </div>
 
           {/* Left Column — Navigation Links */}
-          <div className="w-full lg:w-[50%] xl:w-[45%] flex flex-col h-full relative z-10 px-10 sm:px-16 lg:px-20 xl:px-24 lg:border-r border-gray-100 pt-24 lg:pt-20 pb-8">
+          <div className="w-full lg:w-[50%] xl:w-[45%] flex flex-col h-full relative z-10 px-10 sm:px-16 lg:px-20 xl:px-24 lg:border-r border-gray-100 pt-24 lg:pt-20 pb-[calc(3.5rem+env(safe-area-inset-bottom))]">
             {/* Spacer top */}
             <div className="flex-1 flex flex-col justify-start lg:justify-center">
               <nav className="flex flex-col">
@@ -142,19 +142,22 @@ export function Navbar() {
                   </Link>
                 ))}
               </nav>
-            </div>
 
-            {/* Socials pinned to bottom */}
-            <div className="flex flex-row gap-5 items-center pt-5 border-t border-gray-100">
-              <a href="https://www.instagram.com/enem.pvt.ltd?igsh=aGZ2NGc1ODM3aWZ4" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="hover:-translate-y-1 transition-all duration-300 bg-gray-100/80 hover:bg-[#E4405F] p-3 rounded-full group">
-                <Instagram className="w-5 h-5 text-gray-500 group-hover:text-white transition-colors" />
-              </a>
-              <a href="https://www.facebook.com/profile.php?id=61577380003721" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="hover:-translate-y-1 transition-all duration-300 bg-gray-100/80 hover:bg-[#1877F2] p-3 rounded-full group">
-                <Facebook className="w-5 h-5 text-gray-500 group-hover:text-white transition-colors" />
-              </a>
-              <a href="https://www.youtube.com/@e_n_e_m?si=qJcn3W7-psF0OWvR" target="_blank" rel="noopener noreferrer" aria-label="YouTube" className="hover:-translate-y-1 transition-all duration-300 bg-gray-100/80 hover:bg-[#FF0000] p-3 rounded-full group">
-                <Youtube className="w-5 h-5 text-gray-500 group-hover:text-white transition-colors" />
-              </a>
+              {/* Socials moved here (below nav, above bottom contact buttons) */}
+              <div className="flex flex-row gap-5 items-center mt-6">
+                <a href="https://www.instagram.com/enem.pvt.ltd?igsh=aGZ2NGc1ODM3aWZ4" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="hover:-translate-y-1 transition-all duration-300 bg-gray-100/80 hover:bg-[#E4405F] p-3 rounded-full group">
+                  <Instagram className="w-5 h-5 text-gray-500 group-hover:text-white transition-colors" />
+                </a>
+                <a href="https://www.facebook.com/profile.php?id=61577380003721" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="hover:-translate-y-1 transition-all duration-300 bg-gray-100/80 hover:bg-[#1877F2] p-3 rounded-full group">
+                  <Facebook className="w-5 h-5 text-gray-500 group-hover:text-white transition-colors" />
+                </a>
+                <a href="https://www.youtube.com/@e_n_e_m?si=qJcn3W7-psF0OWvR" target="_blank" rel="noopener noreferrer" aria-label="YouTube" className="hover:-translate-y-1 transition-all duration-300 bg-gray-100/80 hover:bg-[#FF0000] p-3 rounded-full group">
+                  <Youtube className="w-5 h-5 text-gray-500 group-hover:text-white transition-colors" />
+                </a>
+                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="hover:-translate-y-1 transition-all duration-300 bg-gray-100/80 hover:bg-[#0A66C2] p-3 rounded-full group">
+                  <Linkedin className="w-5 h-5 text-gray-500 group-hover:text-white transition-colors" />
+                </a>
+              </div>
             </div>
           </div>
 
@@ -191,6 +194,33 @@ export function Navbar() {
                 </span>
               </Link>
             </div>
+          </div>
+          
+          {/* Quick Contact Buttons row at the absolute bottom of the screen (styled same as normal MobileBottomBar) */}
+          <div className="absolute bottom-0 left-0 right-0 z-20 flex h-[calc(2.75rem+env(safe-area-inset-bottom))] pb-[env(safe-area-inset-bottom)] w-full lg:hidden shadow-[0_-4px_20px_rgba(0,0,0,0.15)] font-sans">
+            <a 
+              href="tel:+917736003018" 
+              className="flex-1 flex items-center justify-center gap-2 bg-[#6b72ff] text-white text-[12px] font-bold tracking-wide hover:bg-[#565cef] transition-colors"
+            >
+              <Phone className="w-4 h-4" strokeWidth={2.5} />
+              CALL US
+            </a>
+            <a 
+              href="mailto:info@webapporbis.com" 
+              className="flex-1 flex items-center justify-center gap-2 bg-[#1cd4ff] text-white text-[12px] font-bold tracking-wide hover:bg-[#0bbde6] transition-colors"
+            >
+              <Mail className="w-4 h-4" strokeWidth={2.5} />
+              MAIL US
+            </a>
+            <a 
+              href="https://wa.me/917736003018" 
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex-1 flex items-center justify-center gap-2 bg-[#ffcc00] text-black text-[12px] font-bold tracking-wide hover:bg-[#e6b800] transition-colors"
+            >
+              <MessageCircle className="w-4 h-4" strokeWidth={2.5} />
+              WHATSAPP
+            </a>
           </div>
         </div>
       </div>
