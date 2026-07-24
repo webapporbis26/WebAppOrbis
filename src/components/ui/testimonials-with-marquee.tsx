@@ -1,5 +1,6 @@
 import { cn } from "@/lib/utils"
 import { TestimonialCard, TestimonialAuthor } from "@/components/ui/testimonial-card"
+import { useEffect, useRef } from "react"
 
 interface TestimonialsSectionProps {
   title: string
@@ -18,13 +19,32 @@ export function TestimonialsSection({
   testimonials,
   className 
 }: TestimonialsSectionProps) {
+  const scrollRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (scrollRef.current) {
+        const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current
+        // If reached the end, scroll back to start
+        if (scrollLeft + clientWidth >= scrollWidth - 10) {
+          scrollRef.current.scrollTo({ left: 0, behavior: "smooth" })
+        } else {
+          // Scroll by one card width approximately
+          scrollRef.current.scrollBy({ left: clientWidth > 768 ? 400 : clientWidth * 0.85, behavior: "smooth" })
+        }
+      }
+    }, 3500)
+    
+    return () => clearInterval(interval)
+  }, [])
+
   return (
     <section className={cn(
       "bg-background text-foreground",
       "py-10 sm:py-14 px-0",
       className
     )}>
-      <div className="mx-auto flex max-w-7xl flex-col items-center gap-4 text-center sm:gap-16">
+      <div className="mx-auto flex max-w-7xl flex-col items-center gap-4 text-center sm:gap-12">
         <div className="flex flex-col items-center gap-4 px-4 sm:gap-8">
           <h2 className="max-w-[720px] text-3xl font-semibold leading-tight sm:text-5xl sm:leading-tight">
             {title}
@@ -34,23 +54,17 @@ export function TestimonialsSection({
           </p>
         </div>
 
-        <div className="relative flex w-full flex-col items-center justify-center overflow-hidden">
-          {/* Infinite Marquee */}
-          <div className="flex w-full group overflow-hidden p-2 [--gap:1rem] [gap:var(--gap)] flex-row [--duration:50s] sm:[--duration:80s]">
-            <div className="flex shrink-0 justify-around [gap:var(--gap)] animate-marquee flex-row group-hover:[animation-play-state:paused]">
-              {[...Array(4)].map((_, setIndex) => (
-                testimonials.map((testimonial, i) => (
-                  <TestimonialCard 
-                    key={`${setIndex}-${i}`}
-                    {...testimonial}
-                  />
-                ))
-              ))}
-            </div>
+        <div className="relative w-full group/testimonials mt-4">
+          <div 
+            ref={scrollRef}
+            className="flex overflow-x-auto gap-4 md:gap-6 snap-x snap-mandatory scrollbar-none pb-4 px-5 sm:px-8 w-full"
+          >
+            {testimonials.map((testimonial, i) => (
+              <div key={i} className="flex-none w-[85%] md:w-[350px] lg:w-[400px] snap-center text-left">
+                <TestimonialCard {...testimonial} />
+              </div>
+            ))}
           </div>
-
-          <div className="pointer-events-none absolute inset-y-0 left-0 hidden w-1/3 bg-gradient-to-r from-background sm:block" />
-          <div className="pointer-events-none absolute inset-y-0 right-0 hidden w-1/3 bg-gradient-to-l from-background sm:block" />
         </div>
       </div>
     </section>

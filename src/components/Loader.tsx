@@ -37,7 +37,7 @@ export function Loader() {
                 duration: 1.5,
                 ease: "easeOut",
               }}
-              className="w-32 h-32 md:w-40 md:h-40 object-contain drop-shadow-2xl relative z-10"
+              className="w-48 h-48 md:w-64 md:h-64 object-contain drop-shadow-2xl relative z-10"
             />
           </div>
         </motion.div>

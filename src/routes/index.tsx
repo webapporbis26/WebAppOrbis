@@ -167,13 +167,41 @@ function ProjectCard({ c }: { c: ProjectItem }) {
 function Home() {
   const heroRef = useRef<HTMLDivElement>(null);
   const serenityRef = useRef<HTMLElement>(null);
+  const [showMoreAbout, setShowMoreAbout] = useState(false);
+
   useTextReveal(heroRef, { stagger: 0.14, delay: 0.4 });
   useSerenityText(serenityRef);
   useFadeUp("[data-fade]");
 
   const [featuresApi, setFeaturesApi] = useState<CarouselApi>();
+  const [digitalApi, setDigitalApi] = useState<CarouselApi>();
   const worksRef = useRef<HTMLDivElement>(null);
   const processRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!digitalApi) return;
+    const interval = setInterval(() => {
+      // It only scrolls if the carousel is active (on mobile)
+      digitalApi.scrollNext();
+    }, 3500);
+    return () => clearInterval(interval);
+  }, [digitalApi]);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (worksRef.current) {
+        const { scrollLeft, scrollWidth, clientWidth } = worksRef.current;
+        if (scrollWidth > clientWidth + 10) {
+          if (scrollLeft + clientWidth >= scrollWidth - 10) {
+            worksRef.current.scrollTo({ left: 0, behavior: "smooth" });
+          } else {
+            worksRef.current.scrollBy({ left: clientWidth * 0.85, behavior: "smooth" });
+          }
+        }
+      }
+    }, 3500);
+    return () => clearInterval(interval);
+  }, []);
 
   const scrollContainer = (ref: React.RefObject<HTMLDivElement | null>, direction: "left" | "right") => {
     if (ref.current) {
@@ -299,12 +327,23 @@ function Home() {
                       About Us
                     </h3>
                     <div className="space-y-4 text-[17px] text-foreground/75 leading-relaxed">
-                      <p>
-                        We are a professional digital solutions company specialising in website designing and development, mobile app development, and customised ERP software solutions. Our focus is on helping businesses establish a strong digital presence while improving operational efficiency through innovative technology solutions.
-                      </p>
-                      <p>
-                        With a dedicated team of designers, developers, and technology experts, we create modern platforms that combine functionality, creativity, and performance. Our approach is centred around understanding business objectives and delivering solutions tailored to specific operational requirements.
-                      </p>
+                      {[
+                        "We are a professional digital solutions company specialising in website designing and development, mobile app development, and customised ERP software solutions. Our focus is on helping businesses establish a strong digital presence while improving operational efficiency through innovative technology solutions.",
+                        "With a dedicated team of designers, developers, and technology experts, we create modern platforms that combine functionality, creativity, and performance. Our approach is centred around understanding business objectives and delivering solutions tailored to specific operational requirements.",
+                        "Our expertise extends across multiple domains, ensuring that we deliver robust and scalable solutions for startups, SMBs, and large enterprises. We take pride in our agile development methodology which guarantees timely delivery without compromising on quality.",
+                        "In an ever-evolving digital landscape, staying ahead of the curve is paramount. We continuously invest in research and development to bring you the latest technological advancements, ensuring your business remains competitive and future-proof.",
+                        "Customer satisfaction is at the core of everything we do. We believe in building long-lasting partnerships with our clients by offering unparalleled support, transparent communication, and a commitment to excellence.",
+                        "From initial concept and strategy to deployment and ongoing maintenance, our comprehensive suite of services covers every aspect of your digital journey. We are here to transform your ideas into successful digital realities.",
+                        "Let us help you navigate the complexities of the digital world. Together, we can build a strong foundation for your business and achieve remarkable growth in today's dynamic market."
+                      ].slice(0, showMoreAbout ? undefined : 2).map((text, i) => (
+                        <p key={i}>{text}</p>
+                      ))}
+                      <button 
+                        onClick={() => setShowMoreAbout(!showMoreAbout)} 
+                        className="mt-2 text-xs font-bold uppercase tracking-wider text-blue-600 hover:text-blue-700 transition-colors flex items-center gap-1 cursor-pointer select-none"
+                      >
+                        {showMoreAbout ? "Read Less ↑" : "Read More ↓"}
+                      </button>
                     </div>
                   </div>
                   <div className="grid sm:grid-cols-2 gap-6 pt-2">
@@ -436,7 +475,7 @@ function Home() {
             </h2>
           </div>
 
-          <Carousel opts={{ loop: true, breakpoints: { '(min-width: 640px)': { active: false } } }} className="w-full">
+          <Carousel setApi={setDigitalApi} opts={{ loop: true, breakpoints: { '(min-width: 640px)': { active: false } } }} className="w-full">
             <CarouselContent className="flex -ml-5 sm:ml-0 sm:grid sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-5 pb-4 sm:pb-0">
             {[
               {
@@ -663,7 +702,7 @@ function Home() {
             <div ref={processRef} className="flex overflow-x-auto md:flex-nowrap md:justify-center gap-6 snap-x snap-mandatory scrollbar-none pb-4 -mx-5 px-5 md:mx-0 md:px-0">
               {processSteps.map((step, i) => (
                 <div key={i} data-fade className="flex-none w-[45%] md:w-1/5 flex flex-col items-center text-center group cursor-default snap-center">
-                  <div className="h-20 w-20 sm:h-28 sm:w-28 rounded-full flex items-center justify-center mb-6 sm:mb-8 transition-transform duration-500 group-hover:-translate-y-2">
+                  <div className="h-20 w-20 sm:h-28 sm:w-28 rounded-full flex items-center justify-center mb-6 sm:mb-8 transition-transform duration-500 group-hover:-translate-y-2 bg-blue-50/50">
                     <step.icon className="h-10 w-10 sm:h-14 sm:w-14 text-blue-600 transition-transform duration-500 group-hover:scale-110" strokeWidth={1.5} />
                   </div>
                   <h4 className="text-[14px] sm:text-[16px] text-foreground/80 font-medium leading-snug px-2 max-w-[200px]">

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useRouterState } from "@tanstack/react-router";
-import { Menu, X, ArrowUpRight, Instagram, Twitter, Linkedin, Github, Mail, Phone, ArrowRight } from "lucide-react";
+import { Menu, X, ArrowUpRight, Instagram, Twitter, Linkedin, Github, Mail, Phone, ArrowRight, Facebook, Youtube } from "lucide-react";
 import Particles from "./Particles";
 
 const logo = { url: "/logo.png" };
@@ -49,14 +49,14 @@ export function Navbar() {
   return (
     <>
       <header
-        className="absolute left-0 right-0 top-0 z-50 py-6"
+        className="absolute left-0 right-0 top-0 z-50 py-0"
       >
         <div className="mx-auto max-w-7xl px-5 sm:px-8">
           <div
             className="flex items-center justify-between rounded-full bg-transparent px-4 py-2.5 sm:px-6"
           >
             <Link to="/" className="flex items-center gap-2.5">
-              <img src={logo.url} alt="WebApp Orbis" className="h-20 sm:h-24 w-auto object-contain" />
+              <img src={logo.url} alt="WebApp Orbis" className="h-28 sm:h-36 w-auto object-contain" />
             </Link>
 
             <div className="flex items-center gap-8">
@@ -120,9 +120,9 @@ export function Navbar() {
           </div>
 
           {/* Left Column — Navigation Links */}
-          <div className="w-full lg:w-[50%] xl:w-[45%] flex flex-col h-full relative z-10 px-10 sm:px-16 lg:px-20 xl:px-24 lg:border-r border-gray-100 pt-20 pb-8">
+          <div className="w-full lg:w-[50%] xl:w-[45%] flex flex-col h-full relative z-10 px-10 sm:px-16 lg:px-20 xl:px-24 lg:border-r border-gray-100 pt-24 lg:pt-20 pb-8">
             {/* Spacer top */}
-            <div className="flex-1 flex flex-col justify-center">
+            <div className="flex-1 flex flex-col justify-start lg:justify-center">
               <nav className="flex flex-col">
                 {[
                   { to: "/", label: "Home" },
@@ -145,15 +145,15 @@ export function Navbar() {
             </div>
 
             {/* Socials pinned to bottom */}
-            <div className="flex flex-wrap gap-5 items-center pt-4 border-t border-gray-100">
-              <a href="https://www.instagram.com/enem.pvt.ltd?igsh=aGZ2NGc1ODM3aWZ4" target="_blank" rel="noopener noreferrer" className="text-xs font-medium text-gray-400 hover:text-black transition-colors flex items-center gap-1 group uppercase tracking-widest">
-                Instagram <ArrowUpRight className="w-3 h-3 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+            <div className="flex flex-row gap-5 items-center pt-5 border-t border-gray-100">
+              <a href="https://www.instagram.com/enem.pvt.ltd?igsh=aGZ2NGc1ODM3aWZ4" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="hover:-translate-y-1 transition-all duration-300 bg-gray-100/80 hover:bg-[#E4405F] p-3 rounded-full group">
+                <Instagram className="w-5 h-5 text-gray-500 group-hover:text-white transition-colors" />
               </a>
-              <a href="https://www.facebook.com/profile.php?id=61577380003721" target="_blank" rel="noopener noreferrer" className="text-xs font-medium text-gray-400 hover:text-black transition-colors flex items-center gap-1 group uppercase tracking-widest">
-                Facebook <ArrowUpRight className="w-3 h-3 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              <a href="https://www.facebook.com/profile.php?id=61577380003721" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="hover:-translate-y-1 transition-all duration-300 bg-gray-100/80 hover:bg-[#1877F2] p-3 rounded-full group">
+                <Facebook className="w-5 h-5 text-gray-500 group-hover:text-white transition-colors" />
               </a>
-              <a href="https://www.youtube.com/@e_n_e_m?si=qJcn3W7-psF0OWvR" target="_blank" rel="noopener noreferrer" className="text-xs font-medium text-gray-400 hover:text-black transition-colors flex items-center gap-1 group uppercase tracking-widest">
-                YouTube <ArrowUpRight className="w-3 h-3 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              <a href="https://www.youtube.com/@e_n_e_m?si=qJcn3W7-psF0OWvR" target="_blank" rel="noopener noreferrer" aria-label="YouTube" className="hover:-translate-y-1 transition-all duration-300 bg-gray-100/80 hover:bg-[#FF0000] p-3 rounded-full group">
+                <Youtube className="w-5 h-5 text-gray-500 group-hover:text-white transition-colors" />
               </a>
             </div>
           </div>

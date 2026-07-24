@@ -122,68 +122,39 @@ function About() {
           <div data-fade className="relative flex items-center justify-center h-[380px] sm:h-[420px]">
 
             {/* Decorative shapes */}
-            <div style={{ position:"absolute", top:"10%", left:"8%", width:36, height:36, borderRadius:"50%", background:"#7c5cbf", opacity:0.85 }} />
-            <div style={{ position:"absolute", bottom:"14%", right:"6%", width:0, height:0, borderLeft:"14px solid transparent", borderRight:"14px solid transparent", borderTop:"24px solid #2dd4bf", opacity:0.8 }} />
-            <div style={{ position:"absolute", top:"55%", left:"3%", width:26, height:26, background:"#f5c842", borderRadius:3 }} />
+            <div className="absolute top-[10%] left-[8%] w-9 h-9 rounded-full bg-[#7c5cbf] opacity-85" />
+            <div className="absolute bottom-[14%] right-[6%] w-0 h-0 border-l-[14px] border-l-transparent border-r-[14px] border-r-transparent border-t-[24px] border-t-[#2dd4bf] opacity-80" />
+            <div className="absolute top-[55%] left-[3%] w-6 h-6 bg-[#f5c842] rounded-sm" />
 
-            {/* Card: 1.5k+ Happy Clients — top right */}
-            <div style={{
-              position:"absolute", top:"0%", right:"4%",
-              background:"#fff", borderRadius:20,
-              padding:"20px 28px", minWidth:170,
-              boxShadow:"0 12px 40px rgba(0,0,0,0.10)",
-            }}>
-              <p style={{ fontSize:40, fontWeight:800, color:"#2dd4bf", lineHeight:1, fontFamily:"Space Grotesk,sans-serif" }}>
-                50<span style={{ fontSize:28 }}>+</span>
+            {/* Card: 50+ Happy Clients — top right */}
+            <div className="absolute top-[0%] right-[2%] sm:right-[4%] bg-white rounded-[20px] p-4 sm:p-5 min-w-[150px] sm:min-w-[170px] shadow-[0_12px_40px_rgba(0,0,0,0.10)] z-20">
+              <p className="text-3xl sm:text-[40px] font-extrabold text-[#2dd4bf] leading-none font-['Space_Grotesk',sans-serif]">
+                50<span className="text-xl sm:text-[28px]">+</span>
               </p>
-              <p style={{ fontSize:11, fontWeight:700, letterSpacing:"0.15em", color:"#888", marginTop:6, textTransform:"uppercase" }}>Happy Clients</p>
+              <p className="text-[10px] sm:text-[11px] font-bold tracking-[0.15em] text-[#888] mt-1.5 uppercase">Happy Clients</p>
             </div>
 
             {/* Card: 5+ Years of Experience — center, purple */}
-            <div style={{
-              position:"absolute", top:"20%", left:"18%",
-              background:"#7c5cbf", borderRadius:20,
-              padding:"28px 32px", minWidth:160,
-              boxShadow:"0 12px 40px rgba(124,92,191,0.35)",
-              zIndex:10,
-            }}>
-              <p style={{ fontSize:64, fontWeight:900, color:"#fff", lineHeight:1, fontFamily:"Space Grotesk,sans-serif" }}>5+</p>
-              <div style={{ width:32, height:3, background:"rgba(255,255,255,0.5)", margin:"8px 0", borderRadius:4 }} />
+            <div className="absolute top-[25%] sm:top-[20%] left-[2%] sm:left-[18%] bg-[#7c5cbf] rounded-[20px] p-5 sm:p-7 min-w-[120px] sm:min-w-[160px] shadow-[0_12px_40px_rgba(124,92,191,0.35)] z-30">
+              <p className="text-5xl sm:text-[64px] font-black text-white leading-none font-['Space_Grotesk',sans-serif]">5+</p>
+              <div className="w-8 h-1 bg-white/50 my-2 rounded-sm" />
             </div>
 
             {/* Card: Years of Experience — yellow, overlapping */}
-            <div style={{
-              position:"absolute", top:"40%", left:"42%",
-              background:"#f5c842", borderRadius:20,
-              padding:"22px 28px", minWidth:160,
-              boxShadow:"0 12px 40px rgba(245,200,66,0.30)",
-              zIndex:8,
-            }}>
-              <p style={{ fontSize:15, fontWeight:800, color:"#222", textTransform:"uppercase", letterSpacing:"0.05em", lineHeight:1.3 }}>Years of<br/>Experience</p>
+            <div className="absolute top-[38%] sm:top-[40%] left-[32%] sm:left-[42%] bg-[#f5c842] rounded-[20px] px-4 py-5 sm:p-[22px_28px] min-w-[130px] sm:min-w-[160px] shadow-[0_12px_40px_rgba(245,200,66,0.30)] z-20">
+              <p className="text-[12px] sm:text-[15px] font-extrabold text-[#222] uppercase tracking-wider leading-snug">Years of<br/>Experience</p>
             </div>
 
-            {/* Card: 2.1k+ Successful Projects — bottom left */}
-            <div style={{
-              position:"absolute", bottom:"2%", left:"10%",
-              background:"#fff", borderRadius:20,
-              padding:"20px 28px", minWidth:170,
-              boxShadow:"0 12px 40px rgba(0,0,0,0.10)",
-              zIndex:9,
-            }}>
-              <p style={{ fontSize:38, fontWeight:800, color:"#7c5cbf", lineHeight:1, fontFamily:"Space Grotesk,sans-serif" }}>
-                100<span style={{ fontSize:26 }}>+</span>
+            {/* Card: 100+ Successful Projects — bottom left */}
+            <div className="absolute bottom-[2%] left-[4%] sm:left-[10%] bg-white rounded-[20px] p-4 sm:p-5 min-w-[150px] sm:min-w-[170px] shadow-[0_12px_40px_rgba(0,0,0,0.10)] z-10">
+              <p className="text-3xl sm:text-[38px] font-extrabold text-[#7c5cbf] leading-none font-['Space_Grotesk',sans-serif]">
+                100<span className="text-xl sm:text-[26px]">+</span>
               </p>
-              <p style={{ fontSize:11, fontWeight:700, letterSpacing:"0.15em", color:"#888", marginTop:6, textTransform:"uppercase" }}>Successful<br/>Projects</p>
+              <p className="text-[10px] sm:text-[11px] font-bold tracking-[0.15em] text-[#888] mt-1.5 uppercase">Successful<br/>Projects</p>
             </div>
 
             {/* Teal half-circle accent */}
-            <div style={{
-              position:"absolute", bottom:"18%", right:"14%",
-              width:50, height:25,
-              background:"#2dd4bf",
-              borderRadius:"0 0 50px 50px",
-              opacity:0.8,
-            }} />
+            <div className="absolute bottom-[18%] right-[10%] sm:right-[14%] w-12 h-6 sm:w-[50px] sm:h-[25px] bg-[#2dd4bf] rounded-b-full opacity-80" />
           </div>
         </div>
       </section>
@@ -195,15 +166,8 @@ function About() {
             <img 
               src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=600&h=450&q=80" 
               alt="Our Philosophy" 
-              className="w-full rounded-2xl border border-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.03)] object-cover mb-8 aspect-[4/3]"
+              className="w-full rounded-2xl border border-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.03)] object-cover aspect-[4/3] sticky top-32"
             />
-            <div className="sticky top-32">
-              <SplitText tag="h2" className="text-5xl sm:text-6xl font-light text-foreground tracking-wide">Our Vision &</SplitText>
-              <SplitText tag="h1" className="text-7xl sm:text-[90px] font-black text-foreground uppercase mt-2 tracking-tighter leading-none">PHILOSOPHY</SplitText>
-              <p className="text-[11px] sm:text-xs font-semibold tracking-[0.2em] sm:tracking-[0.25em] uppercase mt-10 text-foreground/70 leading-relaxed max-w-[280px]">
-                WEBAPP ORBIS - BUILDING DIGITAL FUTURES
-              </p>
-            </div>
           </div>
           
           <div data-fade className="flex flex-col justify-center pt-8 sm:pt-12">

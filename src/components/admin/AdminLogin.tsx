@@ -39,7 +39,7 @@ export function AdminLogin() {
       <div className="relative w-full max-w-md">
         <div className="rounded-3xl border border-border/60 bg-white/80 p-8 shadow-elegant backdrop-blur-xl">
           <div className="mb-6 flex items-center gap-3">
-            <img src={logo.url} alt="WebApp Orbis" className="h-10 w-10 object-contain" />
+            <img src={logo.url} alt="WebApp Orbis" className="h-16 w-16 object-contain" />
             <div className="leading-tight">
               <div className="text-display text-lg font-semibold">
                 WebApp <span className="text-primary">Orbis</span>

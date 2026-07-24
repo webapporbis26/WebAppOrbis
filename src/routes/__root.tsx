@@ -9,6 +9,7 @@ import { Loader } from "../components/Loader";
 import { PageTransition } from "../components/PageTransition";
 import { Toaster } from "@/components/ui/sonner";
 import { SmoothScroll } from "../components/SmoothScroll";
+import { MobileBottomBar } from "../components/MobileBottomBar";
 
 function NotFoundComponent() {
   return (
@@ -87,6 +88,7 @@ function RootComponent() {
         <Outlet />
       </main>
       {!isAdmin && <Footer />}
+      {!isAdmin && <MobileBottomBar />}
       <Toaster position="top-right" closeButton />
     </>
   );
