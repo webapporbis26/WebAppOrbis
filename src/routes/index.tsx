@@ -12,15 +12,9 @@ import { Carousel, CarouselContent, CarouselItem, type CarouselApi } from "@/com
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { CheckCircle2 } from "lucide-react";
 
-import eventVideo from "@/assets/project/event.mp4";
-import candleVideo from "@/assets/project/candle.mp4";
-import resortVideo from "@/assets/project/resort.mp4";
-import malluVideo from "@/assets/project/mallu.mp4";
-import dhnaVideo from "@/assets/project/dhna.mp4";
 import dhanaImg from "@/assets/project/dhana.jpeg";
 import resortImg from "@/assets/project/resort.jpeg";
 import malluImg from "@/assets/project/mallu.jpeg";
-import bestVideo from "@/assets/project/best.mp4";
 import bestImg from "@/assets/project/best.png";
 import candleImg from "@/assets/project/candle.png";
 import eventImg from "@/assets/project/event.png";
@@ -92,37 +86,12 @@ const testimonials = [
 ];
 
 interface ProjectItem {
-  type: "video" | "image";
-  src: string;
   img: string;
   title: string;
   link: string;
 }
 
 function ProjectCard({ c }: { c: ProjectItem }) {
-  const videoRef = useRef<HTMLVideoElement>(null);
-
-  useEffect(() => {
-    if (videoRef.current) {
-      videoRef.current.muted = true;
-    }
-  }, []);
-
-  const handleMouseEnter = () => {
-    if (videoRef.current) {
-      videoRef.current.muted = true;
-      videoRef.current.play().catch((err) => {
-        console.warn("Hover play was prevented:", err);
-      });
-    }
-  };
-
-  const handleMouseLeave = () => {
-    if (videoRef.current) {
-      videoRef.current.pause();
-    }
-  };
-
   return (
     <a 
       href={c.link} 
@@ -130,27 +99,14 @@ function ProjectCard({ c }: { c: ProjectItem }) {
       rel="noopener noreferrer" 
       data-fade 
       className="group block flex-none w-[85%] md:w-auto snap-center"
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
     >
       <div className="relative w-full aspect-video overflow-hidden bg-muted">
         <img
           src={c.img}
           alt={c.title}
           loading="lazy"
-          className="absolute inset-0 h-full w-full object-cover transition-all duration-700 group-hover:scale-105 group-hover:opacity-0 z-10"
+          className="absolute inset-0 h-full w-full object-cover transition-all duration-700 group-hover:scale-105 z-10"
         />
-        {c.type === "video" && (
-          <video
-            ref={videoRef}
-            src={c.src}
-            muted
-            loop
-            playsInline
-            preload="none"
-            className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105 z-0"
-          />
-        )}
       </div>
       <div className="mt-4 sm:mt-5 text-left transition-transform duration-500">
         <h3 className="text-base sm:text-lg font-medium text-foreground uppercase tracking-wide group-hover:text-primary transition-colors">
@@ -626,12 +582,12 @@ function Home() {
 
             <div ref={worksRef} className="flex -mx-5 px-5 md:mx-0 md:px-0 md:grid md:grid-cols-3 gap-8 sm:gap-10 overflow-x-auto md:overflow-x-visible snap-x snap-mandatory scrollbar-none pb-4 md:pb-0">
               {[
-                { type: "video" as const, src: eventVideo, img: eventImg, title: "Dreamweaver Events", link: "https://dreamweaverevents.co.in" },
-                { type: "video" as const, src: candleVideo, img: candleImg, title: "Nazareth Candles", link: "https://nazarethcandles.com" },
-                { type: "video" as const, src: resortVideo, img: resortImg, title: "Chandys Hotels & Resorts", link: "https://chandyshotelsandresorts.com" },
-                { type: "video" as const, src: malluVideo, img: malluImg, title: "Mallusmart", link: "https://mallusmart.com" },
-                { type: "video" as const, src: dhnaVideo, img: dhanaImg, title: "Denahalaya Punnapra", link: "https://denahalayapunnapra.com" },
-                { type: "video" as const, src: bestVideo, img: bestImg, title: "Best Choice Qatar", link: "https://bestchoiceqatar.net" },
+                { type: "image" as const, src: "", img: eventImg, title: "Dreamweaver Events", link: "https://dreamweaverevents.co.in" },
+                { type: "image" as const, src: "", img: candleImg, title: "Nazareth Candles", link: "https://nazarethcandles.com" },
+                { type: "image" as const, src: "", img: resortImg, title: "Chandys Hotels & Resorts", link: "https://chandyshotelsandresorts.com" },
+                { type: "image" as const, src: "", img: malluImg, title: "Mallusmart", link: "https://mallusmart.com" },
+                { type: "image" as const, src: "", img: dhanaImg, title: "Denahalaya Punnapra", link: "https://denahalayapunnapra.com" },
+                { type: "image" as const, src: "", img: bestImg, title: "Best Choice Qatar", link: "https://bestchoiceqatar.net" },
               ].map((c, i) => (
                 <ProjectCard key={i} c={c} />
               ))}
