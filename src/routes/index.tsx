@@ -8,7 +8,7 @@ import { FaqPro } from "@/components/ui/faq-pro";
 import { TestimonialsSection } from "@/components/TestimonialsSection";
 import MultiOrbitSemiCircle from "@/components/ui/multi-orbit-semi-circle";
 import { LogoCloud } from "@/components/ui/logo-cloud-3";
-import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
+import { Carousel, CarouselContent, CarouselItem, type CarouselApi } from "@/components/ui/carousel";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { CheckCircle2 } from "lucide-react";
 
@@ -81,7 +81,7 @@ const processSteps = [
   { icon: LayoutTemplate, title: "Web Design preview & suggestions" },
   { icon: MonitorSmartphone, title: "Designing of web pages & html conversion" },
   { icon: Rocket, title: "Launch the website & final payment" },
-  { icon: Wrench, title: "You will get a after service" },
+  { icon: Wrench, title: "You will receive after-sales service" },
 ];
 
 const testimonials = [
@@ -171,7 +171,7 @@ function Home() {
   useSerenityText(serenityRef);
   useFadeUp("[data-fade]");
 
-  const featuresRef = useRef<HTMLDivElement>(null);
+  const [featuresApi, setFeaturesApi] = useState<CarouselApi>();
   const worksRef = useRef<HTMLDivElement>(null);
   const processRef = useRef<HTMLDivElement>(null);
 
@@ -427,60 +427,6 @@ function Home() {
         </div>
       </section>
 
-      {/* ============== FEATURES STRIP ============== */}
-      <section className="relative z-30 mt-6 sm:mt-8 mx-auto max-w-7xl px-5 sm:px-8">
-        <div className="mb-6 text-center" data-fade>
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight text-foreground leading-tight">
-            Love Our Design? Let's Create Your <span style={{ color: "var(--color-primary, #e11d48)" }}>Dream Website</span>.
-          </h2>
-          <p className="mt-2 text-blue-600 font-semibold text-base sm:text-lg">
-            Talk to Web Design Experts today.
-          </p>
-        </div>
-        <div className="relative group/features">
-          {/* Left Scroll Button */}
-          <button 
-            onClick={() => scrollContainer(featuresRef, 'left')}
-            className="absolute -left-3 top-1/2 -translate-y-1/2 z-40 bg-white/95 dark:bg-card/95 hover:bg-white dark:hover:bg-card border border-border/80 shadow-md rounded-full p-2 text-foreground transition-all duration-300 sm:hidden flex items-center justify-center cursor-pointer"
-            aria-label="Scroll features left"
-          >
-            <ChevronLeft className="h-4 w-4" />
-          </button>
-
-          {/* Right Scroll Button */}
-          <button 
-            onClick={() => scrollContainer(featuresRef, 'right')}
-            className="absolute -right-3 top-1/2 -translate-y-1/2 z-40 bg-white/95 dark:bg-card/95 hover:bg-white dark:hover:bg-card border border-border/80 shadow-md rounded-full p-2 text-foreground transition-all duration-300 sm:hidden flex items-center justify-center cursor-pointer"
-            aria-label="Scroll features right"
-          >
-            <ChevronRight className="h-4 w-4" />
-          </button>
-
-          <Carousel opts={{ loop: true, breakpoints: { '(min-width: 640px)': { active: false } } }} className="w-full" data-fade>
-            <CarouselContent className="py-4 px-4 sm:px-8 flex -ml-5 sm:ml-0 sm:flex-wrap justify-between items-start gap-6 bg-white/50 backdrop-blur-md rounded-2xl border border-border/30 shadow-sm pb-4 sm:pb-0" ref={featuresRef}>
-            {featuresList.map((f, i) => (
-              <CarouselItem key={i} className="pl-5 sm:pl-0 basis-auto">
-                <div className="relative flex-none w-[50%] sm:w-1/3 lg:flex-1 flex flex-col items-center text-center px-2 group cursor-default snap-center">
-                  <div className="h-14 w-14 sm:h-16 sm:w-16 rounded-full flex items-center justify-center text-blue-600 group-hover:scale-110 transition-transform duration-300 mb-4 bg-blue-600/10">
-                    <f.icon className="h-7 w-7 sm:h-8 sm:w-8 stroke-[1.5]" />
-                  </div>
-                  <h4 className="text-xs sm:text-sm font-semibold text-foreground/80 leading-snug max-w-[140px] transition-all duration-300 group-hover:-translate-y-1">
-                    {f.title}
-                  </h4>
-                  
-                  {/* Animated Tooltip */}
-                  <div className="absolute top-[100%] left-1/2 -translate-x-1/2 mt-2 w-[160px] sm:w-[200px] bg-foreground text-background text-[11px] sm:text-xs p-3 rounded-xl shadow-xl opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 pointer-events-none z-50">
-                    <div className="absolute -top-1.5 left-1/2 -translate-x-1/2 border-4 border-transparent border-b-foreground" />
-                    {f.desc}
-                  </div>
-                </div>
-              </CarouselItem>
-            ))}
-            </CarouselContent>
-          </Carousel>
-        </div>
-      </section>
-
       {/* ============== DIGITAL SOLUTIONS ============== */}
       <section className="relative py-10 sm:py-14 bg-[#f5f7fa]">
         <div className="mx-auto max-w-7xl px-5 sm:px-8">
@@ -539,6 +485,60 @@ function Home() {
                     View more
                     <span className="text-sm transition-transform group-hover/link:translate-x-0.5">+</span>
                   </Link>
+                </div>
+              </CarouselItem>
+            ))}
+            </CarouselContent>
+          </Carousel>
+        </div>
+      </section>
+
+      {/* ============== FEATURES STRIP ============== */}
+      <section className="relative z-30 mt-6 sm:mt-8 mx-auto max-w-7xl px-5 sm:px-8">
+        <div className="mb-6 text-center" data-fade>
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight text-foreground leading-tight">
+            Love Our Design? Let's Create Your <span style={{ color: "var(--color-primary, #e11d48)" }}>Dream Website</span>.
+          </h2>
+          <p className="mt-2 text-blue-600 font-semibold text-base sm:text-lg">
+            Talk to Web Design Experts today.
+          </p>
+        </div>
+        <div className="relative group/features bg-white/50 backdrop-blur-md rounded-2xl border border-border/30 shadow-sm py-4 px-2 sm:px-8">
+          {/* Left Scroll Button */}
+          <button 
+            onClick={() => featuresApi?.scrollPrev()}
+            className="absolute -left-3 top-1/2 -translate-y-1/2 z-40 bg-white/95 dark:bg-card/95 hover:bg-white dark:hover:bg-card border border-border/80 shadow-md rounded-full p-2 text-foreground transition-all duration-300 sm:hidden flex items-center justify-center cursor-pointer"
+            aria-label="Scroll features left"
+          >
+            <ChevronLeft className="h-4 w-4" />
+          </button>
+
+          {/* Right Scroll Button */}
+          <button 
+            onClick={() => featuresApi?.scrollNext()}
+            className="absolute -right-3 top-1/2 -translate-y-1/2 z-40 bg-white/95 dark:bg-card/95 hover:bg-white dark:hover:bg-card border border-border/80 shadow-md rounded-full p-2 text-foreground transition-all duration-300 sm:hidden flex items-center justify-center cursor-pointer"
+            aria-label="Scroll features right"
+          >
+            <ChevronRight className="h-4 w-4" />
+          </button>
+
+          <Carousel opts={{ align: 'start', loop: true, breakpoints: { '(min-width: 640px)': { active: false } } }} setApi={setFeaturesApi} className="w-full" data-fade>
+            <CarouselContent className="flex -ml-2 sm:ml-0 sm:flex-wrap sm:justify-between sm:items-start sm:gap-6 pb-4 sm:pb-0">
+            {featuresList.map((f, i) => (
+              <CarouselItem key={i} className="pl-2 sm:pl-0 basis-1/2 sm:basis-auto">
+                <div className="relative w-full sm:w-1/3 lg:flex-1 flex flex-col items-center text-center px-1 sm:px-2 group cursor-default">
+                  <div className="h-14 w-14 sm:h-16 sm:w-16 rounded-full flex items-center justify-center text-blue-600 group-hover:scale-110 transition-transform duration-300 mb-4 bg-blue-600/10">
+                    <f.icon className="h-7 w-7 sm:h-8 sm:w-8 stroke-[1.5]" />
+                  </div>
+                  <h4 className="text-xs sm:text-sm font-semibold text-foreground/80 leading-snug sm:max-w-[140px] transition-all duration-300 group-hover:-translate-y-1">
+                    {f.title}
+                  </h4>
+                  
+                  {/* Animated Tooltip */}
+                  <div className="absolute top-[100%] left-1/2 -translate-x-1/2 mt-2 w-[160px] sm:w-[200px] bg-foreground text-background text-[11px] sm:text-xs p-3 rounded-xl shadow-xl opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 pointer-events-none z-50">
+                    <div className="absolute -top-1.5 left-1/2 -translate-x-1/2 border-4 border-transparent border-b-foreground" />
+                    {f.desc}
+                  </div>
                 </div>
               </CarouselItem>
             ))}

@@ -36,7 +36,7 @@ export function TestimonialsSection({
 
         <div className="relative flex w-full flex-col items-center justify-center overflow-hidden">
           {/* Infinite Marquee */}
-          <div className="flex w-full group overflow-hidden p-2 [--gap:1rem] [gap:var(--gap)] flex-row [--duration:30s] sm:[--duration:40s]">
+          <div className="flex w-full group overflow-hidden p-2 [--gap:1rem] [gap:var(--gap)] flex-row [--duration:50s] sm:[--duration:80s]">
             <div className="flex shrink-0 justify-around [gap:var(--gap)] animate-marquee flex-row group-hover:[animation-play-state:paused]">
               {[...Array(4)].map((_, setIndex) => (
                 testimonials.map((testimonial, i) => (

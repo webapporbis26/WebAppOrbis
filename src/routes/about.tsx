@@ -2,49 +2,13 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { RevealLine, useTextReveal, useFadeUp, gsap, ScrollTrigger } from "@/lib/anim";
 import SplitText from "@/components/ui/SplitText";
-import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext, type CarouselApi } from "@/components/ui/carousel";
 import { Users, Target, Rocket, Lightbulb, MonitorSmartphone, CodeXml, Mail, Smartphone, Loader2, ChevronLeft, ChevronRight } from "lucide-react";
 import about from "@/assets/about-team.jpg";
 import coffeeCup from "@/assets/coffee-cup.png";
 import contactIllustration from "@/assets/contact-illustration.png";
 import { leadsApi } from "@/lib/admin/api";
 
-const DeploymentIcon = (props: any) => (
-  <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
-    <rect x="8" y="16" width="48" height="32" rx="3" fill="#E84F7F" stroke="#222" strokeWidth="2.5"/>
-    <path d="M8 26H56" stroke="#222" strokeWidth="2.5"/>
-    <circle cx="16" cy="21" r="2" fill="#fff" stroke="#222" strokeWidth="1"/>
-    <circle cx="23" cy="21" r="2" fill="#fff" stroke="#222" strokeWidth="1"/>
-    <circle cx="30" cy="21" r="2" fill="#fff" stroke="#222" strokeWidth="1"/>
-    <path d="M26 36L20 40L26 44" stroke="#222" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
-    <path d="M38 36L44 40L38 44" stroke="#222" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
-    <path d="M34 34L30 46" stroke="#222" strokeWidth="2.5" strokeLinecap="round"/>
-  </svg>
-);
 
-const AnalyzingIdeasIcon = (props: any) => (
-  <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
-    <path d="M32 18C25.3726 18 20 23.3726 20 30C20 34.0044 21.96 37.5456 25 39.61V44C25 45.1046 25.8954 46 27 46H37C38.1046 46 39 45.1046 39 44V39.61C42.04 37.5456 44 34.0044 44 30C44 23.3726 38.6274 18 32 18Z" fill="#00D2D3" stroke="#222" strokeWidth="2.5"/>
-    <path d="M27 46H37M27 50H37M29 54H35" stroke="#222" strokeWidth="2.5" strokeLinecap="round"/>
-    <path d="M32 8V12M20 16L23 19M44 16L41 19" stroke="#00D2D3" strokeWidth="2.5" strokeLinecap="round"/>
-  </svg>
-);
-
-const TeamFormationIcon = (props: any) => (
-  <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
-    <circle cx="32" cy="32" r="14" stroke="#222" strokeWidth="2.5"/>
-    <circle cx="32" cy="24" r="4" fill="#9B51E0" stroke="#222" strokeWidth="2"/>
-    <path d="M26 36C26 32.6863 28.6863 30 32 30C35.3137 30 38 32.6863 38 36V38H26V36Z" fill="#9B51E0" stroke="#222" strokeWidth="2"/>
-    <circle cx="18" cy="18" r="3" fill="#fff" stroke="#222" strokeWidth="2.5"/>
-    <circle cx="46" cy="18" r="3" fill="#fff" stroke="#222" strokeWidth="2.5"/>
-    <circle cx="18" cy="46" r="3" fill="#fff" stroke="#222" strokeWidth="2.5"/>
-    <circle cx="46" cy="46" r="3" fill="#fff" stroke="#222" strokeWidth="2.5"/>
-    <circle cx="32" cy="10" r="3" fill="#9B51E0" stroke="#222" strokeWidth="2.5"/>
-    <circle cx="32" cy="54" r="3" fill="#9B51E0" stroke="#222" strokeWidth="2.5"/>
-    <path d="M32 13V18M32 46V51M20 20L25 25M44 20L39 25M20 44L25 39M44 44L39 39" stroke="#222" strokeWidth="2.5" strokeLinecap="round"/>
-    <path d="M18 21V43M46 21V43" stroke="#222" strokeWidth="2.5"/>
-  </svg>
-);
 
 const VisionIcon = (props: any) => (
   <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
@@ -61,13 +25,7 @@ const MissionIcon = (props: any) => (
   </svg>
 );
 
-const servicesData = [
-  { icon: DeploymentIcon, title: "Deployment", text: "Drawing on meticulous research and industry insights, our digital experts deploy tailor-made strategies for businesses with great attention to detail." },
-  { icon: AnalyzingIdeasIcon, title: "Analyzing ideas", text: "At Inter Smart we like to kick things off by clearly laying out your core ideas and then proceed to realize them through fruitful collaboration" },
-  { icon: TeamFormationIcon, title: "Team formation", text: "Collective efforts lie at the foundation of every project we undertake as we draw on the expert skill set of our professionals" },
-  { icon: DeploymentIcon, title: "Deployment", text: "Drawing on meticulous research and industry insights, our digital experts deploy tailor-made strategies for businesses with great attention to detail." },
-  { icon: AnalyzingIdeasIcon, title: "Analyzing ideas", text: "At Inter Smart we like to kick things off by clearly laying out your core ideas and then proceed to realize them through fruitful collaboration" }
-];
+
 
 export const Route = createFileRoute("/about")({
   head: () => ({
@@ -83,9 +41,8 @@ export const Route = createFileRoute("/about")({
 
 function About() {
   const heroRef = useRef<HTMLDivElement>(null);
+  const formRef = useRef<HTMLFormElement>(null);
   const imgRef = useRef<HTMLImageElement>(null);
-  const [api, setApi] = useState<CarouselApi>();
-  const [selectedIndex, setSelectedIndex] = useState(0);
   
   const [sent, setSent] = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -133,21 +90,7 @@ function About() {
   useTextReveal(heroRef, { delay: 0.2 });
   useFadeUp("[data-fade]");
 
-  useEffect(() => {
-    if (!api) return;
-    const interval = setInterval(() => {
-      api.scrollNext();
-    }, 4000);
-    return () => clearInterval(interval);
-  }, [api]);
 
-  useEffect(() => {
-    if (!api) return;
-    const onSelect = () => setSelectedIndex(api.selectedScrollSnap());
-    api.on("select", onSelect);
-    api.on("reInit", onSelect);
-    onSelect();
-  }, [api]);
 
   useEffect(() => {
     const el = imgRef.current;
@@ -292,59 +235,6 @@ function About() {
         </div>
       </section>
 
-      {/* ============== CUSTOMER SERVICE CAROUSEL ============== */}
-      <section className="py-10 sm:py-14 bg-[#f4f6f8]">
-        <div className="mx-auto max-w-[1200px] px-5 sm:px-8 text-center mb-8 sm:mb-12">
-          <SplitText tag="h2" className="text-3xl sm:text-5xl font-light text-[#222] mb-2 tracking-wide">Excellent Customer</SplitText>
-          <SplitText tag="h2" className="text-4xl sm:text-6xl font-bold text-[#111] tracking-tight">Service Is Our Foundation</SplitText>
-        </div>
-
-        <div className="max-w-[1400px] mx-auto relative" data-fade>
-          <Carousel
-            opts={{
-              align: "start",
-              loop: true,
-            }}
-            setApi={setApi}
-            className="w-full"
-          >
-            <CarouselContent className="ml-0 border-y border-[#e2e8f0]">
-              {servicesData.map((service, index) => (
-                <CarouselItem key={index} className="pl-0 md:basis-1/2 lg:basis-1/3 min-h-[360px] border-r border-[#e2e8f0]">
-                  <div className={`flex flex-col h-full items-start text-left p-10 sm:p-14 transition-colors duration-500 hover:bg-[#E5F7F9] bg-transparent cursor-pointer`}>
-                    <div className="mb-10 h-14 w-14">
-                       <service.icon className="w-full h-full drop-shadow-sm" />
-                    </div>
-                    <h3 className="text-[20px] sm:text-[24px] font-bold text-[#222] mb-5 tracking-tight">{service.title}</h3>
-                    <div className="w-8 h-[4px] bg-[#2DD4BF] mb-6" />
-                    <p className="text-[13px] sm:text-[14px] text-[#555] leading-[1.8]">
-                      {service.text}
-                    </p>
-                  </div>
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-            <button 
-              onClick={() => api?.scrollPrev()} 
-              className="hidden md:flex absolute top-1/2 -translate-y-1/2 -left-10 lg:-left-20 xl:-left-24 text-[#222] hover:text-[#2DD4BF] transition-colors drop-shadow-sm"
-              aria-label="Previous slide"
-            >
-              <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="0.75" strokeLinecap="round" strokeLinejoin="round">
-                <path d="m15 18-6-6 6-6"/>
-              </svg>
-            </button>
-            <button 
-              onClick={() => api?.scrollNext()} 
-              className="hidden md:flex absolute top-1/2 -translate-y-1/2 -right-10 lg:-right-20 xl:-right-24 text-[#222] hover:text-[#2DD4BF] transition-colors drop-shadow-sm"
-              aria-label="Next slide"
-            >
-              <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="0.75" strokeLinecap="round" strokeLinejoin="round">
-                <path d="m9 18 6-6-6-6"/>
-              </svg>
-            </button>
-          </Carousel>
-        </div>
-      </section>
 
       {/* ============== MISSION & VISION ============== */}
       <section className="py-10 sm:py-14 bg-[#f4f6f8]">
@@ -551,9 +441,9 @@ function About() {
             {/* Left Column */}
             <div className="flex flex-col text-left pt-2">
               <div className="flex items-center gap-4 mb-12">
-                <img src="/logo.png" alt="Weborbis Logo" className="w-16 h-16 object-contain" />
+                <img src="/logo.png" alt="WebApp Orbis Logo" className="w-16 h-16 object-contain" />
                 <span className="text-4xl md:text-5xl font-black tracking-tighter text-primary drop-shadow-sm">
-                  Weborbis
+                  WebApp Orbis
                 </span>
               </div>
               
