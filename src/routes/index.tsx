@@ -542,7 +542,7 @@ function Home() {
             Talk to Web Design Experts today.
           </p>
         </div>
-        <div className="relative group/features bg-white/50 backdrop-blur-md rounded-2xl border border-border/30 shadow-sm py-4 px-2 sm:px-8">
+        <div className="relative group/features py-6 px-2 sm:px-4">
           {/* Left Scroll Button */}
           <button 
             onClick={() => featuresApi?.scrollPrev()}
@@ -562,14 +562,14 @@ function Home() {
           </button>
 
           <Carousel opts={{ align: 'start', loop: true, breakpoints: { '(min-width: 640px)': { active: false } } }} setApi={setFeaturesApi} className="w-full" data-fade>
-            <CarouselContent className="flex -ml-2 sm:ml-0 sm:flex-wrap sm:justify-between sm:items-start sm:gap-6 pb-4 sm:pb-0">
+            <CarouselContent className="flex -ml-2 sm:ml-0 sm:grid sm:grid-cols-3 lg:grid-cols-6 gap-y-10 gap-x-4 pb-4 sm:pb-0">
             {featuresList.map((f, i) => (
-              <CarouselItem key={i} className="pl-2 sm:pl-0 basis-1/2 sm:basis-auto">
-                <div className="relative w-full sm:w-1/3 lg:flex-1 flex flex-col items-center text-center px-1 sm:px-2 group cursor-default">
-                  <div className="h-14 w-14 sm:h-16 sm:w-16 rounded-full flex items-center justify-center text-blue-600 group-hover:scale-110 transition-transform duration-300 mb-4 bg-blue-600/10">
+              <CarouselItem key={i} className="pl-2 sm:pl-0 basis-1/2 sm:basis-auto flex justify-center">
+                <div className="relative w-full flex flex-col items-center text-center px-1 group cursor-default">
+                  <div className="h-14 w-14 flex items-center justify-center text-blue-600 group-hover:scale-110 transition-transform duration-300 mb-3">
                     <f.icon className="h-7 w-7 sm:h-8 sm:w-8 stroke-[1.5]" />
                   </div>
-                  <h4 className="text-xs sm:text-sm font-semibold text-foreground/80 leading-snug sm:max-w-[140px] transition-all duration-300 group-hover:-translate-y-1">
+                  <h4 className="text-[13px] sm:text-[14px] font-medium text-foreground/85 leading-relaxed max-w-[170px] transition-all duration-300 group-hover:-translate-y-1">
                     {f.title}
                   </h4>
                   
