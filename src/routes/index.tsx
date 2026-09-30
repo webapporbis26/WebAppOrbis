@@ -712,8 +712,20 @@ function CounterCard({ n, s, l }: { n: number; s: string; l: string }) {
 }
 
 function HeroMedia() {
-  const [isMobile, setIsMobile] = useState(false);
+  const [isMobile, setIsMobile] = useState(() =>
+    typeof window !== "undefined" ? window.innerWidth < 1024 : false
+  );
   const [currentIndex, setCurrentIndex] = useState(0);
+
+  // Preload all hero images on mount to avoid black flash
+  useEffect(() => {
+    [...deskHeroItems, ...mobileHeroItems].forEach((item) => {
+      if (item.type === "image") {
+        const img = new Image();
+        img.src = item.src;
+      }
+    });
+  }, []);
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 1024);
@@ -805,12 +817,16 @@ function HeroMediaItem({ item, isActive, onNext }: { item: any, isActive: boolea
           <img
             src={item.src}
             alt={item.alt || ""}
+            loading={isActive ? "eager" : "lazy"}
+            {...(isActive ? { fetchPriority: "high" } : {})}
             className="absolute inset-0 h-full w-full object-cover lg:hidden"
           />
           {/* Desktop: classic full-bleed cover */}
           <img
             src={item.src}
             alt={item.alt || ""}
+            loading={isActive ? "eager" : "lazy"}
+            {...(isActive ? { fetchPriority: "high" } : {})}
             className="absolute inset-0 hidden h-full w-full object-cover lg:block"
           />
         </>
