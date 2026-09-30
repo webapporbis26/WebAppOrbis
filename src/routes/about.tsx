@@ -83,7 +83,7 @@ function About() {
 
   return (
     <>
-      <section ref={heroRef} className="relative overflow-hidden pt-24 sm:pt-28 bg-[#f0f2f5]">
+      <section ref={heroRef} className="relative overflow-hidden bg-[#f0f2f5]">
         {/* Desktop: fixed aspect ratio matching Figma composition */}
         <div className="relative hidden lg:block w-full" style={{ aspectRatio: "1680 / 936" }}>
           <img
@@ -137,7 +137,7 @@ function About() {
               className="absolute inset-0 w-full h-full object-cover"
             />
           </div>
-          <div className="px-5 py-10">
+          <div className="px-5 pt-28 pb-10">
             <p className="text-4xl font-light tracking-wide text-[#222] uppercase mb-2">OUR</p>
             <h1 className="text-6xl sm:text-7xl font-black tracking-tight leading-none text-[#111] uppercase mb-6">STORY</h1>
             <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[#555] leading-relaxed mb-8 max-w-sm">
