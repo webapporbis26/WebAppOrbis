@@ -5,6 +5,7 @@ import { gsap, ScrollTrigger, RevealLine, useTextReveal, useFadeUp } from "@/lib
 import { MagneticButton } from "@/components/MagneticButton";
 import { FaqPro } from "@/components/ui/faq-pro";
 import { TestimonialsSection } from "@/components/TestimonialsSection";
+import { LeadModal } from "@/components/LeadModal";
 import MultiOrbitSemiCircle from "@/components/ui/multi-orbit-semi-circle";
 import { LogoCloud } from "@/components/ui/logo-cloud-3";
 import { Carousel, CarouselContent, CarouselItem, type CarouselApi } from "@/components/ui/carousel";
@@ -140,6 +141,7 @@ function Home() {
 
   useTextReveal(heroRef, { stagger: 0.14, delay: 0.4 });
   useFadeUp("[data-fade]");
+  const [leadService, setLeadService] = useState<string | null>(null);
 
 
   // Hero content pin + zoom-out as we leave
@@ -439,19 +441,24 @@ function Home() {
                   ))}
                 </ul>
 
-                <Link
-                  to={card.link}
-                  className={`mt-auto inline-flex items-center justify-between pl-5 pr-1.5 py-1.5 rounded-full border ${card.btnBorder} ${card.btnText} font-semibold text-sm hover:shadow-md transition-all duration-300 group/btn`}
+                <button
+                  onClick={() => setLeadService(card.title)}
+                  className={`mt-auto inline-flex items-center justify-between pl-5 pr-1.5 py-1.5 rounded-full border ${card.btnBorder} ${card.btnText} font-semibold text-sm hover:shadow-md transition-all duration-300 group/btn cursor-pointer w-full`}
                 >
                   View More
                   <span className={`h-8 w-8 rounded-full ${card.btnArrow} flex items-center justify-center text-white ml-3 group-hover/btn:translate-x-0.5 transition-transform`}>
                     <ArrowRight className="h-4 w-4" />
                   </span>
-                </Link>
+                </button>
               </div>
             ))}
           </div>
         </div>
+        <LeadModal
+          open={leadService !== null}
+          service={leadService ?? ""}
+          onClose={() => setLeadService(null)}
+        />
       </section>
 
       {/* ============== FEATURES STRIP ============== */}
