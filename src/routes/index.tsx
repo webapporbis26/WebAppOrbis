@@ -74,11 +74,11 @@ export const Route = createFileRoute("/")({
 
 
 const processSteps = [
-  { icon: PhoneCall, title: "Project will be evaluated in detail" },
-  { icon: LayoutTemplate, title: "Web Design preview & suggestions" },
-  { icon: MonitorSmartphone, title: "Designing of web pages & html conversion" },
-  { icon: Rocket, title: "Launch the website & final payment" },
-  { icon: Wrench, title: "You will receive after-sales service" },
+  { icon: PhoneCall, title: "Project Discussion", desc: "We understand your business goals and evaluate the project in detail.", color: "text-blue-500", bg: "bg-blue-50", badge: "bg-blue-100 text-blue-600", line: "bg-blue-500" },
+  { icon: LayoutTemplate, title: "Design Preview", desc: "We create design concepts and share preview with suggestions for your feedback.", color: "text-orange-400", bg: "bg-orange-50", badge: "bg-orange-100 text-orange-500", line: "bg-orange-400" },
+  { icon: MonitorSmartphone, title: "Website Development", desc: "We design the web pages and convert them into clean, responsive HTML pages.", color: "text-purple-500", bg: "bg-purple-50", badge: "bg-purple-100 text-purple-600", line: "bg-purple-500" },
+  { icon: Rocket, title: "Launch & Final Payment", desc: "After your approval, we launch the website and complete the final payment.", color: "text-green-500", bg: "bg-green-50", badge: "bg-green-100 text-green-600", line: "bg-green-500" },
+  { icon: Headset, title: "Ongoing Support", desc: "You will receive our continued support and dedicated sales service.", color: "text-pink-500", bg: "bg-pink-50", badge: "bg-pink-100 text-pink-600", line: "bg-pink-500" },
 ];
 
 const testimonials = [
@@ -134,7 +134,6 @@ function Home() {
 
   const [digitalApi, setDigitalApi] = useState<CarouselApi>();
   const worksRef = useRef<HTMLDivElement>(null);
-  const processRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!digitalApi) return;
@@ -608,46 +607,49 @@ function Home() {
       {/* ============== OUR WEBSITE DESIGN PROCESS ============== */}
       <section className="relative py-10 sm:py-14 bg-white">
         <div className="mx-auto max-w-[90rem] px-5 sm:px-8">
-          <div className="text-center mb-12 sm:mb-12" data-fade>
-            <h2 className="text-3xl sm:text-4xl lg:text-[2.75rem] font-light text-foreground mb-6 leading-tight">
-              Our <span className="text-blue-600 font-medium">Website Design Process</span>
+          <div className="text-center mb-10 sm:mb-12" data-fade>
+            <div className="flex items-center justify-center gap-4 mb-4">
+              <span className="h-px w-12 sm:w-16 bg-blue-300" />
+              <span className="text-[11px] sm:text-xs font-semibold tracking-[0.25em] text-blue-500 uppercase">Our Process</span>
+              <span className="h-px w-12 sm:w-16 bg-blue-300" />
+            </div>
+            <h2 className="text-3xl sm:text-4xl lg:text-[2.75rem] font-extrabold tracking-tight text-slate-900 leading-tight mb-4">
+              Our <span className="text-blue-600">Website Design Process</span>
             </h2>
-            <p className="text-foreground/70 text-[15px] sm:text-lg max-w-3xl mx-auto">
+            <p className="text-slate-500 text-[15px] sm:text-lg max-w-3xl mx-auto">
               We offer free consultations to understand your business goals and create a tailored website design strategy.
             </p>
           </div>
 
-          <div className="relative group/process">
-            {/* Left Scroll Button */}
-            <button 
-              onClick={() => scrollContainer(processRef, 'left')}
-              className="absolute -left-3 top-1/3 -translate-y-1/2 z-40 bg-white/95 dark:bg-card/95 hover:bg-white dark:hover:bg-card border border-border/80 shadow-md rounded-full p-2 text-foreground transition-all duration-300 md:hidden flex items-center justify-center cursor-pointer"
-              aria-label="Scroll process left"
-            >
-              <ChevronLeft className="h-4 w-4" />
-            </button>
-
-            {/* Right Scroll Button */}
-            <button 
-              onClick={() => scrollContainer(processRef, 'right')}
-              className="absolute -right-3 top-1/3 -translate-y-1/2 z-40 bg-white/95 dark:bg-card/95 hover:bg-white dark:hover:bg-card border border-border/80 shadow-md rounded-full p-2 text-foreground transition-all duration-300 md:hidden flex items-center justify-center cursor-pointer"
-              aria-label="Scroll process right"
-            >
-              <ChevronRight className="h-4 w-4" />
-            </button>
-
-            <div ref={processRef} className="flex overflow-x-auto md:flex-nowrap md:justify-center gap-6 snap-x snap-mandatory scrollbar-none pb-4 -mx-5 px-5 md:mx-0 md:px-0">
-              {processSteps.map((step, i) => (
-                <div key={i} data-fade className="flex-none w-[45%] md:w-1/5 flex flex-col items-center text-center group cursor-default snap-center">
-                  <div className="h-20 w-20 sm:h-28 sm:w-28 rounded-full flex items-center justify-center mb-6 sm:mb-8 transition-transform duration-500 group-hover:-translate-y-2 bg-blue-50/50">
-                    <step.icon className="h-10 w-10 sm:h-14 sm:w-14 text-blue-600 transition-transform duration-500 group-hover:scale-110" strokeWidth={1.5} />
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5 sm:gap-4 lg:gap-5" data-fade>
+            {processSteps.map((step, i) => (
+              <div key={i} className="relative">
+                <div className="bg-white rounded-2xl border border-slate-100 shadow-[0_2px_16px_rgb(0,0,0,0.04)] p-6 sm:p-5 flex flex-col items-center text-center h-full hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] hover:-translate-y-1 transition-all duration-300">
+                  <div className="w-full flex justify-start mb-2">
+                    <span className={`text-xs font-bold px-2.5 py-1 rounded-full ${step.badge}`}>
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
                   </div>
-                  <h4 className="text-[14px] sm:text-[16px] text-foreground/80 font-medium leading-snug px-2 max-w-[200px]">
+                  <div className={`h-16 w-16 sm:h-[4.5rem] sm:w-[4.5rem] rounded-full ${step.bg} flex items-center justify-center mb-4`}>
+                    <step.icon className={`h-8 w-8 ${step.color}`} strokeWidth={1.5} />
+                  </div>
+                  <h4 className="text-[15px] sm:text-base font-bold text-slate-900 leading-snug mb-2">
                     {step.title}
                   </h4>
+                  <div className={`h-[3px] w-8 rounded-full ${step.line} mb-3`} />
+                  <p className="text-[12px] sm:text-[13px] text-slate-500 leading-relaxed">
+                    {step.desc}
+                  </p>
                 </div>
-              ))}
-            </div>
+                {i < processSteps.length - 1 && (
+                  <div className="hidden lg:block absolute top-16 -right-4 z-10 text-blue-300">
+                    <svg width="28" height="16" viewBox="0 0 28 16" fill="none" className="opacity-60">
+                      <path d="M1 8 H22 M18 3 L23 8 L18 13" stroke="currentColor" strokeWidth="1.5" strokeDasharray="3 3" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                  </div>
+                )}
+              </div>
+            ))}
           </div>
         </div>
       </section>
