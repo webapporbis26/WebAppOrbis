@@ -91,7 +91,6 @@ function About() {
             alt="WebApp Orbis team collaborating"
             className="w-full h-full object-cover object-center"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-white/70 via-white/20 to-transparent" />
         </div>
 
         <div className="relative z-10 mx-auto max-w-7xl px-5 sm:px-8">
