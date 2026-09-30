@@ -231,11 +231,11 @@ function Home() {
         <div data-hero-content className="relative z-20 mx-auto w-full max-w-7xl px-5 sm:px-8 text-white will-change-transform">
           <div className="max-w-3xl">
 
-            <div className="flex flex-wrap items-center gap-2">
+            <div className="flex flex-nowrap items-center gap-2 sm:gap-3">
               <MagneticButton
                 as="a"
                 href="/contact"
-                className="group gap-2 rounded-[14px] px-7 py-4 text-base font-medium text-white shadow-md hover:shadow-lg transition-all duration-300 hover:scale-[1.03] active:scale-95"
+                className="group gap-2 rounded-[14px] px-5 py-3 text-sm sm:px-7 sm:py-4 sm:text-base font-medium text-white shadow-md hover:shadow-lg transition-all duration-300 hover:scale-[1.03] active:scale-95 whitespace-nowrap"
                 {...({ style: { background: "var(--grad-primary)" } } as any)}
               >
                 Start a project
@@ -244,7 +244,7 @@ function Home() {
               <MagneticButton
                 as="a"
                 href="/portfolio"
-                className="group gap-2 rounded-[14px] border border-white/50 bg-black/25 px-7 py-4 text-base font-medium text-white backdrop-blur-md hover:bg-white hover:text-black transition-all duration-300 hover:scale-[1.03] active:scale-95"
+                className="group gap-2 rounded-[14px] border border-white/50 bg-black/25 px-5 py-3 text-sm sm:px-7 sm:py-4 sm:text-base font-medium text-white backdrop-blur-md hover:bg-white hover:text-black transition-all duration-300 hover:scale-[1.03] active:scale-95 whitespace-nowrap"
               >
                 See our work
                 <ArrowUpRight className="h-4 w-4" />
