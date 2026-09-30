@@ -99,14 +99,6 @@ const stats = [
   { value: "98%", label: "Client retention" },
 ];
 
-const process = [
-  { icon: Search, title: "Discover", desc: "Workshops, audits & a roadmap rooted in your business goals." },
-  { icon: PenTool, title: "Design", desc: "Brand-aligned interfaces, prototyped and tested before a line of code." },
-  { icon: Code2, title: "Build", desc: "Engineered in two-week sprints with weekly demos and live previews." },
-  { icon: Rocket, title: "Launch", desc: "Performance, SEO & analytics dialed in before we flip the switch." },
-  { icon: LifeBuoy, title: "Evolve", desc: "Ongoing iteration, support and SLAs to keep things compounding." },
-];
-
 const testimonials = [
   {
     quote: "They rebuilt our platform in 9 weeks and doubled our checkout conversion. Genuinely the best agency we've worked with.",
@@ -129,17 +121,6 @@ const testimonials = [
 function Services() {
   const heroRef = useRef<HTMLDivElement>(null);
   const cardsRef = useRef<HTMLDivElement>(null);
-  const processRef = useRef<HTMLDivElement>(null);
-
-  const scrollContainer = (ref: React.RefObject<HTMLDivElement | null>, direction: "left" | "right") => {
-    if (ref.current) {
-      const scrollAmount = ref.current.clientWidth * 0.75;
-      ref.current.scrollBy({
-        left: direction === "left" ? -scrollAmount : scrollAmount,
-        behavior: "smooth",
-      });
-    }
-  };
 
   useTextReveal(heroRef, { delay: 0.2 });
   useFadeUp("[data-fade]");
@@ -275,82 +256,6 @@ function Services() {
           ))}
         </div>
       </section>
-
-      {/* Process */}
-      <section className="py-12 border-t border-border">
-        <div className="mx-auto max-w-7xl px-5 sm:px-8">
-          <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-            <div>
-              <p data-fade className="mb-4 text-xs uppercase tracking-[0.3em] text-muted-foreground">
-                How we work
-              </p>
-              <SplitText tag="h2" className="text-display text-4xl sm:text-5xl max-w-2xl leading-[1.05]">
-                A process designed to keep momentum high and surprises low.
-              </SplitText>
-            </div>
-          </div>
-
-          <div className="relative group/process">
-            {/* Left Scroll Button */}
-            <button 
-              onClick={() => scrollContainer(processRef, 'left')}
-              className="absolute -left-3 top-1/2 -translate-y-1/2 z-40 bg-white/95 dark:bg-card/95 hover:bg-white dark:hover:bg-card border border-border/80 shadow-md rounded-full p-2 text-foreground transition-all duration-300 lg:hidden flex items-center justify-center cursor-pointer"
-              aria-label="Scroll process left"
-            >
-              <ChevronLeft className="h-4 w-4" />
-            </button>
-
-            {/* Right Scroll Button */}
-            <button 
-              onClick={() => scrollContainer(processRef, 'right')}
-              className="absolute -right-3 top-1/2 -translate-y-1/2 z-40 bg-white/95 dark:bg-card/95 hover:bg-white dark:hover:bg-card border border-border/80 shadow-md rounded-full p-2 text-foreground transition-all duration-300 lg:hidden flex items-center justify-center cursor-pointer"
-              aria-label="Scroll process right"
-            >
-              <ChevronRight className="h-4 w-4" />
-            </button>
-
-            <div ref={processRef} className="mt-12 flex lg:grid gap-6 lg:grid-cols-5 overflow-x-auto lg:overflow-x-visible snap-x snap-mandatory scrollbar-none pb-4 lg:pb-0 -mx-5 px-5 lg:mx-0 lg:px-0">
-              {process.map((p, i) => (
-                <div
-                  key={p.title}
-                  data-fade
-                  className="flex-none w-[75%] sm:w-[45%] lg:w-auto snap-center rounded-2xl border border-border bg-card p-6 transition-all hover:-translate-y-1 hover:shadow-elegant"
-                >
-                  <div className="text-xs text-muted-foreground">0{i + 1}</div>
-                  <div className="mt-4 grid h-11 w-11 place-items-center rounded-xl bg-primary/10 text-primary">
-                    <p.icon className="h-5 w-5" />
-                  </div>
-                  <h3 className="text-display mt-5 text-xl">{p.title}</h3>
-                  <p className="mt-2 text-sm text-muted-foreground">{p.desc}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Concluding Statements */}
-      <section className="py-12 border-t border-border bg-muted/20">
-        <div className="mx-auto max-w-7xl px-5 sm:px-8 grid md:grid-cols-2 gap-12">
-          <div data-fade>
-            <SplitText tag="h3" className="text-display text-2xl sm:text-3xl mb-4">
-              Custom Digital Solutions
-            </SplitText>
-            <p className="text-foreground/75 leading-relaxed">
-              In addition to our core services, we provide customised digital solutions tailored to unique business requirements. We work closely with businesses to develop scalable platforms that support operational growth and digital transformation.
-            </p>
-          </div>
-          <div data-fade>
-            <SplitText tag="h3" className="text-display text-2xl sm:text-3xl mb-4">
-              Delivering Reliable Technology Solutions
-            </SplitText>
-            <p className="text-foreground/75 leading-relaxed">
-              We are committed to providing innovative digital services that combine functionality, design quality, and long-term performance. Whether you require a professional website, a mobile application, or a complete ERP system, we deliver solutions designed to support your business success.
-            </p>
-          </div>
-        </div>
-      </section>
-
 
       {/* CTA */}
       <section className="py-12">
