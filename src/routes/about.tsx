@@ -2,10 +2,11 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { RevealLine, useTextReveal, useFadeUp, gsap, ScrollTrigger } from "@/lib/anim";
 import SplitText from "@/components/ui/SplitText";
-import { Users, Target, Rocket, Lightbulb, MonitorSmartphone, CodeXml, Mail, Smartphone, Loader2, ChevronLeft, ChevronRight } from "lucide-react";
+import { Users, Target, Rocket, Lightbulb, MonitorSmartphone, CodeXml, Mail, Smartphone, Loader2 } from "lucide-react";
 import coffeeCup from "@/assets/coffee-cup.png";
 import contactIllustration from "@/assets/contact-illustration.png";
 import { leadsApi } from "@/lib/admin/api";
+import { DigitalSolutions } from "@/components/DigitalSolutions";
 
 
 
@@ -45,17 +46,6 @@ function About() {
   const [sent, setSent] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [showMorePhilosophy, setShowMorePhilosophy] = useState(false);
-  const servicesRef = useRef<HTMLDivElement>(null);
-
-  const scrollContainer = (ref: React.RefObject<HTMLDivElement | null>, direction: "left" | "right") => {
-    if (ref.current) {
-      const scrollAmount = ref.current.clientWidth * 0.75;
-      ref.current.scrollBy({
-        left: direction === "left" ? -scrollAmount : scrollAmount,
-        behavior: "smooth",
-      });
-    }
-  };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -218,86 +208,9 @@ function About() {
         </div>
       </section>
 
-      <section className="py-10 sm:py-14 bg-white">
-        <div className="mx-auto max-w-7xl px-5 sm:px-8">
-          <div className="mb-12 text-left">
-            <p data-fade className="mb-6 text-sm uppercase tracking-[0.3em] text-gray-400 font-medium">What We Do</p>
-            <h2 className="text-5xl sm:text-6xl md:text-7xl font-light tracking-tight text-[#1a1a1a]">
-              Our Core <span className="font-bold">Services.</span>
-            </h2>
-          </div>
-          <div className="relative group/services">
-            {/* Left Scroll Button */}
-            <button 
-              onClick={() => scrollContainer(servicesRef, 'left')}
-              className="absolute -left-3 top-1/2 -translate-y-1/2 z-40 bg-white/95 dark:bg-card/95 hover:bg-white dark:hover:bg-card border border-border/80 shadow-md rounded-full p-2 text-foreground transition-all duration-300 sm:hidden flex items-center justify-center cursor-pointer"
-              aria-label="Scroll services left"
-            >
-              <ChevronLeft className="h-4 w-4" />
-            </button>
+            <DigitalSolutions />
 
-            {/* Right Scroll Button */}
-            <button 
-              onClick={() => scrollContainer(servicesRef, 'right')}
-              className="absolute -right-3 top-1/2 -translate-y-1/2 z-40 bg-white/95 dark:bg-card/95 hover:bg-white dark:hover:bg-card border border-border/80 shadow-md rounded-full p-2 text-foreground transition-all duration-300 sm:hidden flex items-center justify-center cursor-pointer"
-              aria-label="Scroll services right"
-            >
-              <ChevronRight className="h-4 w-4" />
-            </button>
 
-            <div ref={servicesRef} className="flex sm:grid sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-10 text-left overflow-x-auto sm:overflow-x-visible snap-x snap-mandatory scrollbar-none pb-4 sm:pb-0 -mx-5 px-5 sm:mx-0 sm:px-0">
-              {[
-                {
-                  emoji: "💻",
-                  color: "#2DD4BF",
-                  title: "Website Designing & Development",
-                  desc: "We create responsive and professionally designed websites that enhance brand visibility and improve user experience. Our websites are developed with modern technologies to ensure speed, security, and seamless functionality across all devices.",
-                  link: "/services/web-development",
-                },
-                {
-                  emoji: "📱",
-                  color: "#F472B6",
-                  title: "Mobile App Development",
-                  desc: "Our mobile app development services help businesses connect with customers through intuitive and feature-rich applications. We develop customised Android and iOS applications focused on usability, performance, and long-term scalability.",
-                  link: "/services/mobile-development",
-                },
-                {
-                  emoji: "📈",
-                  color: "#818CF8",
-                  title: "Digital Marketing",
-                  desc: "Boost your online presence and reach your target audience with data-driven marketing campaigns. We leverage social media, content marketing, and paid advertising to drive measurable growth and conversions.",
-                  link: "/services/digital-marketing",
-                },
-                {
-                  emoji: "🎯",
-                  color: "#FBBF24",
-                  title: "SEO Optimization",
-                  desc: "Improve your search engine rankings and drive organic traffic to your website. We implement advanced on-page and off-page SEO strategies to ensure your business stands out in search results.",
-                  link: "/services/seo",
-                },
-              ].map((card, i) => (
-                <div key={i} data-fade className="flex-none w-[85%] sm:w-auto snap-center flex flex-col items-start group">
-                  <div className="text-5xl mb-8">{card.emoji}</div>
-                  <h4 className="text-display text-xl sm:text-2xl font-bold text-[#1a1a1a] leading-tight mb-3">
-                    {card.title}
-                  </h4>
-                  <div className="w-8 h-1 rounded-full mb-6" style={{ backgroundColor: card.color }} />
-                  <p className="text-[15px] text-gray-600 leading-relaxed mb-5 flex-1">
-                    {card.desc}
-                  </p>
-                  <Link
-                    to={card.link}
-                    className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-[0.15em] text-gray-500 hover:text-[#1a1a1a] transition-colors group/link"
-                  >
-                    View more
-                    <span className="text-sm transition-transform group-hover/link:translate-x-0.5">+</span>
-                  </Link>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
 
 
 
