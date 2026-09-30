@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { RevealLine, useTextReveal, useFadeUp, gsap, ScrollTrigger } from "@/lib/anim";
 import SplitText from "@/components/ui/SplitText";
-import { Users, User, Target, Rocket, Lightbulb, MonitorSmartphone, CodeXml, Mail, Smartphone, Loader2, Eye, MessageSquare, Phone, ArrowRight } from "lucide-react";
+import { Users, User, Target, Rocket, Lightbulb, MonitorSmartphone, CodeXml, Mail, Smartphone, Loader2, Eye, MessageSquare, Phone, ArrowRight, ChevronDown } from "lucide-react";
 import coffeeCup from "@/assets/coffee-cup.png";
 import contactIllustration from "@/assets/contact-illustration.png";
 import { leadsApi } from "@/lib/admin/api";
@@ -366,15 +366,20 @@ function About() {
                         <div className="relative">
                           <User className="absolute left-4 top-1/2 -translate-y-1/2 w-[17px] h-[17px] text-slate-400" />
                           <input type="text" name="name" required placeholder="Your full name"
-                            className="w-full bg-slate-50/70 border border-slate-200/80 rounded-full pl-11 pr-4 py-3 text-[13.5px] text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all" />
+                            className="w-full bg-white border border-slate-200 rounded-xl pl-11 pr-4 py-3.5 text-[14px] text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all" />
                         </div>
                       </div>
                       <div>
                         <label className="block text-[12.5px] font-bold text-slate-800 mb-1.5">Phone*</label>
-                        <div className="relative">
-                          <span className="absolute left-4 top-1/2 -translate-y-1/2 text-[15px] select-none">🇮🇳</span>
+                        <div className="relative flex items-center bg-white border border-slate-200 rounded-xl focus-within:border-blue-500 focus-within:ring-2 focus-within:ring-blue-100 transition-all overflow-hidden">
+                          <span className="flex items-center gap-1 pl-4 pr-2 py-3.5 text-[15px] select-none shrink-0">
+                            🇮🇳
+                            <ChevronDown className="w-3.5 h-3.5 text-slate-400" />
+                          </span>
+                          <span className="w-px h-6 bg-slate-200 shrink-0" />
+                          <Phone className="w-[16px] h-[16px] text-slate-400 ml-3 shrink-0" />
                           <input type="tel" name="phone" required placeholder="Your phone number"
-                            className="w-full bg-slate-50/70 border border-slate-200/80 rounded-full pl-11 pr-4 py-3 text-[13.5px] text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all" />
+                            className="w-full py-3.5 pl-2 pr-4 text-[14px] text-slate-900 placeholder:text-slate-400 focus:outline-none bg-transparent" />
                         </div>
                       </div>
                     </div>
@@ -384,7 +389,7 @@ function About() {
                       <div className="relative">
                         <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-[17px] h-[17px] text-slate-400" />
                         <input type="email" name="email" required placeholder="Your email address"
-                          className="w-full bg-slate-50/70 border border-slate-200/80 rounded-full pl-11 pr-4 py-3 text-[13.5px] text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all" />
+                          className="w-full bg-white border border-slate-200 rounded-xl pl-11 pr-4 py-3.5 text-[14px] text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all" />
                       </div>
                     </div>
 
