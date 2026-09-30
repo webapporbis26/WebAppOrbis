@@ -18,6 +18,11 @@ import malluImg from "@/assets/project/mallu.jpeg";
 import bestImg from "@/assets/project/best.png";
 import candleImg from "@/assets/project/candle.png";
 import eventImg from "@/assets/project/event.png";
+import dhanaPortrait from "@/assets/project/dhana-portrait.jpg";
+import resortPortrait from "@/assets/project/resort-portrait.jpg";
+import malluPortrait from "@/assets/project/mallu-portrait.jpg";
+import bestPortrait from "@/assets/project/best-portrait.jpg";
+import eventPortrait from "@/assets/project/event-portrait.jpg";
 
 
 
@@ -31,11 +36,11 @@ const deskHeroItems = [
 ];
 
 const mobileHeroItems = [
-  { type: "image", src: bestImg, alt: "Best Choice Qatar website showcase on laptop and phone" },
-  { type: "image", src: dhanaImg, alt: "Denahalaya institute website showcase on laptop and phone" },
-  { type: "image", src: eventImg, alt: "Dreamweaver Events website showcase on laptop and phone" },
-  { type: "image", src: malluImg, alt: "Mallusmart website showcase on laptop and phone" },
-  { type: "image", src: resortImg, alt: "Chandys Hotels and Resorts website showcase on laptop and phone" },
+  { type: "image", src: bestPortrait, alt: "Best Choice Qatar website showcase on laptop" },
+  { type: "image", src: dhanaPortrait, alt: "Denahalaya institute website showcase on laptop" },
+  { type: "image", src: eventPortrait, alt: "Dreamweaver Events website showcase on laptop" },
+  { type: "image", src: malluPortrait, alt: "Mallusmart website showcase on laptop" },
+  { type: "image", src: resortPortrait, alt: "Chandys Hotels and Resorts website showcase on laptop" },
 ];
 
 const faqs = [
@@ -800,18 +805,17 @@ function HeroMediaItem({ item, isActive, onNext }: { item: any, isActive: boolea
         />
       ) : (
         <>
-          {/* Mobile (<lg): ambient blurred fill so the frame never shows harsh crop edges */}
-          <img
-            src={item.src}
-            alt=""
-            aria-hidden="true"
-            className="h-full w-full scale-110 object-cover blur-2xl brightness-[0.55] lg:hidden"
-          />
-          {/* Full image, never cropped on mobile; classic full-bleed cover on desktop */}
+          {/* Mobile (<lg): dedicated portrait crop, full-bleed cover — no letterboxing */}
           <img
             src={item.src}
             alt={item.alt || ""}
-            className="absolute inset-0 h-full w-full object-contain lg:object-cover"
+            className="absolute inset-0 h-full w-full object-cover lg:hidden"
+          />
+          {/* Desktop: classic full-bleed cover */}
+          <img
+            src={item.src}
+            alt={item.alt || ""}
+            className="absolute inset-0 hidden h-full w-full object-cover lg:block"
           />
         </>
       )}
