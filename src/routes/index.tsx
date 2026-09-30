@@ -23,6 +23,7 @@ import resortPortrait from "@/assets/project/resort-portrait.jpg";
 import malluPortrait from "@/assets/project/mallu-portrait.jpg";
 import bestPortrait from "@/assets/project/best-portrait.jpg";
 import eventPortrait from "@/assets/project/event-portrait.jpg";
+import portfolioShowcase from "@/assets/portfolio-1.jpg";
 
 
 
@@ -325,6 +326,24 @@ function Home() {
                   ].map((c, i) => (
                     <CounterCard key={i} n={c.n} s={c.s} l={c.l} />
                   ))}
+                  {/* Completed project showcase */}
+                  <Link to="/portfolio" className="col-span-2 group relative overflow-hidden rounded-[1.5rem] border border-white shadow-[0_8px_30px_rgb(0,0,0,0.06)] hover:shadow-[0_16px_40px_rgb(0,0,0,0.12)] transition-all duration-300 hover:-translate-y-1">
+                    <img
+                      src={portfolioShowcase}
+                      alt="Our completed projects showcase"
+                      className="w-full h-48 sm:h-56 object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
+                    <div className="absolute bottom-0 left-0 right-0 p-5 flex items-center justify-between">
+                      <div>
+                        <p className="text-white font-bold text-base sm:text-lg leading-tight">Our Completed Projects</p>
+                        <p className="text-white/70 text-xs sm:text-sm">Explore our portfolio</p>
+                      </div>
+                      <span className="h-10 w-10 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center text-white group-hover:bg-primary group-hover:scale-110 transition-all duration-300">
+                        <ArrowUpRight className="h-5 w-5" />
+                      </span>
+                    </div>
+                  </Link>
                   </div>
                 </div>
             </TabsContent>
