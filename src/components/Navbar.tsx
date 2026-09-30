@@ -65,7 +65,7 @@ export function Navbar() {
                   <Link
                     key={l.to}
                     to={l.to}
-                    className="text-lg font-medium transition-colors hover:text-primary"
+                    className="text-lg font-medium text-white transition-colors hover:text-primary"
                     activeProps={{ className: "text-lg font-medium text-primary" }}
                   >
                     {l.label}
@@ -75,7 +75,7 @@ export function Navbar() {
 
               <button
                 aria-label="Menu"
-                className="grid h-12 w-12 place-items-center transition-transform hover:scale-105"
+                className="grid h-12 w-12 place-items-center text-white transition-transform hover:scale-105"
                 onClick={() => setOpen(true)}
               >
                 <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
