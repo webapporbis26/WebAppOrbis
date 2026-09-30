@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { RevealLine, useTextReveal, useFadeUp, gsap, ScrollTrigger } from "@/lib/anim";
 import SplitText from "@/components/ui/SplitText";
-import { Users, Target, Rocket, Lightbulb, MonitorSmartphone, CodeXml, Mail, Smartphone, Loader2, Eye, Target } from "lucide-react";
+import { Users, Target, Rocket, Lightbulb, MonitorSmartphone, CodeXml, Mail, Smartphone, Loader2, Eye, Target, MessageSquare, Phone, ArrowRight } from "lucide-react";
 import coffeeCup from "@/assets/coffee-cup.png";
 import contactIllustration from "@/assets/contact-illustration.png";
 import { leadsApi } from "@/lib/admin/api";
@@ -10,6 +10,7 @@ import { DigitalSolutions } from "@/components/DigitalSolutions";
 import aboutHero from "@/assets/about-hero.png";
 import visionBulb from "@/assets/vision-bulb.png";
 import missionTarget from "@/assets/mission-target.png";
+import contact3d from "@/assets/contact-3d.png";
 
 
 
@@ -276,62 +277,125 @@ function About() {
 
 
       {/* ============== LET'S GET STARTED NOW ============== */}
-      <section className="relative py-10 sm:py-14 bg-[#f0f7ff] overflow-hidden">
+      <section className="relative py-12 sm:py-20 bg-[#f7faff] overflow-hidden">
+        {/* Decorative background shapes */}
+        <div className="absolute -left-24 bottom-0 w-72 h-72 rounded-full bg-blue-100/60 pointer-events-none" />
+        <div className="absolute -right-20 top-0 w-80 h-80 rounded-full bg-blue-100/50 pointer-events-none" />
+        <div className="absolute right-[8%] top-[30%] hidden lg:grid grid-cols-5 gap-2 opacity-50 pointer-events-none">
+          {Array.from({ length: 15 }).map((_, i) => (
+            <div key={i} className="w-1.5 h-1.5 rounded-full bg-blue-300" />
+          ))}
+        </div>
+
         <div className="mx-auto max-w-[1200px] px-5 sm:px-8 relative z-10">
-          <div className="grid grid-cols-1 md:grid-cols-[1fr_1.2fr] gap-12 lg:gap-12 items-start">
-            
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+
             {/* Left Column */}
-            <div className="flex flex-col text-left pt-2">
-              <div className="flex items-center gap-4 mb-12">
-                <img src="/logo.png" alt="WebApp Orbis Logo" className="w-16 h-16 object-contain" />
-                <span className="text-4xl md:text-5xl font-black tracking-tighter text-primary drop-shadow-sm">
-                  WebApp Orbis
-                </span>
+            <div data-fade>
+              <div className="flex items-center gap-3 mb-10">
+                <img src="/logo.png" alt="WebApp Orbis" className="w-14 h-14 object-contain" />
+                <div>
+                  <p className="text-[28px] font-extrabold tracking-tight text-slate-900 leading-none">
+                    WebApp <span className="text-blue-600">Orbis</span>
+                  </p>
+                  <p className="text-[10px] font-semibold tracking-[0.3em] text-slate-400 mt-1.5">IDEAS • WEBSITES • GROWTH</p>
+                </div>
               </div>
-              
-              <div className="space-y-4 pt-4">
-                <a href="mailto:info@webapporbis.com" className="flex items-center gap-3.5 font-bold text-lg text-[#222] hover:text-primary transition-colors">
-                  <Mail className="h-6 w-6 shrink-0 stroke-[2.5]" /> info@webapporbis.com
+
+              <h2 className="text-4xl sm:text-5xl font-extrabold text-slate-900 tracking-tight leading-[1.15] mb-6">
+                Let's Build<br />
+                <span className="text-blue-600">Something Great</span><br />
+                Together
+              </h2>
+              <p className="text-slate-500 text-[15px] leading-relaxed max-w-md mb-10">
+                Have a project in mind? We'd love to hear from you. Get in touch and let's turn your ideas into powerful web solutions.
+              </p>
+
+              <div className="space-y-5 mb-10">
+                <a href="mailto:info@webapporbis.com" className="flex items-center gap-4 group">
+                  <span className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center shrink-0 group-hover:bg-blue-200 transition-colors">
+                    <Mail className="w-5 h-5 text-blue-600" />
+                  </span>
+                  <span>
+                    <span className="block text-[13px] font-medium text-slate-500">Email Us</span>
+                    <span className="block text-[16px] font-bold text-slate-900 group-hover:text-blue-600 transition-colors">info@webapporbis.com</span>
+                  </span>
                 </a>
-                <a href="tel:+917736003018" className="flex items-center gap-3.5 font-bold text-lg text-[#222] hover:text-primary transition-colors">
-                  <Smartphone className="h-6 w-6 shrink-0 stroke-[2.5]" /> +91 7736 003 018
+                <a href="tel:+917736003018" className="flex items-center gap-4 group">
+                  <span className="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center shrink-0 group-hover:bg-green-200 transition-colors">
+                    <Phone className="w-5 h-5 text-green-600" />
+                  </span>
+                  <span>
+                    <span className="block text-[13px] font-medium text-slate-500">Call Us</span>
+                    <span className="block text-[16px] font-bold text-slate-900 group-hover:text-blue-600 transition-colors">+91 7736 003 018</span>
+                  </span>
                 </a>
               </div>
 
-              <div className="mt-12 animate-float drop-shadow-xl hidden sm:block w-full max-w-[320px]">
-                <img src={contactIllustration} alt="Contact Illustration" className="w-full h-auto object-contain rounded-3xl mix-blend-multiply opacity-90" />
+              <img src={contact3d} alt="Get in touch" className="w-full max-w-[420px] h-auto select-none" />
+            </div>
+
+            {/* Right Column — Form Card */}
+            <div data-fade>
+              <div className="bg-white rounded-[28px] shadow-[0_20px_60px_rgba(37,99,235,0.10)] p-8 sm:p-10">
+                <div className="flex items-center gap-3 mb-4">
+                  <span className="text-[12px] font-bold tracking-[0.25em] text-blue-600 uppercase">Get in Touch</span>
+                  <span className="h-[2px] w-16 bg-blue-200 rounded-full" />
+                </div>
+                <h3 className="text-3xl sm:text-[38px] font-extrabold text-slate-900 tracking-tight leading-tight mb-3">
+                  Let's Get <span className="text-blue-600">Started Now!</span>
+                </h3>
+                <p className="text-slate-500 text-[14px] mb-8">
+                  Fill out the form below and our team will get back to you shortly.
+                </p>
+
+                <form onSubmit={handleSubmit} className="space-y-5">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                    <div>
+                      <label className="block text-[13px] font-semibold text-slate-700 mb-2">Name*</label>
+                      <div className="relative">
+                        <User className="absolute left-4 top-1/2 -translate-y-1/2 w-[18px] h-[18px] text-slate-400" />
+                        <input type="text" name="name" required placeholder="Your full name"
+                          className="w-full bg-slate-50 border border-slate-200 rounded-xl pl-11 pr-4 py-3.5 text-[14px] text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all" />
+                      </div>
+                    </div>
+                    <div>
+                      <label className="block text-[13px] font-semibold text-slate-700 mb-2">Phone*</label>
+                      <div className="relative">
+                        <span className="absolute left-4 top-1/2 -translate-y-1/2 text-[16px] select-none">🇮🇳</span>
+                        <input type="tel" name="phone" required placeholder="Your phone number"
+                          className="w-full bg-slate-50 border border-slate-200 rounded-xl pl-11 pr-4 py-3.5 text-[14px] text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all" />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-[13px] font-semibold text-slate-700 mb-2">Email*</label>
+                    <div className="relative">
+                      <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-[18px] h-[18px] text-slate-400" />
+                      <input type="email" name="email" required placeholder="Your email address"
+                        className="w-full bg-slate-50 border border-slate-200 rounded-xl pl-11 pr-4 py-3.5 text-[14px] text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all" />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-[13px] font-semibold text-slate-700 mb-2">How can we help you?</label>
+                    <div className="relative">
+                      <MessageSquare className="absolute left-4 top-4 w-[18px] h-[18px] text-slate-400" />
+                      <textarea name="message" required rows={4} placeholder="Tell us about your project..."
+                        className="w-full bg-slate-50 border border-slate-200 rounded-xl pl-11 pr-4 py-3.5 text-[14px] text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all resize-none" />
+                    </div>
+                  </div>
+
+                  <button type="submit" disabled={sent || submitting}
+                    className="w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-bold text-[14px] tracking-[0.2em] uppercase py-4 rounded-xl shadow-[0_10px_30px_rgba(37,99,235,0.30)] hover:shadow-[0_14px_36px_rgba(37,99,235,0.40)] transition-all flex items-center justify-center gap-3 disabled:opacity-70 cursor-pointer">
+                    {sent ? "Message Sent!" : submitting ? "Sending..." : "Submit"}
+                    {submitting ? <Loader2 className="w-4 h-4 animate-spin" /> : <ArrowRight className="w-4 h-4" />}
+                  </button>
+                </form>
               </div>
             </div>
 
-            {/* Right Column */}
-            <div className="text-left relative z-10 flex flex-col justify-center">
-              <h2 className="text-3xl sm:text-[40px] font-bold text-primary mb-10 tracking-tight drop-shadow-sm">LET'S GET STARTED NOW!</h2>
-              
-              <form onSubmit={handleSubmit} className="space-y-12">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-10">
-                  <div className="relative">
-                    <input type="text" name="name" required placeholder="NAME*" className="w-full bg-transparent border-b border-[#222]/50 text-[#222] placeholder:text-[#222]/80 text-[12px] font-medium tracking-wide py-2 focus:outline-none transition-colors focus:border-primary" />
-                  </div>
-                  <div className="relative flex items-center border-b border-[#222]/50 focus-within:border-primary transition-colors">
-                    <span className="text-[14px] mr-2 text-[#222] select-none cursor-pointer">🇮🇳 ⌄</span>
-                    <input type="tel" name="phone" required placeholder="PHONE*" className="w-full bg-transparent text-[#222] placeholder:text-[#222]/80 text-[12px] font-medium tracking-wide py-2 focus:outline-none" />
-                  </div>
-                </div>
-
-                <div className="relative">
-                  <input type="email" name="email" required placeholder="EMAIL*" className="w-full bg-transparent border-b border-[#222]/50 text-[#222] placeholder:text-[#222]/80 text-[12px] font-medium tracking-wide py-2 focus:outline-none transition-colors focus:border-primary" />
-                </div>
-
-                <div className="relative">
-                  <input type="text" name="message" required placeholder="HOW CAN WE HELP YOU?" className="w-full bg-transparent border-b border-[#222]/50 text-[#222] placeholder:text-[#222]/80 text-[12px] font-medium tracking-wide py-2 focus:outline-none transition-colors focus:border-primary" />
-                </div>
-
-                <button type="submit" disabled={sent || submitting} className="bg-primary text-white text-[13px] font-bold px-10 py-3.5 hover:bg-primary/90 transition-colors mt-6 shadow-sm flex items-center justify-center gap-2 select-none uppercase tracking-widest">
-                  {sent ? "Message Sent!" : submitting ? "Sending..." : "SUBMIT"}
-                  {submitting && <Loader2 className="h-3 w-3 animate-spin" />}
-                </button>
-              </form>
-            </div>
           </div>
         </div>
       </section>
