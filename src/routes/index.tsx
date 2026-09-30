@@ -255,10 +255,6 @@ function Home() {
 
 
         </div>
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 rounded-full bg-black/35 px-5 py-2.5 text-xs uppercase tracking-[0.3em] text-white/80 backdrop-blur-md z-20">
-          <span>Scroll</span>
-          <ArrowDown className="h-4 w-4 animate-bounce" />
-        </div>
       </section>
 
       {/* ============== COMPREHENSIVE ABOUT US ============== */}
