@@ -202,12 +202,6 @@ function About() {
 
       {/* ============== MISSION & VISION ============== */}
       <section className="py-10 sm:py-14 bg-[#f4f6f8]">
-        <div className="mx-auto max-w-[1200px] px-5 sm:px-8 text-center mb-12 sm:mb-12">
-          <SplitText tag="h2" className="text-3xl sm:text-5xl font-light text-[#222] mb-2 tracking-wide">Our Works Define Our</SplitText>
-          <SplitText tag="h2" className="text-4xl sm:text-6xl font-bold text-[#111] tracking-tight mb-6">Success Look Through Some</SplitText>
-          <p className="text-[#555] text-[15px] sm:text-[17px]">Excellent customer service is our foundation</p>
-        </div>
-
         <div className="mx-auto max-w-[1200px] px-5 sm:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12" data-fade>
             {/* Vision Card */}
