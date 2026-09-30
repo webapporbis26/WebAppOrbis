@@ -21,7 +21,6 @@ import resortPortrait from "@/assets/project/resort-portrait.jpg";
 import malluPortrait from "@/assets/project/mallu-portrait.jpg";
 import bestPortrait from "@/assets/project/best-portrait.jpg";
 import eventPortrait from "@/assets/project/event-portrait.jpg";
-import projectsShowcase from "@/assets/projects-showcase.png";
 import aboutShowcase from "@/assets/about-showcase.png";
 
 const deskHeroItems = [
