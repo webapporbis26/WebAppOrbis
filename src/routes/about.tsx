@@ -305,7 +305,12 @@ function About() {
               <h2 className="text-4xl sm:text-5xl font-extrabold text-slate-900 tracking-tight leading-[1.15] mb-6">
                 Let's Build<br />
                 <span className="text-blue-600">Something Great</span><br />
-                Together
+                <span className="relative inline-block">
+                  Together
+                  <svg className="absolute -bottom-2 left-0 w-full" viewBox="0 0 200 12" fill="none" preserveAspectRatio="none">
+                    <path d="M2 9C60 3 140 3 198 8" stroke="#bfdbfe" strokeWidth="5" strokeLinecap="round" />
+                  </svg>
+                </span>
               </h2>
               <p className="text-slate-500 text-[15px] leading-relaxed max-w-md mb-10">
                 Have a project in mind? We'd love to hear from you. Get in touch and let's turn your ideas into powerful web solutions.
@@ -332,7 +337,15 @@ function About() {
                 </a>
               </div>
 
-              <img src={contact3d} alt="Get in touch" className="w-full max-w-[420px] h-auto select-none" />
+              <div className="relative w-full max-w-[440px]">
+                <div className="absolute inset-x-8 bottom-0 top-16 bg-gradient-to-br from-blue-100 to-blue-50 rounded-[40px] pointer-events-none" />
+                <div className="absolute -left-2 top-8 grid grid-cols-4 gap-2 opacity-40 pointer-events-none">
+                  {Array.from({ length: 12 }).map((_, i) => (
+                    <div key={i} className="w-1.5 h-1.5 rounded-full bg-blue-300" />
+                  ))}
+                </div>
+                <img src={contact3d} alt="Get in touch" className="relative w-full h-auto select-none rounded-[32px]" />
+              </div>
             </div>
 
             {/* Right Column — Form Card */}
@@ -356,7 +369,7 @@ function About() {
                       <div className="relative">
                         <User className="absolute left-4 top-1/2 -translate-y-1/2 w-[18px] h-[18px] text-slate-400" />
                         <input type="text" name="name" required placeholder="Your full name"
-                          className="w-full bg-slate-50 border border-slate-200 rounded-xl pl-11 pr-4 py-3.5 text-[14px] text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all" />
+                          className="w-full bg-slate-50/80 border border-slate-200 rounded-full pl-11 pr-4 py-3.5 text-[14px] text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all" />
                       </div>
                     </div>
                     <div>
@@ -364,7 +377,7 @@ function About() {
                       <div className="relative">
                         <span className="absolute left-4 top-1/2 -translate-y-1/2 text-[16px] select-none">🇮🇳</span>
                         <input type="tel" name="phone" required placeholder="Your phone number"
-                          className="w-full bg-slate-50 border border-slate-200 rounded-xl pl-11 pr-4 py-3.5 text-[14px] text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all" />
+                          className="w-full bg-slate-50/80 border border-slate-200 rounded-full pl-11 pr-4 py-3.5 text-[14px] text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all" />
                       </div>
                     </div>
                   </div>
@@ -374,7 +387,7 @@ function About() {
                     <div className="relative">
                       <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-[18px] h-[18px] text-slate-400" />
                       <input type="email" name="email" required placeholder="Your email address"
-                        className="w-full bg-slate-50 border border-slate-200 rounded-xl pl-11 pr-4 py-3.5 text-[14px] text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all" />
+                        className="w-full bg-slate-50/80 border border-slate-200 rounded-full pl-11 pr-4 py-3.5 text-[14px] text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all" />
                     </div>
                   </div>
 
@@ -383,7 +396,7 @@ function About() {
                     <div className="relative">
                       <MessageSquare className="absolute left-4 top-4 w-[18px] h-[18px] text-slate-400" />
                       <textarea name="message" required rows={4} placeholder="Tell us about your project..."
-                        className="w-full bg-slate-50 border border-slate-200 rounded-xl pl-11 pr-4 py-3.5 text-[14px] text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all resize-none" />
+                        className="w-full bg-slate-50/80 border border-slate-200 rounded-[20px] pl-11 pr-4 py-3.5 text-[14px] text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all resize-none" />
                     </div>
                   </div>
 
