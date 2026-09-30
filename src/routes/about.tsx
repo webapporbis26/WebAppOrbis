@@ -332,19 +332,14 @@ function About() {
                 </a>
               </div>
 
-              {/* Illustration with decorations */}
-              <div className="relative mt-2 max-w-[480px]">
-                <div className="absolute left-4 right-4 bottom-0 top-10 bg-blue-100/80 rounded-[36px] pointer-events-none" />
-                <div className="absolute left-0 top-6 grid grid-cols-4 gap-2 opacity-50 pointer-events-none">
+              {/* Illustration */}
+              <div className="relative mt-4 max-w-[460px]">
+                <div className="absolute left-0 top-4 grid grid-cols-4 gap-2 opacity-40 pointer-events-none">
                   {Array.from({ length: 8 }).map((_, i) => (
                     <div key={i} className="w-1.5 h-1.5 rounded-full bg-blue-300" />
                   ))}
                 </div>
-                <svg className="absolute right-8 -top-2 w-16 h-16 text-blue-400 pointer-events-none" viewBox="0 0 64 64" fill="none">
-                  <path d="M8 48C20 30 40 20 56 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeDasharray="4 4" />
-                  <path d="M48 8L56 12L52 20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-                <img src={contact3d} alt="Get in touch" className="relative w-full h-auto select-none" />
+                <img src={contact3d} alt="Get in touch" className="relative w-full h-auto select-none rounded-[24px]" />
               </div>
             </div>
 
