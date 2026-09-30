@@ -266,13 +266,13 @@ function Home() {
             </p>
           </div>
 
-          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start">
+          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-stretch">
             {/* Left: showcase image */}
             <div className="relative rounded-[2rem] overflow-hidden shadow-[0_12px_40px_rgb(0,0,0,0.08)] border border-slate-100" data-fade>
               <img
                 src={aboutShowcase}
                 alt="Our completed projects - BestChoice, Chandy's, Dream Weaver, Mallu's Mart, Denahalaya"
-                className="w-full h-auto object-cover"
+                className="w-full h-auto object-cover lg:absolute lg:inset-0 lg:h-full"
               />
             </div>
 
