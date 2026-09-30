@@ -7,6 +7,7 @@ import coffeeCup from "@/assets/coffee-cup.png";
 import contactIllustration from "@/assets/contact-illustration.png";
 import { leadsApi } from "@/lib/admin/api";
 import { DigitalSolutions } from "@/components/DigitalSolutions";
+import aboutHero from "@/assets/about-hero.png";
 
 
 
@@ -82,54 +83,73 @@ function About() {
 
   return (
     <>
-      <section ref={heroRef} className="pt-28 pb-10 sm:pt-28 sm:pb-14 relative overflow-hidden" style={{ background: "#f0f2f5" }}>
-        <div className="mx-auto max-w-7xl px-5 sm:px-8 relative z-10 grid lg:grid-cols-2 items-center gap-12 lg:gap-8 min-h-[400px]">
-          {/* LEFT — text */}
-          <div className="text-left" data-fade>
-            <p className="text-4xl sm:text-5xl font-light tracking-wide text-[#222] uppercase mb-2">OUR</p>
-            <h1 className="text-6xl sm:text-8xl lg:text-[110px] font-black tracking-tight leading-none text-[#111] uppercase mb-8">STORY</h1>
-            <p className="text-xs sm:text-sm font-semibold uppercase tracking-[0.3em] text-[#555] max-w-xs leading-relaxed">
-              We are truly grateful to you for choosing us as your partner and giving us the opportunity to grow
-            </p>
-          </div>
+      <section ref={heroRef} className="relative overflow-hidden pt-24 sm:pt-28">
+        {/* Background image */}
+        <div className="absolute inset-0">
+          <img
+            src={aboutHero}
+            alt="WebApp Orbis team collaborating"
+            className="w-full h-full object-cover object-center"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-white/70 via-white/20 to-transparent" />
+        </div>
 
-          {/* RIGHT — floating stat cards */}
-          <div data-fade className="relative flex items-center justify-center h-[380px] sm:h-[420px]">
-
-            {/* Decorative shapes */}
-            <div className="absolute top-[10%] left-[8%] w-9 h-9 rounded-full bg-[#7c5cbf] opacity-85" />
-            <div className="absolute bottom-[14%] right-[6%] w-0 h-0 border-l-[14px] border-l-transparent border-r-[14px] border-r-transparent border-t-[24px] border-t-[#2dd4bf] opacity-80" />
-            <div className="absolute top-[55%] left-[3%] w-6 h-6 bg-[#f5c842] rounded-sm" />
-
-            {/* Card: 50+ Happy Clients — top right */}
-            <div className="absolute top-[0%] right-[2%] sm:right-[4%] bg-white rounded-[20px] p-4 sm:p-5 min-w-[150px] sm:min-w-[170px] shadow-[0_12px_40px_rgba(0,0,0,0.10)] z-20">
-              <p className="text-3xl sm:text-[40px] font-extrabold text-[#2dd4bf] leading-none font-['Space_Grotesk',sans-serif]">
-                50<span className="text-xl sm:text-[28px]">+</span>
+        <div className="relative z-10 mx-auto max-w-7xl px-5 sm:px-8">
+          <div className="min-h-[480px] sm:min-h-[540px] lg:min-h-[620px] flex flex-col justify-center py-10">
+            {/* LEFT — text */}
+            <div className="max-w-md" data-fade>
+              <p className="text-4xl sm:text-5xl font-light tracking-wide text-[#222] uppercase mb-2">OUR</p>
+              <h1 className="text-6xl sm:text-8xl lg:text-[110px] font-black tracking-tight leading-none text-[#111] uppercase mb-8">STORY</h1>
+              <p className="text-xs sm:text-sm font-semibold uppercase tracking-[0.3em] text-[#555] max-w-xs leading-relaxed">
+                We are truly grateful to you for choosing us as your partner and giving us the opportunity to grow
               </p>
-              <p className="text-[10px] sm:text-[11px] font-bold tracking-[0.15em] text-[#888] mt-1.5 uppercase">Happy Clients</p>
             </div>
 
-            {/* Card: 5+ Years of Experience — center, purple */}
-            <div className="absolute top-[25%] sm:top-[20%] left-[2%] sm:left-[18%] bg-[#7c5cbf] rounded-[20px] p-5 sm:p-7 min-w-[120px] sm:min-w-[160px] shadow-[0_12px_40px_rgba(124,92,191,0.35)] z-30">
-              <p className="text-5xl sm:text-[64px] font-black text-white leading-none font-['Space_Grotesk',sans-serif]">5+</p>
-              <div className="w-8 h-1 bg-white/50 my-2 rounded-sm" />
+            {/* Stat cards — desktop absolute over image */}
+            <div className="hidden lg:block">
+              {/* Card: 5+ — purple */}
+              <div data-fade className="absolute top-[14%] left-[42%] bg-[#7c5cbf] rounded-[20px] p-6 min-w-[150px] shadow-[0_12px_40px_rgba(124,92,191,0.35)] z-30">
+                <p className="text-[56px] font-black text-white leading-none">5+</p>
+                <div className="w-8 h-1 bg-white/50 my-2 rounded-sm" />
+              </div>
+
+              {/* Card: Years of Experience — yellow, overlapping */}
+              <div data-fade className="absolute top-[30%] left-[52%] bg-[#f5c842] rounded-[20px] px-6 py-5 min-w-[150px] shadow-[0_12px_40px_rgba(245,200,66,0.30)] z-20">
+                <p className="text-[14px] font-extrabold text-[#222] uppercase tracking-wider leading-snug">Years of<br/>Experience</p>
+              </div>
+
+              {/* Card: 50+ Happy Clients — top right */}
+              <div data-fade className="absolute top-[16%] right-[6%] bg-white rounded-[20px] p-5 min-w-[160px] shadow-[0_12px_40px_rgba(0,0,0,0.10)] z-20">
+                <p className="text-[38px] font-extrabold text-[#2dd4bf] leading-none">
+                  50<span className="text-[26px]">+</span>
+                </p>
+                <p className="text-[11px] font-bold tracking-[0.15em] text-[#888] mt-1.5 uppercase">Happy Clients</p>
+              </div>
+
+              {/* Card: 100+ Successful Projects */}
+              <div data-fade className="absolute top-[52%] left-[38%] bg-white rounded-[20px] p-5 min-w-[160px] shadow-[0_12px_40px_rgba(0,0,0,0.10)] z-10">
+                <p className="text-[36px] font-extrabold text-[#7c5cbf] leading-none">
+                  100<span className="text-[24px]">+</span>
+                </p>
+                <p className="text-[11px] font-bold tracking-[0.15em] text-[#888] mt-1.5 uppercase">Successful<br/>Projects</p>
+              </div>
             </div>
 
-            {/* Card: Years of Experience — yellow, overlapping */}
-            <div className="absolute top-[38%] sm:top-[40%] left-[32%] sm:left-[42%] bg-[#f5c842] rounded-[20px] px-4 py-5 sm:p-[22px_28px] min-w-[130px] sm:min-w-[160px] shadow-[0_12px_40px_rgba(245,200,66,0.30)] z-20">
-              <p className="text-[12px] sm:text-[15px] font-extrabold text-[#222] uppercase tracking-wider leading-snug">Years of<br/>Experience</p>
+            {/* Stat cards — mobile/tablet grid */}
+            <div className="grid grid-cols-2 gap-3 mt-8 lg:hidden max-w-md" data-fade>
+              <div className="bg-[#7c5cbf] rounded-2xl p-4 shadow-lg">
+                <p className="text-3xl font-black text-white leading-none">5+</p>
+                <p className="text-[10px] font-bold tracking-[0.12em] text-white/80 mt-1 uppercase">Years of Experience</p>
+              </div>
+              <div className="bg-white rounded-2xl p-4 shadow-lg">
+                <p className="text-3xl font-extrabold text-[#2dd4bf] leading-none">50+</p>
+                <p className="text-[10px] font-bold tracking-[0.12em] text-[#888] mt-1 uppercase">Happy Clients</p>
+              </div>
+              <div className="bg-white rounded-2xl p-4 shadow-lg col-span-2">
+                <p className="text-3xl font-extrabold text-[#7c5cbf] leading-none">100+</p>
+                <p className="text-[10px] font-bold tracking-[0.12em] text-[#888] mt-1 uppercase">Successful Projects</p>
+              </div>
             </div>
-
-            {/* Card: 100+ Successful Projects — bottom left */}
-            <div className="absolute bottom-[2%] left-[4%] sm:left-[10%] bg-white rounded-[20px] p-4 sm:p-5 min-w-[150px] sm:min-w-[170px] shadow-[0_12px_40px_rgba(0,0,0,0.10)] z-10">
-              <p className="text-3xl sm:text-[38px] font-extrabold text-[#7c5cbf] leading-none font-['Space_Grotesk',sans-serif]">
-                100<span className="text-xl sm:text-[26px]">+</span>
-              </p>
-              <p className="text-[10px] sm:text-[11px] font-bold tracking-[0.15em] text-[#888] mt-1.5 uppercase">Successful<br/>Projects</p>
-            </div>
-
-            {/* Teal half-circle accent */}
-            <div className="absolute bottom-[18%] right-[10%] sm:right-[14%] w-12 h-6 sm:w-[50px] sm:h-[25px] bg-[#2dd4bf] rounded-b-full opacity-80" />
           </div>
         </div>
       </section>
