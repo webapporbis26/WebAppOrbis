@@ -231,7 +231,7 @@ function Home() {
         <div data-hero-content className="relative z-20 mx-auto w-full max-w-7xl px-5 sm:px-8 text-white will-change-transform">
           <div className="max-w-3xl">
 
-            <div className="flex flex-nowrap items-center gap-2 sm:gap-3">
+            <div className="hidden lg:flex flex-nowrap items-center gap-2 sm:gap-3">
               <MagneticButton
                 as="a"
                 href="/contact"
