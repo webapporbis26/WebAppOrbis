@@ -299,47 +299,7 @@ function About() {
         </div>
       </section>
 
-      <section className="py-10 sm:py-14 bg-[#fafafa]">
-        <div className="mx-auto max-w-7xl px-5 sm:px-8">
-          <div className="grid lg:grid-cols-2 gap-12 lg:gap-12">
-            <div className="space-y-10 text-left">
-              <p data-fade className="text-sm uppercase tracking-[0.3em] text-gray-400 font-medium">Our Approach</p>
-              <h2 className="text-4xl sm:text-5xl font-light tracking-tight text-[#1a1a1a] leading-tight">Tailored strategies for <br/><span className="font-bold">unique goals.</span></h2>
-              <div className="w-12 h-1 bg-[#1a1a1a]" />
-              <div className="space-y-6">
-                <p data-fade className="text-xl text-gray-600 leading-relaxed font-light">
-                  We believe every business requires unique digital solutions. Our team works closely with clients to 
-                  understand their goals, industry requirements, and operational challenges before creating customised 
-                  strategies and technology platforms.
-                </p>
-                <p data-fade className="text-lg text-gray-500 leading-relaxed">
-                  From planning and design to development and deployment, we maintain a transparent and 
-                  collaborative process to ensure high-quality project delivery.
-                </p>
-              </div>
-            </div>
-            
-            <div className="space-y-10 text-left" data-fade>
-              <p className="text-sm uppercase tracking-[0.3em] text-gray-400 font-medium">Why Businesses Trust Us</p>
-              <ul className="space-y-8">
-                {[
-                  "Experienced development and design team",
-                  "Customised business-focused solutions",
-                  "Modern and scalable technologies",
-                  "SEO-friendly and responsive development",
-                  "Reliable technical support and maintenance",
-                  "Focus on quality, performance, and security"
-                ].map((item, i) => (
-                  <li key={i} className="flex items-center gap-6 border-b border-gray-200 pb-8 last:border-0 last:pb-0">
-                    <span className="text-gray-300 font-mono text-xl">0{i+1}</span>
-                    <span className="text-xl sm:text-2xl font-medium text-[#1a1a1a] tracking-tight">{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        </div>
-      </section>
+
 
       {/* ============== LET'S GET STARTED NOW ============== */}
       <section className="relative py-10 sm:py-14 bg-[#f0f7ff] overflow-hidden">
