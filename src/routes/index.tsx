@@ -23,65 +23,7 @@ import resortPortrait from "@/assets/project/resort-portrait.jpg";
 import malluPortrait from "@/assets/project/mallu-portrait.jpg";
 import bestPortrait from "@/assets/project/best-portrait.jpg";
 import eventPortrait from "@/assets/project/event-portrait.jpg";
-
-const projectSlides = [
-  { img: bestPortrait, name: "BestChoice", tag: "Portable Cabins · Qatar" },
-  { img: dhanaPortrait, name: "Denahalaya", tag: "Psycho-Spiritual Institute" },
-  { img: eventPortrait, name: "Dream Weaver", tag: "Event Management" },
-  { img: malluPortrait, name: "Mallu's Mart", tag: "Online Store · Kerala" },
-  { img: resortPortrait, name: "Chandy's", tag: "Hotels & Resorts · Munnar" },
-];
-
-function ProjectSlider() {
-  const [current, setCurrent] = useState(0);
-
-  useEffect(() => {
-    const id = setInterval(() => {
-      setCurrent((p) => (p + 1) % projectSlides.length);
-    }, 3500);
-    return () => clearInterval(id);
-  }, []);
-
-  return (
-    <div className="col-span-2 group relative overflow-hidden rounded-[1.5rem] border border-white shadow-[0_8px_30px_rgb(0,0,0,0.06)] hover:shadow-[0_16px_40px_rgb(0,0,0,0.12)] transition-shadow duration-300">
-      <div className="relative h-64 sm:h-72 overflow-hidden">
-        {projectSlides.map((p, i) => (
-          <div
-            key={i}
-            className={`absolute inset-0 transition-opacity duration-700 ${i === current ? "opacity-100 z-10" : "opacity-0 z-0"}`}
-          >
-            <img src={p.img} alt={`${p.name} project`} className="w-full h-full object-cover object-top" />
-          </div>
-        ))}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent z-20 pointer-events-none" />
-        <div className="absolute bottom-0 left-0 right-0 p-5 z-30">
-          <div key={current}>
-            <p className="text-white font-bold text-lg leading-tight">{projectSlides[current].name}</p>
-            <p className="text-white/70 text-xs sm:text-sm">{projectSlides[current].tag}</p>
-          </div>
-          <div className="flex items-center justify-between mt-3">
-            <div className="flex gap-1.5">
-              {projectSlides.map((_, i) => (
-                <button
-                  key={i}
-                  onClick={() => setCurrent(i)}
-                  aria-label={`Go to ${projectSlides[i].name}`}
-                  className={`h-1.5 rounded-full transition-all duration-300 ${i === current ? "w-6 bg-white" : "w-1.5 bg-white/40 hover:bg-white/70"}`}
-                />
-              ))}
-            </div>
-            <Link to="/portfolio" className="h-9 w-9 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center text-white hover:bg-primary hover:scale-110 transition-all duration-300">
-              <ArrowUpRight className="h-4 w-4" />
-            </Link>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-
-
+import projectsShowcase from "@/assets/projects-showcase.png";
 
 const deskHeroItems = [
   { type: "image", src: bestImg, alt: "Best Choice Qatar website showcase on laptop and phone" },
@@ -381,8 +323,18 @@ function Home() {
                   ].map((c, i) => (
                     <CounterCard key={i} n={c.n} s={c.s} l={c.l} />
                   ))}
-                  {/* Completed projects auto-slider */}
-                  <ProjectSlider />
+                  {/* Completed projects showcase */}
+                  <Link to="/portfolio" className="col-span-2 group relative overflow-hidden rounded-[1.5rem] border border-white shadow-[0_8px_30px_rgb(0,0,0,0.06)] hover:shadow-[0_16px_40px_rgb(0,0,0,0.12)] transition-all duration-300 hover:-translate-y-1 block">
+                    <img
+                      src={projectsShowcase}
+                      alt="Our completed projects - Denahalaya, Chandy's, BestChoice, Dream Weaver, Mallu's Mart"
+                      className="w-full h-64 sm:h-72 object-cover object-center group-hover:scale-[1.02] transition-transform duration-500"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    <div className="absolute bottom-4 right-4 h-10 w-10 rounded-full bg-white/90 backdrop-blur-md flex items-center justify-center text-slate-900 opacity-0 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300">
+                      <ArrowUpRight className="h-5 w-5" />
+                    </div>
+                  </Link>
                   </div>
                 </div>
             </TabsContent>
