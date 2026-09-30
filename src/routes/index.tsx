@@ -23,21 +23,19 @@ import eventImg from "@/assets/project/event.png";
 
 
 const deskHeroItems = [
-  { type: "image", src: bestImg },
-  { type: "image", src: candleImg },
-  { type: "image", src: dhanaImg },
-  { type: "image", src: eventImg },
-  { type: "image", src: malluImg },
-  { type: "image", src: resortImg },
+  { type: "image", src: bestImg, alt: "Best Choice Qatar website showcase on laptop and phone" },
+  { type: "image", src: dhanaImg, alt: "Denahalaya institute website showcase on laptop and phone" },
+  { type: "image", src: eventImg, alt: "Dreamweaver Events website showcase on laptop and phone" },
+  { type: "image", src: malluImg, alt: "Mallusmart website showcase on laptop and phone" },
+  { type: "image", src: resortImg, alt: "Chandys Hotels and Resorts website showcase on laptop and phone" },
 ];
 
 const mobileHeroItems = [
-  { type: "image", src: bestImg },
-  { type: "image", src: candleImg },
-  { type: "image", src: dhanaImg },
-  { type: "image", src: eventImg },
-  { type: "image", src: malluImg },
-  { type: "image", src: resortImg },
+  { type: "image", src: bestImg, alt: "Best Choice Qatar website showcase on laptop and phone" },
+  { type: "image", src: dhanaImg, alt: "Denahalaya institute website showcase on laptop and phone" },
+  { type: "image", src: eventImg, alt: "Dreamweaver Events website showcase on laptop and phone" },
+  { type: "image", src: malluImg, alt: "Mallusmart website showcase on laptop and phone" },
+  { type: "image", src: resortImg, alt: "Chandys Hotels and Resorts website showcase on laptop and phone" },
 ];
 
 const faqs = [
@@ -241,7 +239,7 @@ function Home() {
               <MagneticButton
                 as="a"
                 href="/portfolio"
-                className="group gap-2 rounded-[14px] border border-white/30 px-7 py-4 text-base font-medium text-white hover:bg-white hover:text-black transition-all duration-300 hover:scale-[1.03] active:scale-95"
+                className="group gap-2 rounded-[14px] border border-white/50 bg-black/25 px-7 py-4 text-base font-medium text-white backdrop-blur-md hover:bg-white hover:text-black transition-all duration-300 hover:scale-[1.03] active:scale-95"
               >
                 See our work
                 <ArrowUpRight className="h-4 w-4" />
@@ -252,7 +250,7 @@ function Home() {
 
 
         </div>
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-xs uppercase tracking-[0.3em] text-white/70 z-20">
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 rounded-full bg-black/35 px-5 py-2.5 text-xs uppercase tracking-[0.3em] text-white/80 backdrop-blur-md z-20">
           <span>Scroll</span>
           <ArrowDown className="h-4 w-4 animate-bounce" />
         </div>
@@ -759,6 +757,10 @@ function HeroMedia() {
           />
         );
       })}
+      {/* Readability scrims: keep CTA buttons, scroll cue and navbar legible on every slide */}
+      <div className="pointer-events-none absolute inset-0 z-20 bg-black/10" />
+      <div className="pointer-events-none absolute inset-x-0 top-0 z-20 h-28 bg-gradient-to-b from-black/55 to-transparent" />
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-20 h-[45%] bg-gradient-to-t from-black/75 via-black/30 to-transparent" />
     </div>
   );
 }
@@ -797,11 +799,21 @@ function HeroMediaItem({ item, isActive, onNext }: { item: any, isActive: boolea
           className="h-full w-full object-cover"
         />
       ) : (
-        <img
-          src={item.src}
-          alt=""
-          className="h-full w-full object-cover"
-        />
+        <>
+          {/* Mobile (<lg): ambient blurred fill so the frame never shows harsh crop edges */}
+          <img
+            src={item.src}
+            alt=""
+            aria-hidden="true"
+            className="h-full w-full scale-110 object-cover blur-2xl brightness-[0.55] lg:hidden"
+          />
+          {/* Full image, never cropped on mobile; classic full-bleed cover on desktop */}
+          <img
+            src={item.src}
+            alt={item.alt || ""}
+            className="absolute inset-0 h-full w-full object-contain lg:object-cover"
+          />
+        </>
       )}
     </div>
   );
