@@ -36,6 +36,10 @@ export function Navbar() {
     setOpen(false);
   }, [pathname]);
 
+  // Homepage hero is dark -> white nav text; other pages have light heroes -> dark nav text
+  const isHome = pathname === "/";
+  const navTextClass = isHome ? "text-white" : "text-slate-900";
+
   // Lock body scroll when menu is open
   useEffect(() => {
     if (open) {
@@ -65,7 +69,7 @@ export function Navbar() {
                   <Link
                     key={l.to}
                     to={l.to}
-                    className="text-lg font-medium text-white transition-colors hover:text-primary"
+                    className={`text-lg font-medium ${navTextClass} transition-colors hover:text-primary`}
                     activeProps={{ className: "text-lg font-medium text-primary" }}
                   >
                     {l.label}
@@ -75,7 +79,7 @@ export function Navbar() {
 
               <button
                 aria-label="Menu"
-                className="grid h-12 w-12 place-items-center text-white transition-transform hover:scale-105"
+                className={`grid h-12 w-12 place-items-center ${navTextClass} transition-transform hover:scale-105`}
                 onClick={() => setOpen(true)}
               >
                 <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
