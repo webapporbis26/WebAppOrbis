@@ -190,6 +190,7 @@ function ProjectDetail() {
       </section>
 
       {/* METRICS */}
+      {project.metrics.length > 0 && (
       <section className="pb-24">
         <div className="mx-auto max-w-7xl px-5 sm:px-8">
           <div className="grid grid-cols-2 gap-px overflow-hidden rounded-3xl border border-border bg-border md:grid-cols-4">
@@ -204,6 +205,7 @@ function ProjectDetail() {
           </div>
         </div>
       </section>
+      )}
 
       {/* GALLERY */}
       <section ref={galleryRef} className="pb-28">
@@ -212,12 +214,16 @@ function ProjectDetail() {
             <div className="md:col-span-4 overflow-hidden rounded-3xl bg-muted">
               <img data-parallax-img src={project.gallery[0]} alt="" className="aspect-[16/10] w-full object-cover" />
             </div>
+            {project.gallery[1] && (
             <div className="md:col-span-2 overflow-hidden rounded-3xl bg-muted">
               <img data-parallax-img src={project.gallery[1]} alt="" className="aspect-[4/5] w-full object-cover" />
             </div>
+            )}
+            {project.gallery[2] && (
             <div className="md:col-span-6 overflow-hidden rounded-3xl bg-muted">
               <img data-parallax-img src={project.gallery[2]} alt="" className="aspect-[21/9] w-full object-cover" />
             </div>
+            )}
           </div>
         </div>
       </section>
