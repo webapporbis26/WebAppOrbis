@@ -277,135 +277,138 @@ function About() {
 
 
       {/* ============== LET'S GET STARTED NOW ============== */}
-      <section className="relative py-12 sm:py-20 bg-[#f7faff] overflow-hidden">
-        {/* Decorative background shapes */}
-        <div className="absolute -left-24 bottom-0 w-72 h-72 rounded-full bg-blue-100/60 pointer-events-none" />
-        <div className="absolute -right-20 top-0 w-80 h-80 rounded-full bg-blue-100/50 pointer-events-none" />
-        <div className="absolute right-[8%] top-[30%] hidden lg:grid grid-cols-5 gap-2 opacity-50 pointer-events-none">
-          {Array.from({ length: 15 }).map((_, i) => (
-            <div key={i} className="w-1.5 h-1.5 rounded-full bg-blue-300" />
-          ))}
-        </div>
+      <section className="relative py-12 sm:py-16 bg-[#f8fbff] overflow-hidden">
+        {/* Background decorations */}
+        <div className="absolute -left-28 -bottom-28 w-96 h-96 rounded-full bg-blue-100/70 pointer-events-none" />
+        <div className="absolute -right-24 -top-24 w-[420px] h-[420px] rounded-full bg-blue-100/60 pointer-events-none" />
 
-        <div className="mx-auto max-w-[1200px] px-5 sm:px-8 relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+        <div className="mx-auto max-w-[1280px] px-5 sm:px-8 relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.1fr] gap-10 lg:gap-8 items-start">
 
             {/* Left Column */}
-            <div data-fade>
-              <div className="flex items-center gap-3 mb-10">
-                <img src="/logo.png" alt="WebApp Orbis" className="w-14 h-14 object-contain" />
+            <div data-fade className="relative">
+              <div className="flex items-center gap-3 mb-8">
+                <img src="/logo.png" alt="WebApp Orbis" className="w-12 h-12 object-contain" />
                 <div>
-                  <p className="text-[28px] font-extrabold tracking-tight text-slate-900 leading-none">
+                  <p className="text-[26px] font-extrabold tracking-tight text-slate-900 leading-none">
                     WebApp <span className="text-blue-600">Orbis</span>
                   </p>
-                  <p className="text-[10px] font-semibold tracking-[0.3em] text-slate-400 mt-1.5">IDEAS • WEBSITES • GROWTH</p>
+                  <p className="text-[9px] font-semibold tracking-[0.32em] text-slate-400 mt-1.5">IDEAS • WEBSITES • GROWTH</p>
                 </div>
               </div>
 
-              <h2 className="text-4xl sm:text-5xl font-extrabold text-slate-900 tracking-tight leading-[1.15] mb-6">
+              <h2 className="text-[44px] sm:text-[54px] font-extrabold text-slate-900 tracking-tight leading-[1.08] mb-5">
                 Let's Build<br />
                 <span className="text-blue-600">Something Great</span><br />
                 <span className="relative inline-block">
                   Together
-                  <svg className="absolute -bottom-2 left-0 w-full" viewBox="0 0 200 12" fill="none" preserveAspectRatio="none">
+                  <svg className="absolute -bottom-1.5 left-0 w-full" viewBox="0 0 200 12" fill="none" preserveAspectRatio="none">
                     <path d="M2 9C60 3 140 3 198 8" stroke="#bfdbfe" strokeWidth="5" strokeLinecap="round" />
                   </svg>
                 </span>
               </h2>
-              <p className="text-slate-500 text-[15px] leading-relaxed max-w-md mb-10">
+              <p className="text-slate-500 text-[15px] leading-[1.7] max-w-[420px] mb-8">
                 Have a project in mind? We'd love to hear from you. Get in touch and let's turn your ideas into powerful web solutions.
               </p>
 
-              <div className="space-y-5 mb-10">
-                <a href="mailto:info@webapporbis.com" className="flex items-center gap-4 group">
-                  <span className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center shrink-0 group-hover:bg-blue-200 transition-colors">
-                    <Mail className="w-5 h-5 text-blue-600" />
+              <div className="space-y-4 mb-6">
+                <a href="mailto:info@webapporbis.com" className="flex items-center gap-4 group w-fit">
+                  <span className="w-11 h-11 rounded-full bg-blue-100 flex items-center justify-center shrink-0 group-hover:bg-blue-200 transition-colors">
+                    <Mail className="w-[18px] h-[18px] text-blue-600" />
                   </span>
                   <span>
-                    <span className="block text-[13px] font-medium text-slate-500">Email Us</span>
-                    <span className="block text-[16px] font-bold text-slate-900 group-hover:text-blue-600 transition-colors">info@webapporbis.com</span>
+                    <span className="block text-[12px] text-slate-500">Email Us</span>
+                    <span className="block text-[15px] font-bold text-slate-900 group-hover:text-blue-600 transition-colors">info@webapporbis.com</span>
                   </span>
                 </a>
-                <a href="tel:+917736003018" className="flex items-center gap-4 group">
-                  <span className="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center shrink-0 group-hover:bg-green-200 transition-colors">
-                    <Phone className="w-5 h-5 text-green-600" />
+                <a href="tel:+917736003018" className="flex items-center gap-4 group w-fit">
+                  <span className="w-11 h-11 rounded-full bg-green-100 flex items-center justify-center shrink-0 group-hover:bg-green-200 transition-colors">
+                    <Phone className="w-[18px] h-[18px] text-green-600" />
                   </span>
                   <span>
-                    <span className="block text-[13px] font-medium text-slate-500">Call Us</span>
-                    <span className="block text-[16px] font-bold text-slate-900 group-hover:text-blue-600 transition-colors">+91 7736 003 018</span>
+                    <span className="block text-[12px] text-slate-500">Call Us</span>
+                    <span className="block text-[15px] font-bold text-slate-900 group-hover:text-blue-600 transition-colors">+91 7736 003 018</span>
                   </span>
                 </a>
               </div>
 
-              <div className="relative w-full max-w-[440px]">
-                <div className="absolute inset-x-8 bottom-0 top-16 bg-gradient-to-br from-blue-100 to-blue-50 rounded-[40px] pointer-events-none" />
-                <div className="absolute -left-2 top-8 grid grid-cols-4 gap-2 opacity-40 pointer-events-none">
-                  {Array.from({ length: 12 }).map((_, i) => (
+              {/* Illustration with decorations */}
+              <div className="relative mt-2 max-w-[480px]">
+                <div className="absolute left-4 right-4 bottom-0 top-10 bg-blue-100/80 rounded-[36px] pointer-events-none" />
+                <div className="absolute left-0 top-6 grid grid-cols-4 gap-2 opacity-50 pointer-events-none">
+                  {Array.from({ length: 8 }).map((_, i) => (
                     <div key={i} className="w-1.5 h-1.5 rounded-full bg-blue-300" />
                   ))}
                 </div>
-                <img src={contact3d} alt="Get in touch" className="relative w-full h-auto select-none rounded-[32px]" />
+                <svg className="absolute right-8 -top-2 w-16 h-16 text-blue-400 pointer-events-none" viewBox="0 0 64 64" fill="none">
+                  <path d="M8 48C20 30 40 20 56 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeDasharray="4 4" />
+                  <path d="M48 8L56 12L52 20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+                <img src={contact3d} alt="Get in touch" className="relative w-full h-auto select-none" />
               </div>
             </div>
 
             {/* Right Column — Form Card */}
-            <div data-fade>
-              <div className="bg-white rounded-[28px] shadow-[0_20px_60px_rgba(37,99,235,0.10)] p-8 sm:p-10">
-                <div className="flex items-center gap-3 mb-4">
-                  <span className="text-[12px] font-bold tracking-[0.25em] text-blue-600 uppercase">Get in Touch</span>
-                  <span className="h-[2px] w-16 bg-blue-200 rounded-full" />
+            <div data-fade className="lg:pt-4">
+              <div className="bg-white rounded-[24px] shadow-[0_24px_70px_rgba(37,99,235,0.12)] p-7 sm:p-10 relative overflow-hidden">
+                <div className="absolute -right-10 -top-10 w-40 h-40 rounded-full bg-blue-50 pointer-events-none" />
+                <div className="relative">
+                  <div className="flex items-center gap-3 mb-3">
+                    <span className="text-[11px] font-bold tracking-[0.28em] text-blue-600 uppercase">Get in Touch</span>
+                    <span className="h-[2px] w-14 bg-blue-200 rounded-full" />
+                  </div>
+                  <h3 className="text-[32px] sm:text-[40px] font-extrabold text-slate-900 tracking-tight leading-tight mb-2">
+                    Let's Get <span className="text-blue-600">Started Now!</span>
+                  </h3>
+                  <p className="text-slate-500 text-[13.5px] mb-7">
+                    Fill out the form below and our team will get back to you shortly.
+                  </p>
+
+                  <form onSubmit={handleSubmit} className="space-y-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div>
+                        <label className="block text-[12.5px] font-bold text-slate-800 mb-1.5">Name*</label>
+                        <div className="relative">
+                          <User className="absolute left-4 top-1/2 -translate-y-1/2 w-[17px] h-[17px] text-slate-400" />
+                          <input type="text" name="name" required placeholder="Your full name"
+                            className="w-full bg-slate-50/70 border border-slate-200/80 rounded-full pl-11 pr-4 py-3 text-[13.5px] text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all" />
+                        </div>
+                      </div>
+                      <div>
+                        <label className="block text-[12.5px] font-bold text-slate-800 mb-1.5">Phone*</label>
+                        <div className="relative">
+                          <span className="absolute left-4 top-1/2 -translate-y-1/2 text-[15px] select-none">🇮🇳</span>
+                          <input type="tel" name="phone" required placeholder="Your phone number"
+                            className="w-full bg-slate-50/70 border border-slate-200/80 rounded-full pl-11 pr-4 py-3 text-[13.5px] text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all" />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="block text-[12.5px] font-bold text-slate-800 mb-1.5">Email*</label>
+                      <div className="relative">
+                        <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-[17px] h-[17px] text-slate-400" />
+                        <input type="email" name="email" required placeholder="Your email address"
+                          className="w-full bg-slate-50/70 border border-slate-200/80 rounded-full pl-11 pr-4 py-3 text-[13.5px] text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all" />
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="block text-[12.5px] font-bold text-slate-800 mb-1.5">How can we help you?</label>
+                      <div className="relative">
+                        <MessageSquare className="absolute left-4 top-3.5 w-[17px] h-[17px] text-slate-400" />
+                        <textarea name="message" required rows={4} placeholder="Tell us about your project..."
+                          className="w-full bg-slate-50/70 border border-slate-200/80 rounded-[18px] pl-11 pr-4 py-3 text-[13.5px] text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all resize-none" />
+                      </div>
+                    </div>
+
+                    <button type="submit" disabled={sent || submitting}
+                      className="w-full bg-gradient-to-r from-[#2f7bff] to-[#1f5eff] hover:from-[#1f5eff] hover:to-[#1748d6] text-white font-bold text-[13px] tracking-[0.22em] uppercase py-[15px] rounded-full shadow-[0_12px_32px_rgba(47,123,255,0.35)] hover:shadow-[0_16px_40px_rgba(47,123,255,0.45)] transition-all flex items-center justify-center gap-3 disabled:opacity-70 cursor-pointer">
+                      {sent ? "Message Sent!" : submitting ? "Sending..." : "Submit"}
+                      {submitting ? <Loader2 className="w-4 h-4 animate-spin" /> : <ArrowRight className="w-4 h-4" />}
+                    </button>
+                  </form>
                 </div>
-                <h3 className="text-3xl sm:text-[38px] font-extrabold text-slate-900 tracking-tight leading-tight mb-3">
-                  Let's Get <span className="text-blue-600">Started Now!</span>
-                </h3>
-                <p className="text-slate-500 text-[14px] mb-8">
-                  Fill out the form below and our team will get back to you shortly.
-                </p>
-
-                <form onSubmit={handleSubmit} className="space-y-5">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                    <div>
-                      <label className="block text-[13px] font-semibold text-slate-700 mb-2">Name*</label>
-                      <div className="relative">
-                        <User className="absolute left-4 top-1/2 -translate-y-1/2 w-[18px] h-[18px] text-slate-400" />
-                        <input type="text" name="name" required placeholder="Your full name"
-                          className="w-full bg-slate-50/80 border border-slate-200 rounded-full pl-11 pr-4 py-3.5 text-[14px] text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all" />
-                      </div>
-                    </div>
-                    <div>
-                      <label className="block text-[13px] font-semibold text-slate-700 mb-2">Phone*</label>
-                      <div className="relative">
-                        <span className="absolute left-4 top-1/2 -translate-y-1/2 text-[16px] select-none">🇮🇳</span>
-                        <input type="tel" name="phone" required placeholder="Your phone number"
-                          className="w-full bg-slate-50/80 border border-slate-200 rounded-full pl-11 pr-4 py-3.5 text-[14px] text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all" />
-                      </div>
-                    </div>
-                  </div>
-
-                  <div>
-                    <label className="block text-[13px] font-semibold text-slate-700 mb-2">Email*</label>
-                    <div className="relative">
-                      <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-[18px] h-[18px] text-slate-400" />
-                      <input type="email" name="email" required placeholder="Your email address"
-                        className="w-full bg-slate-50/80 border border-slate-200 rounded-full pl-11 pr-4 py-3.5 text-[14px] text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all" />
-                    </div>
-                  </div>
-
-                  <div>
-                    <label className="block text-[13px] font-semibold text-slate-700 mb-2">How can we help you?</label>
-                    <div className="relative">
-                      <MessageSquare className="absolute left-4 top-4 w-[18px] h-[18px] text-slate-400" />
-                      <textarea name="message" required rows={4} placeholder="Tell us about your project..."
-                        className="w-full bg-slate-50/80 border border-slate-200 rounded-[20px] pl-11 pr-4 py-3.5 text-[14px] text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all resize-none" />
-                    </div>
-                  </div>
-
-                  <button type="submit" disabled={sent || submitting}
-                    className="w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-bold text-[14px] tracking-[0.2em] uppercase py-4 rounded-xl shadow-[0_10px_30px_rgba(37,99,235,0.30)] hover:shadow-[0_14px_36px_rgba(37,99,235,0.40)] transition-all flex items-center justify-center gap-3 disabled:opacity-70 cursor-pointer">
-                    {sent ? "Message Sent!" : submitting ? "Sending..." : "Submit"}
-                    {submitting ? <Loader2 className="w-4 h-4 animate-spin" /> : <ArrowRight className="w-4 h-4" />}
-                  </button>
-                </form>
               </div>
             </div>
 
