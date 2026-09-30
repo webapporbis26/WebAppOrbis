@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
-import { ArrowDown, ArrowUpRight, Globe, Smartphone, Database, Sparkles, Zap, Shield, Users, Star, Search, Rocket, MonitorSmartphone, SearchCheck, CodeXml, Headset, Share2, MessageCircle, PhoneCall, LayoutTemplate, ChevronLeft, ChevronRight, Laptop, Megaphone, TrendingUp, Check, ArrowRight, Folder, Trophy, Eye } from "lucide-react";
-import { gsap, ScrollTrigger, RevealLine, useTextReveal, useFadeUp, useSerenityText } from "@/lib/anim";
+import { ArrowDown, ArrowUpRight, Globe, Smartphone, Database, Sparkles, Zap, Shield, Users, Star, Search, Rocket, MonitorSmartphone, SearchCheck, CodeXml, Headset, Share2, MessageCircle, PhoneCall, LayoutTemplate, Laptop, Megaphone, TrendingUp, Check, ArrowRight, Folder, Trophy, Eye } from "lucide-react";
+import { gsap, ScrollTrigger, RevealLine, useTextReveal, useFadeUp } from "@/lib/anim";
 import { MagneticButton } from "@/components/MagneticButton";
 import { FaqPro } from "@/components/ui/faq-pro";
 import { TestimonialsSection } from "@/components/TestimonialsSection";
@@ -88,72 +88,66 @@ interface ProjectItem {
   img: string;
   title: string;
   link: string;
+  desc: string;
+  badge: string;
+  badgeClass: string;
+  arrowClass: string;
 }
 
 function ProjectCard({ c }: { c: ProjectItem }) {
   return (
-    <a 
-      href={c.link} 
-      target="_blank" 
-      rel="noopener noreferrer" 
-      data-fade 
-      className="group block flex-none w-[85%] md:w-auto snap-center"
-    >
-      <div className="relative w-full aspect-video overflow-hidden bg-muted">
+    <div data-fade className="group bg-white rounded-3xl p-3 sm:p-4 shadow-[0_4px_24px_rgb(0,0,0,0.04)] hover:shadow-[0_12px_36px_rgb(0,0,0,0.08)] hover:-translate-y-1.5 transition-all duration-300">
+      <a href={c.link} target="_blank" rel="noopener noreferrer" className="block relative overflow-hidden rounded-2xl">
         <img
           src={c.img}
           alt={c.title}
           loading="lazy"
-          className="absolute inset-0 h-full w-full object-cover transition-all duration-700 group-hover:scale-105 z-10"
+          className="w-full aspect-[16/10] object-cover transition-transform duration-700 group-hover:scale-105"
         />
+        <span className={`absolute top-3 left-3 sm:top-4 sm:left-4 text-[11px] sm:text-xs font-semibold px-3 py-1.5 rounded-full ${c.badgeClass}`}>
+          {c.badge}
+        </span>
+      </a>
+      <div className="px-2 sm:px-3 pt-4 pb-2">
+        <div className="flex items-start justify-between gap-3">
+          <div>
+            <h3 className="text-base sm:text-lg font-bold text-slate-900 uppercase tracking-wide leading-snug">
+              {c.title}
+            </h3>
+            <p className="text-[13px] sm:text-sm text-slate-500 mt-1.5 leading-relaxed">
+              {c.desc}
+            </p>
+          </div>
+          <a
+            href={c.link}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`View ${c.title}`}
+            className={`flex-shrink-0 h-10 w-10 rounded-full ${c.arrowClass} flex items-center justify-center transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-0.5`}
+          >
+            <ArrowRight className="h-4 w-4" />
+          </a>
+        </div>
+        <a
+          href={c.link}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-1.5 text-sm font-semibold text-blue-600 hover:text-blue-700 mt-3 transition-colors"
+        >
+          View Project
+          <ArrowRight className="h-3.5 w-3.5" />
+        </a>
       </div>
-      <div className="mt-4 sm:mt-5 text-left transition-transform duration-500">
-        <h3 className="text-base sm:text-lg font-medium text-foreground uppercase tracking-wide group-hover:text-primary transition-colors">
-          {c.title}
-        </h3>
-        <p className="text-xs sm:text-sm text-muted-foreground mt-1 uppercase tracking-wider">
-          Website Design & Development
-        </p>
-      </div>
-    </a>
+    </div>
   );
 }
 
 function Home() {
   const heroRef = useRef<HTMLDivElement>(null);
-  const serenityRef = useRef<HTMLElement>(null);
 
   useTextReveal(heroRef, { stagger: 0.14, delay: 0.4 });
-  useSerenityText(serenityRef);
   useFadeUp("[data-fade]");
 
-  const worksRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      if (worksRef.current) {
-        const { scrollLeft, scrollWidth, clientWidth } = worksRef.current;
-        if (scrollWidth > clientWidth + 10) {
-          if (scrollLeft + clientWidth >= scrollWidth - 10) {
-            worksRef.current.scrollTo({ left: 0, behavior: "smooth" });
-          } else {
-            worksRef.current.scrollBy({ left: clientWidth * 0.85, behavior: "smooth" });
-          }
-        }
-      }
-    }, 3500);
-    return () => clearInterval(interval);
-  }, []);
-
-  const scrollContainer = (ref: React.RefObject<HTMLDivElement | null>, direction: "left" | "right") => {
-    if (ref.current) {
-      const scrollAmount = ref.current.clientWidth * 0.75;
-      ref.current.scrollBy({
-        left: direction === "left" ? -scrollAmount : scrollAmount,
-        behavior: "smooth",
-      });
-    }
-  };
 
   // Hero content pin + zoom-out as we leave
   useEffect(() => {
@@ -505,67 +499,73 @@ function Home() {
       </section>
 
       {/* ============== OUR WORKS ============== */}
-      <section ref={serenityRef} className="relative py-10 sm:py-14 bg-background">
+      <section className="relative py-10 sm:py-14 bg-[#f5f7fa] overflow-hidden">
+        {/* Decorative dotted patterns */}
+        <div className="absolute left-8 sm:left-16 top-24 opacity-40 pointer-events-none hidden md:block">
+          <div className="grid grid-cols-5 gap-2">
+            {Array.from({ length: 20 }).map((_, i) => (
+              <div key={i} className="w-1.5 h-1.5 rounded-full bg-blue-300" />
+            ))}
+          </div>
+        </div>
+        <div className="absolute right-8 sm:right-16 top-24 opacity-40 pointer-events-none hidden md:block">
+          <div className="grid grid-cols-5 gap-2">
+            {Array.from({ length: 20 }).map((_, i) => (
+              <div key={i} className="w-1.5 h-1.5 rounded-full bg-blue-300" />
+            ))}
+          </div>
+        </div>
+
         <div className="mx-auto max-w-[1400px] px-5 sm:px-8">
-          <div className="text-center max-w-4xl mx-auto mb-12">
-            <h3 className="text-[28px] sm:text-[34px] font-light text-foreground mb-2 flex justify-center flex-wrap gap-x-2">
-              {["Our", "Works", "Define", "Our", "Success"].map((w, i) => (
-                <span key={i} className="serenity-word inline-block">{w}</span>
-              ))}
-            </h3>
-            <h2 className="text-[40px] sm:text-[52px] font-thin text-foreground mb-5 tracking-wide leading-tight flex justify-center flex-wrap gap-x-[0.25em]">
-              {["Journey", "Through", "Our", "Diverse", "Creations"].map((w, i) => (
-                <span key={i} className="serenity-word inline-block hover:text-foreground/70 transition-colors duration-300">{w}</span>
-              ))}
+          <div className="text-center mb-8 sm:mb-10" data-fade>
+            <div className="flex items-center justify-center gap-4 mb-4">
+              <span className="h-px w-10 sm:w-12 bg-blue-400" />
+              <span className="text-[11px] sm:text-xs font-semibold tracking-[0.3em] text-blue-500 uppercase">Our Portfolio</span>
+              <span className="h-px w-10 sm:w-12 bg-blue-400" />
+            </div>
+            <h2 className="text-3xl sm:text-4xl lg:text-[2.75rem] font-extrabold text-slate-900 leading-tight tracking-tight mb-4">
+              Websites We&apos;ve Built for <span className="text-blue-600">Growing Brands</span>
             </h2>
-            <p data-fade className="text-[17px] text-foreground/80 mt-4">
-              Take a look at how we help brands transform their digital presence through strategic design, development, and innovation.
+            <p className="text-slate-500 text-[15px] sm:text-lg max-w-2xl mx-auto leading-relaxed">
+              Explore a selection of websites and digital experiences created for our clients.
             </p>
           </div>
 
-          <div className="relative group/works">
-            {/* Left Scroll Button */}
-            <button 
-              onClick={() => scrollContainer(worksRef, 'left')}
-              className="absolute -left-3 top-1/2 -translate-y-1/2 z-40 bg-white/95 dark:bg-card/95 hover:bg-white dark:hover:bg-card border border-border/80 shadow-md rounded-full p-2 text-foreground transition-all duration-300 md:hidden flex items-center justify-center cursor-pointer"
-              aria-label="Scroll works left"
-            >
-              <ChevronLeft className="h-4 w-4" />
-            </button>
-
-            {/* Right Scroll Button */}
-            <button 
-              onClick={() => scrollContainer(worksRef, 'right')}
-              className="absolute -right-3 top-1/2 -translate-y-1/2 z-40 bg-white/95 dark:bg-card/95 hover:bg-white dark:hover:bg-card border border-border/80 shadow-md rounded-full p-2 text-foreground transition-all duration-300 md:hidden flex items-center justify-center cursor-pointer"
-              aria-label="Scroll works right"
-            >
-              <ChevronRight className="h-4 w-4" />
-            </button>
-
-            <div ref={worksRef} className="flex -mx-5 px-5 md:mx-0 md:px-0 md:grid md:grid-cols-3 gap-8 sm:gap-10 overflow-x-auto md:overflow-x-visible snap-x snap-mandatory scrollbar-none pb-4 md:pb-0">
-              {[
-                { type: "image" as const, src: "", img: eventImg, title: "Dreamweaver Events", link: "https://dreamweaverevents.co.in" },
-                { type: "image" as const, src: "", img: candleImg, title: "Nazareth Candles", link: "https://nazarethcandles.com" },
-                { type: "image" as const, src: "", img: resortImg, title: "Chandys Hotels & Resorts", link: "https://chandyshotelsandresorts.com" },
-                { type: "image" as const, src: "", img: malluImg, title: "Mallusmart", link: "https://mallusmart.com" },
-                { type: "image" as const, src: "", img: dhanaImg, title: "Denahalaya Punnapra", link: "https://denahalayapunnapra.com" },
-                { type: "image" as const, src: "", img: bestImg, title: "Best Choice Qatar", link: "https://bestchoiceqatar.net" },
-              ].map((c, i) => (
-                <ProjectCard key={i} c={c} />
-              ))}
-            </div>
-          </div>
-
-          <div className="mt-12 flex justify-center" data-fade>
-            <MagneticButton
-              as="a"
-              href="/portfolio"
-              className="group gap-2 rounded-full px-8 py-4 text-base font-medium text-white shadow-elegant"
-              {...({ style: { background: "var(--grad-primary)" } } as any)}
-            >
-              View all works
-              <ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-            </MagneticButton>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
+            {[
+              {
+                img: eventImg, title: "Dreamweaver Events", link: "https://dreamweaverevents.co.in",
+                desc: "A modern and elegant website for a premium event management company.",
+                badge: "Website Design & Development", badgeClass: "bg-blue-100 text-blue-700", arrowClass: "bg-blue-50 text-blue-600",
+              },
+              {
+                img: candleImg, title: "Nazareth Candles", link: "https://nazarethcandles.com",
+                desc: "A feature-rich website with masterclass registration and resource management.",
+                badge: "Website Design & Development", badgeClass: "bg-emerald-100 text-emerald-700", arrowClass: "bg-emerald-50 text-emerald-600",
+              },
+              {
+                img: resortImg, title: "Chandys Hotels & Resorts", link: "https://chandyshotelsandresorts.com",
+                desc: "A premium website showcasing their resorts with elegant design and booking integration.",
+                badge: "Website Design & Development", badgeClass: "bg-amber-100 text-amber-800", arrowClass: "bg-amber-50 text-amber-600",
+              },
+              {
+                img: bestImg, title: "Bestchoice Qatar", link: "https://bestchoiceqatar.net",
+                desc: "A product-focused website with SEO for portable cabins and industrial solutions.",
+                badge: "Website Design, Development & SEO", badgeClass: "bg-purple-100 text-purple-700", arrowClass: "bg-purple-50 text-purple-600",
+              },
+              {
+                img: malluImg, title: "Mallusmart", link: "https://mallusmart.com",
+                desc: "An eCommerce platform to support Kerala homepreneurs with a modern shopping experience.",
+                badge: "eCommerce Website", badgeClass: "bg-rose-100 text-rose-700", arrowClass: "bg-rose-50 text-rose-600",
+              },
+              {
+                img: dhanaImg, title: "Denahalaya Punnapra", link: "https://denahalayapunnapra.com",
+                desc: "A serene website for a psycho-spiritual institute with program details and outreach.",
+                badge: "Website Design & Development", badgeClass: "bg-blue-100 text-blue-700", arrowClass: "bg-blue-50 text-blue-600",
+              },
+            ].map((c, i) => (
+              <ProjectCard key={i} c={c} />
+            ))}
           </div>
         </div>
       </section>
