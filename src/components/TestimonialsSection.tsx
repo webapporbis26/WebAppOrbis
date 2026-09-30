@@ -1,11 +1,5 @@
 import { useState, useEffect, useCallback } from "react"
 import { ChevronLeft, ChevronRight, Quote, Star } from "lucide-react"
-import eventImg from "@/assets/project/event.png"
-import bestImg from "@/assets/project/best.png"
-import malluImg from "@/assets/project/mallu.jpeg"
-import resortImg from "@/assets/project/resort.jpeg"
-import candleImg from "@/assets/project/candle.png"
-import dhanaImg from "@/assets/project/dhana.jpeg"
 
 interface Testimonial {
   name: string
@@ -16,7 +10,6 @@ interface Testimonial {
   text: string
   team: string
   teamRole: string
-  img: string
 }
 
 const testimonials: Testimonial[] = [
@@ -29,7 +22,6 @@ const testimonials: Testimonial[] = [
     text: "Working with WebApp Orbis was a positive experience for our business. They helped us create a professional website that showcases our event services in a clear and attractive way. The team was responsive, flexible with our requirements, and provided good support throughout the project.",
     team: "Team Dream Weaver",
     teamRole: "Event Management",
-    img: eventImg,
   },
   {
     name: "Best Choice Qatar",
@@ -40,7 +32,6 @@ const testimonials: Testimonial[] = [
     text: "WebApp Orbis has supported us with website development and ongoing digital and SEO requirements. Their team has been consistent in understanding our business goals and working on improvements based on our requirements. We appreciate their technical support, communication, and continued involvement in our online growth.",
     team: "Best Choice Team",
     teamRole: "Qatar",
-    img: bestImg,
   },
   {
     name: "Mallu's Mart",
@@ -51,7 +42,6 @@ const testimonials: Testimonial[] = [
     text: "WebApp Orbis developed our e-commerce platform with the features we needed to manage products, customers, categories, and online sales. The team was attentive to our requirements and worked with us through different stages of the project. Their technical support and willingness to make improvements have been valuable to us.",
     team: "Mallu's Mart Team",
     teamRole: "Kerala",
-    img: malluImg,
   },
   {
     name: "Chandys Hotels & Resorts",
@@ -62,7 +52,6 @@ const testimonials: Testimonial[] = [
     text: "WebApp Orbis has been a reliable technology partner for our hotel and resort websites. Their team understood our requirements well and delivered a professional, user-friendly website that represents our properties effectively. They were responsive throughout the development and support process, and we appreciate their continued assistance.",
     team: "Chandys Team",
     teamRole: "Hospitality",
-    img: resortImg,
   },
   {
     name: "Nazareth Candles",
@@ -73,7 +62,6 @@ const testimonials: Testimonial[] = [
     text: "WebApp Orbis helped us build and manage our online presence with a website that suits our candle business and its different requirements. We particularly appreciated their willingness to understand our ideas and develop features according to our needs. The team has been supportive and responsive whenever we needed changes or assistance.",
     team: "Nazareth Team",
     teamRole: "E-commerce",
-    img: candleImg,
   },
   {
     name: "Denehalaya, Punnapra",
@@ -84,7 +72,6 @@ const testimonials: Testimonial[] = [
     text: "We had a smooth experience working with WebApp Orbis for our website development. The team was easy to communicate with, understood our requirements, and created a clean and professional online presence for us. Their support and attention to our requirements made the overall process comfortable.",
     team: "Denehalaya Team",
     teamRole: "Punnapra",
-    img: dhanaImg,
   },
 ]
 
@@ -114,11 +101,6 @@ function TestimonialCard({ t }: { t: Testimonial }) {
           </div>
           <p className="text-sm font-bold text-slate-900">{t.team}</p>
           <p className="text-[13px] text-slate-500">{t.teamRole}</p>
-        </div>
-        <div className="hidden sm:block w-32 lg:w-36 flex-shrink-0">
-          <div className="rounded-xl overflow-hidden border border-slate-100 shadow-sm rotate-2 hover:rotate-0 transition-transform duration-300">
-            <img src={t.img} alt={`${t.name} website`} className="w-full aspect-[4/5] object-cover object-top" loading="lazy" />
-          </div>
         </div>
       </div>
     </div>
