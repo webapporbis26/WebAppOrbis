@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { RevealLine, useTextReveal, useFadeUp, gsap, ScrollTrigger } from "@/lib/anim";
 import SplitText from "@/components/ui/SplitText";
-import { Users, Target, Rocket, Lightbulb, MonitorSmartphone, CodeXml, Mail, Smartphone, Loader2, Eye, Target, MessageSquare, Phone, ArrowRight } from "lucide-react";
+import { Users, User, Target, Rocket, Lightbulb, MonitorSmartphone, CodeXml, Mail, Smartphone, Loader2, Eye, MessageSquare, Phone, ArrowRight } from "lucide-react";
 import coffeeCup from "@/assets/coffee-cup.png";
 import contactIllustration from "@/assets/contact-illustration.png";
 import { leadsApi } from "@/lib/admin/api";
