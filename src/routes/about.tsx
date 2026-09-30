@@ -3,7 +3,6 @@ import { useEffect, useRef, useState } from "react";
 import { RevealLine, useTextReveal, useFadeUp, gsap, ScrollTrigger } from "@/lib/anim";
 import SplitText from "@/components/ui/SplitText";
 import { Users, Target, Rocket, Lightbulb, MonitorSmartphone, CodeXml, Mail, Smartphone, Loader2, ChevronLeft, ChevronRight } from "lucide-react";
-import about from "@/assets/about-team.jpg";
 import coffeeCup from "@/assets/coffee-cup.png";
 import contactIllustration from "@/assets/contact-illustration.png";
 import { leadsApi } from "@/lib/admin/api";
@@ -42,7 +41,6 @@ export const Route = createFileRoute("/about")({
 function About() {
   const heroRef = useRef<HTMLDivElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
-  const imgRef = useRef<HTMLImageElement>(null);
   
   const [sent, setSent] = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -91,19 +89,6 @@ function About() {
   useFadeUp("[data-fade]");
 
 
-
-  useEffect(() => {
-    const el = imgRef.current;
-    if (!el) return;
-    const st = ScrollTrigger.create({
-      trigger: el,
-      start: "top bottom",
-      end: "bottom top",
-      scrub: 1.4,
-      onUpdate: (s) => gsap.set(el, { yPercent: -20 + s.progress * 40, scale: 1.15 }),
-    });
-    return () => st.kill();
-  }, []);
 
   return (
     <>
@@ -232,41 +217,6 @@ function About() {
           </div>
         </div>
       </section>
-
-      <section className="py-10 sm:py-14 bg-[#fafafa]">
-        <div className="mx-auto grid max-w-7xl gap-12 px-5 sm:px-8 lg:grid-cols-[1fr_1.2fr] items-start">
-          <div className="relative overflow-hidden rounded-2xl aspect-[4/5] shadow-2xl">
-            <img
-              ref={imgRef}
-              src={about}
-              alt="Our team"
-              loading="lazy"
-              className="h-full w-full object-cover will-change-transform"
-            />
-          </div>
-          <div className="space-y-12 pt-10 text-left">
-            <div>
-              <p data-fade className="text-sm uppercase tracking-[0.3em] text-gray-400 font-medium mb-6">Who we are</p>
-              <h2 className="text-4xl sm:text-5xl lg:text-6xl font-light tracking-tight text-[#1a1a1a] leading-[1.1]">Driving digital <br/><span className="font-bold">transformation.</span></h2>
-            </div>
-            <div className="space-y-8">
-              <p data-fade className="text-xl sm:text-2xl text-gray-600 leading-relaxed font-light">
-                We are a professional digital solutions company specialising in website designing and development, 
-                mobile app development, and customised ERP software solutions. Our focus is on helping businesses 
-                establish a strong digital presence while improving operational efficiency through innovative 
-                technology solutions. 
-              </p>
-              <p data-fade className="text-lg text-gray-500 leading-relaxed">
-                With a dedicated team of designers, developers, and technology experts, we create modern platforms 
-                that combine functionality, creativity, and performance. Our approach is centred around understanding 
-                business objectives and delivering solutions tailored to specific operational requirements.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-
 
       <section className="py-10 sm:py-14 bg-white">
         <div className="mx-auto max-w-7xl px-5 sm:px-8">
