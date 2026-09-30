@@ -2,12 +2,14 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { RevealLine, useTextReveal, useFadeUp, gsap, ScrollTrigger } from "@/lib/anim";
 import SplitText from "@/components/ui/SplitText";
-import { Users, Target, Rocket, Lightbulb, MonitorSmartphone, CodeXml, Mail, Smartphone, Loader2 } from "lucide-react";
+import { Users, Target, Rocket, Lightbulb, MonitorSmartphone, CodeXml, Mail, Smartphone, Loader2, Eye, Target } from "lucide-react";
 import coffeeCup from "@/assets/coffee-cup.png";
 import contactIllustration from "@/assets/contact-illustration.png";
 import { leadsApi } from "@/lib/admin/api";
 import { DigitalSolutions } from "@/components/DigitalSolutions";
 import aboutHero from "@/assets/about-hero.png";
+import visionBulb from "@/assets/vision-bulb.png";
+import missionTarget from "@/assets/mission-target.png";
 
 
 
@@ -203,32 +205,64 @@ function About() {
 
 
       {/* ============== MISSION & VISION ============== */}
-      <section className="py-10 sm:py-14 bg-[#f4f6f8]">
+      <section className="py-10 sm:py-14 bg-white">
         <div className="mx-auto max-w-[1200px] px-5 sm:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12" data-fade>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8" data-fade>
             {/* Vision Card */}
-            <div className="bg-white p-10 sm:p-14 flex flex-col md:flex-row gap-8 items-start">
-              <div className="w-16 h-16 shrink-0 mt-1">
-                 <VisionIcon className="w-full h-full" />
-              </div>
-              <div>
-                <h3 className="text-3xl sm:text-[40px] font-light text-[#111] mb-6">Vision</h3>
-                <p className="text-[14px] sm:text-[15px] text-[#555] leading-[1.8]">
-                  From its very inception Inter Smart has been a growth-focused Web Development company with a vision to deliver real value to its customers everywhere. Our cross-functional, closely-knit team will continue to be united by our joined vision to help clients win big in their industry, be it by building high-converting websites or running successful...
-                </p>
+            <div className="relative overflow-hidden rounded-[28px] p-8 sm:p-10"
+                 style={{ background: "linear-gradient(135deg, #f0fdfa 0%, #e6f9f5 50%, #d9f5ef 100%)" }}>
+              {/* Decorative circles */}
+              <div className="absolute -right-16 -top-16 w-64 h-64 rounded-full bg-teal-200/30 pointer-events-none" />
+              <div className="absolute right-24 top-10 w-8 h-8 rounded-full bg-teal-200/50 pointer-events-none" />
+              <div className="absolute right-10 bottom-8 w-40 h-40 rounded-full border-[3px] border-teal-200/40 pointer-events-none" />
+
+              <div className="relative z-10">
+                <div className="flex items-center gap-5 mb-7">
+                  <div className="w-[72px] h-[72px] bg-white rounded-[20px] shadow-[0_8px_24px_rgba(45,212,191,0.18)] flex items-center justify-center shrink-0">
+                    <Eye className="w-9 h-9 text-teal-500" strokeWidth={1.8} />
+                  </div>
+                  <div>
+                    <h3 className="text-4xl sm:text-[42px] font-extrabold text-slate-900 tracking-tight">Vision</h3>
+                    <div className="w-14 h-[3px] bg-teal-400 rounded-full mt-2" />
+                  </div>
+                </div>
+                <div className="flex gap-6 items-end">
+                  <p className="flex-1 text-[14px] sm:text-[15px] text-slate-600 leading-[1.85]">
+                    From its very inception Inter Smart has been a growth-focused Web Development company with a vision to deliver real value to its customers everywhere. Our cross-functional, closely-knit team will continue to be united by our joined vision to help clients win big in their industry, be it by building high-converting websites or running successful...
+                  </p>
+                  <img src={visionBulb} alt="Vision" className="w-32 sm:w-40 shrink-0 -mb-4 -mr-2 select-none" />
+                </div>
               </div>
             </div>
 
             {/* Mission Card */}
-            <div className="bg-white p-10 sm:p-14 flex flex-col md:flex-row gap-8 items-start">
-              <div className="w-16 h-16 shrink-0 mt-1">
-                 <MissionIcon className="w-full h-full" />
+            <div className="relative overflow-hidden rounded-[28px] p-8 sm:p-10"
+                 style={{ background: "linear-gradient(135deg, #faf5ff 0%, #f3e8ff 50%, #ede0fd 100%)" }}>
+              {/* Decorative elements */}
+              <div className="absolute -right-16 -top-16 w-64 h-64 rounded-full bg-purple-200/30 pointer-events-none" />
+              <div className="absolute right-16 top-14 flex gap-1.5 pointer-events-none">
+                {Array.from({ length: 12 }).map((_, i) => (
+                  <div key={i} className="w-1.5 h-1.5 rounded-full bg-purple-300/60" style={{ opacity: 1 - (i % 4) * 0.22 }} />
+                ))}
               </div>
-              <div>
-                <h3 className="text-3xl sm:text-[40px] font-light text-[#111] mb-6">Mission</h3>
-                <p className="text-[14px] sm:text-[15px] text-[#555] leading-[1.8]">
-                  We have always placed maximum emphasis on engineering new technologies in the digital landscape. Equipped with some of the most experienced and certified industry professionals, our mission is to break new ground and surpass our excellence day in, day out. While carrying out our mission, we will always place our clients at the heart...
-                </p>
+              <div className="absolute right-10 bottom-8 w-40 h-40 rounded-full border-[3px] border-purple-200/40 pointer-events-none" />
+
+              <div className="relative z-10">
+                <div className="flex items-center gap-5 mb-7">
+                  <div className="w-[72px] h-[72px] bg-white rounded-[20px] shadow-[0_8px_24px_rgba(139,92,246,0.18)] flex items-center justify-center shrink-0">
+                    <Target className="w-9 h-9 text-violet-600" strokeWidth={1.8} />
+                  </div>
+                  <div>
+                    <h3 className="text-4xl sm:text-[42px] font-extrabold text-slate-900 tracking-tight">Mission</h3>
+                    <div className="w-14 h-[3px] bg-violet-500 rounded-full mt-2" />
+                  </div>
+                </div>
+                <div className="flex gap-6 items-end">
+                  <p className="flex-1 text-[14px] sm:text-[15px] text-slate-600 leading-[1.85]">
+                    We have always placed maximum emphasis on engineering new technologies in the digital landscape. Equipped with some of the most experienced and certified industry professionals, our mission is to break new ground and surpass our excellence day in, day out. While carrying out our mission, we will always place our clients at the heart...
+                  </p>
+                  <img src={missionTarget} alt="Mission" className="w-32 sm:w-40 shrink-0 -mb-4 -mr-2 select-none" />
+                </div>
               </div>
             </div>
           </div>
