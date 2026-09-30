@@ -51,12 +51,12 @@ const faqs = [
 ];
 
 const featuresList = [
-  { icon: MonitorSmartphone, title: "Mobile Friendly Web Designs", desc: "Flawless experience across all devices and screen sizes." },
-  { icon: SearchCheck, title: "SEO-Optimized Websites", desc: "Built with best practices to rank higher on search engines." },
-  { icon: CodeXml, title: "Lightweight and Fast Loading HTML Pages", desc: "Optimized code for blazing fast performance." },
-  { icon: Headset, title: "Unconditional Free Lifetime Support", desc: "We're here to help you, anytime you need us." },
-  { icon: Share2, title: "Social Media Page Creation and Integration", desc: "Seamlessly connect your website with social channels." },
-  { icon: MessageCircle, title: "Direct Enquiry to Your WhatsApp", desc: "Get leads instantly delivered to your WhatsApp." },
+  { icon: MonitorSmartphone, title: "Mobile Friendly Web Designs", desc: "Responsive designs that look perfect on all devices.", color: "text-blue-500", bg: "bg-blue-50", line: "bg-blue-500" },
+  { icon: SearchCheck, title: "SEO-Optimized Websites", desc: "Get better visibility and rank higher on Google.", color: "text-green-500", bg: "bg-green-50", line: "bg-green-500" },
+  { icon: CodeXml, title: "Lightweight and Fast Loading HTML Pages", desc: "Clean code and optimized performance for a faster website.", color: "text-purple-500", bg: "bg-purple-50", line: "bg-purple-500" },
+  { icon: Headset, title: "Unconditional Free Lifetime Support", desc: "We are always here to support your business.", color: "text-orange-400", bg: "bg-orange-50", line: "bg-orange-400" },
+  { icon: Share2, title: "Social Media Page Creation and Integration", desc: "Connect your brand with your audience on all social platforms.", color: "text-pink-500", bg: "bg-pink-50", line: "bg-pink-500" },
+  { icon: MessageCircle, title: "Direct Enquiry to Your WhatsApp", desc: "Get instant enquiries directly to your WhatsApp.", color: "text-cyan-500", bg: "bg-cyan-50", line: "bg-cyan-500" },
 ];
 
 export const Route = createFileRoute("/")({
@@ -132,7 +132,6 @@ function Home() {
   useSerenityText(serenityRef);
   useFadeUp("[data-fade]");
 
-  const [featuresApi, setFeaturesApi] = useState<CarouselApi>();
   const [digitalApi, setDigitalApi] = useState<CarouselApi>();
   const worksRef = useRef<HTMLDivElement>(null);
   const processRef = useRef<HTMLDivElement>(null);
@@ -489,55 +488,38 @@ function Home() {
 
       {/* ============== FEATURES STRIP ============== */}
       <section className="relative z-30 mt-6 sm:mt-8 mx-auto max-w-7xl px-5 sm:px-8">
-        <div className="mb-6 text-center" data-fade>
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight text-foreground leading-tight">
-            Love Our Design? Let's Create Your <span style={{ color: "var(--color-primary, #e11d48)" }}>Dream Website</span>.
+        <div className="mb-8 sm:mb-10 text-center" data-fade>
+          <div className="flex items-center justify-center gap-4 mb-4">
+            <span className="h-px w-12 sm:w-16 bg-blue-300" />
+            <span className="text-[11px] sm:text-xs font-semibold tracking-[0.25em] text-blue-500 uppercase">Our Expert Services</span>
+            <span className="h-px w-12 sm:w-16 bg-blue-300" />
+          </div>
+          <h2 className="text-3xl sm:text-4xl md:text-[2.75rem] font-extrabold tracking-tight text-slate-900 leading-tight">
+            Love Our Design?<br />
+            Let's Create Your <span className="text-blue-600">Dream Website.</span>
           </h2>
-          <p className="mt-2 text-blue-600 font-semibold text-base sm:text-lg">
+          <p className="mt-3 text-slate-500 text-base sm:text-lg">
             Talk to Web Design Experts today.
           </p>
         </div>
-        <div className="relative group/features py-6 px-2 sm:px-4">
-          {/* Left Scroll Button */}
-          <button 
-            onClick={() => featuresApi?.scrollPrev()}
-            className="absolute -left-3 top-1/2 -translate-y-1/2 z-40 bg-white/95 dark:bg-card/95 hover:bg-white dark:hover:bg-card border border-border/80 shadow-md rounded-full p-2 text-foreground transition-all duration-300 sm:hidden flex items-center justify-center cursor-pointer"
-            aria-label="Scroll features left"
-          >
-            <ChevronLeft className="h-4 w-4" />
-          </button>
-
-          {/* Right Scroll Button */}
-          <button 
-            onClick={() => featuresApi?.scrollNext()}
-            className="absolute -right-3 top-1/2 -translate-y-1/2 z-40 bg-white/95 dark:bg-card/95 hover:bg-white dark:hover:bg-card border border-border/80 shadow-md rounded-full p-2 text-foreground transition-all duration-300 sm:hidden flex items-center justify-center cursor-pointer"
-            aria-label="Scroll features right"
-          >
-            <ChevronRight className="h-4 w-4" />
-          </button>
-
-          <Carousel opts={{ align: 'start', loop: true, breakpoints: { '(min-width: 640px)': { active: false } } }} setApi={setFeaturesApi} className="w-full" data-fade>
-            <CarouselContent className="flex -ml-2 sm:ml-0 sm:grid sm:grid-cols-3 lg:grid-cols-6 gap-y-10 gap-x-4 pb-4 sm:pb-0">
-            {featuresList.map((f, i) => (
-              <CarouselItem key={i} className="pl-2 sm:pl-0 basis-1/2 sm:basis-auto flex justify-center">
-                <div className="relative w-full flex flex-col items-center text-center px-1 group cursor-default">
-                  <div className="h-14 w-14 flex items-center justify-center text-blue-600 group-hover:scale-110 transition-transform duration-300 mb-3">
-                    <f.icon className="h-7 w-7 sm:h-8 sm:w-8 stroke-[1.5]" />
-                  </div>
-                  <h4 className="text-[13px] sm:text-[14px] font-medium text-foreground/85 leading-relaxed max-w-[170px] transition-all duration-300 group-hover:-translate-y-1">
-                    {f.title}
-                  </h4>
-                  
-                  {/* Animated Tooltip */}
-                  <div className="absolute top-[100%] left-1/2 -translate-x-1/2 mt-2 w-[160px] sm:w-[200px] bg-foreground text-background text-[11px] sm:text-xs p-3 rounded-xl shadow-xl opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 pointer-events-none z-50">
-                    <div className="absolute -top-1.5 left-1/2 -translate-x-1/2 border-4 border-transparent border-b-foreground" />
-                    {f.desc}
-                  </div>
-                </div>
-              </CarouselItem>
-            ))}
-            </CarouselContent>
-          </Carousel>
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 sm:gap-5" data-fade>
+          {featuresList.map((f, i) => (
+            <div
+              key={i}
+              className="bg-white rounded-2xl border border-slate-100 shadow-[0_2px_16px_rgb(0,0,0,0.04)] p-5 sm:p-6 flex flex-col items-center text-center hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] hover:-translate-y-1 transition-all duration-300"
+            >
+              <div className={`h-16 w-16 sm:h-[4.5rem] sm:w-[4.5rem] rounded-full ${f.bg} flex items-center justify-center mb-4`}>
+                <f.icon className={`h-8 w-8 ${f.color}`} strokeWidth={1.5} />
+              </div>
+              <h4 className="text-[13px] sm:text-sm font-bold text-slate-900 leading-snug mb-2">
+                {f.title}
+              </h4>
+              <div className={`h-[3px] w-8 rounded-full ${f.line} mb-3`} />
+              <p className="text-[11px] sm:text-xs text-slate-500 leading-relaxed">
+                {f.desc}
+              </p>
+            </div>
+          ))}
         </div>
       </section>
 
