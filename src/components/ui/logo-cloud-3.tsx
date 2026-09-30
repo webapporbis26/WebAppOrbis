@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 
 const logoModules = import.meta.glob("@/assets/MBWS clients/*.{png,jpg,jpeg,webp}", { eager: true });
@@ -9,7 +10,39 @@ type LogoCloudProps = React.ComponentProps<"div"> & {
   limit?: number;
 };
 
+function chunk<T>(arr: T[], size: number): T[][] {
+  const out: T[][] = [];
+  for (let i = 0; i < arr.length; i += size) out.push(arr.slice(i, i + size));
+  return out;
+}
+
 export function LogoCloud({ className, title, subtitle, limit = 12, ...props }: LogoCloudProps) {
+  const [isMobile, setIsMobile] = useState(() =>
+    typeof window !== "undefined" ? window.innerWidth < 768 : true
+  );
+  const [current, setCurrent] = useState(0);
+
+  useEffect(() => {
+    const onResize = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
+
+  const perView = isMobile ? 2 : 5;
+  const slides = chunk(LOGOS.slice(0, limit), perView);
+
+  useEffect(() => {
+    setCurrent(0);
+  }, [perView, limit]);
+
+  useEffect(() => {
+    if (slides.length <= 1) return;
+    const id = setInterval(() => {
+      setCurrent((p) => (p + 1) % slides.length);
+    }, 3000);
+    return () => clearInterval(id);
+  }, [slides.length]);
+
   return (
     <div
       className={cn(
@@ -20,7 +53,6 @@ export function LogoCloud({ className, title, subtitle, limit = 12, ...props }: 
       {...props}
     >
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
-        {/* Header Section (Only if title is provided) */}
         {title && (
           <div className="text-center mb-4 sm:mb-4">
             <h2 className="text-display text-2xl sm:text-3xl lg:text-[2.25rem] font-light text-foreground mb-2 leading-tight tracking-tight">
@@ -34,31 +66,51 @@ export function LogoCloud({ className, title, subtitle, limit = 12, ...props }: 
           </div>
         )}
 
-        <div className="relative w-full group/logos mt-2">
-          {/* Auto-scrolling Marquee (all devices) */}
-          <div className="relative w-full flex flex-col items-center justify-center overflow-hidden py-2">
-            <div className="flex w-full group overflow-hidden p-2 [--gap:1rem] sm:[--gap:1.5rem] [gap:var(--gap)] flex-row [--duration:90s]">
-              <div className="flex shrink-0 justify-around [gap:var(--gap)] animate-marquee flex-row group-hover:[animation-play-state:paused]">
-                {[...Array(4)].map((_, setIdx) => (
-                  LOGOS.map((logoUrl, i) => (
-                    <div 
-                      key={`${setIdx}-${i}`} 
-                      className="flex items-center justify-center bg-white dark:bg-card rounded-2xl border border-border/40 shadow-[0_4px_20px_rgb(0,0,0,0.02)] p-4 w-36 h-20 shrink-0 hover:bg-slate-50 transition-colors"
+        <div className="relative w-full mt-2">
+          <div className="overflow-hidden py-2">
+            <div
+              className="flex transition-transform duration-700 ease-in-out"
+              style={{ transform: `translateX(-${current * 100}%)` }}
+            >
+              {slides.map((group, si) => (
+                <div
+                  key={si}
+                  className="flex-none w-full grid grid-cols-2 md:grid-cols-5 gap-3 sm:gap-4 px-1"
+                >
+                  {group.map((logoUrl, i) => (
+                    <div
+                      key={i}
+                      className="flex items-center justify-center bg-white dark:bg-card rounded-2xl border border-border/40 shadow-[0_4px_20px_rgb(0,0,0,0.02)] p-4 h-20 sm:h-24"
                     >
                       <img
                         src={logoUrl}
-                        alt={`Client logo ${i + 1}`}
-                        className="max-h-12 max-w-[85%] object-contain"
+                        alt={`Client logo ${si * perView + i + 1}`}
+                        className="max-h-12 sm:max-h-14 max-w-[85%] object-contain"
+                        loading="lazy"
                       />
                     </div>
-                  ))
-                ))}
-              </div>
+                  ))}
+                </div>
+              ))}
             </div>
-
-            <div className="pointer-events-none absolute inset-y-0 left-0 hidden w-1/6 bg-gradient-to-r from-background md:block" />
-            <div className="pointer-events-none absolute inset-y-0 right-0 hidden w-1/6 bg-gradient-to-l from-background md:block" />
           </div>
+
+          {/* Dots */}
+          {slides.length > 1 && (
+            <div className="flex items-center justify-center gap-2 mt-3">
+              {slides.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => setCurrent(i)}
+                  aria-label={`Go to slide ${i + 1}`}
+                  className={cn(
+                    "h-2 rounded-full transition-all duration-300",
+                    i === current ? "w-6 bg-primary" : "w-2 bg-border hover:bg-muted-foreground"
+                  )}
+                />
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </div>
