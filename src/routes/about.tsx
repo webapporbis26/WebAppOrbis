@@ -332,14 +332,22 @@ function About() {
                 </a>
               </div>
 
-              {/* Illustration */}
-              <div className="relative mt-4 max-w-[460px]">
-                <div className="absolute left-0 top-4 grid grid-cols-4 gap-2 opacity-40 pointer-events-none">
-                  {Array.from({ length: 8 }).map((_, i) => (
+              {/* Illustration - positioned like Figma: wide, extending toward center */}
+              <div className="relative mt-6 -mr-24 sm:-mr-32 lg:-mr-40">
+                {/* Blue blob platform */}
+                <div className="absolute left-[5%] right-[5%] bottom-0 top-[30%] bg-gradient-to-b from-blue-100/90 to-blue-50/60 rounded-[48px] pointer-events-none" />
+                {/* Dotted decoration */}
+                <div className="absolute left-[8%] top-[15%] grid grid-cols-5 gap-2 opacity-50 pointer-events-none">
+                  {Array.from({ length: 15 }).map((_, i) => (
                     <div key={i} className="w-1.5 h-1.5 rounded-full bg-blue-300" />
                   ))}
                 </div>
-                <img src={contact3d} alt="Get in touch" className="relative w-full h-auto select-none rounded-[24px]" />
+                {/* Curved arrow */}
+                <svg className="absolute right-[12%] top-0 w-14 h-14 text-blue-400 pointer-events-none" viewBox="0 0 64 64" fill="none">
+                  <path d="M10 50C22 32 38 22 54 14" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeDasharray="5 5" />
+                  <path d="M46 10L54 14L50 22" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+                <img src={contact3d} alt="Get in touch" className="relative w-full h-auto select-none" />
               </div>
             </div>
 
