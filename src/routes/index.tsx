@@ -77,13 +77,6 @@ const processSteps = [
   { icon: Headset, title: "Ongoing Support", desc: "You will receive our continued support and dedicated sales service.", color: "text-pink-500", bg: "bg-pink-50", badge: "bg-pink-100 text-pink-600", line: "bg-pink-500" },
 ];
 
-const testimonials = [
-  { quote: "WebApp Orbis rebuilt our platform end-to-end and our conversion jumped 38% in the first month.", name: "Maya Chen", role: "Head of Product · Northwind" },
-  { quote: "The most polished design and engineering team we've worked with. Period.", name: "Daniel Park", role: "CEO · Atlas Logistics" },
-  { quote: "They turned a 2-year ERP roadmap into a 4-month rollout. Effortless to work with.", name: "Sara Iqbal", role: "COO · Helios Retail" },
-  { quote: "From discovery to launch every artifact felt premium. Our brand finally has a home.", name: "Tom Reyes", role: "Founder · Pebble" },
-];
-
 interface ProjectItem {
   img: string;
   title: string;
