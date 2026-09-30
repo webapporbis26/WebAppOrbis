@@ -11,6 +11,7 @@ import aboutHero from "@/assets/about-hero.png";
 import visionBulb from "@/assets/vision-bulb.png";
 import missionTarget from "@/assets/mission-target.png";
 import contact3d from "@/assets/contact-3d.png";
+import contactBg from "@/assets/contact-bg.png";
 
 
 
@@ -285,56 +286,54 @@ function About() {
         <div className="mx-auto max-w-[1280px] px-5 sm:px-8 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.1fr] gap-10 lg:gap-8 items-start">
 
-            {/* Left Column */}
-            <div data-fade className="relative">
-              <div className="flex items-center gap-3 mb-8">
-                <img src="/logo.png" alt="WebApp Orbis" className="w-12 h-12 object-contain" />
-                <div>
-                  <p className="text-[26px] font-extrabold tracking-tight text-slate-900 leading-none">
-                    WebApp <span className="text-blue-600">Orbis</span>
-                  </p>
-                  <p className="text-[9px] font-semibold tracking-[0.32em] text-slate-400 mt-1.5">IDEAS • WEBSITES • GROWTH</p>
+            {/* Left Column — BG image with content overlay */}
+            <div data-fade className="relative rounded-[28px] overflow-hidden min-h-[560px] flex flex-col justify-between p-8 sm:p-10"
+              style={{ backgroundImage: `url(${contactBg})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
+              <div>
+                <div className="flex items-center gap-3 mb-8">
+                  <img src="/logo.png" alt="WebApp Orbis" className="w-12 h-12 object-contain" />
+                  <div>
+                    <p className="text-[26px] font-extrabold tracking-tight text-slate-900 leading-none">
+                      WebApp <span className="text-blue-600">Orbis</span>
+                    </p>
+                    <p className="text-[9px] font-semibold tracking-[0.32em] text-slate-400 mt-1.5">IDEAS • WEBSITES • GROWTH</p>
+                  </div>
                 </div>
-              </div>
 
-              <h2 className="text-[44px] sm:text-[54px] font-extrabold text-slate-900 tracking-tight leading-[1.08] mb-5">
-                Let's Build<br />
-                <span className="text-blue-600">Something Great</span><br />
-                <span className="relative inline-block">
-                  Together
-                  <svg className="absolute -bottom-1.5 left-0 w-full" viewBox="0 0 200 12" fill="none" preserveAspectRatio="none">
-                    <path d="M2 9C60 3 140 3 198 8" stroke="#bfdbfe" strokeWidth="5" strokeLinecap="round" />
-                  </svg>
-                </span>
-              </h2>
-              <p className="text-slate-500 text-[15px] leading-[1.7] max-w-[420px] mb-8">
-                Have a project in mind? We'd love to hear from you. Get in touch and let's turn your ideas into powerful web solutions.
-              </p>
+                <h2 className="text-[40px] sm:text-[48px] font-extrabold text-slate-900 tracking-tight leading-[1.1] mb-4">
+                  Let's Build<br />
+                  <span className="text-blue-600">Something Great</span><br />
+                  <span className="relative inline-block">
+                    Together
+                    <svg className="absolute -bottom-1.5 left-0 w-full" viewBox="0 0 200 12" fill="none" preserveAspectRatio="none">
+                      <path d="M2 9C60 3 140 3 198 8" stroke="#bfdbfe" strokeWidth="5" strokeLinecap="round" />
+                    </svg>
+                  </span>
+                </h2>
+                <p className="text-slate-500 text-[14.5px] leading-[1.7] max-w-[380px] mb-7">
+                  Have a project in mind? We'd love to hear from you. Get in touch and let's turn your ideas into powerful web solutions.
+                </p>
 
-              <div className="space-y-4 mb-6">
-                <a href="mailto:info@webapporbis.com" className="flex items-center gap-4 group w-fit">
-                  <span className="w-11 h-11 rounded-full bg-blue-100 flex items-center justify-center shrink-0 group-hover:bg-blue-200 transition-colors">
-                    <Mail className="w-[18px] h-[18px] text-blue-600" />
-                  </span>
-                  <span>
-                    <span className="block text-[12px] text-slate-500">Email Us</span>
-                    <span className="block text-[15px] font-bold text-slate-900 group-hover:text-blue-600 transition-colors">info@webapporbis.com</span>
-                  </span>
-                </a>
-                <a href="tel:+917736003018" className="flex items-center gap-4 group w-fit">
-                  <span className="w-11 h-11 rounded-full bg-green-100 flex items-center justify-center shrink-0 group-hover:bg-green-200 transition-colors">
-                    <Phone className="w-[18px] h-[18px] text-green-600" />
-                  </span>
-                  <span>
-                    <span className="block text-[12px] text-slate-500">Call Us</span>
-                    <span className="block text-[15px] font-bold text-slate-900 group-hover:text-blue-600 transition-colors">+91 7736 003 018</span>
-                  </span>
-                </a>
-              </div>
-
-              {/* Illustration */}
-              <div className="relative mt-6 max-w-[400px]">
-                <img src={contact3d} alt="Get in touch" className="w-full h-auto select-none" />
+                <div className="space-y-3.5">
+                  <a href="mailto:info@webapporbis.com" className="flex items-center gap-4 group w-fit">
+                    <span className="w-11 h-11 rounded-full bg-blue-100 flex items-center justify-center shrink-0 group-hover:bg-blue-200 transition-colors">
+                      <Mail className="w-[18px] h-[18px] text-blue-600" />
+                    </span>
+                    <span>
+                      <span className="block text-[12px] text-slate-500">Email Us</span>
+                      <span className="block text-[15px] font-bold text-slate-900 group-hover:text-blue-600 transition-colors">info@webapporbis.com</span>
+                    </span>
+                  </a>
+                  <a href="tel:+917736003018" className="flex items-center gap-4 group w-fit">
+                    <span className="w-11 h-11 rounded-full bg-green-100 flex items-center justify-center shrink-0 group-hover:bg-green-200 transition-colors">
+                      <Phone className="w-[18px] h-[18px] text-green-600" />
+                    </span>
+                    <span>
+                      <span className="block text-[12px] text-slate-500">Call Us</span>
+                      <span className="block text-[15px] font-bold text-slate-900 group-hover:text-blue-600 transition-colors">+91 7736 003 018</span>
+                    </span>
+                  </a>
+                </div>
               </div>
             </div>
 
