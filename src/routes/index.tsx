@@ -445,7 +445,7 @@ function Home() {
                   onClick={() => setLeadService(card.title)}
                   className={`mt-auto inline-flex items-center justify-between pl-5 pr-1.5 py-1.5 rounded-full border ${card.btnBorder} ${card.btnText} font-semibold text-sm hover:shadow-md transition-all duration-300 group/btn cursor-pointer w-full`}
                 >
-                  View More
+                  Get a Quote
                   <span className={`h-8 w-8 rounded-full ${card.btnArrow} flex items-center justify-center text-white ml-3 group-hover/btn:translate-x-0.5 transition-transform`}>
                     <ArrowRight className="h-4 w-4" />
                   </span>
