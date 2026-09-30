@@ -84,58 +84,66 @@ function About() {
   return (
     <>
       <section ref={heroRef} className="relative overflow-hidden pt-24 sm:pt-28">
-        {/* Background image */}
-        <div className="absolute inset-0">
+        {/* Desktop: fixed aspect ratio so overlay text aligns with boxes in image */}
+        <div className="relative hidden lg:block w-full" style={{ aspectRatio: "1680 / 936" }}>
           <img
             src={aboutHero}
             alt="WebApp Orbis team collaborating"
-            className="w-full h-full object-cover object-center"
+            className="absolute inset-0 w-full h-full"
           />
+          {/* LEFT — text */}
+          <div className="absolute left-[4%] top-[16%] max-w-[28%]" data-fade>
+            <p className="text-5xl font-light tracking-wide text-[#222] uppercase mb-2">OUR</p>
+            <h1 className="text-[110px] font-black tracking-tight leading-none text-[#111] uppercase mb-8">STORY</h1>
+            <p className="text-sm font-semibold uppercase tracking-[0.3em] text-[#555] max-w-xs leading-relaxed">
+              We are truly grateful to you for choosing us as your partner and giving us the opportunity to grow
+            </p>
+          </div>
+
+          {/* 5+ — centered on purple box (875,150)-(1085,315) */}
+          <div data-fade className="absolute flex flex-col items-center justify-center"
+               style={{ left: "52.1%", top: "16%", width: "12.5%", height: "17.6%" }}>
+            <p className="text-[64px] font-black text-white leading-none">5+</p>
+            <div className="w-10 h-1 bg-white/60 mt-2 rounded-sm" />
+          </div>
+
+          {/* YEARS OF EXPERIENCE — centered on yellow box (1005,225)-(1215,365) */}
+          <div data-fade className="absolute flex items-center justify-center"
+               style={{ left: "59.8%", top: "24%", width: "12.5%", height: "15%" }}>
+            <p className="text-[17px] font-extrabold text-[#222] uppercase tracking-wider leading-snug text-center">Years of<br/>Experience</p>
+          </div>
+
+          {/* 50+ HAPPY CLIENTS — centered on white box (1325,125)-(1605,295) */}
+          <div data-fade className="absolute flex flex-col items-center justify-center"
+               style={{ left: "78.9%", top: "13.4%", width: "16.7%", height: "18.2%" }}>
+            <p className="text-[52px] font-extrabold text-[#2dd4bf] leading-none">50+</p>
+            <p className="text-[13px] font-bold tracking-[0.18em] text-[#888] mt-2 uppercase">Happy Clients</p>
+          </div>
+
+          {/* 100+ SUCCESSFUL PROJECTS — centered on white box (675,365)-(885,515) */}
+          <div data-fade className="absolute flex flex-col items-center justify-center"
+               style={{ left: "40.2%", top: "39%", width: "12.5%", height: "16%" }}>
+            <p className="text-[46px] font-extrabold text-[#7c5cbf] leading-none">100+</p>
+            <p className="text-[12px] font-bold tracking-[0.15em] text-[#888] mt-2 uppercase text-center leading-relaxed">Successful<br/>Projects</p>
+          </div>
         </div>
 
-        <div className="relative z-10 mx-auto max-w-7xl px-5 sm:px-8">
-          <div className="min-h-[480px] sm:min-h-[540px] lg:min-h-[620px] flex flex-col justify-center py-10">
-            {/* LEFT — text */}
-            <div className="max-w-md" data-fade>
-              <p className="text-4xl sm:text-5xl font-light tracking-wide text-[#222] uppercase mb-2">OUR</p>
-              <h1 className="text-6xl sm:text-8xl lg:text-[110px] font-black tracking-tight leading-none text-[#111] uppercase mb-8">STORY</h1>
-              <p className="text-xs sm:text-sm font-semibold uppercase tracking-[0.3em] text-[#555] max-w-xs leading-relaxed">
-                We are truly grateful to you for choosing us as your partner and giving us the opportunity to grow
-              </p>
-            </div>
-
-            {/* Stat cards — desktop absolute over image */}
-            <div className="hidden lg:block">
-              {/* Card: 5+ — purple */}
-              <div data-fade className="absolute top-[14%] left-[42%] bg-[#7c5cbf] rounded-[20px] p-6 min-w-[150px] shadow-[0_12px_40px_rgba(124,92,191,0.35)] z-30">
-                <p className="text-[56px] font-black text-white leading-none">5+</p>
-                <div className="w-8 h-1 bg-white/50 my-2 rounded-sm" />
-              </div>
-
-              {/* Card: Years of Experience — yellow, overlapping */}
-              <div data-fade className="absolute top-[30%] left-[52%] bg-[#f5c842] rounded-[20px] px-6 py-5 min-w-[150px] shadow-[0_12px_40px_rgba(245,200,66,0.30)] z-20">
-                <p className="text-[14px] font-extrabold text-[#222] uppercase tracking-wider leading-snug">Years of<br/>Experience</p>
-              </div>
-
-              {/* Card: 50+ Happy Clients — top right */}
-              <div data-fade className="absolute top-[16%] right-[6%] bg-white rounded-[20px] p-5 min-w-[160px] shadow-[0_12px_40px_rgba(0,0,0,0.10)] z-20">
-                <p className="text-[38px] font-extrabold text-[#2dd4bf] leading-none">
-                  50<span className="text-[26px]">+</span>
-                </p>
-                <p className="text-[11px] font-bold tracking-[0.15em] text-[#888] mt-1.5 uppercase">Happy Clients</p>
-              </div>
-
-              {/* Card: 100+ Successful Projects */}
-              <div data-fade className="absolute top-[52%] left-[38%] bg-white rounded-[20px] p-5 min-w-[160px] shadow-[0_12px_40px_rgba(0,0,0,0.10)] z-10">
-                <p className="text-[36px] font-extrabold text-[#7c5cbf] leading-none">
-                  100<span className="text-[24px]">+</span>
-                </p>
-                <p className="text-[11px] font-bold tracking-[0.15em] text-[#888] mt-1.5 uppercase">Successful<br/>Projects</p>
-              </div>
-            </div>
-
-            {/* Stat cards — mobile/tablet grid */}
-            <div className="grid grid-cols-2 gap-3 mt-8 lg:hidden max-w-md" data-fade>
+        {/* Mobile/tablet: image top, text + stat grid below */}
+        <div className="lg:hidden">
+          <div className="relative w-full" style={{ aspectRatio: "1680 / 936" }}>
+            <img
+              src={aboutHero}
+              alt="WebApp Orbis team collaborating"
+              className="absolute inset-0 w-full h-full object-cover"
+            />
+          </div>
+          <div className="bg-[#f0f2f5] px-5 py-10">
+            <p className="text-4xl font-light tracking-wide text-[#222] uppercase mb-2">OUR</p>
+            <h1 className="text-6xl sm:text-7xl font-black tracking-tight leading-none text-[#111] uppercase mb-6">STORY</h1>
+            <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[#555] leading-relaxed mb-8 max-w-sm">
+              We are truly grateful to you for choosing us as your partner and giving us the opportunity to grow
+            </p>
+            <div className="grid grid-cols-2 gap-3 max-w-md">
               <div className="bg-[#7c5cbf] rounded-2xl p-4 shadow-lg">
                 <p className="text-3xl font-black text-white leading-none">5+</p>
                 <p className="text-[10px] font-bold tracking-[0.12em] text-white/80 mt-1 uppercase">Years of Experience</p>
