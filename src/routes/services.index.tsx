@@ -31,7 +31,7 @@ import {
   BarChart3,
   Eye,
 } from "lucide-react";
-import { RevealLine, useTextReveal, useFadeUp, gsap, ScrollTrigger } from "@/lib/anim";
+import { RevealLine, useFadeUp, gsap, ScrollTrigger } from "@/lib/anim";
 import SplitText from "@/components/ui/SplitText";
 import { LeadModal } from "@/components/LeadModal";
 import serviceWeb from "@/assets/service-web.jpg";
@@ -134,13 +134,6 @@ const services = [
   },
 ]
 
-const stats = [
-  { value: "100+", label: "Projects shipped" },
-  { value: "50+", label: "Happy clients" },
-  { value: "5+", label: "Years experience" },
-  { value: "98%", label: "Client retention" },
-];
-
 const testimonials = [
   {
     quote: "They rebuilt our platform in 9 weeks and doubled our checkout conversion. Genuinely the best agency we've worked with.",
@@ -236,11 +229,9 @@ function ServiceVisual({ s }: { s: (typeof services)[number] }) {
 }
 
 function Services() {
-  const heroRef = useRef<HTMLDivElement>(null);
   const cardsRef = useRef<HTMLDivElement>(null);
   const [leadService, setLeadService] = useState<string | null>(null);
 
-  useTextReveal(heroRef, { delay: 0.2 });
   useFadeUp("[data-fade]");
 
   // Parallax on service card images
@@ -276,28 +267,8 @@ function Services() {
 
   return (
     <>
-      {/* Hero — stats only (banner removed at user request) */}
-      <section ref={heroRef} className="pt-36 pb-10 relative overflow-hidden">
-        <div
-          aria-hidden
-          className="absolute -top-32 -right-32 h-[480px] w-[480px] rounded-full blur-3xl opacity-40"
-          style={{ background: "var(--grad-primary)" }}
-        />
-        <div className="mx-auto max-w-7xl px-5 sm:px-8 relative">
-          {/* Stats */}
-          <div data-fade className="mt-12 grid grid-cols-2 gap-6 border-t border-border pt-10 sm:grid-cols-4">
-            {stats.map((s) => (
-              <div key={s.label}>
-                <div className="text-display text-3xl sm:text-4xl">{s.value}</div>
-                <div className="mt-2 text-xs uppercase tracking-[0.2em] text-muted-foreground">{s.label}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* Service cards — Figma style showcase */}
-      <section ref={cardsRef} className="py-10">
+      <section ref={cardsRef} className="pt-36 pb-10">
         <div className="mx-auto max-w-7xl px-5 sm:px-8 space-y-10">
           {services.map((s, i) => (
             <div
