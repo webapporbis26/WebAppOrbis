@@ -6,6 +6,7 @@ import { MagneticButton } from "@/components/MagneticButton";
 import { FaqPro } from "@/components/ui/faq-pro";
 import { TestimonialsSection } from "@/components/TestimonialsSection";
 import { DigitalSolutions } from "@/components/DigitalSolutions";
+import { FeaturedShowcase } from "@/components/FeaturedShowcase";
 import MultiOrbitSemiCircle from "@/components/ui/multi-orbit-semi-circle";
 import { LogoCloud } from "@/components/ui/logo-cloud-3";
 import { Carousel, CarouselContent, CarouselItem, type CarouselApi } from "@/components/ui/carousel";
@@ -442,6 +443,8 @@ function Home() {
           </div>
         </div>
       </section>
+
+      <FeaturedShowcase />
 
       {/* ============== CLIENTS / BRANDS ============== */}
       <section className="relative py-10 sm:py-14 bg-muted/10 border-t border-b border-border/50">
