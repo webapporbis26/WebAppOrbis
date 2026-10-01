@@ -37,7 +37,7 @@ import { LeadModal } from "@/components/LeadModal";
 import serviceWeb from "@/assets/service-web.jpg";
 import serviceMobile from "@/assets/service-mobile.jpg";
 import serviceErp from "@/assets/service-erp.jpg";
-import candleSite from "@/assets/candle-laptop.jpg";
+import candleSite from "@/assets/chandys-laptop.jpg";
 import bestMobile from "@/assets/project/best-portrait.jpg";
 
 
