@@ -30,8 +30,8 @@ function Portfolio() {
       
       {/* HERO SECTION */}
       <section className="relative -mt-28 pt-28 overflow-hidden"
-        style={{ backgroundImage: `url(${portfolioHeroBg})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
-        <div className="mx-auto max-w-[1400px] px-5 sm:px-8 py-16 sm:py-24 min-h-[420px] flex items-center">
+        style={{ backgroundImage: `url(${portfolioHeroBg})`, backgroundSize: 'cover', backgroundPosition: 'center 80%' }}>
+        <div className="mx-auto max-w-[1400px] px-5 sm:px-8 py-20 sm:py-28 min-h-[480px] flex items-center">
           <div data-fade className="max-w-xl">
             <div className="w-12 h-[3px] bg-blue-600 mb-5" />
             <h1 className="leading-[0.95] mb-6">
@@ -46,7 +46,7 @@ function Portfolio() {
       </section>
 
       {/* FILTER BAR */}
-      <section className="mx-auto max-w-[1400px] px-5 sm:px-8 mb-12 pt-12">
+      <section className="mx-auto max-w-[1400px] px-5 sm:px-8 mb-12 pt-8">
         <div className="flex flex-wrap items-center justify-start gap-4" data-fade>
           {CATEGORIES.map(cat => (
             <button
