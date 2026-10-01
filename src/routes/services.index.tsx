@@ -276,21 +276,9 @@ function Services() {
           style={{ background: "var(--grad-primary)" }}
         />
         <div className="mx-auto max-w-7xl px-5 sm:px-8 relative">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-8 items-center">
-            <div className="flex flex-col items-start text-left">
-              <h1 className="text-hero text-left" data-fade>
-                Three things,<br/>
-                done <span className="gradient-text">properly.</span>
-              </h1>
-              <p data-fade className="mt-8 max-w-xl text-lg text-muted-foreground">
-                We provide comprehensive digital solutions designed to help businesses strengthen their online presence, improve operational efficiency, and enhance customer engagement. Our services combine modern technology, creative design, and strategic development to deliver reliable business solutions.
-              </p>
-            </div>
-
-            <div data-fade className="w-full rounded-3xl overflow-hidden aspect-square sm:aspect-video lg:aspect-square xl:aspect-[4/3] relative shadow-elegant">
-              <img src={serviceWeb} alt="Services Overview" className="w-full h-full object-cover" />
-              <div className="absolute inset-0 bg-gradient-to-t from-background/20 to-transparent pointer-events-none" />
-            </div>
+          <div data-fade className="w-full max-w-4xl mx-auto rounded-3xl overflow-hidden aspect-square sm:aspect-video lg:aspect-[16/9] relative shadow-elegant">
+            <img src={serviceWeb} alt="Services Overview" className="w-full h-full object-cover" />
+            <div className="absolute inset-0 bg-gradient-to-t from-background/20 to-transparent pointer-events-none" />
           </div>
 
           {/* Stats */}
