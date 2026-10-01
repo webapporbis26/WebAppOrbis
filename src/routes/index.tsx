@@ -369,6 +369,89 @@ function ProcessSlider() {
   );
 }
 
+const visionMission = [
+  {
+    icon: Eye,
+    title: "Our Vision",
+    desc: "To empower businesses with reliable digital technologies that improve customer engagement, simplify operations, and support long-term business growth.",
+    iconBg: "bg-blue-50",
+    iconColor: "text-blue-500",
+  },
+  {
+    icon: Rocket,
+    title: "Our Mission",
+    desc: "To provide high-quality digital solutions through innovative design, advanced development practices, and customer-focused strategies.",
+    iconBg: "bg-rose-50",
+    iconColor: "text-rose-500",
+  },
+];
+
+function VisionMissionCard({ vm }: { vm: (typeof visionMission)[number] }) {
+  return (
+    <div className="bg-white rounded-2xl border border-slate-100 shadow-[0_2px_12px_rgb(0,0,0,0.04)] p-5 hover:shadow-[0_8px_24px_rgb(0,0,0,0.08)] hover:-translate-y-1 transition-all duration-300 h-full">
+      <div className="flex items-center gap-2.5 mb-2.5">
+        <div className={`h-9 w-9 rounded-full ${vm.iconBg} flex items-center justify-center`}>
+          <vm.icon className={`h-4.5 w-4.5 ${vm.iconColor}`} strokeWidth={1.75} />
+        </div>
+        <h4 className="text-[15px] font-bold text-slate-900">{vm.title}</h4>
+      </div>
+      <p className="text-[13px] text-slate-500 leading-relaxed">
+        {vm.desc}
+      </p>
+    </div>
+  );
+}
+
+function VisionMissionSlider() {
+  const n = visionMission.length;
+  const [idx, setIdx] = useState(0);
+  const touchX = useRef<number | null>(null);
+
+  useEffect(() => {
+    const t = setInterval(() => setIdx((i) => (i + 1) % n), 4000);
+    return () => clearInterval(t);
+  }, [n]);
+
+  return (
+    <div className="sm:hidden" data-fade>
+      <div
+        className="overflow-hidden"
+        onTouchStart={(e) => (touchX.current = e.touches[0].clientX)}
+        onTouchEnd={(e) => {
+          if (touchX.current == null) return;
+          const dx = e.changedTouches[0].clientX - touchX.current;
+          if (dx < -40) setIdx((i) => (i + 1) % n);
+          else if (dx > 40) setIdx((i) => (i - 1 + n) % n);
+          touchX.current = null;
+        }}
+      >
+        <div
+          className="flex transition-transform duration-500 ease-out"
+          style={{ transform: `translateX(-${idx * 100}%)` }}
+        >
+          {visionMission.map((vm, i) => (
+            <div key={i} className="w-full shrink-0 px-1">
+              <VisionMissionCard vm={vm} />
+            </div>
+          ))}
+        </div>
+      </div>
+      <div className="flex justify-center gap-2 mt-4">
+        {visionMission.map((_, i) => (
+          <button
+            key={i}
+            aria-label={`Go to slide ${i + 1}`}
+            onClick={() => setIdx(i)}
+            className={`h-2 rounded-full transition-all duration-300 ${
+              i === idx ? "w-7 bg-blue-600" : "w-2 bg-slate-300"
+            }`}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
 function Home() {
   const heroRef = useRef<HTMLDivElement>(null);
 
@@ -535,31 +618,14 @@ function Home() {
                 ))}
               </div>
 
-              {/* Vision / Mission */}
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div className="bg-white rounded-2xl border border-slate-100 shadow-[0_2px_12px_rgb(0,0,0,0.04)] p-5 hover:shadow-[0_8px_24px_rgb(0,0,0,0.08)] hover:-translate-y-1 transition-all duration-300">
-                  <div className="flex items-center gap-2.5 mb-2.5">
-                    <div className="h-9 w-9 rounded-full bg-blue-50 flex items-center justify-center">
-                      <Eye className="h-4.5 w-4.5 text-blue-500" strokeWidth={1.75} />
-                    </div>
-                    <h4 className="text-[15px] font-bold text-slate-900">Our Vision</h4>
-                  </div>
-                  <p className="text-[13px] text-slate-500 leading-relaxed">
-                    To empower businesses with reliable digital technologies that improve customer engagement, simplify operations, and support long-term business growth.
-                  </p>
-                </div>
-                <div className="bg-white rounded-2xl border border-slate-100 shadow-[0_2px_12px_rgb(0,0,0,0.04)] p-5 hover:shadow-[0_8px_24px_rgb(0,0,0,0.08)] hover:-translate-y-1 transition-all duration-300">
-                  <div className="flex items-center gap-2.5 mb-2.5">
-                    <div className="h-9 w-9 rounded-full bg-rose-50 flex items-center justify-center">
-                      <Rocket className="h-4.5 w-4.5 text-rose-500" strokeWidth={1.75} />
-                    </div>
-                    <h4 className="text-[15px] font-bold text-slate-900">Our Mission</h4>
-                  </div>
-                  <p className="text-[13px] text-slate-500 leading-relaxed">
-                    To provide high-quality digital solutions through innovative design, advanced development practices, and customer-focused strategies.
-                  </p>
-                </div>
+              {/* Vision / Mission - desktop grid */}
+              <div className="hidden sm:grid sm:grid-cols-2 gap-4">
+                {visionMission.map((vm, i) => (
+                  <VisionMissionCard key={i} vm={vm} />
+                ))}
               </div>
+              {/* Vision / Mission - mobile slider */}
+              <VisionMissionSlider />
             </div>
           </div>
         </div>
