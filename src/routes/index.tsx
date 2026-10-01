@@ -288,6 +288,87 @@ function WorksSlider() {
   );
 }
 
+function ProcessCard({ step, i }: { step: (typeof processSteps)[number]; i: number }) {
+  return (
+    <div className="relative h-full">
+      <div className="bg-white rounded-2xl border border-slate-100 shadow-[0_2px_16px_rgb(0,0,0,0.04)] p-6 sm:p-5 flex flex-col items-center text-center h-full hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] hover:-translate-y-1 transition-all duration-300">
+        <div className="w-full flex justify-start mb-2">
+          <span className={`text-xs font-bold px-2.5 py-1 rounded-full ${step.badge}`}>
+            {String(i + 1).padStart(2, "0")}
+          </span>
+        </div>
+        <div className={`h-16 w-16 sm:h-[4.5rem] sm:w-[4.5rem] rounded-full ${step.bg} flex items-center justify-center mb-4`}>
+          <step.icon className={`h-8 w-8 ${step.color}`} strokeWidth={1.5} />
+        </div>
+        <h4 className="text-[15px] sm:text-base font-bold text-slate-900 leading-snug mb-2">
+          {step.title}
+        </h4>
+        <div className={`h-[3px] w-8 rounded-full ${step.line} mb-3`} />
+        <p className="text-[12px] sm:text-[13px] text-slate-500 leading-relaxed">
+          {step.desc}
+        </p>
+      </div>
+      {i < processSteps.length - 1 && (
+        <div className="hidden lg:block absolute top-16 -right-4 z-10 text-blue-300">
+          <svg width="28" height="16" viewBox="0 0 28 16" fill="none" className="opacity-60">
+            <path d="M1 8 H22 M18 3 L23 8 L18 13" stroke="currentColor" strokeWidth="1.5" strokeDasharray="3 3" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function ProcessSlider() {
+  const n = processSteps.length;
+  const [idx, setIdx] = useState(0);
+  const touchX = useRef<number | null>(null);
+
+  useEffect(() => {
+    const t = setInterval(() => setIdx((i) => (i + 1) % n), 4000);
+    return () => clearInterval(t);
+  }, [n]);
+
+  return (
+    <div className="lg:hidden" data-fade>
+      <div
+        className="overflow-hidden"
+        onTouchStart={(e) => (touchX.current = e.touches[0].clientX)}
+        onTouchEnd={(e) => {
+          if (touchX.current == null) return;
+          const dx = e.changedTouches[0].clientX - touchX.current;
+          if (dx < -40) setIdx((i) => (i + 1) % n);
+          else if (dx > 40) setIdx((i) => (i - 1 + n) % n);
+          touchX.current = null;
+        }}
+      >
+        <div
+          className="flex transition-transform duration-500 ease-out"
+          style={{ transform: `translateX(-${idx * 100}%)` }}
+        >
+          {processSteps.map((step, i) => (
+            <div key={i} className="w-full shrink-0 px-1">
+              <ProcessCard step={step} i={i} />
+            </div>
+          ))}
+        </div>
+      </div>
+      <div className="flex justify-center gap-2 mt-5">
+        {processSteps.map((_, i) => (
+          <button
+            key={i}
+            aria-label={`Go to slide ${i + 1}`}
+            onClick={() => setIdx(i)}
+            className={`h-2 rounded-full transition-all duration-300 ${
+              i === idx ? "w-7 bg-blue-600" : "w-2 bg-slate-300"
+            }`}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
 function Home() {
   const heroRef = useRef<HTMLDivElement>(null);
 
@@ -588,36 +669,14 @@ function Home() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5 sm:gap-4 lg:gap-5" data-fade>
+          {/* Desktop grid */}
+          <div className="hidden lg:grid lg:grid-cols-5 gap-5 sm:gap-4 lg:gap-5" data-fade>
             {processSteps.map((step, i) => (
-              <div key={i} className="relative">
-                <div className="bg-white rounded-2xl border border-slate-100 shadow-[0_2px_16px_rgb(0,0,0,0.04)] p-6 sm:p-5 flex flex-col items-center text-center h-full hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] hover:-translate-y-1 transition-all duration-300">
-                  <div className="w-full flex justify-start mb-2">
-                    <span className={`text-xs font-bold px-2.5 py-1 rounded-full ${step.badge}`}>
-                      {String(i + 1).padStart(2, "0")}
-                    </span>
-                  </div>
-                  <div className={`h-16 w-16 sm:h-[4.5rem] sm:w-[4.5rem] rounded-full ${step.bg} flex items-center justify-center mb-4`}>
-                    <step.icon className={`h-8 w-8 ${step.color}`} strokeWidth={1.5} />
-                  </div>
-                  <h4 className="text-[15px] sm:text-base font-bold text-slate-900 leading-snug mb-2">
-                    {step.title}
-                  </h4>
-                  <div className={`h-[3px] w-8 rounded-full ${step.line} mb-3`} />
-                  <p className="text-[12px] sm:text-[13px] text-slate-500 leading-relaxed">
-                    {step.desc}
-                  </p>
-                </div>
-                {i < processSteps.length - 1 && (
-                  <div className="hidden lg:block absolute top-16 -right-4 z-10 text-blue-300">
-                    <svg width="28" height="16" viewBox="0 0 28 16" fill="none" className="opacity-60">
-                      <path d="M1 8 H22 M18 3 L23 8 L18 13" stroke="currentColor" strokeWidth="1.5" strokeDasharray="3 3" strokeLinecap="round" strokeLinejoin="round"/>
-                    </svg>
-                  </div>
-                )}
-              </div>
+              <ProcessCard key={i} step={step} i={i} />
             ))}
           </div>
+          {/* Mobile/tablet auto-slider: 1 at a time */}
+          <ProcessSlider />
         </div>
       </section>
 
