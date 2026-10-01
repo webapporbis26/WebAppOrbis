@@ -172,7 +172,15 @@ export const TestimonialsSection = () => {
           </p>
         </div>
 
-        <div className="overflow-hidden" data-fade>
+        {/* Mobile: single card, no transform */}
+        <div className="sm:hidden px-1" data-fade>
+          <div key={current}>
+            <TestimonialCard t={testimonials[current]} />
+          </div>
+        </div>
+
+        {/* Tablet/Desktop: slider track */}
+        <div className="hidden sm:block overflow-hidden" data-fade>
           <div
             className="flex transition-transform duration-700 ease-in-out"
             style={{ transform: `translateX(-${current * (100 / testimonials.length)}%)` }}
