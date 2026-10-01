@@ -278,67 +278,62 @@ function About() {
 
 
       {/* ============== LET'S GET STARTED NOW ============== */}
-      <section className="relative py-12 sm:py-16 bg-[#f8fbff] overflow-hidden">
-        {/* Background decorations */}
-        <div className="absolute -left-28 -bottom-28 w-96 h-96 rounded-full bg-blue-100/70 pointer-events-none" />
-        <div className="absolute -right-24 -top-24 w-[420px] h-[420px] rounded-full bg-blue-100/60 pointer-events-none" />
+      <section className="relative py-12 sm:py-16 overflow-hidden"
+        style={{ backgroundImage: `url(${contactBg})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
 
         <div className="mx-auto max-w-[1280px] px-5 sm:px-8 relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.1fr] gap-10 lg:gap-8 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.05fr] gap-10 lg:gap-12 items-start">
 
-            {/* Left Column — BG image with content overlay */}
-            <div data-fade className="relative rounded-[28px] overflow-hidden min-h-[560px] flex flex-col justify-between p-8 sm:p-10"
-              style={{ backgroundImage: `url(${contactBg})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
-              <div>
-                <div className="flex items-center gap-3 mb-8">
-                  <img src="/logo.png" alt="WebApp Orbis" className="w-12 h-12 object-contain" />
-                  <div>
-                    <p className="text-[26px] font-extrabold tracking-tight text-slate-900 leading-none">
-                      WebApp <span className="text-blue-600">Orbis</span>
-                    </p>
-                    <p className="text-[9px] font-semibold tracking-[0.32em] text-slate-400 mt-1.5">IDEAS • WEBSITES • GROWTH</p>
-                  </div>
+            {/* Left Column */}
+            <div data-fade className="pt-2">
+              <div className="flex items-center gap-3 mb-8">
+                <img src="/logo.png" alt="WebApp Orbis" className="w-12 h-12 object-contain" />
+                <div>
+                  <p className="text-[26px] font-extrabold tracking-tight text-slate-900 leading-none">
+                    WebApp <span className="text-blue-600">Orbis</span>
+                  </p>
+                  <p className="text-[9px] font-semibold tracking-[0.32em] text-slate-400 mt-1.5">IDEAS • WEBSITES • GROWTH</p>
                 </div>
+              </div>
 
-                <h2 className="text-[40px] sm:text-[48px] font-extrabold text-slate-900 tracking-tight leading-[1.1] mb-4">
-                  Let's Build<br />
-                  <span className="text-blue-600">Something Great</span><br />
-                  <span className="relative inline-block">
-                    Together
-                    <svg className="absolute -bottom-1.5 left-0 w-full" viewBox="0 0 200 12" fill="none" preserveAspectRatio="none">
-                      <path d="M2 9C60 3 140 3 198 8" stroke="#bfdbfe" strokeWidth="5" strokeLinecap="round" />
-                    </svg>
+              <h2 className="text-[44px] sm:text-[54px] font-extrabold text-slate-900 tracking-tight leading-[1.08] mb-5">
+                Let's Build<br />
+                <span className="text-blue-600">Something Great</span><br />
+                <span className="relative inline-block">
+                  Together
+                  <svg className="absolute -bottom-1.5 left-0 w-full" viewBox="0 0 200 12" fill="none" preserveAspectRatio="none">
+                    <path d="M2 9C60 3 140 3 198 8" stroke="#bfdbfe" strokeWidth="5" strokeLinecap="round" />
+                  </svg>
+                </span>
+              </h2>
+              <p className="text-slate-500 text-[15px] leading-[1.7] max-w-[420px] mb-8">
+                Have a project in mind? We'd love to hear from you. Get in touch and let's turn your ideas into powerful web solutions.
+              </p>
+
+              <div className="space-y-4">
+                <a href="mailto:info@webapporbis.com" className="flex items-center gap-4 group w-fit">
+                  <span className="w-11 h-11 rounded-full bg-blue-100 flex items-center justify-center shrink-0 group-hover:bg-blue-200 transition-colors">
+                    <Mail className="w-[18px] h-[18px] text-blue-600" />
                   </span>
-                </h2>
-                <p className="text-slate-500 text-[14.5px] leading-[1.7] max-w-[380px] mb-7">
-                  Have a project in mind? We'd love to hear from you. Get in touch and let's turn your ideas into powerful web solutions.
-                </p>
-
-                <div className="space-y-3.5">
-                  <a href="mailto:info@webapporbis.com" className="flex items-center gap-4 group w-fit">
-                    <span className="w-11 h-11 rounded-full bg-blue-100 flex items-center justify-center shrink-0 group-hover:bg-blue-200 transition-colors">
-                      <Mail className="w-[18px] h-[18px] text-blue-600" />
-                    </span>
-                    <span>
-                      <span className="block text-[12px] text-slate-500">Email Us</span>
-                      <span className="block text-[15px] font-bold text-slate-900 group-hover:text-blue-600 transition-colors">info@webapporbis.com</span>
-                    </span>
-                  </a>
-                  <a href="tel:+917736003018" className="flex items-center gap-4 group w-fit">
-                    <span className="w-11 h-11 rounded-full bg-green-100 flex items-center justify-center shrink-0 group-hover:bg-green-200 transition-colors">
-                      <Phone className="w-[18px] h-[18px] text-green-600" />
-                    </span>
-                    <span>
-                      <span className="block text-[12px] text-slate-500">Call Us</span>
-                      <span className="block text-[15px] font-bold text-slate-900 group-hover:text-blue-600 transition-colors">+91 7736 003 018</span>
-                    </span>
-                  </a>
-                </div>
+                  <span>
+                    <span className="block text-[12px] text-slate-500">Email Us</span>
+                    <span className="block text-[15px] font-bold text-slate-900 group-hover:text-blue-600 transition-colors">info@webapporbis.com</span>
+                  </span>
+                </a>
+                <a href="tel:+917736003018" className="flex items-center gap-4 group w-fit">
+                  <span className="w-11 h-11 rounded-full bg-green-100 flex items-center justify-center shrink-0 group-hover:bg-green-200 transition-colors">
+                    <Phone className="w-[18px] h-[18px] text-green-600" />
+                  </span>
+                  <span>
+                    <span className="block text-[12px] text-slate-500">Call Us</span>
+                    <span className="block text-[15px] font-bold text-slate-900 group-hover:text-blue-600 transition-colors">+91 7736 003 018</span>
+                  </span>
+                </a>
               </div>
             </div>
 
             {/* Right Column — Form Card */}
-            <div data-fade className="lg:pt-4">
+            <div data-fade>
               <div className="bg-white rounded-[24px] shadow-[0_24px_70px_rgba(37,99,235,0.12)] p-7 sm:p-10 relative overflow-hidden">
                 <div className="absolute -right-10 -top-10 w-40 h-40 rounded-full bg-blue-50 pointer-events-none" />
                 <div className="relative">
@@ -392,7 +387,7 @@ function About() {
                       <div className="relative">
                         <MessageSquare className="absolute left-4 top-3.5 w-[17px] h-[17px] text-slate-400" />
                         <textarea name="message" required rows={4} placeholder="Tell us about your project..."
-                          className="w-full bg-slate-50/70 border border-slate-200/80 rounded-[18px] pl-11 pr-4 py-3 text-[13.5px] text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all resize-none" />
+                          className="w-full bg-white border border-slate-200 rounded-xl pl-11 pr-4 py-3.5 text-[14px] text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all resize-none" />
                       </div>
                     </div>
 
