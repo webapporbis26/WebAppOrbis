@@ -136,20 +136,10 @@ function ProjectCard({ p }: { p: any }) {
     if (videoRef.current) videoRef.current.muted = true;
   }, []);
 
-  return (
-    <Link
-      to="/portfolio/$slug"
-      params={{ slug: p.slug }}
-      className="group block"
-      data-fade
-      onMouseEnter={() => {
-        if (videoRef.current) {
-          videoRef.current.muted = true;
-          videoRef.current.play().catch(() => {});
-        }
-      }}
-      onMouseLeave={() => videoRef.current?.pause()}
-    >
+  const hasLiveUrl = p.liveUrl && p.liveUrl !== "#";
+
+  const cardInner = (
+    <>
       {/* Image Container */}
       <div className="relative w-full aspect-[4/3] bg-[#f5f5f5] overflow-hidden mb-5 border border-gray-100 transition-shadow duration-500 group-hover:shadow-xl">
         <img 
@@ -180,6 +170,36 @@ function ProjectCard({ p }: { p: any }) {
           {p.tag} & DEVELOPMENT
         </p>
       </div>
+    </>
+  );
+
+  const sharedProps = {
+    className: "group block",
+    "data-fade": true,
+    onMouseEnter: () => {
+      if (videoRef.current) {
+        videoRef.current.muted = true;
+        videoRef.current.play().catch(() => {});
+      }
+    },
+    onMouseLeave: () => videoRef.current?.pause(),
+  };
+
+  if (hasLiveUrl) {
+    return (
+      <a href={p.liveUrl} target="_blank" rel="noopener noreferrer" {...sharedProps}>
+        {cardInner}
+      </a>
+    );
+  }
+
+  return (
+    <Link
+      to="/portfolio/$slug"
+      params={{ slug: p.slug }}
+      {...sharedProps}
+    >
+      {cardInner}
     </Link>
   );
 }
