@@ -111,7 +111,7 @@ export const projects: Project[] = [
     outcome: "High user engagement.",
     metrics: [{ label: "Users", value: "10k+" }],
     gallery: [malluImg],
-    liveUrl: "#",
+    liveUrl: "https://mallusmart.com/",
     next: "dhana-project",
   },
   {
