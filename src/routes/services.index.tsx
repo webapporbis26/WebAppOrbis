@@ -276,19 +276,14 @@ function Services() {
 
   return (
     <>
-      {/* Hero */}
-      <section ref={heroRef} className="pt-40 pb-16 relative overflow-hidden">
+      {/* Hero — stats only (banner removed at user request) */}
+      <section ref={heroRef} className="pt-36 pb-10 relative overflow-hidden">
         <div
           aria-hidden
           className="absolute -top-32 -right-32 h-[480px] w-[480px] rounded-full blur-3xl opacity-40"
           style={{ background: "var(--grad-primary)" }}
         />
         <div className="mx-auto max-w-7xl px-5 sm:px-8 relative">
-          <div data-fade className="w-full max-w-4xl mx-auto rounded-3xl overflow-hidden aspect-square sm:aspect-video lg:aspect-[16/9] relative shadow-elegant">
-            <img src={serviceWeb} alt="Services Overview" className="w-full h-full object-cover" />
-            <div className="absolute inset-0 bg-gradient-to-t from-background/20 to-transparent pointer-events-none" />
-          </div>
-
           {/* Stats */}
           <div data-fade className="mt-12 grid grid-cols-2 gap-6 border-t border-border pt-10 sm:grid-cols-4">
             {stats.map((s) => (
