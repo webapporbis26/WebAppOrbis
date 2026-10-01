@@ -29,7 +29,7 @@ function Portfolio() {
     <div className="bg-white min-h-screen pt-28 pb-28 font-sans">
       
       {/* HERO SECTION */}
-      <section className="relative mb-12 -mt-28 pt-28 overflow-hidden"
+      <section className="relative -mt-28 pt-28 overflow-hidden"
         style={{ backgroundImage: `url(${portfolioHeroBg})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
         <div className="mx-auto max-w-[1400px] px-5 sm:px-8 py-16 sm:py-24 min-h-[420px] flex items-center">
           <div data-fade className="max-w-xl">
@@ -46,7 +46,7 @@ function Portfolio() {
       </section>
 
       {/* FILTER BAR */}
-      <section className="mx-auto max-w-[1400px] px-5 sm:px-8 mb-12">
+      <section className="mx-auto max-w-[1400px] px-5 sm:px-8 mb-12 pt-12">
         <div className="flex flex-wrap items-center justify-start gap-4" data-fade>
           {CATEGORIES.map(cat => (
             <button
