@@ -39,7 +39,6 @@ import serviceMobile from "@/assets/service-mobile.jpg";
 import serviceErp from "@/assets/service-erp.jpg";
 import candleSite from "@/assets/project/candle.png";
 import bestMobile from "@/assets/project/best-portrait.jpg";
-import chandysLaptop from "@/assets/chandys-laptop.png";
 
 
 export const Route = createFileRoute("/services/")({
@@ -63,7 +62,7 @@ const services = [
     titleB: "Design & Development",
     desc: "We create professional websites that combine modern design with advanced functionality. Our websites are developed to deliver fast performance, responsive layouts, and seamless user experiences across desktops, tablets, and mobile devices.",
     image: serviceWeb,
-    laptopImg: chandysLaptop,
+    laptopImg: candleSite,
     phoneImg: bestMobile,
     tag: "Web Platforms",
     badges: [
