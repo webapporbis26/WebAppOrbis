@@ -26,12 +26,12 @@ function Portfolio() {
   }, [activeFilter]);
 
   return (
-    <div className="bg-white min-h-screen pt-28 pb-28 font-sans">
+    <div className="bg-white min-h-screen pb-28 font-sans">
       
       {/* HERO SECTION */}
-      <section className="relative -mt-28 pt-28 overflow-hidden"
+      <section className="relative pt-36 sm:pt-44 overflow-hidden"
         style={{ backgroundImage: `url(${portfolioHeroBg})`, backgroundSize: 'cover', backgroundPosition: 'center 80%' }}>
-        <div className="mx-auto max-w-[1400px] px-5 sm:px-8 py-20 sm:py-28 min-h-[480px] flex items-center">
+        <div className="mx-auto max-w-[1400px] px-5 sm:px-8 pb-20 sm:pb-28 min-h-[480px] flex items-center">
           <div data-fade className="max-w-xl">
             <div className="w-12 h-[3px] bg-blue-600 mb-5" />
             <h1 className="leading-[0.95] mb-6">
