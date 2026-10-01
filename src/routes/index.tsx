@@ -469,10 +469,10 @@ function Home() {
               <span className="h-px w-12 sm:w-16 bg-blue-300" />
             </div>
             <h2 className="text-3xl sm:text-4xl lg:text-[2.75rem] font-extrabold tracking-tight text-slate-900 leading-tight mb-4">
-              Our <span className="text-blue-600">Website Design Process</span>
+              Our <span className="text-blue-600">Website Development Process</span>
             </h2>
             <p className="text-slate-500 text-[15px] sm:text-lg max-w-3xl mx-auto">
-              We offer free consultations to understand your business goals and create a tailored website design strategy.
+              From the initial idea to the final launch, we follow a clear and streamlined process to create a website that fits your business.
             </p>
           </div>
 
