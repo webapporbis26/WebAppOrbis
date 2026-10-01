@@ -162,7 +162,7 @@ function ServiceVisual({ s }: { s: (typeof services)[number] }) {
   // Photo mode: clean image, no mockups/badges (user-supplied photo)
   if ((s as any).photoImg) {
     return (
-      <div className="relative w-full h-full min-h-[400px] sm:min-h-[480px]">
+      <div className="relative w-full aspect-[16/10]">
         <div className="absolute inset-0 rounded-[2rem] overflow-hidden shadow-[0_24px_60px_rgb(0,0,0,0.12)]">
           <img
             src={(s as any).photoImg}
