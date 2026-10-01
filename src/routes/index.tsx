@@ -4,6 +4,7 @@ import { ArrowDown, ArrowUpRight, Globe, Smartphone, Database, Sparkles, Zap, Sh
 import { gsap, ScrollTrigger, RevealLine, useTextReveal, useFadeUp } from "@/lib/anim";
 import { MagneticButton } from "@/components/MagneticButton";
 import { FaqPro } from "@/components/ui/faq-pro";
+import { TestimonialsSection } from "@/components/TestimonialsSection";
 import { DigitalSolutions } from "@/components/DigitalSolutions";
 import MultiOrbitSemiCircle from "@/components/ui/multi-orbit-semi-circle";
 import { LogoCloud } from "@/components/ui/logo-cloud-3";
