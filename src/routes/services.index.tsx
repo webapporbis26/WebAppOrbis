@@ -39,6 +39,7 @@ import serviceMobile from "@/assets/service-mobile.jpg";
 import serviceErp from "@/assets/service-erp.jpg";
 import candleSite from "@/assets/chandys-laptop.jpg";
 import bestMobile from "@/assets/project/best-portrait.jpg";
+import chandysDesk from "@/assets/chandys-desk.jpg";
 
 
 export const Route = createFileRoute("/services/")({
@@ -64,6 +65,7 @@ const services = [
     image: serviceWeb,
     laptopImg: candleSite,
     phoneImg: bestMobile,
+    photoImg: chandysDesk,
     tag: "Web Platforms",
     badges: [
       { icon: Rocket, title: "Modern Design", desc: "Visually engaging and on-brand websites" },
@@ -157,6 +159,23 @@ function ServiceVisual({ s }: { s: (typeof services)[number] }) {
   const B0 = s.badges[0].icon;
   const B1 = s.badges[1].icon;
   const B2 = s.badges[2].icon;
+
+  // Photo mode: clean image, no mockups/badges (user-supplied photo)
+  if ((s as any).photoImg) {
+    return (
+      <div className="relative w-full h-full min-h-[400px] sm:min-h-[480px]">
+        <div className="absolute inset-0 rounded-[2rem] overflow-hidden shadow-[0_24px_60px_rgb(0,0,0,0.12)]">
+          <img
+            src={(s as any).photoImg}
+            alt={s.titleA + " " + s.titleB}
+            className="w-full h-full object-cover"
+            loading="lazy"
+          />
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="relative w-full h-full min-h-[400px] sm:min-h-[480px]">
       {/* Soft background */}
