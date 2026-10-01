@@ -205,6 +205,89 @@ function FeaturesSlider() {
   );
 }
 
+const worksList: ProjectItem[] = [
+  {
+    img: eventImg, title: "Dreamweaver Events", link: "https://dreamweaverevents.co.in",
+    desc: "A modern and elegant website for a premium event management company.",
+    badge: "Website Design & Development", badgeClass: "bg-blue-100 text-blue-700", arrowClass: "bg-blue-50 text-blue-600",
+  },
+  {
+    img: candleImg, title: "Nazareth Candles", link: "https://nazarethcandles.com",
+    desc: "A feature-rich website with masterclass registration and resource management.",
+    badge: "Website Design & Development", badgeClass: "bg-emerald-100 text-emerald-700", arrowClass: "bg-emerald-50 text-emerald-600",
+  },
+  {
+    img: resortImg, title: "Chandys Hotels & Resorts", link: "https://chandyshotelsandresorts.com",
+    desc: "A premium website showcasing their resorts with elegant design and booking integration.",
+    badge: "Website Design & Development", badgeClass: "bg-amber-100 text-amber-800", arrowClass: "bg-amber-50 text-amber-600",
+  },
+  {
+    img: bestImg, title: "Bestchoice Qatar", link: "https://bestchoiceqatar.net",
+    desc: "A product-focused website with SEO for portable cabins and industrial solutions.",
+    badge: "Website Design, Development & SEO", badgeClass: "bg-purple-100 text-purple-700", arrowClass: "bg-purple-50 text-purple-600",
+  },
+  {
+    img: malluImg, title: "Mallusmart", link: "https://mallusmart.com",
+    desc: "An eCommerce platform to support Kerala homepreneurs with a modern shopping experience.",
+    badge: "eCommerce Website", badgeClass: "bg-rose-100 text-rose-700", arrowClass: "bg-rose-50 text-rose-600",
+  },
+  {
+    img: dhanaImg, title: "Denahalaya Punnapra", link: "https://denahalayapunnapra.com",
+    desc: "A serene website for a psycho-spiritual institute with program details and outreach.",
+    badge: "Website Design & Development", badgeClass: "bg-blue-100 text-blue-700", arrowClass: "bg-blue-50 text-blue-600",
+  },
+];
+
+function WorksSlider() {
+  const n = worksList.length;
+  const [idx, setIdx] = useState(0);
+  const touchX = useRef<number | null>(null);
+
+  useEffect(() => {
+    const t = setInterval(() => setIdx((i) => (i + 1) % n), 4000);
+    return () => clearInterval(t);
+  }, [n]);
+
+  return (
+    <div className="lg:hidden" data-fade>
+      <div
+        className="overflow-hidden"
+        onTouchStart={(e) => (touchX.current = e.touches[0].clientX)}
+        onTouchEnd={(e) => {
+          if (touchX.current == null) return;
+          const dx = e.changedTouches[0].clientX - touchX.current;
+          if (dx < -40) setIdx((i) => (i + 1) % n);
+          else if (dx > 40) setIdx((i) => (i - 1 + n) % n);
+          touchX.current = null;
+        }}
+      >
+        <div
+          className="flex transition-transform duration-500 ease-out"
+          style={{ transform: `translateX(-${idx * 100}%)` }}
+        >
+          {worksList.map((c, i) => (
+            <div key={i} className="w-full shrink-0 px-1">
+              <ProjectCard c={c} />
+            </div>
+          ))}
+        </div>
+      </div>
+      <div className="flex justify-center gap-2 mt-5">
+        {worksList.map((_, i) => (
+          <button
+            key={i}
+            aria-label={`Go to slide ${i + 1}`}
+            onClick={() => setIdx(i)}
+            className={`h-2 rounded-full transition-all duration-300 ${
+              i === idx ? "w-7 bg-blue-600" : "w-2 bg-slate-300"
+            }`}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
 function Home() {
   const heroRef = useRef<HTMLDivElement>(null);
 
@@ -461,42 +544,14 @@ function Home() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
-            {[
-              {
-                img: eventImg, title: "Dreamweaver Events", link: "https://dreamweaverevents.co.in",
-                desc: "A modern and elegant website for a premium event management company.",
-                badge: "Website Design & Development", badgeClass: "bg-blue-100 text-blue-700", arrowClass: "bg-blue-50 text-blue-600",
-              },
-              {
-                img: candleImg, title: "Nazareth Candles", link: "https://nazarethcandles.com",
-                desc: "A feature-rich website with masterclass registration and resource management.",
-                badge: "Website Design & Development", badgeClass: "bg-emerald-100 text-emerald-700", arrowClass: "bg-emerald-50 text-emerald-600",
-              },
-              {
-                img: resortImg, title: "Chandys Hotels & Resorts", link: "https://chandyshotelsandresorts.com",
-                desc: "A premium website showcasing their resorts with elegant design and booking integration.",
-                badge: "Website Design & Development", badgeClass: "bg-amber-100 text-amber-800", arrowClass: "bg-amber-50 text-amber-600",
-              },
-              {
-                img: bestImg, title: "Bestchoice Qatar", link: "https://bestchoiceqatar.net",
-                desc: "A product-focused website with SEO for portable cabins and industrial solutions.",
-                badge: "Website Design, Development & SEO", badgeClass: "bg-purple-100 text-purple-700", arrowClass: "bg-purple-50 text-purple-600",
-              },
-              {
-                img: malluImg, title: "Mallusmart", link: "https://mallusmart.com",
-                desc: "An eCommerce platform to support Kerala homepreneurs with a modern shopping experience.",
-                badge: "eCommerce Website", badgeClass: "bg-rose-100 text-rose-700", arrowClass: "bg-rose-50 text-rose-600",
-              },
-              {
-                img: dhanaImg, title: "Denahalaya Punnapra", link: "https://denahalayapunnapra.com",
-                desc: "A serene website for a psycho-spiritual institute with program details and outreach.",
-                badge: "Website Design & Development", badgeClass: "bg-blue-100 text-blue-700", arrowClass: "bg-blue-50 text-blue-600",
-              },
-            ].map((c, i) => (
+          {/* Desktop grid */}
+          <div className="hidden lg:grid lg:grid-cols-3 gap-5 sm:gap-6">
+            {worksList.map((c, i) => (
               <ProjectCard key={i} c={c} />
             ))}
           </div>
+          {/* Mobile/tablet auto-slider: 1 at a time */}
+          <WorksSlider />
         </div>
       </section>
 
