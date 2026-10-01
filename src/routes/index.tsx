@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
-import { ArrowDown, ArrowUpRight, Globe, Smartphone, Database, Sparkles, Zap, Shield, Users, Star, Search, Rocket, MonitorSmartphone, SearchCheck, CodeXml, Headset, Share2, MessageCircle, PhoneCall, LayoutTemplate, TrendingUp, ArrowRight, Folder, Trophy, Eye } from "lucide-react";
+import { ArrowDown, ArrowUpRight, Globe, Smartphone, Database, Sparkles, Zap, Shield, Users, Star, Search, Rocket, MonitorSmartphone, SearchCheck, CodeXml, Headset, Share2, MessageCircle, PhoneCall, LayoutTemplate, TrendingUp, ArrowRight, Folder, Trophy, Eye, Target } from "lucide-react";
 import { gsap, ScrollTrigger, RevealLine, useTextReveal, useFadeUp } from "@/lib/anim";
 import { MagneticButton } from "@/components/MagneticButton";
 import { FaqPro } from "@/components/ui/faq-pro";
@@ -369,35 +369,57 @@ function ProcessSlider() {
   );
 }
 
+import missionTarget3d from "@/assets/mission-target-3d.png";
+import visionBulb3d from "@/assets/vision-bulb-3d.png";
+
 const visionMission = [
   {
     icon: Eye,
-    title: "Our Vision",
+    title: "Vision",
     desc: "To empower businesses with reliable digital technologies that improve customer engagement, simplify operations, and support long-term business growth.",
-    iconBg: "bg-blue-50",
-    iconColor: "text-blue-500",
+    bg: "bg-[#e6f9f5]",
+    accent: "bg-teal-400",
+    iconColor: "text-teal-500",
+    art: visionBulb3d,
   },
   {
-    icon: Rocket,
-    title: "Our Mission",
+    icon: Target,
+    title: "Mission",
     desc: "To provide high-quality digital solutions through innovative design, advanced development practices, and customer-focused strategies.",
-    iconBg: "bg-rose-50",
-    iconColor: "text-rose-500",
+    bg: "bg-[#f1eafd]",
+    accent: "bg-purple-500",
+    iconColor: "text-purple-600",
+    art: missionTarget3d,
   },
 ];
 
 function VisionMissionCard({ vm }: { vm: (typeof visionMission)[number] }) {
   return (
-    <div className="bg-white rounded-2xl border border-slate-100 shadow-[0_2px_12px_rgb(0,0,0,0.04)] p-5 hover:shadow-[0_8px_24px_rgb(0,0,0,0.08)] hover:-translate-y-1 transition-all duration-300 h-full">
-      <div className="flex items-center gap-2.5 mb-2.5">
-        <div className={`h-9 w-9 rounded-full ${vm.iconBg} flex items-center justify-center`}>
-          <vm.icon className={`h-4.5 w-4.5 ${vm.iconColor}`} strokeWidth={1.75} />
+    <div className={`relative ${vm.bg} rounded-[2rem] p-7 sm:p-8 overflow-hidden h-full`}>
+      {/* decorative circles */}
+      <div className="absolute -top-16 -right-16 w-56 h-56 rounded-full bg-white/40 pointer-events-none" />
+      <div className="absolute top-1/2 -right-10 w-40 h-40 rounded-full border-[10px] border-white/30 pointer-events-none" />
+
+      <div className="relative flex items-center gap-5 mb-6">
+        <div className="h-20 w-20 rounded-[1.4rem] bg-white shadow-[0_8px_24px_rgb(0,0,0,0.08)] flex items-center justify-center flex-shrink-0">
+          <vm.icon className={`h-10 w-10 ${vm.iconColor}`} strokeWidth={1.75} />
         </div>
-        <h4 className="text-[15px] font-bold text-slate-900">{vm.title}</h4>
+        <div>
+          <h4 className="text-4xl font-extrabold text-slate-900 tracking-tight">{vm.title}</h4>
+          <div className={`h-1.5 w-24 rounded-full ${vm.accent} mt-2`} />
+        </div>
       </div>
-      <p className="text-[13px] text-slate-500 leading-relaxed">
+
+      <p className="relative text-[17px] text-slate-600 leading-[1.9] max-w-[62%]">
         {vm.desc}
       </p>
+
+      <img
+        src={vm.art}
+        alt={vm.title}
+        className="absolute bottom-4 right-4 w-36 h-36 sm:w-44 sm:h-44 object-contain pointer-events-none"
+        loading="lazy"
+      />
     </div>
   );
 }
