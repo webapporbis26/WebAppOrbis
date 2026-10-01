@@ -1,205 +1,145 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState, useMemo, useRef, useEffect } from "react";
-import { ChevronDown, Check } from "lucide-react";
-import { projects } from "@/lib/portfolio-data";
+import { useState, useMemo } from "react";
+import { ExternalLink, ArrowRight, MessageSquareText, Monitor, Smartphone } from "lucide-react";
+import { projects, type Project } from "@/lib/portfolio-data";
 import { useFadeUp } from "@/lib/anim";
 
 export const Route = createFileRoute("/portfolio/")({
   head: () => ({
     meta: [
-      { title: "Our Works | WebApp Orbis" },
-      { name: "description", content: "Turning vision into reality: a portfolio of our completed projects." },
+      { title: "Our Work | WebApp Orbis" },
+      { name: "description", content: "A showcase of websites and digital solutions we've built for businesses across different industries." },
     ],
   }),
   component: Portfolio,
 });
 
-const CATEGORIES = ["All", "Web Design", "E-commerce", "Web App", "Hospitality", "Platform"];
+const FILTERS = ["All", "Websites", "Mobile Apps", "Digital Marketing", "SEO"] as const;
 
-function FilterDropdown({
-  label,
-  options,
-  value,
-  onChange,
-}: {
-  label: string;
-  options: string[];
-  value: string;
-  onChange: (v: string) => void;
-}) {
-  const [open, setOpen] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
+function badgeIcon(badge: string) {
+  if (badge.toLowerCase().includes("mobile")) return <Smartphone className="w-3.5 h-3.5" />;
+  return <Monitor className="w-3.5 h-3.5" />;
+}
 
-  useEffect(() => {
-    const onDocClick = (e: MouseEvent) => {
-      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
-    };
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setOpen(false);
-    };
-    document.addEventListener("mousedown", onDocClick);
-    document.addEventListener("keydown", onKey);
-    return () => {
-      document.removeEventListener("mousedown", onDocClick);
-      document.removeEventListener("keydown", onKey);
-    };
-  }, []);
+function ProjectCard({ p }: { p: Project }) {
+  const hasLiveUrl = p.liveUrl && p.liveUrl !== "#";
 
   return (
-    <div ref={ref} className="relative">
-      <button
-        onClick={() => setOpen((o) => !o)}
-        className={`flex items-center gap-3 px-7 py-3.5 rounded-full border text-[15px] transition-all duration-200 ${
-          open
-            ? "border-slate-900 text-slate-900"
-            : "border-gray-300 text-slate-800 hover:border-slate-900"
-        }`}
-      >
-        <span className={value !== "All" ? "font-semibold" : ""}>
-          {value === "All" ? label : value}
+    <article
+      data-fade
+      className="group bg-white rounded-[1.75rem] overflow-hidden border border-slate-100 shadow-[0_8px_32px_rgb(0,0,0,0.04)] hover:shadow-[0_20px_56px_rgb(0,0,0,0.10)] transition-shadow duration-500 flex flex-col"
+    >
+      {/* Image */}
+      <div className="relative w-full aspect-[16/10] overflow-hidden bg-slate-100">
+        <img
+          src={p.img}
+          alt={p.title}
+          className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+          loading="lazy"
+        />
+        <span className="absolute top-4 left-4 inline-flex items-center gap-1.5 bg-white/95 backdrop-blur px-3.5 py-1.5 rounded-full text-[12px] font-semibold text-blue-700 shadow-sm">
+          {badgeIcon(p.badge)}
+          {p.badge}
         </span>
-        <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${open ? "rotate-180" : ""}`} />
-      </button>
-      {open && (
-        <div className="absolute right-0 mt-3 w-60 bg-white rounded-2xl shadow-[0_16px_48px_rgb(0,0,0,0.12)] border border-slate-100 py-2 z-30 overflow-hidden">
-          {options.map((opt) => (
-            <button
-              key={opt}
-              onClick={() => {
-                onChange(opt);
-                setOpen(false);
-              }}
-              className={`w-full flex items-center justify-between px-5 py-3 text-left text-[15px] transition-colors ${
-                value === opt
-                  ? "text-slate-900 font-semibold bg-slate-50"
-                  : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
-              }`}
+      </div>
+
+      {/* Body */}
+      <div className="flex flex-col flex-1 px-6 pt-5 pb-6">
+        <h3 className="text-[19px] font-bold text-slate-900 mb-1.5">{p.title}</h3>
+        <p className="text-[14px] leading-relaxed text-slate-500 mb-5 flex-1">{p.cardDesc}</p>
+
+        <div className="flex items-center gap-3">
+          {hasLiveUrl ? (
+            <a
+              href={p.liveUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white text-[13.5px] font-semibold px-5 py-2.5 rounded-full transition-colors"
             >
-              {opt}
-              {value === opt && <Check className="w-4 h-4 text-blue-600" />}
-            </button>
-          ))}
+              <ExternalLink className="w-4 h-4" />
+              Visit Website
+            </a>
+          ) : (
+            <span className="inline-flex items-center gap-2 bg-blue-600 text-white text-[13.5px] font-semibold px-5 py-2.5 rounded-full opacity-90">
+              <ExternalLink className="w-4 h-4" />
+              Visit Website
+            </span>
+          )}
+          <Link
+            to="/contact"
+            className="inline-flex items-center gap-2 border-[1.5px] border-blue-600 text-blue-600 hover:bg-blue-50 text-[13.5px] font-semibold px-5 py-2.5 rounded-full transition-colors"
+          >
+            <MessageSquareText className="w-4 h-4" />
+            Get a Quote
+            <ArrowRight className="w-3.5 h-3.5" />
+          </Link>
         </div>
-      )}
-    </div>
+      </div>
+    </article>
   );
 }
 
 function Portfolio() {
-  const [activeFilter, setActiveFilter] = useState("All");
+  const [activeFilter, setActiveFilter] = useState<(typeof FILTERS)[number]>("All");
   useFadeUp("[data-fade]");
 
   const filteredProjects = useMemo(() => {
     if (activeFilter === "All") return projects;
-    return projects.filter(p => p.tag === activeFilter);
+    return projects.filter((p) => p.category === activeFilter);
   }, [activeFilter]);
 
   return (
-    <div className="bg-white min-h-screen pb-28 font-sans pt-36 sm:pt-44">
+    <div className="bg-[#f7fafd] min-h-screen pb-24 sm:pb-28 font-sans pt-32 sm:pt-40">
+      {/* HEADER */}
+      <section className="mx-auto max-w-[1400px] px-5 sm:px-8 mb-10 sm:mb-12">
+        <div className="flex flex-wrap items-start justify-between gap-8" data-fade>
+          <div className="max-w-xl">
+            <p className="flex items-center gap-3 text-[12px] font-bold tracking-[0.22em] text-blue-600 mb-4">
+              <span className="inline-block w-8 h-[2px] bg-blue-600" />
+              OUR PORTFOLIO
+            </p>
+            <h1 className="text-5xl sm:text-6xl font-extrabold tracking-tight mb-4">
+              <span className="text-slate-900">Our </span>
+              <span className="text-blue-600">Work</span>
+            </h1>
+            <p className="text-[15px] sm:text-base text-slate-500 leading-relaxed">
+              A showcase of websites and digital solutions we've built for businesses across different industries.
+            </p>
+          </div>
 
-      {/* HEADER — title + dropdown filters */}
-      <section className="mx-auto max-w-[1400px] px-5 sm:px-8 mb-10 sm:mb-14">
-        <div className="flex flex-wrap items-center justify-between gap-6" data-fade>
-          <h1 className="text-5xl sm:text-6xl md:text-7xl font-medium text-slate-900 tracking-tight">
-            Our Works
-            <sup className="text-xl sm:text-2xl font-normal text-slate-900 ml-2">
-              ({filteredProjects.length})
-            </sup>
-          </h1>
-          <div className="flex flex-wrap items-center gap-4">
-            <FilterDropdown
-              label="Categories"
-              options={CATEGORIES}
-              value={activeFilter}
-              onChange={setActiveFilter}
-            />
+          {/* Filter pills */}
+          <div className="flex flex-wrap items-center gap-2 bg-white border border-slate-100 rounded-full p-1.5 shadow-[0_4px_20px_rgb(0,0,0,0.04)] self-center">
+            {FILTERS.map((f) => (
+              <button
+                key={f}
+                onClick={() => setActiveFilter(f)}
+                className={`px-5 py-2.5 rounded-full text-[13.5px] font-semibold transition-all duration-200 ${
+                  activeFilter === f
+                    ? "bg-blue-600 text-white shadow-[0_4px_14px_rgb(37,99,235,0.35)]"
+                    : "text-slate-600 hover:text-slate-900 hover:bg-slate-50"
+                }`}
+              >
+                {f}
+              </button>
+            ))}
           </div>
         </div>
       </section>
 
       {/* GRID */}
       <section className="mx-auto max-w-[1400px] px-5 sm:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 gap-y-12">
-          {filteredProjects.map((p) => (
-            <ProjectCard key={p.title} p={p} />
-          ))}
-        </div>
+        {filteredProjects.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
+            {filteredProjects.map((p) => (
+              <ProjectCard key={p.slug} p={p} />
+            ))}
+          </div>
+        ) : (
+          <p className="text-center text-slate-500 py-20 text-[15px]">
+            No projects in this category yet — check back soon.
+          </p>
+        )}
       </section>
     </div>
-  );
-}
-
-function ProjectCard({ p }: { p: any }) {
-  const videoRef = useRef<HTMLVideoElement>(null);
-
-  useEffect(() => {
-    if (videoRef.current) videoRef.current.muted = true;
-  }, []);
-
-  const hasLiveUrl = p.liveUrl && p.liveUrl !== "#";
-
-  const cardInner = (
-    <>
-      {/* Image Container */}
-      <div className="relative w-full aspect-[4/3] bg-[#f5f5f5] overflow-hidden mb-5 border border-gray-100 transition-shadow duration-500 group-hover:shadow-xl">
-        <img 
-          src={p.img} 
-          alt={p.title}
-          className="absolute inset-0 w-full h-full object-cover transition-all duration-[1.2s] ease-out group-hover:scale-105 group-hover:opacity-0 z-10"
-          loading="lazy"
-        />
-        {p.video && (
-          <video
-            ref={videoRef}
-            src={p.video}
-            muted
-            loop
-            playsInline
-            preload="auto"
-            className="absolute inset-0 h-full w-full object-cover transition-transform duration-[1.2s] ease-out group-hover:scale-105 z-0"
-          />
-        )}
-      </div>
-      
-      {/* Text Area */}
-      <div className="px-1">
-        <h3 className="text-[#1a1a1a] font-bold text-lg uppercase tracking-wide mb-1 transition-colors">
-          {p.title}
-        </h3>
-        <p className="text-[#1a1a1a] text-[11px] font-medium uppercase tracking-widest">
-          {p.tag} & DEVELOPMENT
-        </p>
-      </div>
-    </>
-  );
-
-  const sharedProps = {
-    className: "group block",
-    "data-fade": true,
-    onMouseEnter: () => {
-      if (videoRef.current) {
-        videoRef.current.muted = true;
-        videoRef.current.play().catch(() => {});
-      }
-    },
-    onMouseLeave: () => videoRef.current?.pause(),
-  };
-
-  if (hasLiveUrl) {
-    return (
-      <a href={p.liveUrl} target="_blank" rel="noopener noreferrer" {...sharedProps}>
-        {cardInner}
-      </a>
-    );
-  }
-
-  return (
-    <Link
-      to="/portfolio/$slug"
-      params={{ slug: p.slug }}
-      {...sharedProps}
-    >
-      {cardInner}
-    </Link>
   );
 }
