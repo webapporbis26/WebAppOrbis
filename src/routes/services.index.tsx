@@ -39,7 +39,9 @@ import serviceMobile from "@/assets/service-mobile.jpg";
 import serviceErp from "@/assets/service-erp.jpg";
 import candleSite from "@/assets/chandys-laptop.jpg";
 import bestMobile from "@/assets/project/best-portrait.jpg";
-import websiteMockup from "@/assets/website-mockup.jpg";
+import websiteSquare from "@/assets/Blue Tech Travel Website Mockup.png";
+import mobileMockupSquare from "@/assets/mobile-mockup-square.png";
+import erpMockupSquare from "@/assets/erp-mockup-square.png";
 
 
 export const Route = createFileRoute("/services/")({
@@ -65,7 +67,7 @@ const services = [
     image: serviceWeb,
     laptopImg: candleSite,
     phoneImg: bestMobile,
-    photoImg: websiteMockup,
+    photoImg: websiteSquare,
     tag: "Web Platforms",
     badges: [
       { icon: Rocket, title: "Modern Design", desc: "Visually engaging and on-brand websites" },
@@ -92,6 +94,7 @@ const services = [
     image: serviceMobile,
     laptopImg: candleSite,
     phoneImg: bestMobile,
+    photoImg: mobileMockupSquare,
     tag: "iOS · Android",
     badges: [
       { icon: Zap, title: "Native Performance", desc: "Buttery-smooth on any device" },
@@ -118,6 +121,7 @@ const services = [
     image: serviceErp,
     laptopImg: candleSite,
     phoneImg: bestMobile,
+    photoImg: erpMockupSquare,
     tag: "Enterprise",
     badges: [
       { icon: Settings, title: "Automated Workflows", desc: "Less manual busywork" },
@@ -163,7 +167,7 @@ function ServiceVisual({ s }: { s: (typeof services)[number] }) {
   // Photo mode: clean image, no mockups/badges (user-supplied photo)
   if ((s as any).photoImg) {
     return (
-      <div className="relative w-full aspect-[16/10]">
+      <div className="relative w-full aspect-square">
         <div className="absolute inset-0 rounded-[2rem] overflow-hidden shadow-[0_24px_60px_rgb(0,0,0,0.12)]">
           <img
             src={(s as any).photoImg}
@@ -286,14 +290,30 @@ function Services() {
 
   return (
     <>
+      {/* Page Header */}
+      <section className="pt-36 pb-2 md:pt-48 md:pb-4 text-center">
+        <div className="mx-auto max-w-7xl px-5 sm:px-8">
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-50 border border-blue-100 text-blue-600 text-sm font-semibold mb-6" data-fade>
+            <span className="w-1.5 h-1.5 rounded-full bg-blue-600"></span>
+            What We Do
+          </div>
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-slate-900 mb-6 max-w-3xl mx-auto">
+            <SplitText>Our Services & Expertise</SplitText>
+          </h1>
+          <p className="text-lg text-slate-600 max-w-2xl mx-auto" data-fade>
+            We deliver end-to-end digital solutions, from beautifully crafted websites to robust mobile apps and scalable ERP systems.
+          </p>
+        </div>
+      </section>
+
       {/* Service cards — Figma style showcase */}
-      <section ref={cardsRef} className="pt-36 pb-10">
-        <div className="mx-auto max-w-7xl px-5 sm:px-8 space-y-10">
+      <section ref={cardsRef} className="pb-20 mt-8 md:mt-12">
+        <div className="mx-auto max-w-7xl px-5 sm:px-8 space-y-20 md:space-y-24">
           {services.map((s, i) => (
             <div
               key={s.titleA}
               data-fade
-              className="grid gap-8 lg:gap-12 items-center rounded-[2rem] overflow-hidden py-8 px-5 sm:p-10 lg:p-12 md:grid-cols-2"
+              className="grid gap-8 lg:gap-16 items-center md:grid-cols-2"
             >
               {/* Visual — always left */}
               <div>
@@ -302,15 +322,7 @@ function Services() {
 
               {/* Content — always right */}
               <div>
-                <div className="flex items-center gap-3 mb-5">
-                  <span className="text-sm font-semibold text-slate-500">{s.num}</span>
-                  <span className="h-11 w-11 rounded-full bg-gradient-to-br from-blue-600 to-blue-400 flex items-center justify-center shadow-[0_8px_20px_rgb(37,99,235,0.3)]">
-                    <s.icon className="h-5 w-5 text-white" strokeWidth={1.75} />
-                  </span>
-                  <span className="text-sm font-semibold tracking-[0.2em] text-blue-500 uppercase">
-                    / {s.label}
-                  </span>
-                </div>
+
 
                 <h2 className="text-3xl sm:text-4xl lg:text-[2.6rem] font-extrabold tracking-tight leading-[1.1] mb-4">
                   <span className="text-slate-900">{s.titleA}</span>{" "}

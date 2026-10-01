@@ -332,7 +332,6 @@ function Home() {
         </div>
       </section>
 
-      <DigitalSolutions />
 
       {/* ============== FEATURES STRIP ============== */}
       <section className="relative z-30 mt-6 sm:mt-8 mx-auto max-w-7xl px-5 sm:px-8">
