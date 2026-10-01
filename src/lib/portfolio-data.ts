@@ -131,7 +131,7 @@ export const projects: Project[] = [
     outcome: "Improved brand perception.",
     metrics: [{ label: "Engagement", value: "+25%" }],
     gallery: [dhanaImg],
-    liveUrl: "#",
+    liveUrl: "https://www.denahalayapunnapra.com/",
     next: "best-project",
   },
   {
@@ -151,7 +151,7 @@ export const projects: Project[] = [
     outcome: "Award-winning design.",
     metrics: [{ label: "Awards", value: "2" }],
     gallery: [bestImg],
-    liveUrl: "#",
+    liveUrl: "https://bestchoiceqatar.net/",
     next: "dreamweaver-events",
   },
 ];
