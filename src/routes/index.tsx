@@ -343,8 +343,8 @@ function Home() {
             <span className="h-px w-12 sm:w-16 bg-blue-300" />
           </div>
           <h2 className="text-3xl sm:text-4xl md:text-[2.75rem] font-extrabold tracking-tight text-slate-900 leading-tight">
-            Love Our Design?<br />
-            Let's Create Your <span className="text-blue-600">Dream Website.</span>
+            Let's create a website that<br />
+            <span className="text-blue-600">represents your brand and attracts customers.</span>
           </h2>
           <p className="mt-3 text-slate-500 text-base sm:text-lg">
             Talk to Web Design Experts today.
