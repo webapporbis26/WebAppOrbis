@@ -302,13 +302,13 @@ function Services() {
               data-fade
               className="grid gap-8 lg:gap-12 items-center rounded-[2rem] overflow-hidden py-8 px-5 sm:p-10 lg:p-12 md:grid-cols-2"
             >
-              {/* Visual */}
-              <div className={i % 2 === 1 ? "md:order-2" : ""}>
+              {/* Visual — always left */}
+              <div>
                 <ServiceVisual s={s} />
               </div>
 
-              {/* Content */}
-              <div className={i % 2 === 1 ? "md:order-1" : ""}>
+              {/* Content — always right */}
+              <div>
                 <div className="flex items-center gap-3 mb-5">
                   <span className="text-sm font-semibold text-slate-500">{s.num}</span>
                   <span className="h-11 w-11 rounded-full bg-gradient-to-br from-blue-600 to-blue-400 flex items-center justify-center shadow-[0_8px_20px_rgb(37,99,235,0.3)]">
@@ -356,10 +356,10 @@ function Services() {
                   ))}
                 </div>
 
-                <div className="flex flex-wrap items-center gap-4">
+                <div className="flex items-center gap-3 sm:gap-4 flex-nowrap overflow-x-auto pb-1">
                   <button
                     onClick={() => setLeadService(`${s.titleA} ${s.titleB}`)}
-                    className="inline-flex items-center gap-2.5 pl-6 pr-2 py-2 rounded-full bg-gradient-to-r from-blue-700 to-blue-500 text-white font-semibold text-[15px] shadow-[0_10px_24px_rgb(37,99,235,0.35)] hover:shadow-[0_14px_32px_rgb(37,99,235,0.45)] hover:-translate-y-0.5 transition-all duration-300 cursor-pointer"
+                    className="inline-flex flex-shrink-0 items-center gap-2.5 pl-6 pr-2 py-2 rounded-full bg-gradient-to-r from-blue-700 to-blue-500 text-white font-semibold text-[15px] shadow-[0_10px_24px_rgb(37,99,235,0.35)] hover:shadow-[0_14px_32px_rgb(37,99,235,0.45)] hover:-translate-y-0.5 transition-all duration-300 cursor-pointer"
                   >
                     Get a Quote
                     <span className="h-9 w-9 rounded-full bg-white/20 flex items-center justify-center">
@@ -368,7 +368,7 @@ function Services() {
                   </button>
                   <Link
                     to="/portfolio"
-                    className="inline-flex items-center gap-2 px-6 py-3 rounded-full border-[1.5px] border-blue-500 text-blue-600 font-semibold text-[15px] hover:bg-blue-50 transition-all duration-300"
+                    className="inline-flex flex-shrink-0 items-center gap-2 px-6 py-3 rounded-full border-[1.5px] border-blue-500 text-blue-600 font-semibold text-[15px] hover:bg-blue-50 transition-all duration-300"
                   >
                     <Eye className="h-4 w-4" />
                     View Our Work
