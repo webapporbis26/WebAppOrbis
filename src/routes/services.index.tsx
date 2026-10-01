@@ -39,7 +39,6 @@ import serviceMobile from "@/assets/service-mobile.jpg";
 import serviceErp from "@/assets/service-erp.jpg";
 import candleSite from "@/assets/chandys-laptop.jpg";
 import bestMobile from "@/assets/project/best-portrait.jpg";
-import chandysDesk from "@/assets/chandys-desk.jpg";
 
 
 export const Route = createFileRoute("/services/")({
@@ -65,7 +64,7 @@ const services = [
     image: serviceWeb,
     laptopImg: candleSite,
     phoneImg: bestMobile,
-    photoImg: chandysDesk,
+    photoImg: candleSite,
     tag: "Web Platforms",
     badges: [
       { icon: Rocket, title: "Modern Design", desc: "Visually engaging and on-brand websites" },
