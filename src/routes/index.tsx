@@ -136,6 +136,75 @@ function ProjectCard({ c }: { c: ProjectItem }) {
   );
 }
 
+function FeatureCard({ f }: { f: (typeof featuresList)[number] }) {
+  return (
+    <div className="bg-white rounded-2xl border border-slate-100 shadow-[0_2px_16px_rgb(0,0,0,0.04)] p-5 sm:p-6 flex flex-col items-center text-center hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] hover:-translate-y-1 transition-all duration-300 h-full">
+      <div className={`h-16 w-16 sm:h-[4.5rem] sm:w-[4.5rem] rounded-full ${f.bg} flex items-center justify-center mb-4`}>
+        <f.icon className={`h-8 w-8 ${f.color}`} strokeWidth={1.5} />
+      </div>
+      <h4 className="text-[13px] sm:text-sm font-bold text-slate-900 leading-snug mb-2">
+        {f.title}
+      </h4>
+      <div className={`h-[3px] w-8 rounded-full ${f.line} mb-3`} />
+      <p className="text-[11px] sm:text-xs text-slate-500 leading-relaxed">
+        {f.desc}
+      </p>
+    </div>
+  );
+}
+
+function FeaturesSlider() {
+  const pages = Math.ceil(featuresList.length / 2);
+  const [idx, setIdx] = useState(0);
+  const touchX = useRef<number | null>(null);
+
+  useEffect(() => {
+    const t = setInterval(() => setIdx((i) => (i + 1) % pages), 3500);
+    return () => clearInterval(t);
+  }, [pages]);
+
+  return (
+    <div className="md:hidden" data-fade>
+      <div
+        className="overflow-hidden"
+        onTouchStart={(e) => (touchX.current = e.touches[0].clientX)}
+        onTouchEnd={(e) => {
+          if (touchX.current == null) return;
+          const dx = e.changedTouches[0].clientX - touchX.current;
+          if (dx < -40) setIdx((i) => (i + 1) % pages);
+          else if (dx > 40) setIdx((i) => (i - 1 + pages) % pages);
+          touchX.current = null;
+        }}
+      >
+        <div
+          className="flex transition-transform duration-500 ease-out"
+          style={{ transform: `translateX(-${idx * 100}%)` }}
+        >
+          {Array.from({ length: pages }).map((_, pg) => (
+            <div key={pg} className="w-full shrink-0 grid grid-cols-2 gap-4 px-0.5">
+              {featuresList.slice(pg * 2, pg * 2 + 2).map((f, i) => (
+                <FeatureCard key={i} f={f} />
+              ))}
+            </div>
+          ))}
+        </div>
+      </div>
+      <div className="flex justify-center gap-2 mt-5">
+        {Array.from({ length: pages }).map((_, i) => (
+          <button
+            key={i}
+            aria-label={`Go to slide ${i + 1}`}
+            onClick={() => setIdx(i)}
+            className={`h-2 rounded-full transition-all duration-300 ${
+              i === idx ? "w-7 bg-blue-600" : "w-2 bg-slate-300"
+            }`}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
 function Home() {
   const heroRef = useRef<HTMLDivElement>(null);
 
@@ -349,25 +418,14 @@ function Home() {
             Talk to Web Design Experts today.
           </p>
         </div>
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 sm:gap-5" data-fade>
+        {/* Desktop / tablet grid */}
+        <div className="hidden md:grid md:grid-cols-3 lg:grid-cols-6 gap-4 sm:gap-5" data-fade>
           {featuresList.map((f, i) => (
-            <div
-              key={i}
-              className="bg-white rounded-2xl border border-slate-100 shadow-[0_2px_16px_rgb(0,0,0,0.04)] p-5 sm:p-6 flex flex-col items-center text-center hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] hover:-translate-y-1 transition-all duration-300"
-            >
-              <div className={`h-16 w-16 sm:h-[4.5rem] sm:w-[4.5rem] rounded-full ${f.bg} flex items-center justify-center mb-4`}>
-                <f.icon className={`h-8 w-8 ${f.color}`} strokeWidth={1.5} />
-              </div>
-              <h4 className="text-[13px] sm:text-sm font-bold text-slate-900 leading-snug mb-2">
-                {f.title}
-              </h4>
-              <div className={`h-[3px] w-8 rounded-full ${f.line} mb-3`} />
-              <p className="text-[11px] sm:text-xs text-slate-500 leading-relaxed">
-                {f.desc}
-              </p>
-            </div>
+            <FeatureCard key={i} f={f} />
           ))}
         </div>
+        {/* Mobile auto-slider: 2 at a time */}
+        <FeaturesSlider />
       </section>
 
       {/* ============== OUR WORKS ============== */}
