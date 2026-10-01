@@ -6,14 +6,20 @@ import showcaseDreamweaver from "@/assets/showcase-dreamweaver.webp";
 import showcaseMallusmart from "@/assets/showcase-mallusmart.png";
 import showcaseDenahalaya from "@/assets/showcase-denahalaya.png";
 import showcaseChandys from "@/assets/showcase-chandys.png";
+import showcaseNazarethM from "@/assets/showcase-nazareth-m.jpg";
+import showcaseBestchoiceM from "@/assets/showcase-bestchoice-m.jpg";
+import showcaseDreamweaverM from "@/assets/showcase-dreamweaver-m.jpg";
+import showcaseMallusmartM from "@/assets/showcase-mallusmart-m.jpg";
+import showcaseDenahalayaM from "@/assets/showcase-denahalaya-m.jpg";
+import showcaseChandysM from "@/assets/showcase-chandys-m.jpg";
 
 const slides = [
-  { img: showcaseNazareth, alt: "Nazareth Candles website showcase" },
-  { img: showcaseBestchoice, alt: "Bestchoice Contracting website showcase" },
-  { img: showcaseDreamweaver, alt: "Dream Weaver Events website showcase" },
-  { img: showcaseMallusmart, alt: "Mallu's Mart eCommerce website showcase" },
-  { img: showcaseDenahalaya, alt: "Denahalaya Psycho-Spiritual Institute website showcase" },
-  { img: showcaseChandys, alt: "Chandy's Hotels and Resorts website showcase" },
+  { img: showcaseNazareth, imgM: showcaseNazarethM, alt: "Nazareth Candles website showcase" },
+  { img: showcaseBestchoice, imgM: showcaseBestchoiceM, alt: "Bestchoice Contracting website showcase" },
+  { img: showcaseDreamweaver, imgM: showcaseDreamweaverM, alt: "Dream Weaver Events website showcase" },
+  { img: showcaseMallusmart, imgM: showcaseMallusmartM, alt: "Mallu's Mart eCommerce website showcase" },
+  { img: showcaseDenahalaya, imgM: showcaseDenahalayaM, alt: "Denahalaya Psycho-Spiritual Institute website showcase" },
+  { img: showcaseChandys, imgM: showcaseChandysM, alt: "Chandy's Hotels and Resorts website showcase" },
 ];
 
 export function FeaturedShowcase() {
@@ -60,12 +66,15 @@ export function FeaturedShowcase() {
           >
             {slides.map((s, i) => (
               <div key={i} className="w-full shrink-0">
-                <img
-                  src={s.img}
-                  alt={s.alt}
-                  className="w-full h-auto select-none"
-                  draggable={false}
-                />
+                <picture>
+                  <source media="(max-width: 767px)" srcSet={s.imgM} />
+                  <img
+                    src={s.img}
+                    alt={s.alt}
+                    className="w-full h-auto select-none"
+                    draggable={false}
+                  />
+                </picture>
               </div>
             ))}
           </div>
