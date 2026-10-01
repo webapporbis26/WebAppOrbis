@@ -39,6 +39,7 @@ import serviceMobile from "@/assets/service-mobile.jpg";
 import serviceErp from "@/assets/service-erp.jpg";
 import candleSite from "@/assets/chandys-laptop.jpg";
 import bestMobile from "@/assets/project/best-portrait.jpg";
+import websiteMockup from "@/assets/website-mockup.jpg";
 
 
 export const Route = createFileRoute("/services/")({
@@ -64,7 +65,7 @@ const services = [
     image: serviceWeb,
     laptopImg: candleSite,
     phoneImg: bestMobile,
-    photoImg: candleSite,
+    photoImg: websiteMockup,
     tag: "Web Platforms",
     badges: [
       { icon: Rocket, title: "Modern Design", desc: "Visually engaging and on-brand websites" },
@@ -162,7 +163,7 @@ function ServiceVisual({ s }: { s: (typeof services)[number] }) {
   // Photo mode: clean image, no mockups/badges (user-supplied photo)
   if ((s as any).photoImg) {
     return (
-      <div className="relative w-full aspect-[16/10]">
+      <div className="relative w-full aspect-[2/1]">
         <div className="absolute inset-0 rounded-[2rem] overflow-hidden shadow-[0_24px_60px_rgb(0,0,0,0.12)]">
           <img
             src={(s as any).photoImg}
