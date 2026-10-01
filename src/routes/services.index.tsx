@@ -39,6 +39,7 @@ import serviceMobile from "@/assets/service-mobile.jpg";
 import serviceErp from "@/assets/service-erp.jpg";
 import candleSite from "@/assets/project/candle.png";
 import bestMobile from "@/assets/project/best-portrait.jpg";
+import chandysLaptop from "@/assets/chandys-laptop.png";
 
 
 export const Route = createFileRoute("/services/")({
@@ -62,7 +63,7 @@ const services = [
     titleB: "Design & Development",
     desc: "We create professional websites that combine modern design with advanced functionality. Our websites are developed to deliver fast performance, responsive layouts, and seamless user experiences across desktops, tablets, and mobile devices.",
     image: serviceWeb,
-    laptopImg: candleSite,
+    laptopImg: chandysLaptop,
     phoneImg: bestMobile,
     tag: "Web Platforms",
     badges: [
@@ -165,7 +166,7 @@ function ServiceVisual({ s }: { s: (typeof services)[number] }) {
   const B1 = s.badges[1].icon;
   const B2 = s.badges[2].icon;
   return (
-    <div className="relative w-full h-[400px] sm:h-[460px]">
+    <div className="relative w-full h-full min-h-[400px] sm:min-h-[480px]">
       {/* Soft background */}
       <div className="absolute inset-0 rounded-[2rem] bg-gradient-to-br from-[#eaf3ff] via-[#f4f9ff] to-[#e8f1ff] overflow-hidden">
         <div className="absolute -top-16 -right-16 w-64 h-64 rounded-full bg-blue-100/70 blur-2xl" />
