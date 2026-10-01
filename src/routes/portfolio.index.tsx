@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState, useMemo, useRef, useEffect } from "react";
 import { projects } from "@/lib/portfolio-data";
-import portfolioHeroBg from "@/assets/portfolio-hero-bg.png";
+import { PortfolioHeroSlider } from "@/components/PortfolioHeroSlider";
 import { useFadeUp } from "@/lib/anim";
 
 export const Route = createFileRoute("/portfolio/")({
@@ -28,22 +28,8 @@ function Portfolio() {
   return (
     <div className="bg-white min-h-screen pb-28 font-sans">
       
-      {/* HERO SECTION */}
-      <section className="relative pt-36 sm:pt-44 overflow-hidden"
-        style={{ backgroundImage: `url(${portfolioHeroBg})`, backgroundSize: 'cover', backgroundPosition: 'center 80%' }}>
-        <div className="mx-auto max-w-[1400px] px-5 sm:px-8 pb-20 sm:pb-28 min-h-[480px] flex items-center">
-          <div data-fade className="max-w-xl">
-            <div className="w-12 h-[3px] bg-blue-600 mb-5" />
-            <h1 className="leading-[0.95] mb-6">
-              <span className="block text-5xl sm:text-6xl md:text-[76px] font-light text-slate-400 tracking-tight uppercase">Our</span>
-              <span className="block text-7xl sm:text-8xl md:text-[110px] font-black tracking-tight uppercase bg-gradient-to-r from-[#0a2472] via-[#1e40af] to-[#2563eb] bg-clip-text text-transparent">Works</span>
-            </h1>
-            <p className="text-slate-500 text-[17px] sm:text-lg leading-[1.7] max-w-md">
-              Turning vision into reality with a portfolio of our completed digital projects.
-            </p>
-          </div>
-        </div>
-      </section>
+      {/* HERO SLIDER */}
+      <PortfolioHeroSlider />
 
       {/* FILTER BAR */}
       <section className="mx-auto max-w-[1400px] px-5 sm:px-8 mb-12 pt-8">
