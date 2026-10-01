@@ -37,6 +37,8 @@ import { LeadModal } from "@/components/LeadModal";
 import serviceWeb from "@/assets/service-web.jpg";
 import serviceMobile from "@/assets/service-mobile.jpg";
 import serviceErp from "@/assets/service-erp.jpg";
+import candleSite from "@/assets/project/candle.png";
+import bestMobile from "@/assets/project/best-portrait.jpg";
 
 
 export const Route = createFileRoute("/services/")({
@@ -60,6 +62,8 @@ const services = [
     titleB: "Design & Development",
     desc: "We create professional websites that combine modern design with advanced functionality. Our websites are developed to deliver fast performance, responsive layouts, and seamless user experiences across desktops, tablets, and mobile devices.",
     image: serviceWeb,
+    laptopImg: candleSite,
+    phoneImg: bestMobile,
     tag: "Web Platforms",
     badges: [
       { icon: Rocket, title: "Modern Design", desc: "Visually engaging and on-brand websites" },
@@ -84,6 +88,8 @@ const services = [
     titleB: "Development",
     desc: "We develop customised mobile applications designed to improve customer accessibility and business operations. Our applications are built with modern technologies to ensure smooth performance, security, and scalability.",
     image: serviceMobile,
+    laptopImg: candleSite,
+    phoneImg: bestMobile,
     tag: "iOS · Android",
     badges: [
       { icon: Zap, title: "Native Performance", desc: "Buttery-smooth on any device" },
@@ -108,6 +114,8 @@ const services = [
     titleB: "Solutions",
     desc: "Our ERP solutions are designed to simplify and automate business operations through integrated management systems. We develop customised ERP software that improves productivity, workflow efficiency, and data management across departments.",
     image: serviceErp,
+    laptopImg: candleSite,
+    phoneImg: bestMobile,
     tag: "Enterprise",
     badges: [
       { icon: Settings, title: "Automated Workflows", desc: "Less manual busywork" },
@@ -175,10 +183,10 @@ function ServiceVisual({ s }: { s: (typeof services)[number] }) {
       </span>
 
       {/* Laptop */}
-      <div className="absolute left-1/2 -translate-x-[36%] top-[18%] w-[72%]">
+      <div className="absolute left-1/2 -translate-x-[38%] top-[16%] w-[80%]">
         <div className="bg-slate-900 rounded-t-2xl p-[6px] pb-0 shadow-[0_24px_60px_rgb(0,0,0,0.18)]">
           <div className="rounded-t-xl overflow-hidden bg-white">
-            <img src={s.image} alt={s.titleA + " " + s.titleB} className="w-full aspect-[16/10] object-cover" loading="lazy" />
+            <img src={s.laptopImg} alt={s.titleA + " " + s.titleB} className="w-full aspect-[16/10] object-cover object-top" loading="lazy" />
           </div>
         </div>
         <div className="h-[10px] bg-gradient-to-b from-slate-300 to-slate-400 rounded-b-lg mx-[-8%]" />
@@ -186,10 +194,10 @@ function ServiceVisual({ s }: { s: (typeof services)[number] }) {
       </div>
 
       {/* Phone */}
-      <div className="absolute left-[5%] bottom-[5%] w-[23%] min-w-[104px]">
+      <div className="absolute left-[4%] bottom-[4%] w-[24%] min-w-[108px]">
         <div className="bg-slate-900 rounded-[1.8rem] p-[6px] shadow-[0_20px_50px_rgb(0,0,0,0.22)]">
           <div className="rounded-[1.4rem] overflow-hidden relative bg-white">
-            <img src={s.image} alt={s.titleA + " mobile view"} className="w-full aspect-[9/18.5] object-cover" loading="lazy" />
+            <img src={s.phoneImg} alt={s.titleA + " mobile view"} className="w-full aspect-[9/18.5] object-cover object-top" loading="lazy" />
             <div className="absolute top-2 left-1/2 -translate-x-1/2 w-[38%] h-[16px] bg-slate-900 rounded-full" />
           </div>
         </div>
