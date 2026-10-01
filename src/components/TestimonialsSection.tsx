@@ -174,14 +174,14 @@ export const TestimonialsSection = () => {
 
         <div className="overflow-hidden" data-fade>
           <div
-            className="flex gap-5 sm:gap-6 transition-transform duration-700 ease-in-out"
-            style={{ transform: `translateX(-${current * (100 / perView)}%)` }}
+            className="flex transition-transform duration-700 ease-in-out"
+            style={{ transform: `translateX(-${current * (100 / testimonials.length)}%)` }}
           >
             {testimonials.map((t, i) => (
               <div
                 key={i}
-                className="flex-shrink-0"
-                style={{ width: `calc(${100 / perView}% - ${(perView - 1) * 24 / perView}px)` }}
+                className="flex-shrink-0 px-2.5 sm:px-3"
+                style={{ width: `${100 / perView}%` }}
               >
                 <TestimonialCard t={t} />
               </div>
