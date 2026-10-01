@@ -108,20 +108,22 @@ function Portfolio() {
           </div>
 
           {/* Filter pills */}
-          <div className="flex flex-wrap items-center gap-2 bg-white border border-slate-100 rounded-full p-1.5 shadow-[0_4px_20px_rgb(0,0,0,0.04)] self-center">
-            {FILTERS.map((f) => (
-              <button
-                key={f}
-                onClick={() => setActiveFilter(f)}
-                className={`px-5 py-2.5 rounded-full text-[13.5px] font-semibold transition-all duration-200 ${
-                  activeFilter === f
-                    ? "bg-blue-600 text-white shadow-[0_4px_14px_rgb(37,99,235,0.35)]"
-                    : "text-slate-600 hover:text-slate-900 hover:bg-slate-50"
-                }`}
-              >
-                {f}
-              </button>
-            ))}
+          <div className="w-full sm:w-auto overflow-x-auto pb-1 -mx-5 px-5 sm:mx-0 sm:px-0">
+            <div className="flex flex-nowrap sm:flex-wrap items-center gap-2 bg-white border border-slate-100 rounded-full p-1.5 shadow-[0_4px_20px_rgb(0,0,0,0.04)] self-center w-max sm:w-auto">
+              {FILTERS.map((f) => (
+                <button
+                  key={f}
+                  onClick={() => setActiveFilter(f)}
+                  className={`px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-[12.5px] sm:text-[13.5px] font-semibold transition-all duration-200 whitespace-nowrap flex-shrink-0 ${
+                    activeFilter === f
+                      ? "bg-blue-600 text-white shadow-[0_4px_14px_rgb(37,99,235,0.35)]"
+                      : "text-slate-600 hover:text-slate-900 hover:bg-slate-50"
+                  }`}
+                >
+                  {f}
+                </button>
+              ))}
+            </div>
           </div>
         </div>
       </section>
