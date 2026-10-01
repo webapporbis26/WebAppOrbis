@@ -300,7 +300,7 @@ function Services() {
             <div
               key={s.titleA}
               data-fade
-              className="grid gap-8 lg:gap-12 items-center rounded-[2rem] bg-white overflow-hidden py-8 px-5 sm:p-10 lg:p-12 md:grid-cols-2"
+              className="grid gap-8 lg:gap-12 items-center rounded-[2rem] overflow-hidden py-8 px-5 sm:p-10 lg:p-12 md:grid-cols-2"
             >
               {/* Visual */}
               <div className={i % 2 === 1 ? "md:order-2" : ""}>
