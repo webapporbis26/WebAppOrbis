@@ -3,11 +3,13 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import showcaseNazareth from "@/assets/showcase-nazareth.webp";
 import showcaseBestchoice from "@/assets/showcase-bestchoice.webp";
 import showcaseDreamweaver from "@/assets/showcase-dreamweaver.webp";
+import showcaseMallusmart from "@/assets/showcase-mallusmart.png";
 
 const slides = [
   { img: showcaseNazareth, alt: "Nazareth Candles website showcase" },
   { img: showcaseBestchoice, alt: "Bestchoice Contracting website showcase" },
   { img: showcaseDreamweaver, alt: "Dream Weaver Events website showcase" },
+  { img: showcaseMallusmart, alt: "Mallu's Mart eCommerce website showcase" },
 ];
 
 export function FeaturedShowcase() {
