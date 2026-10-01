@@ -33,12 +33,13 @@ function Portfolio() {
         style={{ backgroundImage: `url(${portfolioHeroBg})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
         <div className="mx-auto max-w-[1400px] px-5 sm:px-8 py-16 sm:py-24 min-h-[420px] flex items-center">
           <div data-fade className="max-w-xl">
-            <h1 className="leading-none mb-6">
-              <span className="block text-5xl sm:text-6xl md:text-[72px] font-light text-gray-400 tracking-tight mb-2 uppercase">Our</span>
-              <span className="block text-7xl sm:text-8xl md:text-[110px] font-black text-[#1a1a1a] tracking-tight uppercase">Works</span>
+            <div className="w-12 h-[3px] bg-blue-600 mb-5" />
+            <h1 className="leading-[0.95] mb-6">
+              <span className="block text-5xl sm:text-6xl md:text-[76px] font-light text-slate-400 tracking-tight uppercase">Our</span>
+              <span className="block text-7xl sm:text-8xl md:text-[110px] font-black tracking-tight uppercase bg-gradient-to-r from-[#0a2472] via-[#1e40af] to-[#2563eb] bg-clip-text text-transparent">Works</span>
             </h1>
-            <p className="text-[#1a1a1a] text-lg sm:text-xl font-semibold uppercase tracking-wide leading-relaxed">
-              TURNING VISION INTO REALITY: A PORTFOLIO OF OUR COMPLETED PROJECTS
+            <p className="text-slate-500 text-[17px] sm:text-lg leading-[1.7] max-w-md">
+              Turning vision into reality with a portfolio of our completed digital projects.
             </p>
           </div>
         </div>
