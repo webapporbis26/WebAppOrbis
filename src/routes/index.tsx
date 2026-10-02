@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
-import { ArrowDown, ArrowUpRight, Globe, Smartphone, Database, Sparkles, Zap, Shield, Users, Star, Search, Rocket, MonitorSmartphone, SearchCheck, CodeXml, Headset, Share2, MessageCircle, PhoneCall, LayoutTemplate, TrendingUp, ArrowRight, Folder, Trophy, Eye } from "lucide-react";
+import { ArrowDown, ArrowUpRight, Globe, Smartphone, Database, Sparkles, Zap, Shield, Users, Star, Search, Rocket, MonitorSmartphone, SearchCheck, CodeXml, Headset, Share2, MessageCircle, PhoneCall, LayoutTemplate, TrendingUp, ArrowRight, Folder, Trophy, Eye, ExternalLink, MessageSquareText } from "lucide-react";
 import { gsap, ScrollTrigger, RevealLine, useTextReveal, useFadeUp } from "@/lib/anim";
 import { MagneticButton } from "@/components/MagneticButton";
 import { FaqPro } from "@/components/ui/faq-pro";
@@ -90,49 +90,49 @@ interface ProjectItem {
 
 function ProjectCard({ c }: { c: ProjectItem }) {
   return (
-    <div data-fade className="group bg-white rounded-3xl p-3 sm:p-4 shadow-[0_4px_24px_rgb(0,0,0,0.04)] hover:shadow-[0_12px_36px_rgb(0,0,0,0.08)] hover:-translate-y-1.5 transition-all duration-300">
-      <a href={c.link} target="_blank" rel="noopener noreferrer" className="block relative overflow-hidden rounded-2xl">
+    <article
+      data-fade
+      className="group bg-white rounded-[1.75rem] overflow-hidden border border-slate-100 shadow-[0_8px_32px_rgb(0,0,0,0.04)] hover:shadow-[0_20px_56px_rgb(0,0,0,0.10)] transition-shadow duration-500 flex flex-col"
+    >
+      {/* Image */}
+      <div className="relative w-full aspect-[16/10] overflow-hidden bg-slate-100">
         <img
           src={c.img}
           alt={c.title}
+          className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
           loading="lazy"
-          className="w-full aspect-[16/10] object-cover transition-transform duration-700 group-hover:scale-105"
         />
-        <span className={`absolute top-3 left-3 sm:top-4 sm:left-4 text-[11px] sm:text-xs font-semibold px-3 py-1.5 rounded-full ${c.badgeClass}`}>
+        <span className="absolute top-4 left-4 flex items-center gap-1.5 bg-white/95 backdrop-blur px-3.5 py-1.5 rounded-full text-[12px] font-semibold text-blue-700 shadow-sm">
+          <MonitorSmartphone className="w-3.5 h-3.5" />
           {c.badge}
         </span>
-      </a>
-      <div className="px-2 sm:px-3 pt-4 pb-2">
-        <div className="flex items-start justify-between gap-3">
-          <div>
-            <h3 className="text-base sm:text-lg font-bold text-slate-900 uppercase tracking-wide leading-snug">
-              {c.title}
-            </h3>
-            <p className="text-[13px] sm:text-sm text-slate-500 mt-1.5 leading-relaxed">
-              {c.desc}
-            </p>
-          </div>
+      </div>
+
+      {/* Body */}
+      <div className="flex flex-col flex-1 px-6 pt-5 pb-6">
+        <h3 className="text-[19px] font-bold text-slate-900 mb-1.5">{c.title}</h3>
+        <p className="text-[14px] leading-relaxed text-slate-500 mb-5 flex-1">{c.desc}</p>
+
+        <div className="flex flex-wrap items-center gap-3">
           <a
             href={c.link}
             target="_blank"
             rel="noopener noreferrer"
-            aria-label={`View ${c.title}`}
-            className={`flex-shrink-0 h-10 w-10 rounded-full ${c.arrowClass} flex items-center justify-center transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-0.5`}
+            className="inline-flex flex-1 items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white text-[13.5px] font-semibold px-4 py-2.5 rounded-full transition-colors"
           >
-            <ArrowRight className="h-4 w-4" />
+            <ExternalLink className="w-4 h-4" />
+            Visit Website
           </a>
+          <Link
+            to="/contact"
+            className="inline-flex flex-1 items-center justify-center gap-2 border-[1.5px] border-blue-600 text-blue-600 hover:bg-blue-50 text-[13.5px] font-semibold px-4 py-2.5 rounded-full transition-colors"
+          >
+            <MessageSquareText className="w-4 h-4" />
+            Get a Quote
+          </Link>
         </div>
-        <a
-          href={c.link}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-1.5 text-sm font-semibold text-blue-600 hover:text-blue-700 mt-3 transition-colors"
-        >
-          View Project
-          <ArrowRight className="h-3.5 w-3.5" />
-        </a>
       </div>
-    </div>
+    </article>
   );
 }
 

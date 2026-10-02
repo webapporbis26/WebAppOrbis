@@ -2,12 +2,11 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { RevealLine, useTextReveal, useFadeUp, gsap, ScrollTrigger } from "@/lib/anim";
 import SplitText from "@/components/ui/SplitText";
-import { Users, User, Rocket, Lightbulb, MonitorSmartphone, CodeXml, Mail, Smartphone, Loader2, MessageSquare, Phone, ArrowRight, ChevronDown } from "lucide-react";
+import { Users, User, Target, Rocket, Lightbulb, MonitorSmartphone, CodeXml, Mail, Smartphone, Loader2, Eye, MessageSquare, Phone, ArrowRight, ChevronDown, Folder, Trophy, TrendingUp } from "lucide-react";
 import coffeeCup from "@/assets/coffee-cup.png";
 import contactIllustration from "@/assets/contact-illustration.png";
 import { leadsApi } from "@/lib/admin/api";
-import { DigitalSolutions } from "@/components/DigitalSolutions";
-import aboutHero from "@/assets/about-hero.png";
+import aboutShowcase from "@/assets/about-showcase.png";
 import contact3d from "@/assets/contact-3d.png";
 import contactBg from "@/assets/contact-bg.png";
 
@@ -68,125 +67,108 @@ function About() {
 
   return (
     <>
-      <section ref={heroRef} className="relative overflow-hidden bg-[#f0f2f5]">
-        {/* Desktop: fixed aspect ratio matching Figma composition */}
-        <div className="relative hidden lg:block w-full" style={{ aspectRatio: "1680 / 936" }}>
-          <img
-            src={aboutHero}
-            alt="WebApp Orbis team collaborating"
-            className="absolute inset-0 w-full h-full"
-          />
-          {/* LEFT — text */}
-          <div className="absolute left-[4%] top-[26%] max-w-[30%]" data-fade>
-            <p className="text-[48px] font-light tracking-wide text-[#222] uppercase mb-1">OUR</p>
-            <h1 className="text-[104px] font-black tracking-tight leading-none text-[#111] uppercase mb-7">STORY</h1>
-            <p className="text-[13px] font-semibold uppercase tracking-[0.28em] text-[#555] max-w-[300px] leading-[2]">
-              We are truly grateful to you for choosing us as your partner and giving us the opportunity to grow
-            </p>
-          </div>
-
-          {/* Card: 5+ — purple */}
-          <div data-fade className="absolute bg-[#7c5cbf] rounded-[22px] shadow-[0_16px_45px_rgba(124,92,191,0.35)] flex flex-col items-center justify-center"
-               style={{ left: "33.5%", top: "18%", width: "9.5%", height: "16.5%" }}>
-            <p className="text-[56px] font-black text-white leading-none">5+</p>
-            <div className="w-9 h-[3px] bg-white/60 mt-2 rounded-sm" />
-          </div>
-
-          {/* Card: YEARS OF EXPERIENCE — yellow */}
-          <div data-fade className="absolute bg-[#f5c842] rounded-[22px] shadow-[0_16px_45px_rgba(245,200,66,0.30)] flex items-center justify-center"
-               style={{ left: "42.5%", top: "26%", width: "9.5%", height: "10%" }}>
-            <p className="text-[15px] font-extrabold text-[#222] uppercase tracking-wider leading-snug text-center">Years of<br/>Experience</p>
-          </div>
-
-          {/* Card: 50+ HAPPY CLIENTS — white */}
-          <div data-fade className="absolute bg-white rounded-[22px] shadow-[0_16px_45px_rgba(0,0,0,0.10)] flex flex-col items-center justify-center"
-               style={{ left: "76%", top: "14%", width: "14%", height: "14%" }}>
-            <p className="text-[54px] font-extrabold text-[#2dd4bf] leading-none">50+</p>
-            <p className="text-[12px] font-bold tracking-[0.18em] text-[#888] mt-2 uppercase">Happy Clients</p>
-          </div>
-
-          {/* Card: 100+ SUCCESSFUL PROJECTS — white */}
-          <div data-fade className="absolute bg-white rounded-[22px] shadow-[0_16px_45px_rgba(0,0,0,0.10)] flex flex-col items-center justify-center"
-               style={{ left: "30.5%", top: "46%", width: "10%", height: "14%" }}>
-            <p className="text-[44px] font-extrabold text-[#7c5cbf] leading-none">100+</p>
-            <p className="text-[11px] font-bold tracking-[0.14em] text-[#888] mt-2 uppercase text-center leading-relaxed">Successful<br/>Projects</p>
+      <section className="relative py-20 sm:py-28 bg-white overflow-hidden pt-36">
+        {/* Decorative dotted pattern */}
+        <div className="absolute right-8 sm:right-16 top-36 opacity-40 pointer-events-none hidden md:block">
+          <div className="grid grid-cols-5 gap-2">
+            {Array.from({ length: 20 }).map((_, i) => (
+              <div key={i} className="w-1.5 h-1.5 rounded-full bg-blue-300" />
+            ))}
           </div>
         </div>
 
-        {/* Mobile/tablet: image top, text + stat grid below */}
-        <div className="lg:hidden">
-          <div className="relative w-full" style={{ aspectRatio: "1680 / 936" }}>
-            <img
-              src={aboutHero}
-              alt="WebApp Orbis team collaborating"
-              className="absolute inset-0 w-full h-full object-cover"
-            />
-          </div>
-          <div className="px-5 pt-28 pb-10">
-            <p className="text-4xl font-light tracking-wide text-[#222] uppercase mb-2">OUR</p>
-            <h1 className="text-6xl sm:text-7xl font-black tracking-tight leading-none text-[#111] uppercase mb-6">STORY</h1>
-            <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[#555] leading-relaxed mb-8 max-w-sm">
-              We are truly grateful to you for choosing us as your partner and giving us the opportunity to grow
-            </p>
-            <div className="grid grid-cols-2 gap-3 max-w-md">
-              <div className="bg-[#7c5cbf] rounded-2xl p-4 shadow-lg">
-                <p className="text-3xl font-black text-white leading-none">5+</p>
-                <p className="text-[10px] font-bold tracking-[0.12em] text-white/80 mt-1 uppercase">Years of Experience</p>
-              </div>
-              <div className="bg-white rounded-2xl p-4 shadow-lg">
-                <p className="text-3xl font-extrabold text-[#2dd4bf] leading-none">50+</p>
-                <p className="text-[10px] font-bold tracking-[0.12em] text-[#888] mt-1 uppercase">Happy Clients</p>
-              </div>
-              <div className="bg-white rounded-2xl p-4 shadow-lg col-span-2">
-                <p className="text-3xl font-extrabold text-[#7c5cbf] leading-none">100+</p>
-                <p className="text-[10px] font-bold tracking-[0.12em] text-[#888] mt-1 uppercase">Successful Projects</p>
-              </div>
+        <div className="mx-auto max-w-[1400px] px-5 sm:px-8">
+          <div className="text-center mb-10 sm:mb-16" data-fade>
+            <div className="flex items-center justify-center gap-4 mb-4">
+              <span className="h-px w-10 sm:w-12 bg-blue-400" />
+              <span className="text-[11px] sm:text-xs font-semibold tracking-[0.3em] text-blue-500 uppercase">About Us</span>
+              <span className="h-px w-10 sm:w-12 bg-blue-400" />
             </div>
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 leading-tight tracking-tight mb-4">
+              Digital Ideas. <span className="text-blue-600">Powerful Solutions.</span>
+            </h1>
+            <p className="text-slate-500 text-[16px] sm:text-lg max-w-2xl mx-auto leading-relaxed">
+              We create modern websites, mobile applications and digital solutions to help businesses grow and succeed online.
+            </p>
           </div>
-        </div>
-      </section>
 
-      {/* ============== OUR PHILOSOPHY ============== */}
-      <section className="relative py-10 sm:py-14 bg-white">
-        <div className="mx-auto max-w-[1200px] px-5 sm:px-8 grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-12 lg:gap-12 items-start">
-          <div data-fade className="flex flex-col h-full">
-            <img 
-              src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=600&h=450&q=80" 
-              alt="Our Philosophy" 
-              className="w-full rounded-2xl border border-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.03)] object-cover aspect-[4/3] sticky top-32"
-            />
-          </div>
-          
-          <div data-fade className="flex flex-col justify-center pt-8 sm:pt-12">
-            <SplitText tag="h2" className="text-3xl sm:text-4xl lg:text-[46px] font-light text-foreground mb-10 sm:mb-12 leading-[1.25]">
-              Transforming Ideas Into <br className="hidden lg:block" /> Digital Realities
-            </SplitText>
-            <div className="space-y-8 text-[14px] sm:text-[15px] text-foreground/70 leading-[1.8] text-justify md:text-left">
-              <p>
-                At WebApp Orbis, our philosophy centers on the belief that every digital product we create should be a perfect blend of form and function. We don't just write code; we architect solutions that empower businesses to scale, innovate, and thrive in an increasingly digital world.
+          <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-stretch">
+            {/* Left: showcase image */}
+            <div className="relative rounded-[2rem] overflow-hidden shadow-[0_12px_40px_rgb(0,0,0,0.08)] border border-slate-100" data-fade>
+              <img
+                src={aboutShowcase}
+                alt="Our completed projects - BestChoice, Chandy's, Dream Weaver, Mallu's Mart, Denahalaya"
+                className="w-full h-auto object-cover lg:absolute lg:inset-0 lg:h-full"
+              />
+            </div>
+
+            {/* Right: content */}
+            <div data-fade>
+              <div className="flex items-center gap-3 mb-3">
+                <span className="h-px w-8 bg-blue-400" />
+                <span className="text-[11px] sm:text-xs font-semibold tracking-[0.25em] text-blue-500 uppercase">About WebApp Orbis</span>
+              </div>
+              <h3 className="text-3xl sm:text-4xl lg:text-[2.25rem] font-extrabold text-slate-900 leading-tight tracking-tight mb-5">
+                Your Trusted Partner in <span className="text-blue-600">Digital Growth</span>
+              </h3>
+              <p className="text-slate-500 text-[15px] sm:text-base leading-relaxed mb-6">
+                We are a professional digital solutions company specialising in website designing and development, mobile app development, and customised ERP software solutions. Our focus is on helping businesses establish a strong digital presence while improving operational efficiency through innovative technology solutions.
               </p>
-              {showMorePhilosophy && (
-                <>
-                  <p>
-                    We understand that your technology infrastructure is the backbone of your modern enterprise. That's why our approach is deeply collaborative. We embed ourselves within your teams, ensuring that our strategies align perfectly with your long-term business objectives and operational realities.
-                  </p>
-                  <p>
-                    From intuitive user interfaces to robust backend architectures, our commitment to excellence remains unwavering. We leverage cutting-edge technologies to deliver experiences that not only captivate your audience but also drive measurable results and sustainable growth for your brand.
-                  </p>
-                </>
-              )}
-              <button 
-                onClick={() => setShowMorePhilosophy(!showMorePhilosophy)} 
-                className="mt-2 text-xs font-bold uppercase tracking-wider text-blue-600 hover:text-blue-700 transition-colors flex items-center gap-1 cursor-pointer select-none"
+              <Link
+                to="/contact"
+                className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm px-6 py-3 rounded-full transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5 mb-10"
               >
-                {showMorePhilosophy ? "Read Less ↑" : "Read More ↓"}
-              </button>
+                Work With Us
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+
+              {/* Stats */}
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mb-8">
+                {[
+                  { icon: Folder, n: "100+", l: "Projects shipped", color: "text-blue-500", bg: "bg-blue-50" },
+                  { icon: Users, n: "50+", l: "Happy clients", color: "text-emerald-500", bg: "bg-emerald-50" },
+                  { icon: Trophy, n: "5+", l: "Years of experience", color: "text-amber-500", bg: "bg-amber-50" },
+                  { icon: TrendingUp, n: "98%", l: "Client retention", color: "text-purple-500", bg: "bg-purple-50" },
+                ].map((s, i) => (
+                  <div key={i} className="bg-white rounded-2xl border border-slate-100 shadow-[0_2px_12px_rgb(0,0,0,0.04)] p-4 sm:p-5 text-center hover:shadow-[0_8px_24px_rgb(0,0,0,0.08)] hover:-translate-y-1 transition-all duration-300">
+                    <div className={`h-10 w-10 rounded-full ${s.bg} flex items-center justify-center mx-auto mb-2`}>
+                      <s.icon className={`h-5 w-5 ${s.color}`} strokeWidth={1.75} />
+                    </div>
+                    <p className="text-xl sm:text-2xl font-extrabold text-blue-600 leading-tight">{s.n}</p>
+                    <p className="text-[11px] sm:text-xs text-slate-500 mt-1 leading-snug">{s.l}</p>
+                  </div>
+                ))}
+              </div>
+
+              {/* Vision / Mission */}
+              <div className="grid sm:grid-cols-2 gap-4">
+                <div className="bg-white rounded-2xl border border-slate-100 shadow-[0_2px_12px_rgb(0,0,0,0.04)] p-5 hover:shadow-[0_8px_24px_rgb(0,0,0,0.08)] hover:-translate-y-1 transition-all duration-300">
+                  <div className="flex items-center gap-2.5 mb-2.5">
+                    <div className="h-9 w-9 rounded-full bg-blue-50 flex items-center justify-center">
+                      <Eye className="h-4.5 w-4.5 text-blue-500" strokeWidth={1.75} />
+                    </div>
+                    <h4 className="text-[15px] font-bold text-slate-900">Our Vision</h4>
+                  </div>
+                  <p className="text-[13px] text-slate-500 leading-relaxed">
+                    To empower businesses with reliable digital technologies that improve customer engagement, simplify operations, and support long-term business growth.
+                  </p>
+                </div>
+                <div className="bg-white rounded-2xl border border-slate-100 shadow-[0_2px_12px_rgb(0,0,0,0.04)] p-5 hover:shadow-[0_8px_24px_rgb(0,0,0,0.08)] hover:-translate-y-1 transition-all duration-300">
+                  <div className="flex items-center gap-2.5 mb-2.5">
+                    <div className="h-9 w-9 rounded-full bg-rose-50 flex items-center justify-center">
+                      <Rocket className="h-4.5 w-4.5 text-rose-500" strokeWidth={1.75} />
+                    </div>
+                    <h4 className="text-[15px] font-bold text-slate-900">Our Mission</h4>
+                  </div>
+                  <p className="text-[13px] text-slate-500 leading-relaxed">
+                    To provide high-quality digital solutions through innovative design, advanced development practices, and customer-focused strategies.
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </section>
-
-            <DigitalSolutions />
 
 
 
