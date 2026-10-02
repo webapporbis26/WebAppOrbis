@@ -125,12 +125,12 @@ function Portfolio() {
           </div>
           {/* Filter pills - mobile: neat scrollable row */}
           <div className="sm:hidden w-full overflow-x-auto pb-2 -mb-2" style={{ scrollbarWidth: "none" }}>
-            <div className="flex gap-2 w-max pr-5">
+            <div className="flex gap-1.5 w-max pr-5">
               {FILTERS.map((f) => (
                 <button
                   key={f}
                   onClick={() => setActiveFilter(f)}
-                  className={`px-4 py-2 rounded-full text-[12.5px] font-semibold transition-all duration-200 whitespace-nowrap flex-shrink-0 border ${
+                  className={`px-3 py-1.5 rounded-full text-[11.5px] font-semibold transition-all duration-200 whitespace-nowrap flex-shrink-0 border ${
                     activeFilter === f
                       ? "bg-blue-600 text-white border-blue-600 shadow-[0_4px_14px_rgb(37,99,235,0.35)]"
                       : "bg-white text-slate-600 border-slate-200"
