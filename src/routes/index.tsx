@@ -688,10 +688,10 @@ function Home() {
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.12),transparent_50%)] pointer-events-none" />
         <div className="mx-auto max-w-5xl px-5 sm:px-8 relative z-10 text-center">
           <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight mb-4 leading-tight">
-            Love Our Design? Let's Create Your Dream Website.
+            Ready to Take Your Business Online?
           </h2>
           <p className="text-blue-100 text-base sm:text-xl font-medium max-w-2xl mx-auto mb-8">
-            Talk to Web Design Experts today. Let's collaborate to build a digital presence that stands out.
+            Let’s create a website that represents your brand and attracts customers.
           </p>
           <div className="flex justify-center">
             <Link
