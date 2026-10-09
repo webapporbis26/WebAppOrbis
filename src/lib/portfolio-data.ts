@@ -156,7 +156,7 @@ export const projects: Project[] = [
     slug: "eden-retreat",
     img: malluImg,
     video: malluVideo,
-    title: "Eden Retreat",
+    title: "Mallu Smart",
     tag: "Web Design",
     category: "Websites",
     badge: "Website",
