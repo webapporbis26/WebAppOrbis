@@ -755,7 +755,7 @@ function HeroMedia() {
   }, [currentIndex, items]);
 
   return (
-    <div className="absolute inset-0 w-full h-full overflow-hidden bg-black">
+    <div className="absolute inset-0 w-full h-full overflow-hidden bg-gradient-to-br from-[#0b1e3a] via-[#123064] to-[#0b1e3a]">
       {items.map((item, idx) => {
         const isActive = idx === currentIndex;
         return (
@@ -780,6 +780,8 @@ function HeroMediaItem({ item, isActive, onNext }: { item: any, isActive: boolea
   // If a slide image ever fails to load (flaky mobile network), swap in a
   // preloaded fallback instead of showing a broken-image icon on black.
   const [imgFailed, setImgFailed] = useState(false);
+  // Fade each image in only after it has actually decoded — no black flash.
+  const [imgLoaded, setImgLoaded] = useState(false);
 
   useEffect(() => {
     if (item.type === "video" && videoRef.current) {
@@ -797,9 +799,10 @@ function HeroMediaItem({ item, isActive, onNext }: { item: any, isActive: boolea
     }
   }, [isActive, item.type, item.src]);
 
-  // Reset error state when the slide changes
+  // Reset error/loaded state when the slide changes
   useEffect(() => {
     setImgFailed(false);
+    setImgLoaded(false);
   }, [item.src]);
 
   return (
@@ -822,21 +825,23 @@ function HeroMediaItem({ item, isActive, onNext }: { item: any, isActive: boolea
           <img
             src={imgFailed ? bestPortrait : item.src}
             alt={item.alt || ""}
-            loading="eager"
+            loading={isActive ? "eager" : "lazy"}
             decoding="async"
+            onLoad={() => setImgLoaded(true)}
             onError={() => setImgFailed(true)}
             {...(isActive ? { fetchPriority: "high" } : {})}
-            className="absolute inset-0 h-full w-full object-cover lg:hidden"
+            className={`absolute inset-0 h-full w-full object-cover lg:hidden transition-opacity duration-700 ${imgLoaded ? "opacity-100" : "opacity-0"}`}
           />
           {/* Desktop: classic full-bleed cover */}
           <img
             src={imgFailed ? bestImg : item.src}
             alt={item.alt || ""}
-            loading="eager"
+            loading={isActive ? "eager" : "lazy"}
             decoding="async"
+            onLoad={() => setImgLoaded(true)}
             onError={() => setImgFailed(true)}
             {...(isActive ? { fetchPriority: "high" } : {})}
-            className="absolute inset-0 hidden h-full w-full object-cover lg:block"
+            className={`absolute inset-0 hidden h-full w-full object-cover lg:block transition-opacity duration-700 ${imgLoaded ? "opacity-100" : "opacity-0"}`}
           />
         </>
       )}
