@@ -5,7 +5,6 @@ import { reportLovableError } from "../lib/lovable-error-reporting";
 import { Navbar } from "../components/Navbar";
 import { Footer } from "../components/Footer";
 import { FloatingBackground } from "../components/FloatingBackground";
-import { Loader } from "../components/Loader";
 import { PageTransition } from "../components/PageTransition";
 import { Toaster } from "@/components/ui/sonner";
 import { SmoothScroll } from "../components/SmoothScroll";
@@ -79,7 +78,6 @@ function RootComponent() {
       <SmoothScroll />
       {!isAdmin && (
         <>
-          <Loader />
           <FloatingBackground />
           <PageTransition />
           <Navbar />
