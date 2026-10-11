@@ -54,20 +54,20 @@ function ProjectCard({ p }: { p: Project }) {
               href={p.liveUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white text-[13.5px] font-semibold px-5 py-2.5 rounded-full transition-colors"
+              className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white text-[12.5px] sm:text-[13.5px] font-semibold px-4 py-2 sm:px-5 sm:py-2.5 rounded-full transition-colors whitespace-nowrap"
             >
               <ExternalLink className="w-4 h-4" />
               Visit Website
             </a>
           ) : (
-            <span className="inline-flex items-center gap-2 bg-blue-600 text-white text-[13.5px] font-semibold px-5 py-2.5 rounded-full opacity-90">
+            <span className="inline-flex items-center gap-2 bg-blue-600 text-white text-[12.5px] sm:text-[13.5px] font-semibold px-4 py-2 sm:px-5 sm:py-2.5 rounded-full opacity-90 whitespace-nowrap">
               <ExternalLink className="w-4 h-4" />
               Visit Website
             </span>
           )}
           <Link
             to="/contact"
-            className="inline-flex items-center gap-2 border-[1.5px] border-blue-600 text-blue-600 hover:bg-blue-50 text-[13.5px] font-semibold px-5 py-2.5 rounded-full transition-colors"
+            className="inline-flex items-center gap-2 border-[1.5px] border-blue-600 text-blue-600 hover:bg-blue-50 text-[12.5px] sm:text-[13.5px] font-semibold px-4 py-2 sm:px-5 sm:py-2.5 rounded-full transition-colors whitespace-nowrap"
           >
             <MessageSquareText className="w-4 h-4" />
             Get a Quote
