@@ -40,6 +40,15 @@ const mobileHeroItems = [
   { type: "image", src: resortPortrait, alt: "Chandys Hotels and Resorts website showcase on laptop" },
 ];
 
+// Caption shown on the hero for the currently visible slide
+const heroSlideMeta = [
+  { label: "Best Choice Qatar", sub: "E-commerce Website" },
+  { label: "Denahalaya", sub: "Institute Website" },
+  { label: "Dreamweaver Events", sub: "Event Management Website" },
+  { label: "Mallu Smart", sub: "E-commerce Website" },
+  { label: "Chandys Hotels & Resorts", sub: "Hotel & Resort Website" },
+];
+
 const faqs = [
   { q: "How do engagements typically start?", a: "A 30-minute discovery call, followed by a fixed-fee discovery sprint to scope the work in detail." },
   { q: "Do you work with in-house teams?", a: "Yes — we frequently embed with internal product, design or engineering teams." },
@@ -371,6 +380,7 @@ function ProcessSlider() {
 
 function Home() {
   const heroRef = useRef<HTMLDivElement>(null);
+  const [heroIndex, setHeroIndex] = useState(0);
 
   useTextReveal(heroRef, { stagger: 0.14, delay: 0.4 });
   useFadeUp("[data-fade]");
@@ -426,20 +436,34 @@ function Home() {
       {/* ============== HERO ============== */}
       <section
         ref={heroRef}
-        className="relative flex min-h-[100dvh] items-end pb-12 sm:pb-16 overflow-hidden"
+        className="relative flex min-h-[85dvh] lg:min-h-[100dvh] items-end pb-12 sm:pb-16 overflow-hidden"
       >
         <div className="absolute inset-0 z-0">
-          <HeroMedia />
+          <HeroMedia currentIndex={heroIndex} onIndexChange={setHeroIndex} />
         </div>
 
         <div data-hero-content className="relative z-20 mx-auto w-full max-w-7xl px-5 sm:px-8 text-white will-change-transform">
           <div className="max-w-3xl">
+            {/* Current slide caption */}
+            <div className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 backdrop-blur-md px-4 py-1.5 text-[12px] sm:text-[13px] font-medium text-white mb-4 sm:mb-5">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              {heroSlideMeta[heroIndex % heroSlideMeta.length].label}
+              <span className="text-white/60">·</span>
+              <span className="text-white/80">{heroSlideMeta[heroIndex % heroSlideMeta.length].sub}</span>
+            </div>
 
-            <div className="hidden lg:flex flex-nowrap items-center gap-2 sm:gap-3">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.05] mb-4">
+              We Build Websites That <span className="text-blue-400">Grow Your Business.</span>
+            </h1>
+            <p className="text-white/80 text-[15px] sm:text-lg leading-relaxed max-w-xl mb-7">
+              Modern websites, mobile apps &amp; ERP solutions — designed to win customers.
+            </p>
+
+            <div className="flex flex-col sm:flex-row sm:flex-nowrap sm:items-center gap-3">
               <MagneticButton
                 as="a"
                 href="/contact"
-                className="group gap-2 rounded-[14px] px-5 py-3 text-sm sm:px-7 sm:py-4 sm:text-base font-medium text-white shadow-md hover:shadow-lg transition-all duration-300 hover:scale-[1.03] active:scale-95 whitespace-nowrap"
+                className="group gap-2 rounded-[14px] px-5 py-3.5 text-sm sm:px-7 sm:py-4 sm:text-base font-medium text-white shadow-md hover:shadow-lg transition-all duration-300 hover:scale-[1.03] active:scale-95 whitespace-nowrap justify-center"
                 {...({ style: { background: "var(--grad-primary)" } } as any)}
               >
                 Start a project
@@ -448,7 +472,7 @@ function Home() {
               <MagneticButton
                 as="a"
                 href="/portfolio"
-                className="group gap-2 rounded-[14px] border border-white/50 bg-black/25 px-5 py-3 text-sm sm:px-7 sm:py-4 sm:text-base font-medium text-white backdrop-blur-md hover:bg-white hover:text-black transition-all duration-300 hover:scale-[1.03] active:scale-95 whitespace-nowrap"
+                className="group gap-2 rounded-[14px] border border-white/50 bg-black/25 px-5 py-3.5 text-sm sm:px-7 sm:py-4 sm:text-base font-medium text-white backdrop-blur-md hover:bg-white hover:text-black transition-all duration-300 hover:scale-[1.03] active:scale-95 whitespace-nowrap justify-center"
               >
                 See our work
                 <ArrowUpRight className="h-4 w-4" />
@@ -708,11 +732,10 @@ function Home() {
   );
 }
 
-function HeroMedia() {
+function HeroMedia({ currentIndex, onIndexChange }: { currentIndex: number; onIndexChange: (i: number) => void }) {
   const [isMobile, setIsMobile] = useState(() =>
     typeof window !== "undefined" ? window.innerWidth < 1024 : false
   );
-  const [currentIndex, setCurrentIndex] = useState(0);
 
   // Preload all hero images on mount to avoid black flash
   useEffect(() => {
@@ -734,7 +757,7 @@ function HeroMedia() {
   const items = isMobile ? mobileHeroItems : deskHeroItems;
 
   useEffect(() => {
-    setCurrentIndex(0);
+    onIndexChange(0);
   }, [isMobile]);
 
   useEffect(() => {
@@ -743,11 +766,11 @@ function HeroMedia() {
 
     if (currentItem.type === "image") {
       timer = setTimeout(() => {
-        setCurrentIndex((prev) => (prev + 1) % items.length);
+        onIndexChange((currentIndex + 1) % items.length);
       }, 4000);
     } else {
       timer = setTimeout(() => {
-        setCurrentIndex((prev) => (prev + 1) % items.length);
+        onIndexChange((currentIndex + 1) % items.length);
       }, 15000); // fallback
     }
 
@@ -763,7 +786,7 @@ function HeroMedia() {
             key={item.src} 
             item={item} 
             isActive={isActive} 
-            onNext={() => setCurrentIndex((prev) => (prev + 1) % items.length)} 
+            onNext={() => onIndexChange((currentIndex + 1) % items.length)} 
           />
         );
       })}
