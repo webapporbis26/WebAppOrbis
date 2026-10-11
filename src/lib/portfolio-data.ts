@@ -160,7 +160,7 @@ export const projects: Project[] = [
     tag: "Web Design",
     category: "Websites",
     badge: "Website",
-    cardDesc: "A beautiful website for a mud house resort and homestay with SEO-focused content.",
+    cardDesc: "Mallu's Mart is the first website from Kerala dedicated exclusively to products created by homepreneurs.",
     year: "2024",
     client: "Eden Retreat",
     role: "Web Design & Development",
