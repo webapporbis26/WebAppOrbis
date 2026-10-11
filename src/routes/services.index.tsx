@@ -307,7 +307,7 @@ function Services() {
       </section>
 
       {/* Service cards — Figma style showcase */}
-      <section ref={cardsRef} className="pb-20 mt-8 md:mt-12">
+      <section ref={cardsRef} className="pb-20 mt-2 md:mt-4">
         <div className="mx-auto max-w-7xl px-5 sm:px-8 space-y-20 md:space-y-24">
           {services.map((s, i) => (
             <div
