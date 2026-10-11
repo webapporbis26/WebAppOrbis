@@ -777,6 +777,9 @@ function HeroMedia() {
 
 function HeroMediaItem({ item, isActive, onNext }: { item: any, isActive: boolean, onNext: () => void }) {
   const videoRef = useRef<HTMLVideoElement>(null);
+  // If a slide image ever fails to load (flaky mobile network), swap in a
+  // preloaded fallback instead of showing a broken-image icon on black.
+  const [imgFailed, setImgFailed] = useState(false);
 
   useEffect(() => {
     if (item.type === "video" && videoRef.current) {
@@ -793,6 +796,11 @@ function HeroMediaItem({ item, isActive, onNext }: { item: any, isActive: boolea
       }
     }
   }, [isActive, item.type, item.src]);
+
+  // Reset error state when the slide changes
+  useEffect(() => {
+    setImgFailed(false);
+  }, [item.src]);
 
   return (
     <div
@@ -812,17 +820,21 @@ function HeroMediaItem({ item, isActive, onNext }: { item: any, isActive: boolea
         <>
           {/* Mobile (<lg): dedicated portrait crop, full-bleed cover — no letterboxing */}
           <img
-            src={item.src}
+            src={imgFailed ? bestPortrait : item.src}
             alt={item.alt || ""}
-            loading={isActive ? "eager" : "lazy"}
+            loading="eager"
+            decoding="async"
+            onError={() => setImgFailed(true)}
             {...(isActive ? { fetchPriority: "high" } : {})}
             className="absolute inset-0 h-full w-full object-cover lg:hidden"
           />
           {/* Desktop: classic full-bleed cover */}
           <img
-            src={item.src}
+            src={imgFailed ? bestImg : item.src}
             alt={item.alt || ""}
-            loading={isActive ? "eager" : "lazy"}
+            loading="eager"
+            decoding="async"
+            onError={() => setImgFailed(true)}
             {...(isActive ? { fetchPriority: "high" } : {})}
             className="absolute inset-0 hidden h-full w-full object-cover lg:block"
           />
