@@ -47,13 +47,11 @@ export function Footer() {
           {/* Column 2: Our Services */}
           <FooterSection title="Our Services" colorClass="text-cyan-400" borderClass="md:border-cyan-400">
             <ul className="flex flex-col gap-3.5 text-[15px] font-medium text-gray-400 mb-4 md:mb-0">
-              <li><Link to="/services" className="hover:text-white transition-all duration-300 inline-block hover:translate-x-1">Web Designing & Development</Link></li>
-              <li><a href="#" className="hover:text-white transition-all duration-300 inline-block hover:translate-x-1">Digital Marketing</a></li>
-              <li><a href="#" className="hover:text-white transition-all duration-300 inline-block hover:translate-x-1">Ecommerce Web Development</a></li>
-              <li><a href="#" className="hover:text-white transition-all duration-300 inline-block hover:translate-x-1">SEO Services</a></li>
-              <li><a href="#" className="hover:text-white transition-all duration-300 inline-block hover:translate-x-1">Graphics & Branding</a></li>
-              <li><a href="#" className="hover:text-white transition-all duration-300 inline-block hover:translate-x-1">Mobile App Development</a></li>
-              <li><a href="#" className="hover:text-white transition-all duration-300 inline-block hover:translate-x-1">Social Media Optimization</a></li>
+              <li><Link to="/services/web-development" className="hover:text-white transition-all duration-300 inline-block hover:translate-x-1">Website Design & Development</Link></li>
+              <li><Link to="/services/mobile-development" className="hover:text-white transition-all duration-300 inline-block hover:translate-x-1">Mobile App Development</Link></li>
+              <li><Link to="/services/erp-software" className="hover:text-white transition-all duration-300 inline-block hover:translate-x-1">ERP Software Solutions</Link></li>
+              <li><Link to="/services/digital-marketing" className="hover:text-white transition-all duration-300 inline-block hover:translate-x-1">Digital Marketing</Link></li>
+              <li><Link to="/services/seo" className="hover:text-white transition-all duration-300 inline-block hover:translate-x-1">SEO Services</Link></li>
             </ul>
           </FooterSection>
 
