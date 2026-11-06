@@ -632,7 +632,7 @@ export function CrudView({ config }: { config: EntityConfig }) {
 
       {/* View Dialog */}
       <Dialog open={!!viewing} onOpenChange={(v) => !v && setViewing(null)}>
-        <DialogContent className="max-w-4xl p-0 sm:rounded-[2rem]" onInteractOutside={(e) => e.preventDefault()}>
+        <DialogContent className="max-h-[90vh] max-w-4xl overflow-y-auto p-0 sm:rounded-[2rem]" onInteractOutside={(e) => e.preventDefault()}>
           {/* Header section with gradient */}
           <div className="relative overflow-hidden bg-gradient-to-br from-primary/10 via-primary/5 to-transparent px-8 pb-6 pt-10">
             <div className="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-primary/10 blur-3xl"></div>
