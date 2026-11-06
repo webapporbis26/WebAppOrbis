@@ -25,6 +25,7 @@ import { Route as ServicesDigitalMarketingRouteImport } from './routes/services.
 import { Route as PortfolioSlugRouteImport } from './routes/portfolio.$slug'
 import { Route as AdminSettingsRouteImport } from './routes/admin.settings'
 import { Route as AdminRenewalsRouteImport } from './routes/admin.renewals'
+import { Route as AdminQuotationsRouteImport } from './routes/admin.quotations'
 import { Route as AdminLeadsRouteImport } from './routes/admin.leads'
 import { Route as AdminEmployeesRouteImport } from './routes/admin.employees'
 import { Route as AdminDealsRouteImport } from './routes/admin.deals'
@@ -112,6 +113,11 @@ const AdminRenewalsRoute = AdminRenewalsRouteImport.update({
   path: '/renewals',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminQuotationsRoute = AdminQuotationsRouteImport.update({
+  id: '/quotations',
+  path: '/quotations',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminLeadsRoute = AdminLeadsRouteImport.update({
   id: '/leads',
   path: '/leads',
@@ -143,6 +149,7 @@ export interface FileRoutesByFullPath {
   '/admin/deals': typeof AdminDealsRoute
   '/admin/employees': typeof AdminEmployeesRoute
   '/admin/leads': typeof AdminLeadsRoute
+  '/admin/quotations': typeof AdminQuotationsRoute
   '/admin/renewals': typeof AdminRenewalsRoute
   '/admin/settings': typeof AdminSettingsRoute
   '/portfolio/$slug': typeof PortfolioSlugRoute
@@ -163,6 +170,7 @@ export interface FileRoutesByTo {
   '/admin/deals': typeof AdminDealsRoute
   '/admin/employees': typeof AdminEmployeesRoute
   '/admin/leads': typeof AdminLeadsRoute
+  '/admin/quotations': typeof AdminQuotationsRoute
   '/admin/renewals': typeof AdminRenewalsRoute
   '/admin/settings': typeof AdminSettingsRoute
   '/portfolio/$slug': typeof PortfolioSlugRoute
@@ -186,6 +194,7 @@ export interface FileRoutesById {
   '/admin/deals': typeof AdminDealsRoute
   '/admin/employees': typeof AdminEmployeesRoute
   '/admin/leads': typeof AdminLeadsRoute
+  '/admin/quotations': typeof AdminQuotationsRoute
   '/admin/renewals': typeof AdminRenewalsRoute
   '/admin/settings': typeof AdminSettingsRoute
   '/portfolio/$slug': typeof PortfolioSlugRoute
@@ -210,6 +219,7 @@ export interface FileRouteTypes {
     | '/admin/deals'
     | '/admin/employees'
     | '/admin/leads'
+    | '/admin/quotations'
     | '/admin/renewals'
     | '/admin/settings'
     | '/portfolio/$slug'
@@ -230,6 +240,7 @@ export interface FileRouteTypes {
     | '/admin/deals'
     | '/admin/employees'
     | '/admin/leads'
+    | '/admin/quotations'
     | '/admin/renewals'
     | '/admin/settings'
     | '/portfolio/$slug'
@@ -252,6 +263,7 @@ export interface FileRouteTypes {
     | '/admin/deals'
     | '/admin/employees'
     | '/admin/leads'
+    | '/admin/quotations'
     | '/admin/renewals'
     | '/admin/settings'
     | '/portfolio/$slug'
@@ -389,6 +401,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminRenewalsRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/quotations': {
+      id: '/admin/quotations'
+      path: '/quotations'
+      fullPath: '/admin/quotations'
+      preLoaderRoute: typeof AdminQuotationsRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/leads': {
       id: '/admin/leads'
       path: '/leads'
@@ -425,6 +444,7 @@ interface AdminRouteChildren {
   AdminDealsRoute: typeof AdminDealsRoute
   AdminEmployeesRoute: typeof AdminEmployeesRoute
   AdminLeadsRoute: typeof AdminLeadsRoute
+  AdminQuotationsRoute: typeof AdminQuotationsRoute
   AdminRenewalsRoute: typeof AdminRenewalsRoute
   AdminSettingsRoute: typeof AdminSettingsRoute
   AdminIndexRoute: typeof AdminIndexRoute
@@ -435,6 +455,7 @@ const AdminRouteChildren: AdminRouteChildren = {
   AdminDealsRoute: AdminDealsRoute,
   AdminEmployeesRoute: AdminEmployeesRoute,
   AdminLeadsRoute: AdminLeadsRoute,
+  AdminQuotationsRoute: AdminQuotationsRoute,
   AdminRenewalsRoute: AdminRenewalsRoute,
   AdminSettingsRoute: AdminSettingsRoute,
   AdminIndexRoute: AdminIndexRoute,
