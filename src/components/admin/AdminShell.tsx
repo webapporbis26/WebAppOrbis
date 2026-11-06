@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { Link, useRouterState } from "@tanstack/react-router";
-import { LayoutDashboard, Users, Briefcase, RefreshCw, UserCog, FileText, Search, Bell, LogOut, Settings2 } from "lucide-react";
+import { LayoutDashboard, Users, Briefcase, RefreshCw, UserCog, FileText, Receipt, Search, Bell, LogOut, Settings2 } from "lucide-react";
 import type { ReactNode } from "react";
 const logo = { url: "/logo.png" };
 import { adminLogout } from "@/lib/admin/auth";
@@ -8,6 +8,7 @@ import { adminLogout } from "@/lib/admin/auth";
 const nav = [
   { to: "/admin", label: "Dashboard", icon: LayoutDashboard, exact: true },
   { to: "/admin/leads", label: "Leads", icon: Users },
+  { to: "/admin/quotations", label: "Quotations", icon: Receipt },
   { to: "/admin/deals", label: "Deals & Projects", icon: Briefcase },
   { to: "/admin/renewals", label: "Renewals", icon: RefreshCw },
   { to: "/admin/employees", label: "Employees", icon: UserCog },

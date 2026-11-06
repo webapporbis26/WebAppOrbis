@@ -249,3 +249,31 @@ html.lenis, html.lenis body {
 .animate-marquee {
   animation: marquee var(--duration, 20s) linear infinite;
 }
+
+/* ---------- Quotations print ---------- */
+@page {
+  size: A4;
+  margin: 10mm;
+}
+
+@media print {
+  /* Hide the whole app — only the portalled quotation prints. */
+  #root {
+    display: none !important;
+  }
+  #quotation-print-area {
+    display: block !important;
+    width: 100%;
+    color: #1e293b;
+  }
+  #quotation-print-area * {
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+  #quotation-print-area table {
+    break-inside: auto;
+  }
+  #quotation-print-area tr {
+    break-inside: avoid;
+  }
+}
