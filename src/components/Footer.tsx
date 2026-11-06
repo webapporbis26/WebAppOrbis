@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "@tanstack/react-router";
-import { Facebook, Twitter, Instagram, Linkedin, MessageCircle, Shield, Youtube, Plus, Minus } from "lucide-react";
+import { Facebook, Twitter, Instagram, MessageCircle, Shield, Youtube, Plus, Minus } from "lucide-react";
 
 function FooterSection({ title, children, colorClass, borderClass }: { title: string, children: React.ReactNode, colorClass: string, borderClass: string }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -27,9 +27,9 @@ function FooterSection({ title, children, colorClass, borderClass }: { title: st
 
 export function Footer() {
   return (
-    <footer className="relative bg-[#050505] text-white pt-10 md:pt-24 pb-6 px-5 sm:px-8 border-t border-white/10 font-sans">
+    <footer className="relative bg-[#050505] text-white pt-10 md:pt-12 pb-6 px-5 sm:px-8 border-t border-white/10 font-sans">
       <div className="mx-auto max-w-7xl">
-        <div className="flex flex-col md:grid md:grid-cols-3 gap-y-0 md:gap-y-12 md:gap-x-16 border-t border-white/10 md:border-none">
+        <div className="flex flex-col md:grid md:grid-cols-2 gap-y-0 md:gap-y-12 md:gap-x-16 border-t border-white/10 md:border-none">
           
           {/* Column 1: Company */}
           <FooterSection title="Company" colorClass="text-blue-500" borderClass="md:border-blue-500">
@@ -37,25 +37,11 @@ export function Footer() {
               <li><Link to="/" className="hover:text-white transition-all duration-300 inline-block hover:translate-x-1">Home</Link></li>
               <li><Link to="/about" className="hover:text-white transition-all duration-300 inline-block hover:translate-x-1">About Us</Link></li>
               <li><Link to="/portfolio" className="hover:text-white transition-all duration-300 inline-block hover:translate-x-1">Our Works</Link></li>
-              <li><a href="#" className="hover:text-white transition-all duration-300 inline-block hover:translate-x-1">Careers</a></li>
-              <li><a href="#" className="hover:text-white transition-all duration-300 inline-block hover:translate-x-1">Blogs</a></li>
-              <li><a href="#" className="hover:text-white transition-all duration-300 inline-block hover:translate-x-1">Clients</a></li>
               <li><Link to="/contact" className="hover:text-white transition-all duration-300 inline-block hover:translate-x-1">Contact</Link></li>
             </ul>
           </FooterSection>
 
-          {/* Column 2: Our Services */}
-          <FooterSection title="Our Services" colorClass="text-cyan-400" borderClass="md:border-cyan-400">
-            <ul className="flex flex-col gap-3.5 text-[15px] font-medium text-gray-400 mb-4 md:mb-0">
-              <li><Link to="/services/web-development" className="hover:text-white transition-all duration-300 inline-block hover:translate-x-1">Website Design & Development</Link></li>
-              <li><Link to="/services/mobile-development" className="hover:text-white transition-all duration-300 inline-block hover:translate-x-1">Mobile App Development</Link></li>
-              <li><Link to="/services/erp-software" className="hover:text-white transition-all duration-300 inline-block hover:translate-x-1">ERP Software Solutions</Link></li>
-              <li><Link to="/services/digital-marketing" className="hover:text-white transition-all duration-300 inline-block hover:translate-x-1">Digital Marketing</Link></li>
-              <li><Link to="/services/seo" className="hover:text-white transition-all duration-300 inline-block hover:translate-x-1">SEO Services</Link></li>
-            </ul>
-          </FooterSection>
-
-          {/* Column 3: Join Us */}
+          {/* Column 2: Join Us */}
           <div className="flex flex-col pt-4 md:pt-0">
             <h3 className="text-[15px] md:text-sm font-light md:font-bold md:uppercase md:tracking-widest md:inline-block md:border-b-2 md:pb-2 md:w-max mb-4 md:mb-2 text-yellow-500 md:border-yellow-500">
               Join Us
@@ -70,9 +56,6 @@ export function Footer() {
               <a href="https://www.youtube.com/@e_n_e_m?si=qJcn3W7-psF0OWvR" target="_blank" rel="noopener noreferrer" aria-label="YouTube" className="hover:-translate-y-1 transition-all duration-300 bg-white/5 hover:bg-[#FF0000] p-3 rounded-full group">
                 <Youtube className="w-5 h-5 text-gray-400 group-hover:text-white transition-colors" />
               </a>
-              <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="hover:-translate-y-1 transition-all duration-300 bg-white/5 hover:bg-[#0A66C2] p-3 rounded-full group">
-                <Linkedin className="w-5 h-5 text-gray-400 group-hover:text-white transition-colors" />
-              </a>
             </div>
           </div>
 
@@ -82,8 +65,6 @@ export function Footer() {
         <div className="mt-4 pb-0 flex flex-col md:flex-row justify-between items-center gap-4 text-xs font-medium text-gray-500">
           <p>Copyright © 2026. WebApp Orbis. All Rights Reserved</p>
           <div className="flex items-center gap-4">
-            <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
-            <span className="text-gray-700">/</span>
             <a href="#" className="hover:text-white transition-colors">Terms and Conditions</a>
           </div>
         </div>
