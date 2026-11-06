@@ -325,7 +325,7 @@ function seedNinav(): Quotation {
     gstEnabled: true,
     gstRate: 18,
     paymentTerms: PAYMENT_TERMS[0],
-    notes: "Domain, SSL, and Server charges additional.",
+    notes: "",
     status: "Draft",
     createdAt: new Date().toISOString(),
   };
