@@ -452,9 +452,6 @@ function Home() {
               <span className="text-white/80">{heroSlideMeta[heroIndex % heroSlideMeta.length].sub}</span>
             </div>
 
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.05] mb-4">
-              We Build Websites That <span className="text-blue-400">Grow Your Business.</span>
-            </h1>
             <p className="text-white/80 text-[15px] sm:text-lg leading-relaxed max-w-xl mb-7">
               Modern websites, mobile apps &amp; ERP solutions — designed to win customers.
             </p>
