@@ -92,6 +92,10 @@ function QuotationsPage() {
   };
 
   const onPackageChange = (packageId: string) => {
+    if (!packageId) {
+      setDraft((d) => (d ? { ...d, packageId: "", items: [] } : d));
+      return;
+    }
     const pkg = PACKAGES.find((p) => p.id === packageId);
     if (!pkg) return;
     setDraft((d) => (d ? { ...d, packageId, items: pkg.items.map((i) => ({ ...i })) } : d));
@@ -293,6 +297,7 @@ function QuotationsPage() {
                     value={draft.packageId}
                     onChange={(e) => onPackageChange(e.target.value)}
                   >
+                    <option value="">— Select a package —</option>
                     {PACKAGES.map((p) => (
                       <option key={p.id} value={p.id}>
                         {p.label}
