@@ -1,6 +1,10 @@
 // Print-ready quotation / MoU document. Rendered twice by the Quotations page:
 // once as the on-screen preview and once (via portal) as the print-only copy,
 // so the printed PDF is exactly what is previewed.
+//
+// The MoU template reproduces the NINAV sample PDF section by section
+// (parties, background, sections 1-10, financial table, signatures) — only the
+// client, dates and amounts are filled in from the quotation data.
 import {
   COMPANY,
   PACKAGES,
@@ -56,29 +60,32 @@ function MouDocument({ q }: { q: Quotation }) {
     <div className="text-[13px] leading-relaxed text-slate-800">
       <DocHeader title="Memorandum of Understanding" subtitle={`Ref: ${q.number || "—"} · ${formatDateLong(q.date)}`} />
 
-      <p className="mt-5">
-        This Memorandum of Understanding (hereinafter referred to as the &ldquo;MoU&rdquo;) is entered into on this day of{" "}
-        <strong>{formatDateLong(q.date)}</strong>, by and between:
+      <p className="mt-5 text-center font-display text-lg font-bold tracking-wide text-slate-900">
+        MEMORANDUM OF UNDERSTANDING
+      </p>
+      <p className="mt-3">
+        This Memorandum of Understanding (hereinafter referred to as the &ldquo;MoU&rdquo;) is entered into on this day
+        of <strong>{formatDateLong(q.date)}</strong>, by and between:
       </p>
 
-      <div className="mt-4 grid grid-cols-2 gap-4">
-        <div className="rounded-xl border border-slate-200 bg-slate-50/60 p-4">
-          <div className="text-[11px] font-bold uppercase tracking-wider text-slate-500">Party One</div>
-          <div className="mt-1 font-display text-base font-bold text-slate-900">{COMPANY.name}</div>
-          <div className="text-slate-600">
-            A website and app design and development company based in {COMPANY.address}.
-          </div>
-        </div>
-        <div className="rounded-xl border border-slate-200 bg-slate-50/60 p-4">
-          <div className="text-[11px] font-bold uppercase tracking-wider text-slate-500">Party Two</div>
-          <div className="mt-1 font-display text-base font-bold text-slate-900">{q.clientName || "—"}</div>
-          {q.contactPerson && <div className="text-slate-600">Contact: {q.contactPerson}</div>}
-          {q.business && <div className="text-slate-600">{q.business}</div>}
-          {q.address && <div className="text-slate-600">{q.address}</div>}
-        </div>
+      <div className="mt-4">
+        <div className="font-semibold text-slate-900">Party One:</div>
+        <p className="mt-1">
+          <strong>{COMPANY.name}</strong> — A website and app design and development company based in{" "}
+          {COMPANY.address}.
+        </p>
+      </div>
+      <div className="mt-3">
+        <div className="font-semibold text-slate-900">Party Two:</div>
+        <p className="mt-1">
+          <strong>{q.clientName || "—"}</strong>
+          {q.contactPerson ? ` — ${q.contactPerson}` : ""}
+          {q.business ? ` (${q.business})` : ""}
+          {q.address ? `, ${q.address}` : ""}
+        </p>
       </div>
 
-      <SectionTitle>Background</SectionTitle>
+      <SectionTitle>Background:</SectionTitle>
       <p>
         Party One is engaged in the business of website and app design and development, including but not limited to
         UI/UX design, web development, mobile application development, maintenance, and other related services.
@@ -92,6 +99,7 @@ function MouDocument({ q }: { q: Quotation }) {
         a. Party One, {COMPANY.name}, agrees to provide the following services to Party Two, in accordance with the
         terms of this MoU:
       </p>
+      <p className="mt-2 font-semibold text-slate-900">i. Non-Recurring Bills Work</p>
       {pkg.scope.map((g) => (
         <div key={g.title} className="mt-3 break-inside-avoid">
           <div className="font-semibold text-slate-900">{g.title}</div>
@@ -103,63 +111,188 @@ function MouDocument({ q }: { q: Quotation }) {
         </div>
       ))}
       <p className="mt-3">
-        b. <strong>Client&rsquo;s Responsibilities:</strong> Party Two shall provide timely access to necessary
-        information, data, and assets, collaborate on content ensuring accuracy and relevance, and grant necessary
-        access permissions to platforms required for the execution of the services.
+        b. <strong>Client&rsquo;s Responsibilities:</strong> Party Two acknowledges and agrees to undertake the
+        following responsibilities to facilitate the provision of digital marketing services:
       </p>
-      <p className="mt-2">
-        c. <strong>Modifications to Scope:</strong> Any modifications or additions to the scope may be considered upon
-        mutual written agreement between the parties and shall be documented as an addendum to this MoU.
+      <p className="mt-1">
+        i. Provide timely access to necessary information, data, and assets required for the execution of digital
+        marketing strategies.
+      </p>
+      <p className="mt-1">
+        ii. Collaborate with Party One in the development of content, ensuring accuracy and relevance to Party
+        Two&rsquo;s business.
+      </p>
+      <p className="mt-1">
+        iii. Grant necessary access permissions to social media accounts, websites, and other relevant platforms as
+        required for the implementation of digital marketing strategies.
+      </p>
+      <p className="mt-3">
+        c. <strong>Modifications to Scope:</strong> Any modifications or additions to the scope of collaboration may
+        be considered upon mutual written agreement between the parties. Such modifications shall be documented and
+        appended to this MoU as an addendum.
       </p>
 
       <SectionTitle>2. Duration</SectionTitle>
       <p>
-        a. <strong>Commencement Date:</strong> The collaboration under this MoU shall commence on{" "}
-        <strong>{formatDateLong(q.date)}</strong>, which shall be considered the effective date of this agreement.
+        a. <strong>Commencement Date:</strong> The collaboration under this Memorandum of Understanding (MoU) shall
+        commence on <strong>{formatDateLong(q.date)}</strong>, which shall be considered the{" "}
+        <strong>effective date</strong> of this agreement.
       </p>
 
-      <SectionTitle>3. Termination</SectionTitle>
-      <p>
-        a. This Agreement will be terminated immediately if either Party breaches the terms of this Agreement without
-        rectifying such breach within a reasonable period.
+      <SectionTitle>3. Termination:</SectionTitle>
+      <p>This Agreement may be terminated if the following occurs:</p>
+      <p className="mt-1">
+        <strong>a.</strong> This Agreement will be terminated immediately if either Party One or Party Two breaches
+        the terms of this Agreement. More specifically, it will also be terminated if either Party One or Party Two
+        breaches any condition set forth herein without rectifying such breach within a reasonable period.
       </p>
       <p className="mt-1">
-        b. This Agreement may be terminated at any time by either Party by providing prior written notice to the other
-        Party.
+        <strong>b.</strong> This Agreement may be terminated at any time by either Party by providing prior written
+        notice to the other Party.
       </p>
-      <p className="mt-1">c. This Agreement will automatically be terminated when both parties complete their obligations.</p>
+      <p className="mt-1">
+        <strong>c.</strong> This Agreement will automatically be terminated when both parties complete their
+        obligations.
+      </p>
 
-      <SectionTitle>4. Obligations of Party One</SectionTitle>
+      <SectionTitle>4. Obligations of Party One:</SectionTitle>
       <p>
-        Party One shall develop and deliver the agreed services as per the scope, maintain quality and industry
-        standards, provide timely updates and regular progress reports, maintain open communication and transparency,
-        and keep all information received from Party Two confidential.
+        Party One hereby agrees to fulfill the following obligations to ensure the effective delivery of digital
+        marketing services.
+      </p>
+      <p className="mt-2 font-semibold text-slate-900">a. Development and Implementation of Strategies:</p>
+      <p className="mt-1">
+        i. Develop effective digital marketing strategies based on the information provided by Party Two (e.g.,
+        business details, target audience).
+      </p>
+      <p className="mt-1">
+        ii. Collaborate with Party Two in implementing the agreed-upon strategies. This may include joint brainstorming
+        sessions, content creation workshops, and ongoing communication.
+      </p>
+      <p className="mt-2 font-semibold text-slate-900">b. Content Creation and Management:</p>
+      <p className="mt-1">
+        i. Create high-quality content aligned with the approved strategies and target audience.
+      </p>
+      <p className="mt-1">
+        ii. Manage the scheduling and publication of content across various digital platforms.
+      </p>
+      <p className="mt-2 font-semibold text-slate-900">c. Campaign Management and Optimization:</p>
+      <p className="mt-1">
+        i. Actively manage the digital marketing campaign, including monitoring performance metrics and making necessary
+        adjustments to optimize results.
+      </p>
+      <p className="mt-1">
+        ii. Provide regular reports to Party Two to keep them informed about the campaign&rsquo;s progress and
+        effectiveness.
+      </p>
+      <p className="mt-2 font-semibold text-slate-900">d. Communication and Transparency:</p>
+      <p className="mt-1">
+        i. Maintain open communication channels with Party Two, including timely updates, prompt responses to
+        inquiries, and addressing any concerns raised.
+      </p>
+      <p className="mt-1">
+        ii. Ensure transparency throughout the process by sharing campaign data and insights with Party Two.
+      </p>
+      <p className="mt-2 font-semibold text-slate-900">e. Compliance with Client Requirements and Industry Standards:</p>
+      <p className="mt-1">
+        i. Adhere to all guidelines, brand specifications, and content requirements provided by Party Two.
+      </p>
+      <p className="mt-1">
+        ii. Ensure that all services delivered comply with relevant industry standards and best practices.
+      </p>
+      <p className="mt-2 font-semibold text-slate-900">f. Meeting Performance Objectives:</p>
+      <p className="mt-1">
+        i. Work diligently towards achieving the agreed-upon performance objectives outlined in the contract.
+      </p>
+      <p className="mt-2 font-semibold text-slate-900">g. Confidentiality:</p>
+      <p className="mt-1">
+        i. Maintain the confidentiality of all information received from Party Two, including business data, customer
+        information, and marketing strategies.
+      </p>
+      <p className="mt-2 font-semibold text-slate-900">h. No Harm to Reputation:</p>
+      <p className="mt-1">
+        i. Party One agrees to refrain from any actions or practices that could damage the reputation or public image
+        of Party Two.
       </p>
 
-      <SectionTitle>5. Obligations of Party Two</SectionTitle>
+      <SectionTitle>5. Obligations of Party Two:</SectionTitle>
+      <p className="mt-2 font-semibold text-slate-900">a. Provision of Information:</p>
+      <p className="mt-1">
+        Party Two shall promptly provide accurate and complete information necessary for the delivery of digital
+        marketing services. This includes, but is not limited to, business details, target audience information, and
+        any other data relevant to the effective execution of the agreed-upon strategies.
+      </p>
+      <p className="mt-2 font-semibold text-slate-900">b. Cooperation:</p>
+      <p className="mt-1">
+        Party Two shall actively cooperate with Party One in the development and implementation of digital marketing
+        strategies. This includes providing timely feedback, granting necessary approvals, and collaborating on content
+        creation to ensure the success of the campaign.
+      </p>
+      <p className="mt-2 font-semibold text-slate-900">c. Access and Permissions:</p>
+      <p className="mt-1">
+        Party Two shall grant Party One the necessary access and permissions to social media accounts, websites, and
+        other relevant platforms to facilitate the execution of digital marketing services.
+      </p>
+      <p className="mt-2 font-semibold text-slate-900">d. Compliance with Guidelines:</p>
+      <p className="mt-1">
+        Party Two shall comply with all guidelines provided by Party One to ensure the effectiveness of the digital
+        marketing campaign. This includes adhering to content standards, posting schedules, and any other instructions
+        issued by Party One.
+      </p>
+      <p className="mt-2 font-semibold text-slate-900">e. No Harm to Reputation:</p>
+      <p className="mt-1">
+        Party Two shall not engage in any activity that may harm the reputation or interests of Party One. This
+        includes refraining from actions that could negatively affect the delivery of digital marketing services or the
+        overall brand image of Party One.
+      </p>
+      <p className="mt-2 font-semibold text-slate-900">f. Prompt Response:</p>
+      <p className="mt-1">
+        Party Two shall respond promptly to any queries, requests, or communications from Party One related to the
+        collaboration. Timely communication is essential for the successful implementation of digital marketing
+        strategies.
+      </p>
+      <p className="mt-2 font-semibold text-slate-900">g. Payment Obligations:</p>
+      <p className="mt-1">
+        Party Two shall adhere to the payment terms outlined in Section 7 (Financial Arrangements) of this MoU. Failure
+        to make timely payments may result in the suspension of services or the termination of this agreement, as
+        outlined in Section 3 (Termination).
+      </p>
+
+      <SectionTitle>6. Confidentiality:</SectionTitle>
       <p>
-        Party Two shall promptly provide accurate and complete information necessary for delivery of the services,
-        actively cooperate with timely feedback and approvals, grant necessary access and permissions, respond promptly
-        to queries, and adhere to the payment terms outlined in Section 8. Failure to make timely payments may result
-        in suspension of services or termination of this agreement.
+        <strong>a.</strong> All terms and conditions of this Agreement, as well as any confidential information shared
+        between Party One and Party Two during the term of the Agreement, shall be kept confidential, unless disclosure
+        is required by law.
+      </p>
+      <p className="mt-1">
+        <strong>b.</strong> Disclosure or use of this information for any purpose beyond the scope of this Agreement,
+        or beyond the exceptions set forth above, is expressly prohibited without the prior written consent of both
+        Party One and Party Two.
+      </p>
+      <p className="mt-1">
+        <strong>c.</strong> The obligation of Party One and Party Two to maintain confidentiality will survive the
+        termination of this Agreement and remain in effect indefinitely.
       </p>
 
-      <SectionTitle>6. Confidentiality</SectionTitle>
+      <SectionTitle>7. Intellectual Property:</SectionTitle>
       <p>
-        All terms and conditions of this Agreement, as well as any confidential information shared between the parties,
-        shall be kept confidential unless disclosure is required by law. This obligation survives termination of this
-        Agreement and remains in effect indefinitely.
+        a. Party One agrees that any intellectual property provided by Party Two shall remain the sole property of
+        Party Two, including (but not limited to) copyrights, patents, trade secret rights, and other intellectual
+        property rights associated with any ideas, concepts, techniques, inventions, processes, works of authorship,
+        confidential information, or trade secrets.
+      </p>
+      <p className="mt-1">
+        b. Party One will refrain from using such intellectual property upon the termination of this agreement.
+      </p>
+      <p className="mt-1">
+        c. Return of Materials: Upon termination of this collaboration, Party Two shall promptly return or, at Party
+        One&rsquo;s option, destroy all materials, documents, or information provided by Party One, including any
+        copies thereof.
       </p>
 
-      <SectionTitle>7. Intellectual Property</SectionTitle>
-      <p>
-        Any intellectual property provided by Party Two shall remain the sole property of Party Two. Party One will
-        refrain from using such intellectual property upon termination of this agreement. Upon termination, Party Two
-        shall promptly return or, at Party One&rsquo;s option, destroy all materials provided by Party One.
-      </p>
-
-      <SectionTitle>8. Financial Arrangements</SectionTitle>
+      <SectionTitle>8. Financial Arrangements:</SectionTitle>
       <p>a. Proposed Expenses:</p>
+      <p className="mt-1 font-semibold text-slate-900">i. Non-Recurring Bills</p>
       <table className="mt-2 w-full border-collapse overflow-hidden rounded-xl text-left">
         <thead>
           <tr className="bg-[#1d4ed8] text-white" style={{ printColorAdjust: "exact" }}>
@@ -175,10 +308,11 @@ function MouDocument({ q }: { q: Quotation }) {
             </tr>
           ))}
           <tr className="bg-slate-100 font-bold text-slate-900">
-            <td className="border-t border-slate-200 px-4 py-2.5">
-              Total{q.gstEnabled ? " (excl. GST)" : ""}
+            <td className="border-t border-slate-200 px-4 py-2.5">TOTAL</td>
+            <td className="border-t border-slate-200 px-4 py-2.5 text-right">
+              {formatINR(subtotal)}
+              {q.gstEnabled ? " + GST" : ""}
             </td>
-            <td className="border-t border-slate-200 px-4 py-2.5 text-right">{formatINR(subtotal)}</td>
           </tr>
           {q.gstEnabled && (
             <>
@@ -194,36 +328,55 @@ function MouDocument({ q }: { q: Quotation }) {
           )}
         </tbody>
       </table>
-      <p className="mt-2 text-slate-600">Additional charges: Domain, SSL, and Server charges.</p>
+      <p className="mt-2 text-slate-600">Additional charges: ● Domain, SSL, and Server charges.</p>
       <p className="mt-2">
-        b. <strong>Payment Terms:</strong> {q.paymentTerms}.
+        b. <strong>Payment Terms:</strong> Party Two shall settle payments to Party One as follows:
       </p>
-      <p className="mt-1">
-        c. <strong>Additional Services:</strong> Any services outside the scope of this agreement shall be charged
-        separately, with a cost estimate approved in writing by Party Two before such services are rendered.
-      </p>
+      <p className="mt-1">i. {q.paymentTerms}.</p>
       {q.notes && (
         <p className="mt-1">
-          d. <strong>Notes:</strong> {q.notes}
+          <strong>Notes:</strong> {q.notes}
         </p>
       )}
+      <p className="mt-2">
+        c. <strong>Additional Services:</strong> Any services requested or utilized by Party Two that fall outside the
+        scope of the initial agreement shall be charged separately. Party One shall issue a cost estimate in accordance
+        with the prevailing rate card, which must be approved in writing by Party Two before such services are
+        rendered.
+      </p>
+      <p className="mt-1">
+        d. <strong>Late Payment:</strong> If Party Two fails to make payment by the agreed date, Party One reserves
+        the right to suspend digital marketing services until full settlement of the outstanding amount.
+      </p>
+      <p className="mt-1">
+        e. <strong>Tax-Inclusive Invoices:</strong> All invoices generated by Party One shall be tax-inclusive.
+        However, the quoted cost for digital marketing services excludes applicable taxes. Party Two shall be
+        responsible for any additional taxes, duties, or charges.
+      </p>
 
       <SectionTitle>9. Amendments</SectionTitle>
       <p>
-        Any amendments made to this Agreement must be in writing and signed by both Party One and Party Two.
+        i. Party One and Party Two agree that any amendments made to this Agreement must be in writing and signed by
+        both Party One and Party Two.
+      </p>
+      <p className="mt-1">
+        ii. As such, any amendments made by the parties will be applied to this agreement.
       </p>
 
       <SectionTitle>10. Entire Agreement</SectionTitle>
       <p>
         This Agreement constitutes the entire agreement and understanding between the Parties with respect to the
-        subject matter herein and supersedes all prior agreements, understandings, inducements, and conditions —
-        whether express or implied, oral or written — relating to the same subject matter.
+        subject matter herein. It supersedes all prior agreements, understandings, inducements, and conditions —
+        whether express or implied, oral or written — relating to the same subject matter. The express terms of this
+        Agreement shall prevail over any prior course of performance or trade usage that is inconsistent with its
+        provisions.
       </p>
 
       <p className="mt-5">
         <strong>
           In witness whereof, the duly authorised representatives of Party One and Party Two hereby approve and sign
-          this Memorandum of Understanding.
+          this Memorandum of Understanding. This MoU is signed and delivered by the Parties in two identical copies on
+          this {formatDateLong(q.date)}.
         </strong>
       </p>
 
