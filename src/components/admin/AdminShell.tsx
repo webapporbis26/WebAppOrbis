@@ -1,16 +1,18 @@
 import { useEffect } from "react";
 import { Link, useRouterState } from "@tanstack/react-router";
-import { LayoutDashboard, Users, Briefcase, RefreshCw, UserCog, FileText, Receipt, Search, Bell, LogOut, Settings2 } from "lucide-react";
+import { LayoutDashboard, Users, Briefcase, RefreshCw, UserCog, FileText, Receipt, Search, Bell, LogOut, Settings2, type LucideIcon } from "lucide-react";
 import type { ReactNode } from "react";
 const logo = { url: "/logo.png" };
-import { adminLogout } from "@/lib/admin/auth";
+import { adminLogout, useAdminAuth } from "@/lib/admin/auth";
 
-const nav = [
+type NavItem = { to: string; label: string; icon: LucideIcon; exact?: boolean; superAdminOnly?: boolean };
+
+const nav: NavItem[] = [
   { to: "/admin", label: "Dashboard", icon: LayoutDashboard, exact: true },
   { to: "/admin/leads", label: "Leads", icon: Users },
   { to: "/admin/quotations", label: "Quotations", icon: Receipt },
   { to: "/admin/deals", label: "Deals & Projects", icon: Briefcase },
-  { to: "/admin/renewals", label: "Renewals", icon: RefreshCw },
+  { to: "/admin/renewals", label: "Renewals", icon: RefreshCw, superAdminOnly: true },
   { to: "/admin/employees", label: "Employees", icon: UserCog },
   { to: "/admin/content", label: "Content", icon: FileText },
   { to: "/admin/settings", label: "Settings", icon: Settings2 },
@@ -18,6 +20,8 @@ const nav = [
 
 export function AdminShell({ children }: { children: ReactNode }) {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const { isSuperAdmin } = useAdminAuth();
+  const visibleNav = nav.filter((n) => !n.superAdminOnly || isSuperAdmin);
   // Force light mode always in admin
   useEffect(() => {
     document.documentElement.classList.remove("dark");
@@ -37,7 +41,7 @@ export function AdminShell({ children }: { children: ReactNode }) {
           </div>
 
           <nav className="flex-1 space-y-1 px-3 py-2">
-            {nav.map((n) => {
+            {visibleNav.map((n) => {
               const active = n.exact ? pathname === n.to : pathname.startsWith(n.to);
               return (
                 <Link
@@ -97,7 +101,7 @@ export function AdminShell({ children }: { children: ReactNode }) {
 
           {/* Mobile nav */}
           <div className="flex gap-1 overflow-x-auto border-b border-border/60 bg-card/70 px-4 py-2 lg:hidden">
-            {nav.map((n) => {
+            {visibleNav.map((n) => {
               const active = n.exact ? pathname === n.to : pathname.startsWith(n.to);
               return (
                 <Link
