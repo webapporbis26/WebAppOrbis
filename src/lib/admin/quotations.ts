@@ -6,6 +6,8 @@
 export type QuotationItem = {
   description: string;
   amount: number;
+  qty?: number; // MBWS Standard pricing table (amount = qty × rate)
+  rate?: number;
 };
 
 export type ScopeGroup = {
@@ -13,7 +15,26 @@ export type ScopeGroup = {
   points: string[];
 };
 
-export type TemplateId = "mou" | "quotation";
+// MBWS Standard template — §02 scope-of-work table rows.
+export type ScopeRow = {
+  feature: string;
+  description: string;
+};
+
+// MBWS Standard template — §05 domain/hosting/renewal table rows.
+export type RenewalRow = {
+  service: string;
+  firstYear: string;
+  renewal: string;
+};
+
+export type TemplateId = "mou" | "quotation" | "mbws-standard" | "mbws-digital-marketing" | "mbws-seo";
+
+export const MBWS_TEMPLATE_IDS: TemplateId[] = ["mbws-standard", "mbws-digital-marketing", "mbws-seo"];
+
+export function isMbwsTemplate(id: TemplateId): boolean {
+  return MBWS_TEMPLATE_IDS.includes(id);
+}
 
 export type Quotation = {
   id: string;
@@ -35,18 +56,55 @@ export type Quotation = {
   notes: string;
   status: "Draft" | "Sent" | "Confirmed";
   createdAt: string;
+  // ---- MBWS-only fields (optional; older stored records don't have them) ----
+  projectName?: string;
+  category?: string;
+  gstin?: string;
+  projectObjectives?: string;
+  scopeRows?: ScopeRow[];
+  discount?: number;
+  taxTreatment?: string; // "GST inclusive" | "GST exclusive"
+  amountInWords?: string;
+  renewalRows?: RenewalRow[];
+  advancePercent?: number; // MBWS payment milestones (balance = 100 - advance)
+  timelineDays?: number; // MBWS Standard §07
+  supportText?: string; // MBWS Standard §09
+  monthlyFee?: number; // MBWS Digital Marketing / SEO monthly charge
 };
 
-export const TEMPLATES: { id: TemplateId; label: string; hint: string }[] = [
+export const TEMPLATES: { id: TemplateId; label: string; short: string; hint: string; superAdminOnly?: boolean }[] = [
   {
     id: "mou",
     label: "MoU — Memorandum of Understanding",
+    short: "MoU",
     hint: "Full agreement format (NINAV sample): parties, scope, obligations, terms, signatures.",
   },
   {
     id: "quotation",
     label: "Quotation — Standard",
+    short: "Quotation",
     hint: "Short branded quote: items, totals, payment terms and signature.",
+  },
+  {
+    id: "mbws-standard",
+    label: "MBWS — Standard Quotation",
+    short: "MBWS Standard",
+    hint: "MBWS format: overview, scope table, pricing + GST, domain/hosting, milestones, timeline, terms, acceptance.",
+    superAdminOnly: true,
+  },
+  {
+    id: "mbws-digital-marketing",
+    label: "MBWS — Digital Marketing Quotation",
+    short: "MBWS Digital Marketing",
+    hint: "MBWS format: Facebook & Instagram campaign management, monthly fee, advance/balance.",
+    superAdminOnly: true,
+  },
+  {
+    id: "mbws-seo",
+    label: "MBWS — SEO Services Quotation",
+    short: "MBWS SEO",
+    hint: "MBWS format: monthly SEO service, 4-month recommended timeline, advance/balance.",
+    superAdminOnly: true,
   },
 ];
 
@@ -241,6 +299,73 @@ export const COMPANY = {
   signatoryRole: "Managing Director, WebApp Orbis",
 };
 
+// MBWS brand, exactly as printed on the MBWS quotation templates.
+export const MBWS_COMPANY = {
+  name: "MBWS Software Solutions",
+  short: "MBWS",
+  phone: "+91 99477 62280",
+  email: "hr@mbws.in",
+  website: "www.mbws.in",
+};
+
+export const MBWS_TAX_TREATMENTS = ["GST exclusive", "GST inclusive"];
+
+// MBWS Standard §05 — service names are fixed by the template; charges are entered per client.
+export function defaultRenewalRows(): RenewalRow[] {
+  return [
+    { service: "Domain Registration", firstYear: "Included", renewal: "" },
+    { service: "Server Hosting", firstYear: "Included", renewal: "" },
+    { service: "SSL Certificate", firstYear: "Included", renewal: "" },
+    { service: "Email / Maintenance", firstYear: "Included", renewal: "" },
+  ];
+}
+
+export function defaultScopeRows(): ScopeRow[] {
+  return [
+    { feature: "", description: "" },
+    { feature: "", description: "" },
+    { feature: "", description: "" },
+  ];
+}
+
+// Monthly-charge label used for the single synced line item of the
+// Digital Marketing / SEO templates (keeps totals + saved-list totals working).
+export function mbwsMonthlyItemLabel(templateId: TemplateId): string {
+  return templateId === "mbws-digital-marketing"
+    ? "Digital Marketing Campaign Management (Monthly)"
+    : "SEO Services (Monthly)";
+}
+
+// Defaults applied when a draft switches into an MBWS template. Only fills
+// fields the draft doesn't already have a value for.
+export function mbwsDefaultsFor(templateId: TemplateId, q: Quotation): Partial<Quotation> {
+  if (!isMbwsTemplate(templateId)) return {};
+  const base: Partial<Quotation> = {
+    advancePercent: q.advancePercent ?? 50,
+  };
+  if (templateId === "mbws-standard") {
+    return {
+      ...base,
+      projectName: q.projectName ?? "",
+      category: q.category ?? "",
+      gstin: q.gstin ?? "",
+      projectObjectives: q.projectObjectives ?? "",
+      scopeRows: q.scopeRows ?? defaultScopeRows(),
+      discount: q.discount ?? 0,
+      taxTreatment: q.taxTreatment ?? MBWS_TAX_TREATMENTS[0],
+      amountInWords: q.amountInWords ?? "",
+      renewalRows: q.renewalRows ?? defaultRenewalRows(),
+      timelineDays: q.timelineDays ?? undefined,
+      supportText: q.supportText ?? "",
+    };
+  }
+  return {
+    ...base,
+    monthlyFee: q.monthlyFee ?? 0,
+    gstEnabled: false,
+  };
+}
+
 const STORAGE_KEY = "wo_admin_quotations";
 
 export function formatINR(n: number): string {
@@ -277,6 +402,40 @@ export function formatDateLong(iso: string): string {
   return d.toLocaleDateString("en-IN", { day: "numeric", month: "long", year: "numeric" });
 }
 
+// DD/MM/YYYY, as printed on the MBWS templates.
+export function formatDateShort(iso: string): string {
+  if (!iso) return "—";
+  const d = new Date(iso + "T00:00:00");
+  if (isNaN(d.getTime())) return iso;
+  const dd = String(d.getDate()).padStart(2, "0");
+  const mm = String(d.getMonth() + 1).padStart(2, "0");
+  return `${dd}/${mm}/${d.getFullYear()}`;
+}
+
+// Whole days between two yyyy-mm-dd dates (for the MBWS validity clause).
+export function daysBetween(fromIso: string, toIso: string): number | null {
+  if (!fromIso || !toIso) return null;
+  const a = new Date(fromIso + "T00:00:00").getTime();
+  const b = new Date(toIso + "T00:00:00").getTime();
+  if (isNaN(a) || isNaN(b)) return null;
+  return Math.round((b - a) / 86400000);
+}
+
+// MBWS Standard §04 pricing: GST applies to the taxable amount (subtotal − discount).
+export function mbwsPricing(q: Pick<Quotation, "items" | "gstEnabled" | "gstRate" | "discount">): {
+  subtotal: number;
+  discount: number;
+  taxable: number;
+  gst: number;
+  total: number;
+} {
+  const subtotal = quotationSubtotal(q);
+  const discount = Math.max(0, Number(q.discount) || 0);
+  const taxable = Math.max(0, subtotal - discount);
+  const gst = q.gstEnabled ? (taxable * (Number(q.gstRate) || 0)) / 100 : 0;
+  return { subtotal, discount, taxable, gst, total: taxable + gst };
+}
+
 function readStored(): Quotation[] {
   if (typeof window === "undefined") return [];
   try {
@@ -298,10 +457,12 @@ function writeStored(list: Quotation[]) {
   }
 }
 
-function nextNumber(list: Quotation[]): string {
+function nextNumber(list: Quotation[], templateId?: TemplateId): string {
   const year = new Date().getFullYear();
   const seq = list.length + 1;
-  return `WO/Q/${year}-${String(seq).padStart(3, "0")}`;
+  const padded = String(seq).padStart(3, "0");
+  if (templateId && isMbwsTemplate(templateId)) return `MBWS/QTN/${year}/${padded}`;
+  return `WO/Q/${year}-${padded}`;
 }
 
 /** The NINAV MoU from the sample PDF, pre-seeded so the format is ready to print. */
@@ -342,7 +503,7 @@ export function loadQuotations(): Quotation[] {
 export function saveQuotation(q: Quotation): Quotation[] {
   const list = readStored();
   const idx = list.findIndex((x) => x.id === q.id);
-  const next = idx >= 0 ? list.map((x) => (x.id === q.id ? q : x)) : [{ ...q, number: q.number || nextNumber(list) }, ...list];
+  const next = idx >= 0 ? list.map((x) => (x.id === q.id ? q : x)) : [{ ...q, number: q.number || nextNumber(list, q.templateId) }, ...list];
   writeStored(next);
   return next;
 }
@@ -375,5 +536,18 @@ export function blankQuotation(): Quotation {
     notes: "",
     status: "Draft",
     createdAt: new Date().toISOString(),
+    projectName: "",
+    category: "",
+    gstin: "",
+    projectObjectives: "",
+    scopeRows: defaultScopeRows(),
+    discount: 0,
+    taxTreatment: MBWS_TAX_TREATMENTS[0],
+    amountInWords: "",
+    renewalRows: defaultRenewalRows(),
+    advancePercent: 50,
+    timelineDays: undefined,
+    supportText: "",
+    monthlyFee: 0,
   };
 }
