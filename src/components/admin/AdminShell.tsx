@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { Link, useRouterState } from "@tanstack/react-router";
-import { LayoutDashboard, Users, Briefcase, RefreshCw, UserCog, FileText, Receipt, Search, Bell, LogOut, Settings2, type LucideIcon } from "lucide-react";
+import { LayoutDashboard, Users, Briefcase, RefreshCw, UserCog, FileText, Receipt, ReceiptText, Search, Bell, LogOut, Settings2, type LucideIcon } from "lucide-react";
 import type { ReactNode } from "react";
 const logo = { url: "/logo.png" };
 import { adminLogout, useAdminAuth } from "@/lib/admin/auth";
@@ -11,6 +11,7 @@ const nav: NavItem[] = [
   { to: "/admin", label: "Dashboard", icon: LayoutDashboard, exact: true },
   { to: "/admin/leads", label: "Leads", icon: Users },
   { to: "/admin/quotations", label: "Quotations", icon: Receipt },
+  { to: "/admin/invoices", label: "Invoices", icon: ReceiptText, superAdminOnly: true },
   { to: "/admin/deals", label: "Deals & Projects", icon: Briefcase },
   { to: "/admin/renewals", label: "Renewals", icon: RefreshCw, superAdminOnly: true },
   { to: "/admin/employees", label: "Employees", icon: UserCog },

@@ -257,23 +257,27 @@ html.lenis, html.lenis body {
 }
 
 @media print {
-  /* Hide the whole app — only the portalled quotation prints. */
+  /* Hide the whole app — only the portalled quotation/invoice prints. */
   #root {
     display: none !important;
   }
-  #quotation-print-area {
+  #quotation-print-area,
+  #invoice-print-area {
     display: block !important;
     width: 100%;
     color: #1e293b;
   }
-  #quotation-print-area * {
+  #quotation-print-area *,
+  #invoice-print-area * {
     print-color-adjust: exact;
     -webkit-print-color-adjust: exact;
   }
-  #quotation-print-area table {
+  #quotation-print-area table,
+  #invoice-print-area table {
     break-inside: auto;
   }
-  #quotation-print-area tr {
+  #quotation-print-area tr,
+  #invoice-print-area tr {
     break-inside: avoid;
   }
 }

@@ -515,12 +515,12 @@ function QuotationDocumentView({ q }: { q: Quotation }) {
 // dates, scope rows, charges and payment split come from the quotation data.
 // ---------------------------------------------------------------------------
 
-const MBWS_NAVY = "#1f4e79";
+export const MBWS_NAVY = "#1f4e79";
 const MBWS_TABLE_HEAD_BG = "#d9e2f3";
 const MBWS_GRADIENT = "linear-gradient(90deg, #f5c400, #e91e8c, #7b2d8b, #00a9ce)";
 const MBWS_FOOTER_GRADIENT = "linear-gradient(90deg, #00a9ce, #5b2c8a, #e91e8c)";
 
-function MbwsLetterhead() {
+export function MbwsLetterhead() {
   return (
     <div>
       <div className="flex items-start justify-between gap-6">
@@ -550,7 +550,7 @@ function MbwsLetterhead() {
   );
 }
 
-function MbwsFooter() {
+export function MbwsFooter() {
   return (
     <div className="mt-8">
       <div className="border-t border-slate-300 pt-2 text-[11px] text-slate-500">
@@ -589,9 +589,9 @@ function MbwsPageTitle({ title, subtitle, center }: { title: string; subtitle: s
 }
 
 const mbwsTh = "px-3 py-2 text-left font-bold";
-const mbwsTd = "border-t border-slate-200 px-3 py-2";
+export const mbwsTd = "border-t border-slate-200 px-3 py-2";
 
-function MbwsTableHead({ cols, align }: { cols: string[]; align?: ("left" | "right")[] }) {
+export function MbwsTableHead({ cols, align }: { cols: string[]; align?: ("left" | "right")[] }) {
   return (
     <thead>
       <tr style={{ background: MBWS_TABLE_HEAD_BG, color: MBWS_NAVY, printColorAdjust: "exact" }}>
