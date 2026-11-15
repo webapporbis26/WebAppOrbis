@@ -4,8 +4,10 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Eye, Pencil, Plus, Printer, Save, Trash2, X } from "lucide-react";
 import { toast } from "sonner";
 import { QuotationDocument } from "@/components/admin/QuotationDocument";
+import { useAdminAuth } from "@/lib/admin/auth";
 import { useCollection } from "@/lib/admin/storage";
 import {
+  MBWS_TAX_TREATMENTS,
   PAYMENT_TERMS,
   PACKAGES,
   TEMPLATES,
@@ -13,12 +15,17 @@ import {
   deleteQuotation,
   formatDateLong,
   formatINR,
+  isMbwsTemplate,
   loadQuotations,
+  mbwsDefaultsFor,
+  mbwsMonthlyItemLabel,
+  mbwsPricing,
   quotationGst,
   quotationSubtotal,
   quotationTotal,
   saveQuotation,
   type Quotation,
+  type QuotationItem,
 } from "@/lib/admin/quotations";
 
 export const Route = createFileRoute("/admin/quotations")({
@@ -36,11 +43,28 @@ const statusTone: Record<Quotation["status"], string> = {
 };
 
 function QuotationsPage() {
+  const { isSuperAdmin } = useAdminAuth();
   const [list, setList] = useState<Quotation[]>(() => loadQuotations());
   const [draft, setDraft] = useState<Quotation | null>(null);
   const [clientSource, setClientSource] = useState<string>("");
   const { items: leads, update: updateLead } = useCollection<Record<string, any>>("wo_admin_leads");
   const printQueued = useRef(false);
+
+  // MBWS templates and saved MBWS records are super-admin only. The section
+  // itself stays visible to all admins; only the MBWS surface is gated.
+  const visibleTemplates = TEMPLATES.filter((t) => isSuperAdmin || !t.superAdminOnly);
+  const visibleList = isSuperAdmin ? list : list.filter((q) => !isMbwsTemplate(q.templateId));
+  const isMbws = draft ? isMbwsTemplate(draft.templateId) : false;
+  const isMbwsStandard = draft?.templateId === "mbws-standard";
+  const isMbwsMonthly =
+    draft?.templateId === "mbws-digital-marketing" || draft?.templateId === "mbws-seo";
+
+  const cloneQuotation = (q: Quotation): Quotation => ({
+    ...q,
+    items: q.items.map((i) => ({ ...i })),
+    scopeRows: (q.scopeRows ?? []).map((r) => ({ ...r })),
+    renewalRows: (q.renewalRows ?? []).map((r) => ({ ...r })),
+  });
 
   // Print only after the portal has rendered the requested document.
   useEffect(() => {
@@ -61,14 +85,49 @@ function QuotationsPage() {
   };
 
   const openForEdit = (q: Quotation) => {
-    setDraft({ ...q, items: q.items.map((i) => ({ ...i })) });
+    if (isMbwsTemplate(q.templateId) && !isSuperAdmin) {
+      toast.error("MBWS quotations are visible to super admins only.");
+      return;
+    }
+    setDraft(cloneQuotation(q));
     setClientSource("");
     window.scrollTo({ top: 0 });
   };
 
   const printQuotation = (q: Quotation) => {
+    if (isMbwsTemplate(q.templateId) && !isSuperAdmin) {
+      toast.error("MBWS quotations are visible to super admins only.");
+      return;
+    }
     printQueued.current = true;
-    setDraft({ ...q, items: q.items.map((i) => ({ ...i })) });
+    setDraft(cloneQuotation(q));
+  };
+
+  const onTemplateChange = (templateId: Quotation["templateId"]) => {
+    if (isMbwsTemplate(templateId) && !isSuperAdmin) return;
+    setDraft((d) => {
+      if (!d) return d;
+      const next = { ...d, templateId, ...mbwsDefaultsFor(templateId, d) };
+      if (templateId === "mbws-digital-marketing" || templateId === "mbws-seo") {
+        // The monthly fee is the single charge — keep the line item in sync
+        // so totals, validation and the saved-list total all work.
+        const fee = Number(next.monthlyFee) || 0;
+        next.items = [{ description: mbwsMonthlyItemLabel(templateId), amount: fee }];
+        next.gstEnabled = false;
+      }
+      return next;
+    });
+  };
+
+  const onMonthlyFeeChange = (fee: number) => {
+    setDraft((d) => {
+      if (!d) return d;
+      return {
+        ...d,
+        monthlyFee: fee,
+        items: [{ description: mbwsMonthlyItemLabel(d.templateId), amount: fee }],
+      };
+    });
   };
 
   const onClientChange = (value: string) => {
@@ -98,7 +157,9 @@ function QuotationsPage() {
     }
     const pkg = PACKAGES.find((p) => p.id === packageId);
     if (!pkg) return;
-    setDraft((d) => (d ? { ...d, packageId, items: pkg.items.map((i) => ({ ...i })) } : d));
+    setDraft((d) =>
+      d ? { ...d, packageId, items: pkg.items.map((i) => ({ ...i, qty: 1, rate: i.amount })) } : d,
+    );
   };
 
   const onSave = () => {
@@ -124,6 +185,10 @@ function QuotationsPage() {
   };
 
   const onDelete = (q: Quotation) => {
+    if (isMbwsTemplate(q.templateId) && !isSuperAdmin) {
+      toast.error("MBWS quotations are visible to super admins only.");
+      return;
+    }
     if (!window.confirm(`Delete quotation ${q.number || q.clientName}?`)) return;
     setList(deleteQuotation(q.id));
     if (draft?.id === q.id) setDraft(null);
@@ -133,6 +198,22 @@ function QuotationsPage() {
   const subtotal = draft ? quotationSubtotal(draft) : 0;
   const gst = draft ? quotationGst(draft) : 0;
   const total = draft ? quotationTotal(draft) : 0;
+  const mbwsTotals = draft ? mbwsPricing({ ...draft, discount: draft.discount ?? 0 }) : null;
+
+  // MBWS Standard rows carry qty × rate; the amount always follows them.
+  const updateMbwsItem = (i: number, patch: Partial<QuotationItem>) => {
+    if (!draft) return;
+    set(
+      "items",
+      draft.items.map((x, xi) => {
+        if (xi !== i) return x;
+        const next = { ...x, ...patch };
+        const qty = next.qty ?? 1;
+        const rate = next.rate ?? next.amount;
+        return { ...next, qty, rate, amount: qty * rate };
+      }),
+    );
+  };
 
   return (
     <div>
@@ -183,9 +264,9 @@ function QuotationsPage() {
                     id="q-template"
                     className={inputCls}
                     value={draft.templateId}
-                    onChange={(e) => set("templateId", e.target.value as Quotation["templateId"])}
+                    onChange={(e) => onTemplateChange(e.target.value as Quotation["templateId"])}
                   >
-                    {TEMPLATES.map((t) => (
+                    {visibleTemplates.map((t) => (
                       <option key={t.id} value={t.id}>
                         {t.label}
                       </option>
@@ -287,6 +368,122 @@ function QuotationsPage() {
                   />
                 </div>
 
+                {isMbws && (
+                  <div className="grid grid-cols-2 gap-3">
+                    <div>
+                      <label className={labelCls} htmlFor="q-project">
+                        Project / Service Name
+                      </label>
+                      <input
+                        id="q-project"
+                        className={inputCls}
+                        value={draft.projectName ?? ""}
+                        onChange={(e) => set("projectName", e.target.value)}
+                        placeholder="e.g. Company Website Development"
+                      />
+                    </div>
+                    <div>
+                      <label className={labelCls} htmlFor="q-category">
+                        Category
+                      </label>
+                      <input
+                        id="q-category"
+                        className={inputCls}
+                        value={draft.category ?? ""}
+                        onChange={(e) => set("category", e.target.value)}
+                        placeholder="e.g. Website Development"
+                      />
+                    </div>
+                  </div>
+                )}
+
+                {isMbwsStandard && (
+                  <>
+                    <div>
+                      <label className={labelCls} htmlFor="q-gstin">
+                        Client GSTIN (if applicable)
+                      </label>
+                      <input
+                        id="q-gstin"
+                        className={inputCls}
+                        value={draft.gstin ?? ""}
+                        onChange={(e) => set("gstin", e.target.value)}
+                        placeholder="GSTIN"
+                      />
+                    </div>
+                    <div>
+                      <label className={labelCls} htmlFor="q-objectives">
+                        Project Objectives
+                      </label>
+                      <textarea
+                        id="q-objectives"
+                        rows={2}
+                        className={`${inputCls} resize-none`}
+                        value={draft.projectObjectives ?? ""}
+                        onChange={(e) => set("projectObjectives", e.target.value)}
+                        placeholder="Key goals and expected outcomes"
+                      />
+                    </div>
+                    <div>
+                      <div className="mb-1.5 flex items-center justify-between">
+                        <span className="text-sm font-semibold text-slate-700">Scope of Work</span>
+                        <button
+                          type="button"
+                          onClick={() =>
+                            set("scopeRows", [...(draft.scopeRows ?? []), { feature: "", description: "" }])
+                          }
+                          className="inline-flex items-center gap-1 rounded-full bg-blue-50 px-3 py-1 text-xs font-semibold text-blue-700 hover:bg-blue-100"
+                        >
+                          <Plus className="h-3.5 w-3.5" /> Add row
+                        </button>
+                      </div>
+                      <div className="space-y-2">
+                        {(draft.scopeRows ?? []).map((r, i) => (
+                          <div key={i} className="grid grid-cols-[1fr_1fr_32px] gap-2">
+                            <input
+                              className={inputCls}
+                              value={r.feature}
+                              onChange={(e) =>
+                                set(
+                                  "scopeRows",
+                                  (draft.scopeRows ?? []).map((x, xi) =>
+                                    xi === i ? { ...x, feature: e.target.value } : x,
+                                  ),
+                                )
+                              }
+                              placeholder="Page / Module / Feature"
+                            />
+                            <input
+                              className={inputCls}
+                              value={r.description}
+                              onChange={(e) =>
+                                set(
+                                  "scopeRows",
+                                  (draft.scopeRows ?? []).map((x, xi) =>
+                                    xi === i ? { ...x, description: e.target.value } : x,
+                                  ),
+                                )
+                              }
+                              placeholder="Description / Deliverable"
+                            />
+                            <button
+                              type="button"
+                              aria-label="Remove scope row"
+                              onClick={() =>
+                                set("scopeRows", (draft.scopeRows ?? []).filter((_, xi) => xi !== i))
+                              }
+                              className="grid h-10 w-8 place-items-center rounded-xl text-slate-400 hover:bg-rose-50 hover:text-rose-600"
+                            >
+                              <Trash2 className="h-4 w-4" />
+                            </button>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </>
+                )}
+
+                {!isMbwsMonthly && (
                 <div>
                   <label className={labelCls} htmlFor="q-package">
                     Service Package
@@ -305,110 +502,396 @@ function QuotationsPage() {
                     ))}
                   </select>
                 </div>
+                )}
 
-                <div>
-                  <div className="mb-1.5 flex items-center justify-between">
-                    <span className="text-sm font-semibold text-slate-700">Line Items</span>
-                    <button
-                      type="button"
-                      onClick={() => set("items", [...draft.items, { description: "", amount: 0 }])}
-                      className="inline-flex items-center gap-1 rounded-full bg-blue-50 px-3 py-1 text-xs font-semibold text-blue-700 hover:bg-blue-100"
-                    >
-                      <Plus className="h-3.5 w-3.5" /> Add item
-                    </button>
+                {isMbwsMonthly ? (
+                  <div>
+                    <label className={labelCls} htmlFor="q-fee">
+                      Monthly Fee (₹)
+                    </label>
+                    <input
+                      id="q-fee"
+                      className={inputCls}
+                      type="number"
+                      min={0}
+                      value={draft.monthlyFee || ""}
+                      onChange={(e) => onMonthlyFeeChange(Number(e.target.value) || 0)}
+                      placeholder="₹ per month"
+                    />
+                    <div className="mt-3 rounded-2xl bg-slate-50 p-3 text-sm">
+                      <div className="flex justify-between text-base font-bold text-slate-900">
+                        <span>Quotation Total</span>
+                        <span>
+                          {formatINR(draft.monthlyFee || 0)} per month
+                        </span>
+                      </div>
+                    </div>
                   </div>
-                  <div className="space-y-2">
-                    {draft.items.map((it, i) => (
-                      <div key={i} className="grid grid-cols-[1fr_110px_32px] gap-2">
-                        <input
+                ) : (
+                  <div>
+                    <div className="mb-1.5 flex items-center justify-between">
+                      <span className="text-sm font-semibold text-slate-700">Line Items</span>
+                      <button
+                        type="button"
+                        onClick={() =>
+                          set("items", [
+                            ...draft.items,
+                            isMbwsStandard
+                              ? { description: "", amount: 0, qty: 1, rate: 0 }
+                              : { description: "", amount: 0 },
+                          ])
+                        }
+                        className="inline-flex items-center gap-1 rounded-full bg-blue-50 px-3 py-1 text-xs font-semibold text-blue-700 hover:bg-blue-100"
+                      >
+                        <Plus className="h-3.5 w-3.5" /> Add item
+                      </button>
+                    </div>
+                    <div className="space-y-2">
+                      {draft.items.map((it, i) =>
+                        isMbwsStandard ? (
+                          <div key={i} className="grid grid-cols-[1fr_56px_96px_96px_32px] gap-2">
+                            <input
+                              className={inputCls}
+                              value={it.description}
+                              onChange={(e) => updateMbwsItem(i, { description: e.target.value })}
+                              placeholder="Service / deliverable"
+                            />
+                            <input
+                              className={inputCls}
+                              type="number"
+                              min={0}
+                              value={it.qty ?? 1}
+                              onChange={(e) => updateMbwsItem(i, { qty: Number(e.target.value) || 0 })}
+                              placeholder="Qty"
+                              aria-label="Quantity"
+                            />
+                            <input
+                              className={inputCls}
+                              type="number"
+                              min={0}
+                              value={it.rate ?? ""}
+                              onChange={(e) => updateMbwsItem(i, { rate: Number(e.target.value) || 0 })}
+                              placeholder="Rate ₹"
+                              aria-label="Rate"
+                            />
+                            <input
+                              className={`${inputCls} bg-slate-50`}
+                              value={formatINR(it.amount)}
+                              readOnly
+                              aria-label="Amount"
+                            />
+                            <button
+                              type="button"
+                              aria-label="Remove item"
+                              onClick={() => set("items", draft.items.filter((_, xi) => xi !== i))}
+                              className="grid h-10 w-8 place-items-center rounded-xl text-slate-400 hover:bg-rose-50 hover:text-rose-600"
+                            >
+                              <Trash2 className="h-4 w-4" />
+                            </button>
+                          </div>
+                        ) : (
+                          <div key={i} className="grid grid-cols-[1fr_110px_32px] gap-2">
+                            <input
+                              className={inputCls}
+                              value={it.description}
+                              onChange={(e) =>
+                                set(
+                                  "items",
+                                  draft.items.map((x, xi) => (xi === i ? { ...x, description: e.target.value } : x)),
+                                )
+                              }
+                              placeholder="Work description"
+                            />
+                            <input
+                              className={inputCls}
+                              type="number"
+                              min={0}
+                              value={it.amount || ""}
+                              onChange={(e) =>
+                                set(
+                                  "items",
+                                  draft.items.map((x, xi) =>
+                                    xi === i ? { ...x, amount: Number(e.target.value) || 0 } : x,
+                                  ),
+                                )
+                              }
+                              placeholder="₹"
+                            />
+                            <button
+                              type="button"
+                              aria-label="Remove item"
+                              onClick={() => set("items", draft.items.filter((_, xi) => xi !== i))}
+                              className="grid h-10 w-8 place-items-center rounded-xl text-slate-400 hover:bg-rose-50 hover:text-rose-600"
+                            >
+                              <Trash2 className="h-4 w-4" />
+                            </button>
+                          </div>
+                        ),
+                      )}
+                    </div>
+                    {isMbwsStandard && mbwsTotals ? (
+                      <div className="mt-3 space-y-1 rounded-2xl bg-slate-50 p-3 text-sm">
+                        <div className="flex justify-between">
+                          <span className="text-slate-500">Subtotal</span>
+                          <span className="font-medium">{formatINR(mbwsTotals.subtotal)}</span>
+                        </div>
+                        <div className="flex items-center justify-between gap-2">
+                          <span className="text-slate-500">Discount</span>
+                          <input
+                            type="number"
+                            min={0}
+                            value={draft.discount || ""}
+                            onChange={(e) => set("discount", Number(e.target.value) || 0)}
+                            className="w-28 rounded-lg border border-slate-200 px-2 py-1 text-right text-sm outline-none focus:ring-2 focus:ring-blue-500"
+                            placeholder="₹"
+                          />
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-slate-500">Taxable Amount</span>
+                          <span className="font-medium">{formatINR(mbwsTotals.taxable)}</span>
+                        </div>
+                        <div className="flex items-center justify-between gap-2">
+                          <label className="flex items-center gap-2 text-slate-500">
+                            <input
+                              type="checkbox"
+                              checked={draft.gstEnabled}
+                              onChange={(e) => set("gstEnabled", e.target.checked)}
+                              className="h-4 w-4 accent-blue-600"
+                            />
+                            GST
+                          </label>
+                          <span className="flex items-center gap-1">
+                            <input
+                              type="number"
+                              min={0}
+                              max={28}
+                              value={draft.gstRate}
+                              disabled={!draft.gstEnabled}
+                              onChange={(e) => set("gstRate", Number(e.target.value) || 0)}
+                              className="w-16 rounded-lg border border-slate-200 px-2 py-1 text-right text-sm outline-none focus:ring-2 focus:ring-blue-500"
+                            />
+                            <span className="text-slate-500">% · {formatINR(mbwsTotals.gst)}</span>
+                          </span>
+                        </div>
+                        <div className="flex justify-between border-t border-slate-200 pt-1.5 text-base font-bold text-slate-900">
+                          <span>Grand Total</span>
+                          <span>{formatINR(mbwsTotals.total)}</span>
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="mt-3 space-y-1 rounded-2xl bg-slate-50 p-3 text-sm">
+                        <div className="flex justify-between">
+                          <span className="text-slate-500">Subtotal</span>
+                          <span className="font-medium">{formatINR(subtotal)}</span>
+                        </div>
+                        <div className="flex items-center justify-between gap-2">
+                          <label className="flex items-center gap-2 text-slate-500">
+                            <input
+                              type="checkbox"
+                              checked={draft.gstEnabled}
+                              onChange={(e) => set("gstEnabled", e.target.checked)}
+                              className="h-4 w-4 accent-blue-600"
+                            />
+                            GST
+                          </label>
+                          <span className="flex items-center gap-1">
+                            <input
+                              type="number"
+                              min={0}
+                              max={28}
+                              value={draft.gstRate}
+                              disabled={!draft.gstEnabled}
+                              onChange={(e) => set("gstRate", Number(e.target.value) || 0)}
+                              className="w-16 rounded-lg border border-slate-200 px-2 py-1 text-right text-sm outline-none focus:ring-2 focus:ring-blue-500"
+                            />
+                            <span className="text-slate-500">% · {formatINR(gst)}</span>
+                          </span>
+                        </div>
+                        <div className="flex justify-between border-t border-slate-200 pt-1.5 text-base font-bold text-slate-900">
+                          <span>Total</span>
+                          <span>{formatINR(total)}</span>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {isMbwsStandard && (
+                  <>
+                    <div className="grid grid-cols-2 gap-3">
+                      <div>
+                        <label className={labelCls} htmlFor="q-taxtreat">
+                          Tax Treatment
+                        </label>
+                        <select
+                          id="q-taxtreat"
                           className={inputCls}
-                          value={it.description}
-                          onChange={(e) =>
-                            set(
-                              "items",
-                              draft.items.map((x, xi) => (xi === i ? { ...x, description: e.target.value } : x)),
-                            )
-                          }
-                          placeholder="Work description"
-                        />
+                          value={draft.taxTreatment ?? MBWS_TAX_TREATMENTS[0]}
+                          onChange={(e) => set("taxTreatment", e.target.value)}
+                        >
+                          {MBWS_TAX_TREATMENTS.map((t) => (
+                            <option key={t} value={t}>
+                              {t}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                      <div>
+                        <label className={labelCls} htmlFor="q-words">
+                          Amount in Words
+                        </label>
                         <input
+                          id="q-words"
                           className={inputCls}
-                          type="number"
-                          min={0}
-                          value={it.amount || ""}
-                          onChange={(e) =>
-                            set(
-                              "items",
-                              draft.items.map((x, xi) =>
-                                xi === i ? { ...x, amount: Number(e.target.value) || 0 } : x,
-                              ),
-                            )
-                          }
-                          placeholder="₹"
+                          value={draft.amountInWords ?? ""}
+                          onChange={(e) => set("amountInWords", e.target.value)}
+                          placeholder="e.g. Fifty-three thousand rupees only"
                         />
+                      </div>
+                    </div>
+                    <div>
+                      <div className="mb-1.5 flex items-center justify-between">
+                        <span className="text-sm font-semibold text-slate-700">
+                          Domain, Hosting &amp; Renewal Charges
+                        </span>
                         <button
                           type="button"
-                          aria-label="Remove item"
-                          onClick={() => set("items", draft.items.filter((_, xi) => xi !== i))}
-                          className="grid h-10 w-8 place-items-center rounded-xl text-slate-400 hover:bg-rose-50 hover:text-rose-600"
+                          onClick={() =>
+                            set("renewalRows", [
+                              ...(draft.renewalRows ?? []),
+                              { service: "", firstYear: "", renewal: "" },
+                            ])
+                          }
+                          className="inline-flex items-center gap-1 rounded-full bg-blue-50 px-3 py-1 text-xs font-semibold text-blue-700 hover:bg-blue-100"
                         >
-                          <Trash2 className="h-4 w-4" />
+                          <Plus className="h-3.5 w-3.5" /> Add row
                         </button>
                       </div>
-                    ))}
-                  </div>
-                  <div className="mt-3 space-y-1 rounded-2xl bg-slate-50 p-3 text-sm">
-                    <div className="flex justify-between">
-                      <span className="text-slate-500">Subtotal</span>
-                      <span className="font-medium">{formatINR(subtotal)}</span>
+                      <div className="space-y-2">
+                        {(draft.renewalRows ?? []).map((r, i) => (
+                          <div key={i} className="grid grid-cols-[1fr_1fr_1fr_32px] gap-2">
+                            <input
+                              className={inputCls}
+                              value={r.service}
+                              onChange={(e) =>
+                                set(
+                                  "renewalRows",
+                                  (draft.renewalRows ?? []).map((x, xi) =>
+                                    xi === i ? { ...x, service: e.target.value } : x,
+                                  ),
+                                )
+                              }
+                              placeholder="Service"
+                            />
+                            <input
+                              className={inputCls}
+                              value={r.firstYear}
+                              onChange={(e) =>
+                                set(
+                                  "renewalRows",
+                                  (draft.renewalRows ?? []).map((x, xi) =>
+                                    xi === i ? { ...x, firstYear: e.target.value } : x,
+                                  ),
+                                )
+                              }
+                              placeholder="First Year — Included / ₹"
+                            />
+                            <input
+                              className={inputCls}
+                              value={r.renewal}
+                              onChange={(e) =>
+                                set(
+                                  "renewalRows",
+                                  (draft.renewalRows ?? []).map((x, xi) =>
+                                    xi === i ? { ...x, renewal: e.target.value } : x,
+                                  ),
+                                )
+                              }
+                              placeholder="Annual Renewal — ₹"
+                            />
+                            <button
+                              type="button"
+                              aria-label="Remove renewal row"
+                              onClick={() =>
+                                set("renewalRows", (draft.renewalRows ?? []).filter((_, xi) => xi !== i))
+                              }
+                              className="grid h-10 w-8 place-items-center rounded-xl text-slate-400 hover:bg-rose-50 hover:text-rose-600"
+                            >
+                              <Trash2 className="h-4 w-4" />
+                            </button>
+                          </div>
+                        ))}
+                      </div>
                     </div>
-                    <div className="flex items-center justify-between gap-2">
-                      <label className="flex items-center gap-2 text-slate-500">
+                    <div className="grid grid-cols-2 gap-3">
+                      <div>
+                        <label className={labelCls} htmlFor="q-timeline">
+                          Estimated Duration (working days)
+                        </label>
                         <input
-                          type="checkbox"
-                          checked={draft.gstEnabled}
-                          onChange={(e) => set("gstEnabled", e.target.checked)}
-                          className="h-4 w-4 accent-blue-600"
-                        />
-                        GST
-                      </label>
-                      <span className="flex items-center gap-1">
-                        <input
+                          id="q-timeline"
+                          className={inputCls}
                           type="number"
                           min={0}
-                          max={28}
-                          value={draft.gstRate}
-                          disabled={!draft.gstEnabled}
-                          onChange={(e) => set("gstRate", Number(e.target.value) || 0)}
-                          className="w-16 rounded-lg border border-slate-200 px-2 py-1 text-right text-sm outline-none focus:ring-2 focus:ring-blue-500"
+                          value={draft.timelineDays ?? ""}
+                          onChange={(e) => set("timelineDays", Number(e.target.value) || undefined)}
+                          placeholder="e.g. 15"
                         />
-                        <span className="text-slate-500">% · {formatINR(gst)}</span>
-                      </span>
+                      </div>
                     </div>
-                    <div className="flex justify-between border-t border-slate-200 pt-1.5 text-base font-bold text-slate-900">
-                      <span>Total</span>
-                      <span>{formatINR(total)}</span>
+                    <div>
+                      <label className={labelCls} htmlFor="q-support">
+                        Support &amp; Maintenance
+                      </label>
+                      <textarea
+                        id="q-support"
+                        rows={2}
+                        className={`${inputCls} resize-none`}
+                        value={draft.supportText ?? ""}
+                        onChange={(e) => set("supportText", e.target.value)}
+                        placeholder="Included post-launch support period, coverage, response expectations — or state clearly if none is included."
+                      />
                     </div>
-                  </div>
-                </div>
+                  </>
+                )}
 
-                <div>
-                  <label className={labelCls} htmlFor="q-terms">
-                    Payment Terms
-                  </label>
-                  <select
-                    id="q-terms"
-                    className={inputCls}
-                    value={draft.paymentTerms}
-                    onChange={(e) => set("paymentTerms", e.target.value)}
-                  >
-                    {PAYMENT_TERMS.map((t) => (
-                      <option key={t} value={t}>
-                        {t}
-                      </option>
-                    ))}
-                  </select>
-                </div>
+                {isMbws ? (
+                  <div>
+                    <label className={labelCls} htmlFor="q-advance">
+                      Advance Payment (%)
+                    </label>
+                    <input
+                      id="q-advance"
+                      className={inputCls}
+                      type="number"
+                      min={0}
+                      max={100}
+                      value={draft.advancePercent ?? 50}
+                      onChange={(e) => set("advancePercent", Number(e.target.value) || 0)}
+                    />
+                    <p className="mt-1 text-xs text-slate-400">
+                      Balance {100 - (draft.advancePercent ?? 50)}% as per the template milestones.
+                    </p>
+                  </div>
+                ) : (
+                  <div>
+                    <label className={labelCls} htmlFor="q-terms">
+                      Payment Terms
+                    </label>
+                    <select
+                      id="q-terms"
+                      className={inputCls}
+                      value={draft.paymentTerms}
+                      onChange={(e) => set("paymentTerms", e.target.value)}
+                    >
+                      {PAYMENT_TERMS.map((t) => (
+                        <option key={t} value={t}>
+                          {t}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                )}
 
                 <div className="grid grid-cols-2 gap-3">
                   <div>
@@ -507,9 +990,9 @@ function QuotationsPage() {
       <div className="rounded-3xl border border-slate-200 bg-white shadow-sm">
         <div className="border-b border-slate-100 px-5 py-4 sm:px-6">
           <h2 className="font-display text-lg font-bold text-slate-900">Saved Quotations</h2>
-          <p className="text-sm text-slate-500">{list.length} record(s) — stored in this browser.</p>
+          <p className="text-sm text-slate-500">{visibleList.length} record(s) — stored in this browser.</p>
         </div>
-        {list.length === 0 ? (
+        {visibleList.length === 0 ? (
           <div className="px-5 py-10 text-center text-sm text-slate-500">
             No quotations yet. Click <strong>New Quotation</strong> to build one from a template.
           </div>
@@ -528,7 +1011,7 @@ function QuotationsPage() {
                 </tr>
               </thead>
               <tbody>
-                {list.map((q) => (
+                {visibleList.map((q) => (
                   <tr key={q.id} className="border-b border-slate-50 last:border-0 hover:bg-slate-50/60">
                     <td className="px-5 py-3 font-semibold text-slate-900">{q.number || "—"}</td>
                     <td className="px-3 py-3">
@@ -536,9 +1019,15 @@ function QuotationsPage() {
                       {q.contactPerson && <div className="text-xs text-slate-400">{q.contactPerson}</div>}
                     </td>
                     <td className="px-3 py-3 text-slate-600">
-                      {q.templateId === "mou" ? "MoU" : "Quotation"}
+                      {TEMPLATES.find((t) => t.id === q.templateId)?.short ?? "Quotation"}
                     </td>
-                    <td className="px-3 py-3 text-right font-medium">{formatINR(quotationTotal(q))}</td>
+                    <td className="px-3 py-3 text-right font-medium">
+                      {formatINR(
+                        q.templateId === "mbws-standard"
+                          ? mbwsPricing({ ...q, discount: q.discount ?? 0 }).total
+                          : quotationTotal(q),
+                      )}
+                    </td>
                     <td className="px-3 py-3 text-slate-600">{formatDateLong(q.date)}</td>
                     <td className="px-3 py-3">
                       <span className={`rounded-full px-2.5 py-0.5 text-xs font-medium ${statusTone[q.status]}`}>
