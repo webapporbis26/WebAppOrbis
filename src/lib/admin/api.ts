@@ -11,6 +11,9 @@ export const authApi = {
     if (normalized === 'admin@weborbis.com' || normalized === 'admin@webapporbis.com' || normalized === 'admin@weborbis') {
       mappedEmail = 'admin@webapporbis';
     }
+    if (normalized === 'superadmin@webapporbis.com' || normalized === 'superadmin@weborbis.com' || normalized === 'superadmin@weborbis') {
+      mappedEmail = 'superadmin@webapporbis';
+    }
     
     const res = await fetch(`${BASE_URL}/User/GenerateToken`, {
       method: 'POST',
