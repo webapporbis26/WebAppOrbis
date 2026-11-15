@@ -300,7 +300,8 @@ export const renewalsApi = {
         amount: item.amount || 0,
         reminder: item.reminderStage || 'Active',
         payment: item.paymentStatus || 'Pending',
-        notes: item.notes || ''
+        notes: item.notes || '',
+        invoiceUrl: item.invoiceUrl || ''
       }));
   },
   
@@ -325,6 +326,7 @@ export const renewalsApi = {
     formData.append('ReminderStage', renewal.reminder || '');
     formData.append('PaymentStatus', renewal.payment || '');
     formData.append('Notes', renewal.notes || '');
+    formData.append('InvoiceUrl', renewal.invoiceUrl || '');
     formData.append('AmountPaid', '0');
     formData.append('CreatedOn', new Date().toISOString());
     formData.append('IsActive', 'true');

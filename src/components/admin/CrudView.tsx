@@ -74,6 +74,11 @@ function formatCell(field: string, value: any): string {
   return String(value);
 }
 
+// Only http(s) values become clickable links — anything else renders as plain text.
+function isHttpUrl(value: string): boolean {
+  return /^https?:\/\//i.test(value.trim());
+}
+
 export function CrudView({ config }: { config: EntityConfig }) {
   const { items, create, update, remove } = useCollection<Record<string, any>>(
     config.storageKey,
@@ -396,7 +401,16 @@ export function CrudView({ config }: { config: EntityConfig }) {
                     }
                     return (
                       <TableCell key={c.name} className="text-sm">
-                        {c.badge ? (
+                        {c.link && displayValue && isHttpUrl(String(displayValue)) ? (
+                          <a
+                            href={String(displayValue).trim()}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-1 font-medium text-primary hover:underline"
+                          >
+                            View <ExternalLink className="h-3.5 w-3.5" />
+                          </a>
+                        ) : c.badge ? (
                           <Badge variant="outline" className={`rounded-full border ${badgeTone(String(displayValue ?? ""))}`}>
                             {formatCell(c.name, displayValue)}
                           </Badge>
@@ -659,6 +673,7 @@ export function CrudView({ config }: { config: EntityConfig }) {
                 }
                 
                 const isBadge = config.columns.find((c) => c.name === f.name)?.badge;
+                const isLink = config.columns.find((c) => c.name === f.name)?.link;
 
                 return (
                   <div key={f.name} className={`group flex flex-col justify-center rounded-2xl border border-border/40 bg-slate-50/50 px-4 py-2.5 transition-colors hover:bg-slate-50 ${f.full ? "sm:col-span-2" : ""}`}>
@@ -670,6 +685,15 @@ export function CrudView({ config }: { config: EntityConfig }) {
                         <Badge variant="outline" className={`rounded-full border px-2.5 py-0.5 font-medium ${badgeTone(String(displayValue))}`}>
                           {formatCell(f.name, displayValue)}
                         </Badge>
+                      ) : isLink && displayValue && isHttpUrl(String(displayValue)) ? (
+                        <a
+                          href={String(displayValue).trim()}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1 break-all font-medium text-primary hover:underline"
+                        >
+                          Open invoice <ExternalLink className="h-3.5 w-3.5 shrink-0" />
+                        </a>
                       ) : (
                         displayValue || "—"
                       )}

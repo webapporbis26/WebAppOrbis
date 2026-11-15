@@ -16,7 +16,7 @@ export type EntityConfig = {
   subtitle: string;
   storageKey: string;
   fields: FieldDef[];
-  columns: { name: string; label: string; badge?: boolean }[];
+  columns: { name: string; label: string; badge?: boolean; link?: boolean }[];
   searchable: string[];
 };
 
@@ -181,6 +181,7 @@ export const renewalsConfig: EntityConfig = {
       options: ["Pending", "Paid", "Overdue"],
     },
     { name: "notes", label: "Notes", type: "textarea", full: true },
+    { name: "invoiceUrl", label: "Invoice URL", type: "text", placeholder: "https://…", full: true },
   ],
   columns: [
     { name: "company", label: "Company" },
@@ -190,6 +191,7 @@ export const renewalsConfig: EntityConfig = {
     { name: "expiry", label: "Expiry" },
     { name: "reminder", label: "Reminder", badge: true },
     { name: "payment", label: "Payment", badge: true },
+    { name: "invoiceUrl", label: "Invoice", link: true },
   ],
   searchable: ["company", "domain", "client"],
 };
