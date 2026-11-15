@@ -3,12 +3,14 @@ import { Users, Briefcase, RefreshCw, UserCog, FileText, ArrowUpRight, TrendingU
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid } from "recharts";
 import { useCollection } from "@/lib/admin/storage";
 import { seeds } from "@/lib/admin/schemas";
+import { useAdminAuth } from "@/lib/admin/auth";
 
 export const Route = createFileRoute("/admin/")({
   component: AdminDashboard,
 });
 
 function AdminDashboard() {
+  const { isSuperAdmin } = useAdminAuth();
   const leads = useCollection("wo_admin_leads", seeds.wo_admin_leads as any).items;
   const deals = useCollection("wo_admin_deals", seeds.wo_admin_deals as any).items;
   const renewals = useCollection("wo_admin_renewals", seeds.wo_admin_renewals as any).items;
@@ -19,7 +21,10 @@ function AdminDashboard() {
   const cards = [
     { label: "Total Leads", value: leads.length, to: "/admin/leads", icon: Users, accent: "from-indigo-500 to-blue-500" },
     { label: "Active Deals", value: deals.length, to: "/admin/deals", icon: Briefcase, accent: "from-emerald-500 to-teal-500" },
-    { label: "Upcoming Renewals", value: renewals.length, to: "/admin/renewals", icon: RefreshCw, accent: "from-amber-500 to-orange-500" },
+    // Renewal details are super-admin only — same gating as the Renewals nav/route.
+    ...(isSuperAdmin
+      ? [{ label: "Upcoming Renewals", value: renewals.length, to: "/admin/renewals", icon: RefreshCw, accent: "from-amber-500 to-orange-500" }]
+      : []),
     { label: "Team Members", value: employees.length, to: "/admin/employees", icon: UserCog, accent: "from-violet-500 to-fuchsia-500" },
     { label: "Content Modules", value: content.length, to: "/admin/content", icon: FileText, accent: "from-sky-500 to-cyan-500" },
   ];
@@ -64,7 +69,7 @@ function AdminDashboard() {
         </div>
       </div>
 
-      {urgentRenewals.length > 0 && (
+      {isSuperAdmin && urgentRenewals.length > 0 && (
         <div className="rounded-2xl border border-rose-200 bg-rose-50 p-4 shadow-soft dark:border-rose-900/50 dark:bg-rose-950/20">
           <div className="flex items-center gap-2 font-semibold text-rose-700 dark:text-rose-400">
              <AlertCircle className="h-5 w-5" />
@@ -91,7 +96,7 @@ function AdminDashboard() {
         </div>
       )}
 
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">
+      <div className={`grid grid-cols-1 gap-4 sm:grid-cols-2 ${isSuperAdmin ? "lg:grid-cols-5" : "lg:grid-cols-4"}`}>
         {cards.map((c) => (
           <Link
             key={c.label}
@@ -159,6 +164,7 @@ function AdminDashboard() {
           </ul>
         </Panel>
 
+        {isSuperAdmin && (
         <Panel title="Upcoming Renewals" to="/admin/renewals">
           <ul className="divide-y divide-border/60">
             {upcomingRenewals.map((r: any) => (
@@ -176,6 +182,7 @@ function AdminDashboard() {
             {upcomingRenewals.length === 0 && <li className="py-6 text-center text-sm text-muted-foreground">Nothing upcoming.</li>}
           </ul>
         </Panel>
+        )}
 
         <Panel title="Recent Activity" to="/admin">
            <div className="flex flex-col gap-4">
