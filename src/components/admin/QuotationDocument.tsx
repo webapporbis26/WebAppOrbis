@@ -5,6 +5,7 @@
 // The MoU template reproduces the NINAV sample PDF section by section
 // (parties, background, sections 1-10, financial table, signatures) — only the
 // client, dates and amounts are filled in from the quotation data.
+import { Globe, Mail, Phone } from "lucide-react";
 import {
   COMPANY,
   MBWS_COMPANY,
@@ -530,10 +531,19 @@ export function MbwsLetterhead() {
           className="h-[52px] w-auto"
           style={{ printColorAdjust: "exact" }}
         />
-        <div className="text-right text-[12px] leading-relaxed text-slate-700">
-          <div>{MBWS_COMPANY.phone}</div>
-          <div>{MBWS_COMPANY.email}</div>
-          <div>{MBWS_COMPANY.website}</div>
+        <div className="space-y-0.5 text-right text-[12px] leading-relaxed text-slate-700">
+          <div className="flex items-center justify-end gap-1.5">
+            <Phone className="h-3.5 w-3.5 text-[#5b2c8a]" />
+            <span>{MBWS_COMPANY.phone}</span>
+          </div>
+          <div className="flex items-center justify-end gap-1.5">
+            <Mail className="h-3.5 w-3.5 text-[#5b2c8a]" />
+            <span>{MBWS_COMPANY.email}</span>
+          </div>
+          <div className="flex items-center justify-end gap-1.5">
+            <Globe className="h-3.5 w-3.5 text-[#5b2c8a]" />
+            <span>{MBWS_COMPANY.website}</span>
+          </div>
         </div>
       </div>
       <div className="mt-2 h-1 w-full" style={{ background: MBWS_GRADIENT, printColorAdjust: "exact" }} />
