@@ -524,21 +524,12 @@ export function MbwsLetterhead() {
   return (
     <div>
       <div className="flex items-start justify-between gap-6">
-        <div>
-          <div
-            className="font-display text-[34px] font-black leading-none tracking-tight"
-            style={{
-              background: "linear-gradient(135deg, #e91e8c, #5b2c8a)",
-              WebkitBackgroundClip: "text",
-              backgroundClip: "text",
-              color: "transparent",
-              printColorAdjust: "exact",
-            }}
-          >
-            MBWS
-          </div>
-          <div className="mt-0.5 text-[15px] font-semibold leading-none text-[#2e75b6]">Software Solutions</div>
-        </div>
+        <img
+          src="/mbws-logo.png"
+          alt="MBWS Software Solutions"
+          className="h-[52px] w-auto"
+          style={{ printColorAdjust: "exact" }}
+        />
         <div className="text-right text-[12px] leading-relaxed text-slate-700">
           <div>{MBWS_COMPANY.phone}</div>
           <div>{MBWS_COMPANY.email}</div>
