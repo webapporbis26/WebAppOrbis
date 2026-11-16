@@ -554,8 +554,11 @@ export function MbwsLetterhead() {
 export function MbwsFooter() {
   return (
     <div className="mt-8">
-      <div className="border-t border-slate-300 pt-2 text-[11px] text-slate-500">
-        {MBWS_COMPANY.name} | {MBWS_COMPANY.website} | {MBWS_COMPANY.email} | {MBWS_COMPANY.phone}
+      <div className="text-center">
+        <div className="text-[12px] font-bold" style={{ color: "#5b2c8a" }}>
+          {MBWS_COMPANY.tagline}
+        </div>
+        <div className="mt-0.5 text-[11px] text-slate-500">{MBWS_COMPANY.services}</div>
       </div>
       <div
         className="mt-2 py-1.5 text-center text-[12px] font-medium text-white"

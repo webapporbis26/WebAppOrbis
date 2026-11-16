@@ -306,6 +306,8 @@ export const MBWS_COMPANY = {
   phone: "+91 99477 62280",
   email: "hr@mbws.in",
   website: "www.mbws.in",
+  tagline: "Innovative Software. Digital Growth. Business Solutions.",
+  services: "Web Development | Mobile Applications | ERP Solutions | SEO & Digital Marketing",
 };
 
 export const MBWS_TAX_TREATMENTS = ["GST exclusive", "GST inclusive"];
