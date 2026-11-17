@@ -5,6 +5,7 @@
 // The MoU template reproduces the NINAV sample PDF section by section
 // (parties, background, sections 1-10, financial table, signatures) — only the
 // client, dates and amounts are filled in from the quotation data.
+import { Globe, Mail, Phone } from "lucide-react";
 import {
   COMPANY,
   MBWS_COMPANY,
@@ -524,25 +525,25 @@ export function MbwsLetterhead() {
   return (
     <div>
       <div className="flex items-start justify-between gap-6">
-        <div>
-          <div
-            className="font-display text-[34px] font-black leading-none tracking-tight"
-            style={{
-              background: "linear-gradient(135deg, #e91e8c, #5b2c8a)",
-              WebkitBackgroundClip: "text",
-              backgroundClip: "text",
-              color: "transparent",
-              printColorAdjust: "exact",
-            }}
-          >
-            MBWS
+        <img
+          src="/mbws-logo.png"
+          alt="MBWS Software Solutions"
+          className="h-[52px] w-auto"
+          style={{ printColorAdjust: "exact" }}
+        />
+        <div className="space-y-0.5 text-right text-[12px] leading-relaxed text-slate-700">
+          <div className="flex items-center justify-end gap-1.5">
+            <Phone className="h-3.5 w-3.5 text-[#5b2c8a]" />
+            <span>{MBWS_COMPANY.phone}</span>
           </div>
-          <div className="mt-0.5 text-[15px] font-semibold leading-none text-[#2e75b6]">Software Solutions</div>
-        </div>
-        <div className="text-right text-[12px] leading-relaxed text-slate-700">
-          <div>{MBWS_COMPANY.phone}</div>
-          <div>{MBWS_COMPANY.email}</div>
-          <div>{MBWS_COMPANY.website}</div>
+          <div className="flex items-center justify-end gap-1.5">
+            <Mail className="h-3.5 w-3.5 text-[#5b2c8a]" />
+            <span>{MBWS_COMPANY.email}</span>
+          </div>
+          <div className="flex items-center justify-end gap-1.5">
+            <Globe className="h-3.5 w-3.5 text-[#5b2c8a]" />
+            <span>{MBWS_COMPANY.website}</span>
+          </div>
         </div>
       </div>
       <div className="mt-2 h-1 w-full" style={{ background: MBWS_GRADIENT, printColorAdjust: "exact" }} />
@@ -553,8 +554,11 @@ export function MbwsLetterhead() {
 export function MbwsFooter() {
   return (
     <div className="mt-8">
-      <div className="border-t border-slate-300 pt-2 text-[11px] text-slate-500">
-        {MBWS_COMPANY.name} | {MBWS_COMPANY.website} | {MBWS_COMPANY.email} | {MBWS_COMPANY.phone}
+      <div className="text-center">
+        <div className="text-[12px] font-bold" style={{ color: "#5b2c8a" }}>
+          {MBWS_COMPANY.tagline}
+        </div>
+        <div className="mt-0.5 text-[11px] text-slate-500">{MBWS_COMPANY.services}</div>
       </div>
       <div
         className="mt-2 py-1.5 text-center text-[12px] font-medium text-white"
