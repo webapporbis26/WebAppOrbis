@@ -2,7 +2,11 @@ import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 
 const logoModules = import.meta.glob("@/assets/MBWS clients/*.{png,jpg,jpeg,webp}", { eager: true });
-const LOGOS = Object.values(logoModules).map((mod: any) => mod.default);
+// Cropped fragments, not usable logos — keep them out of the cloud.
+const EXCLUDED_LOGOS = new Set(["client-5.png", "client-6.png"]);
+const LOGOS = Object.entries(logoModules)
+  .filter(([path]) => !EXCLUDED_LOGOS.has(path.split("/").pop() ?? ""))
+  .map(([, mod]: any) => mod.default);
 
 type LogoCloudProps = React.ComponentProps<"div"> & {
   title?: React.ReactNode;
