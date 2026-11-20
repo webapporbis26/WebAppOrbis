@@ -705,24 +705,109 @@ function Home() {
       <TestimonialsSection />
 
       {/* ============== CTA BANNER ============== */}
-      <section className="relative py-14 sm:py-20 bg-gradient-to-r from-blue-600 to-indigo-700 text-white overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.12),transparent_50%)] pointer-events-none" />
-        <div className="mx-auto max-w-5xl px-5 sm:px-8 relative z-10 text-center">
-          <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight mb-4 leading-tight">
-            Ready to Take Your Business Online?
-          </h2>
-          <p className="text-blue-100 text-base sm:text-xl font-medium max-w-2xl mx-auto mb-8">
-            Let’s create a website that represents your brand and attracts customers.
-          </p>
-          <div className="flex justify-center">
-            <Link
-              to="/contact"
-              className="bg-white text-blue-600 hover:bg-blue-50 font-bold px-8 py-4 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-0.5 inline-flex items-center gap-2 text-sm sm:text-base"
-            >
-              Get a Free Quote
-              <span className="text-lg">→</span>
-            </Link>
+      <section className="relative overflow-hidden bg-gradient-to-br from-[#dce9fb] via-[#e7edfd] to-[#c3d0f7]">
+        <div className="absolute -right-24 -top-24 h-96 w-96 rounded-full bg-white/30 blur-3xl pointer-events-none" />
+        <div className="absolute -left-32 bottom-0 h-72 w-72 rounded-full bg-blue-300/20 blur-3xl pointer-events-none" />
+        <div className="relative mx-auto max-w-7xl px-5 sm:px-8 py-14 sm:py-20 grid lg:grid-cols-2 gap-12 items-center">
+          <div>
+            <h2 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-slate-900 leading-[1.1] mb-5">
+              Ready to Take Your<br />
+              <span className="text-blue-600">Business Online?</span>
+            </h2>
+            <p className="text-slate-600 text-base sm:text-lg max-w-md mb-8">
+              Let&rsquo;s create a website that represents your brand and attracts customers.
+            </p>
+            <div className="flex flex-wrap gap-4">
+              <Link
+                to="/contact"
+                className="bg-blue-600 hover:bg-blue-700 text-white font-bold px-7 py-3.5 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 inline-flex items-center gap-2 text-sm sm:text-base"
+              >
+                Get a Free Quote
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+              <Link
+                to="/portfolio"
+                className="bg-white text-blue-600 hover:bg-blue-50 font-bold px-7 py-3.5 rounded-full shadow-md hover:shadow-lg transition-all duration-300 inline-flex items-center gap-2 text-sm sm:text-base ring-1 ring-blue-100"
+              >
+                Our Works
+              </Link>
+            </div>
           </div>
+
+          {/* Device mockup: laptop + phone */}
+          <div className="relative h-[300px] sm:h-[360px]" aria-hidden="true">
+            {/* Laptop */}
+            <div className="absolute left-0 top-2 w-[78%]">
+              <div className="relative">
+                <div className="rounded-t-2xl bg-slate-800 p-2 pb-0 shadow-2xl">
+                  <div className="rounded-t-xl bg-white overflow-hidden">
+                    <div className="flex items-center gap-1.5 px-3 py-2 bg-slate-50 border-b border-slate-100">
+                      <span className="text-blue-600 font-extrabold text-xs leading-none">W</span>
+                      <span className="ml-2 h-2 flex-1 rounded bg-slate-200" />
+                    </div>
+                    <div className="relative h-28 sm:h-36 bg-gradient-to-br from-blue-200 to-blue-400">
+                      <svg className="absolute inset-x-0 bottom-0 w-full h-20" viewBox="0 0 400 80" preserveAspectRatio="none">
+                        <polygon points="0,80 120,20 220,80" fill="#3b82f6" opacity="0.7" />
+                        <polygon points="140,80 260,5 400,80" fill="#2563eb" opacity="0.85" />
+                        <circle cx="320" cy="18" r="10" fill="#dbeafe" />
+                      </svg>
+                    </div>
+                    <div className="grid grid-cols-3 gap-2 p-3">
+                      <div className="h-8 rounded bg-blue-100" />
+                      <div className="h-8 rounded bg-blue-100" />
+                      <div className="h-8 rounded bg-blue-100" />
+                      <div className="h-6 rounded bg-slate-100" />
+                      <div className="h-6 rounded bg-slate-100" />
+                      <div className="h-6 rounded bg-slate-100" />
+                    </div>
+                  </div>
+                </div>
+                <div className="absolute -left-[7%] -right-[7%] top-full h-3.5 bg-gradient-to-b from-slate-200 to-slate-400 rounded-b-2xl [clip-path:polygon(6%_0,94%_0,100%_100%,0%_100%)]" />
+              </div>
+            </div>
+            {/* Phone */}
+            <div className="absolute right-0 bottom-0 w-[26%]">
+              <div className="rounded-[1.4rem] bg-slate-800 p-1.5 shadow-2xl">
+                <div className="rounded-[1.1rem] bg-white overflow-hidden">
+                  <div className="flex items-center gap-1 px-2 py-1.5 bg-slate-50 border-b border-slate-100">
+                    <span className="text-blue-600 font-extrabold text-[10px] leading-none">W</span>
+                    <span className="ml-1 h-1.5 flex-1 rounded bg-slate-200" />
+                  </div>
+                  <div className="relative h-16 bg-gradient-to-br from-blue-200 to-blue-400">
+                    <svg className="absolute inset-x-0 bottom-0 w-full h-10" viewBox="0 0 200 40" preserveAspectRatio="none">
+                      <polygon points="0,40 60,10 110,40" fill="#3b82f6" opacity="0.7" />
+                      <polygon points="70,40 130,2 200,40" fill="#2563eb" opacity="0.85" />
+                    </svg>
+                  </div>
+                  <div className="space-y-1.5 p-2">
+                    <div className="h-4 rounded bg-blue-100" />
+                    <div className="h-4 rounded bg-slate-100" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ============== FEATURES STRIP ============== */}
+      <section className="bg-white">
+        <div className="mx-auto max-w-7xl px-5 sm:px-8 py-10 sm:py-12 grid gap-8 sm:grid-cols-3 sm:divide-x sm:divide-slate-200">
+          {[
+            { icon: Rocket, title: "Modern Design", desc: "Clean and user-friendly" },
+            { icon: Zap, title: "Fast & Secure", desc: "Reliable and high-performing" },
+            { icon: Headset, title: "Ongoing Support", desc: "We're always here for you" },
+          ].map((f) => (
+            <div key={f.title} className="flex items-center gap-4 sm:px-8 first:sm:pl-0 last:sm:pr-0">
+              <div className="h-12 w-12 sm:h-14 sm:w-14 rounded-full bg-blue-50 flex items-center justify-center flex-shrink-0">
+                <f.icon className="h-6 w-6 text-blue-600" />
+              </div>
+              <div>
+                <h3 className="font-bold text-slate-900 text-base sm:text-lg leading-tight">{f.title}</h3>
+                <p className="text-sm text-slate-500 mt-0.5">{f.desc}</p>
+              </div>
+            </div>
+          ))}
         </div>
       </section>
     </>
