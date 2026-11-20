@@ -183,7 +183,7 @@ export const TestimonialsSection = () => {
         <div className="hidden sm:block overflow-hidden" data-fade>
           <div
             className="flex transition-transform duration-700 ease-in-out"
-            style={{ transform: `translateX(-${current * (100 / testimonials.length)}%)` }}
+            style={{ transform: `translateX(-${current * (100 / perView)}%)` }}
           >
             {testimonials.map((t, i) => (
               <div
