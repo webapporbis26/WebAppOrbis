@@ -666,7 +666,7 @@ function Home() {
             </>
           }
           subtitle="Trusted by 50+ businesses worldwide to deliver digital solutions that perform."
-          limit={25}
+          limit={26}
         />
       </section>
 
