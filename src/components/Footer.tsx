@@ -5,9 +5,9 @@ function BrandMark({ className }: { className?: string }) {
   return (
     <svg viewBox="0 0 24 24" fill="none" className={className} aria-hidden="true">
       <path
-        d="M3 5 L7.5 19 L12 9 L16.5 19 L21 5"
-        stroke="#3b82f6"
-        strokeWidth="3"
+        d="M2.5 5 L7 19 L12 9.5 L17 19 L21.5 5"
+        stroke="#2563eb"
+        strokeWidth="4"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
@@ -23,7 +23,7 @@ export function Footer() {
           {/* Brand */}
           <div className="md:pr-10">
             <Link to="/" className="flex items-center gap-2.5">
-              <BrandMark className="h-8 w-8" />
+              <BrandMark className="h-9 w-9" />
               <span className="text-xl font-extrabold tracking-tight">WebApp Orbis</span>
             </Link>
             <p className="text-sm text-slate-400 leading-relaxed mt-4 max-w-xs">
