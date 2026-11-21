@@ -1,20 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { Facebook, Instagram, Youtube } from "lucide-react";
 
-function BrandMark({ className }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" className={className} aria-hidden="true">
-      <path
-        d="M2.5 5 L7 19 L12 9.5 L17 19 L21.5 5"
-        stroke="#2563eb"
-        strokeWidth="4"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
-
 export function Footer() {
   return (
     <footer className="relative bg-[#151D33] text-white font-sans">
@@ -23,7 +9,7 @@ export function Footer() {
           {/* Brand */}
           <div className="md:pr-10">
             <Link to="/" className="flex items-center gap-2.5">
-              <BrandMark className="h-9 w-9" />
+              <img src="/logo-w.png" alt="WebApp Orbis" className="h-9 w-auto" />
               <span className="text-xl font-extrabold tracking-tight">WebApp Orbis</span>
             </Link>
             <p className="text-sm text-slate-400 leading-relaxed mt-4 max-w-xs">
